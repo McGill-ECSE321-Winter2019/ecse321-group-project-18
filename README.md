@@ -7,5 +7,5 @@ _This README.md is a fillable template for the project submissions. Use the tabl
 |Team member's name|Total hours|Responsibility         |
 |------------------|-----------|-----------------------|
 |Team Member 1     |  _x_ hours|Mobile frontend lead   |
-|Team Member 2     |  _y_ hours|Project management lead|
+|Saleh Bakhit      |  _y_ hours|TBD                    |
 |...               |...        |                       |
