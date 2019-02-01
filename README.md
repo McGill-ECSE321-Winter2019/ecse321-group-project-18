@@ -5,7 +5,7 @@ _This README.md is a fillable template for the project submissions. Use the tabl
 The scope of this software engineering group project of the Winter 2019 edition of the ECSE 321 course is to develop a software system for managing co-op terms for future co-op programs.
 
 Here are available records to our  
-[Meeting Minutes and Key Decisions] (https://github.com/McGill-ECSE321-Winter2019/ecse321-group-project-18/wiki/Project-Report)
+[Meeting Minutes and Key Decisions](https://github.com/McGill-ECSE321-Winter2019/ecse321-group-project-18/wiki/Project-Report)
 
 ## Deliverable 1
 
