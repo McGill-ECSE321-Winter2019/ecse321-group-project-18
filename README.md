@@ -9,9 +9,9 @@ Here are available records to our
 
 ## Deliverable 1
 
-|Team member's name|Total hours|Responsibility         |
-|------------------|-----------|-----------------------|
-|Team Member 1     |  _x_ hours|Mobile frontend lead   |
-|Saleh Bakhit      |  _y_ hours|TBD                    |
-|Yen-Vi Huynh      |           |                       |
+|Team member's name      |Total hours|Responsibility         |
+|------------------------|-----------|-----------------------|
+|Moetassem Abdelazim     |  _x_ hours|CTO                    |
+|Saleh Bakhit            |  _y_ hours|TBD                    |
+|Yen-Vi Huynh            |           |                       |
 
