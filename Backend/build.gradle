@@ -35,21 +35,3 @@ task compile(type: JavaCompile) {
   sourceSets.test.java.outputDir = file('build/bin')
   sourceSets.main.java.outputDir = file('build/bin')
 }
-
-sourceSets {
-  main {
-    java { srcDir 'src/main/java' }
-  }
-  test {
-    java { srcDir 'src/test/java'}
-  }
-}
-
-jar {
-  destinationDir=file('distributable')
-  manifest {
-    attributes "Main-Class": "$mainClassName"
-  }
-}
-
-mainClassName='application.AcademicMangerApplication'
