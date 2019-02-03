@@ -27,6 +27,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	runtimeOnly 'org.postgresql:postgresql'
     testImplementation "junit:junit:4.12"
+    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.1.2.RELEASE'
 }
 
 task compile(type: JavaCompile) {
@@ -35,3 +36,13 @@ task compile(type: JavaCompile) {
   sourceSets.test.java.outputDir = file('build/bin')
   sourceSets.main.java.outputDir = file('build/bin')
 }
+
+sourceSets {
+  main {
+    java { srcDir 'src/main/java' }
+  }
+  test {
+    java { srcDir 'src/test/java'}
+  }
+}
+
