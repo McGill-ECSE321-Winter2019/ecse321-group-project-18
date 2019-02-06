@@ -6,8 +6,7 @@ The scope of this software engineering group project of the Winter 2019 edition 
 
 For the list of requirements of the project, refer to this wiki [page](https://github.com/McGill-ECSE321-Winter2019/ecse321-group-project-18/wiki/Project-Requirements).
 
-Here are available records to our  
-[Meeting Minutes and Key Decisions](https://github.com/McGill-ECSE321-Winter2019/ecse321-group-project-18/wiki/Project-Report)
+Here are available records to our [Meeting Minutes and Key Decisions](https://github.com/McGill-ECSE321-Winter2019/ecse321-group-project-18/wiki/Project-Report)
 
 ## Deliverable 1
 
