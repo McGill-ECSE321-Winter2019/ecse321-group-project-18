@@ -1,6 +1,4 @@
 package ca.mcgill.ecse321.academicmanager.model;
-import Student;
-import TermStatus;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import java.util.Set;

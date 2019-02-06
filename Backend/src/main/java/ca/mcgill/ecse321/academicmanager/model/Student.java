@@ -1,5 +1,4 @@
-import ca.mcgill.ecse321.academicmanager.model.Cooperator;
-import ca.mcgill.ecse321.academicmanager.model.CoopTerm;
+package ca.mcgill.ecse321.academicmanager.model;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
