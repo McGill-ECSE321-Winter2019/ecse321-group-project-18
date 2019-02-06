@@ -7,16 +7,6 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class Cooperator{
-private Set<Student> student;
-
-@OneToMany(mappedBy="cooperator", cascade={CascadeType.ALL})
-public Set<Student> getStudent() {
-   return this.student;
-}
-
-public void setStudent(Set<Student> students) {
-   this.student = students;
-}
 
 private Set<Course> course;
 

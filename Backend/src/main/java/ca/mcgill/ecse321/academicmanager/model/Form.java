@@ -4,23 +4,33 @@ import javax.persistence.ManyToOne;
 
 @Entity
 public class Form{
-private CoopTerm coopTerm;
+private FormType formType;
 
-@ManyToOne(optional=false)
-public CoopTerm getCoopTerm() {
-   return this.coopTerm;
+public void setFormType(FormType value) {
+   this.formType = value;
 }
 
-public void setCoopTerm(CoopTerm coopTerm) {
-   this.coopTerm = coopTerm;
+public FormType getFormType() {
+   return this.formType;
 }
 
-private String downloadLink;
+private String pdfLink;
 
-public void setDownloadLink(String value) {
-this.downloadLink = value;
+public void setPdfLink(String value) {
+   this.pdfLink = value;
+}
+
+public String getPdfLink() {
+   return this.pdfLink;
+}
+
+
+private String name;
+
+public void setName(String value) {
+this.name = value;
     }
-public String getDownloadLink() {
-return this.downloadLink;
+public String getName() {
+return this.name;
     }
    }

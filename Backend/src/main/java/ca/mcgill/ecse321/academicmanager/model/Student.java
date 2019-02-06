@@ -1,4 +1,5 @@
 package ca.mcgill.ecse321.academicmanager.model;
+import CoopTermRegistration;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
@@ -6,26 +7,37 @@ import javax.persistence.ManyToOne;
 
 @Entity
 public class Student{
-private String name;
+private String firstName;
 
-public void setName(String value) {
-   this.name = value;
+public void setFirstName(String value) {
+   this.firstName = value;
 }
 
-public String getName() {
-   return this.name;
+public String getFirstName() {
+   return this.firstName;
 }
 
-private CoopTerm coopTerm;
+private CoopTermRegistration coopTermRegistration;
 
-@OneToOne(mappedBy="student")
-public CoopTerm getCoopTerm() {
-   return this.coopTerm;
+@OneToOne(mappedBy="student", optional=false)
+public CoopTermRegistration getCoopTermRegistration() {
+   return this.coopTermRegistration;
 }
 
-public void setCoopTerm(CoopTerm coopTerm) {
-   this.coopTerm = coopTerm;
+public void setCoopTermRegistration(CoopTermRegistration coopTermRegistration) {
+   this.coopTermRegistration = coopTermRegistration;
 }
+
+private String lastName;
+
+public void setLastName(String value) {
+   this.lastName = value;
+}
+
+public String getLastName() {
+   return this.lastName;
+}
+
 
 private Integer studentID;
 
