@@ -1,5 +1,0 @@
-language: java
-before_install:
-- gradle wrapper
-script:
-- gradle build -xtest
