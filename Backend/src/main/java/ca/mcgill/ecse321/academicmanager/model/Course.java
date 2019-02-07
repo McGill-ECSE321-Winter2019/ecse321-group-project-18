@@ -1,6 +1,7 @@
 package ca.mcgill.ecse321.academicmanager.model;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -10,33 +11,41 @@ private String courseID;
    public void setCourseID(String value) {
 this.courseID = value;
     }
+@Id
 public String getCourseID() {
 return this.courseID;
     }
+
 private Integer courseRank;
 
 public void setCourseRank(Integer value) {
-this.courseRank = value;
-    }
+   this.courseRank = value;
+}
+
 public Integer getCourseRank() {
-return this.courseRank;
-    }
+   return this.courseRank;
+}
+
 private String term;
 
 public void setTerm(String value) {
-this.term = value;
-    }
+   this.term = value;
+}
+
 public String getTerm() {
-return this.term;
-    }
+   return this.term;
+}
+
 private String courseName;
 
 public void setCourseName(String value) {
-this.courseName = value;
-    }
+   this.courseName = value;
+}
+
 public String getCourseName() {
-return this.courseName;
-    }
+   return this.courseName;
+}
+
 private Cooperator cooperator;
 
 @ManyToOne(optional=false)
