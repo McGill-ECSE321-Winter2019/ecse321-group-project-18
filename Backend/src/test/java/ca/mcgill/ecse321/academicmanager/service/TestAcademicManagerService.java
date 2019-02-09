@@ -17,19 +17,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import ca.mcgill.ecse321.academicmanager.dao.CoopPositionRepository;
 import ca.mcgill.ecse321.academicmanager.dao.CoopTermRegistrationRepository;
 import ca.mcgill.ecse321.academicmanager.dao.CourseRepository;
 import ca.mcgill.ecse321.academicmanager.dao.FormRepository;
+import ca.mcgill.ecse321.academicmanager.dao.MeetingRepository;
 import ca.mcgill.ecse321.academicmanager.dao.StudentRepository;
+import ca.mcgill.ecse321.academicmanager.dao.TermRepository;
 
 import ca.mcgill.ecse321.academicmanager.model.Cooperator;
-import ca.mcgill.ecse321.academicmanager.model.CoopPosition;
 import ca.mcgill.ecse321.academicmanager.model.CoopTermRegistration;
 import ca.mcgill.ecse321.academicmanager.model.Course;
 import ca.mcgill.ecse321.academicmanager.model.Form;
 //import ca.mcgill.ecse321.academicmanager.model.FormType;
+import ca.mcgill.ecse321.academicmanager.model.Meeting;
 import ca.mcgill.ecse321.academicmanager.model.Student;
+import ca.mcgill.ecse321.academicmanager.model.Term;
 //import ca.mcgill.ecse321.academicmanager.model.TermStatus;
 
 @RunWith(SpringRunner.class)
@@ -40,21 +42,23 @@ public class TestAcademicManagerService {
 	private AcademicManagerService service;
 	
 	@Autowired
-	private CoopPositionRepository coopPositionRepository;
-	@Autowired
 	private CoopTermRegistrationRepository coopTermRegistrationRepository;
 	@Autowired
 	private CourseRepository courseRepository;
 	@Autowired
 	private FormRepository formRepository;
 	@Autowired
+	private MeetingRepository meetingRepository;
+	@Autowired
 	private StudentRepository studentRepository;
+	@Autowired
+	private TermRepository termRepository;
 	
 	@After
 	public void clearDatabase() {
 		courseRepository.deleteAll();
 		formRepository.deleteAll();
-		coopPositionRepository.deleteAll();
+		termRepository.deleteAll();
 		coopTermRegistrationRepository.deleteAll();
 		studentRepository.deleteAll();
 	}
@@ -65,7 +69,7 @@ public class TestAcademicManagerService {
 
 		String firstname = "Saleh";
 		String lastname = "Bakhit";
-		Integer studentID = 260632353;
+		String studentID = "260632353";
 
 		try {
 			service.createStudent(studentID, firstname, lastname);
@@ -86,7 +90,7 @@ public class TestAcademicManagerService {
 
 		String firstname = null;
 		String lasttname = null;
-		Integer studentID = null;
+		String studentID = null;
 		String error = null;
 
 		try {

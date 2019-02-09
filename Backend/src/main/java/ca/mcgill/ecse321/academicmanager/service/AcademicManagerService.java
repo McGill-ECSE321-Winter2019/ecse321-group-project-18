@@ -9,26 +9,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ca.mcgill.ecse321.academicmanager.dao.CoopPositionRepository;
 import ca.mcgill.ecse321.academicmanager.dao.CoopTermRegistrationRepository;
 import ca.mcgill.ecse321.academicmanager.dao.CourseRepository;
 import ca.mcgill.ecse321.academicmanager.dao.FormRepository;
+import ca.mcgill.ecse321.academicmanager.dao.MeetingRepository;
 import ca.mcgill.ecse321.academicmanager.dao.StudentRepository;
+import ca.mcgill.ecse321.academicmanager.dao.TermRepository;
 
 import ca.mcgill.ecse321.academicmanager.model.Cooperator;
-import ca.mcgill.ecse321.academicmanager.model.CoopPosition;
 import ca.mcgill.ecse321.academicmanager.model.CoopTermRegistration;
 import ca.mcgill.ecse321.academicmanager.model.Course;
 import ca.mcgill.ecse321.academicmanager.model.Form;
-import ca.mcgill.ecse321.academicmanager.model.FormType;
+//import ca.mcgill.ecse321.academicmanager.model.FormType;
+import ca.mcgill.ecse321.academicmanager.model.Meeting;
 import ca.mcgill.ecse321.academicmanager.model.Student;
-import ca.mcgill.ecse321.academicmanager.model.TermStatus;
+import ca.mcgill.ecse321.academicmanager.model.Term;
+//import ca.mcgill.ecse321.academicmanager.model.TermStatus;
 
 @Service
 public class AcademicManagerService {
 	
-	@Autowired
-	CoopPositionRepository coopPositionRepository;
 	@Autowired
 	CoopTermRegistrationRepository coopTermRegistrationRepository;
 	@Autowired
@@ -36,10 +36,14 @@ public class AcademicManagerService {
 	@Autowired
 	FormRepository formRepository;
 	@Autowired
+	MeetingRepository meetingRepository;
+	@Autowired
 	StudentRepository studentRepository;
+	@Autowired
+	TermRepository termRepository;
 	
 	@Transactional
-	public Student createStudent(Integer studentID, String firstname, String lastname) {
+	public Student createStudent(String studentID, String firstname, String lastname) {
 		Student s = new Student();
 		s.setStudentID(studentID);
 		s.setFirstName(firstname);
@@ -50,7 +54,7 @@ public class AcademicManagerService {
 	}
 	
 	@Transactional
-	public Student getStudent(Integer studentID) {
+	public Student getStudent(String studentID) {
 		Student s = studentRepository.findByStudentID(studentID);
 		return s;
 	}
