@@ -10,6 +10,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import ca.mcgill.ecse321.academicmanager.dao.CooperatorRepository;
 import ca.mcgill.ecse321.academicmanager.dao.CoopTermRegistrationRepository;
 import ca.mcgill.ecse321.academicmanager.dao.CourseRepository;
 import ca.mcgill.ecse321.academicmanager.dao.FormRepository;
@@ -42,6 +44,8 @@ public class TestAcademicManagerService {
 	private AcademicManagerService service;
 	
 	@Autowired
+	private CooperatorRepository cooperatorRepository;
+	@Autowired
 	private CoopTermRegistrationRepository coopTermRegistrationRepository;
 	@Autowired
 	private CourseRepository courseRepository;
@@ -54,6 +58,11 @@ public class TestAcademicManagerService {
 	@Autowired
 	private TermRepository termRepository;
 	
+	@Before
+	public void createCooperator() {
+		service.createCooperator(1);
+	}
+	
 	@After
 	public void clearDatabase() {
 		courseRepository.deleteAll();
@@ -61,10 +70,41 @@ public class TestAcademicManagerService {
 		termRepository.deleteAll();
 		coopTermRegistrationRepository.deleteAll();
 		studentRepository.deleteAll();
+		cooperatorRepository.deleteAll();
+	}
+	
+	@Test
+	public void testCreateCourse() {	
+		List<Cooperator> allCooperators = service.getAllCooperators();
+		assertEquals(1, allCooperators.size());
+		Cooperator cooperator = allCooperators.get(0);
+		
+		assertEquals(0, service.getAllCourses().size());
+
+		String courseID = "ECSE321";
+		String courseName = "Introduction to Software Engineering";
+		String term = "Winter2019";
+
+		try {
+			service.createCourse(courseID, courseName, term, cooperator);
+		} catch (IllegalArgumentException e) {
+			// Check that no error occurred
+			fail();
+		}
+
+		List<Course> allCourses = service.getAllCourses();
+
+		assertEquals(1, allCourses.size());
+		assertEquals(courseID, allCourses.get(0).getCourseID());
+		assertEquals(term, allCourses.get(0).getTerm());
 	}
 	
 	@Test
 	public void testCreateStudent() {
+		List<Cooperator> allCooperators = service.getAllCooperators();
+		assertEquals(1, allCooperators.size());
+		Cooperator cooperator = allCooperators.get(0);
+		
 		assertEquals(0, service.getAllStudents().size());
 
 		String firstname = "Saleh";
@@ -72,20 +112,24 @@ public class TestAcademicManagerService {
 		String studentID = "260632353";
 
 		try {
-			service.createStudent(studentID, firstname, lastname);
+			service.createStudent(studentID, firstname, lastname, cooperator);
 		} catch (IllegalArgumentException e) {
 			// Check that no error occurred
 			fail();
 		}
 
-		List<Student> allPersons = service.getAllStudents();
+		List<Student> allStudents = service.getAllStudents();
 
-		assertEquals(1, allPersons.size());
-		assertEquals(studentID, allPersons.get(0).getStudentID());
+		assertEquals(1, allStudents.size());
+		assertEquals(studentID, allStudents.get(0).getStudentID());
 	}
-
+	
 	@Test
-	public void testCreatePersonNull() {
+	public void testCreateStudentNull() {
+		List<Cooperator> allCooperators = service.getAllCooperators();
+		assertEquals(1, allCooperators.size());
+		Cooperator cooperator = allCooperators.get(0);
+		
 		assertEquals(0, service.getAllStudents().size());
 
 		String firstname = null;
@@ -94,13 +138,13 @@ public class TestAcademicManagerService {
 		String error = null;
 
 		try {
-			service.createStudent(studentID, firstname, lasttname);
+			service.createStudent(studentID, firstname, lasttname, cooperator);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
 
 		// check error
-		assertEquals("Person name cannot be empty!", error);
+		assertEquals("one or more argument(s) is/are null/empty", error);
 
 		// check no change in memory
 		assertEquals(0, service.getAllStudents().size());
