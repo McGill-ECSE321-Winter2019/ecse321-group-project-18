@@ -7,5 +7,9 @@ notifications:
 jdk:
   - oraclejdk9
 
+deploy:
+  provider: heroku
+  api_key: 37ed6f03-9099-47a7-93ac-0282b72b2666
+  app: Backend
 
 
