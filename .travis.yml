@@ -1,9 +1,13 @@
 language: java
 script:
 - ./gradlew build -xtest
+- bash checkdir.sh
 notifications:
   slack: ecse321-group18:tJheLEmh0qxP7QBcS8dSegUe
 jdk:
   - oraclejdk9
-services:
-  - postgresql
+
+deploy:
+  provider: heroku
+  api_key: 704328de-5957-4c7a-ac06-6d94a658d8dc
+  app: cooperatorapp-backend-18 

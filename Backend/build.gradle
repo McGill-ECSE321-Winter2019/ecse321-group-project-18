@@ -13,6 +13,7 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'application'
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
@@ -46,3 +47,12 @@ sourceSets {
   }
 }
 
+mainClassName='ca.mcgill.ecse321.academicmanager.AcademicManagerApplication'
+
+jar {
+  destinationDir=file('distributable')
+  manifest {
+    // It is smart to reuse the name of the main class variable instead of hardcoding it
+    attributes "Main-Class": "$mainClassName"
+  }
+}
