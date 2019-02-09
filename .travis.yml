@@ -1,7 +1,7 @@
 language: java
 script:
 - ./gradlew build -xtest
-- ./checkdir.sh
+- bash checkdir.sh
 notifications:
   slack: ecse321-group18:tJheLEmh0qxP7QBcS8dSegUe
 jdk:
