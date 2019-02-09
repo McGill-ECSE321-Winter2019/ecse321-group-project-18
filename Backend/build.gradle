@@ -47,7 +47,7 @@ sourceSets {
   }
 }
 
-mainClassName='application.AcademicManagerApplication'
+mainClassName='ca.mcgill.ecse321.academicmanager.AcademicManagerApplication'
 
 jar {
   destinationDir=file('distributable')
