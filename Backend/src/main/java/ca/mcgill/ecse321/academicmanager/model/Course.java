@@ -15,37 +15,30 @@ this.courseID = value;
 public String getCourseID() {
 return this.courseID;
     }
-
-private Integer courseRank;
-
-public void setCourseRank(Integer value) {
-   this.courseRank = value;
-}
-
-public Integer getCourseRank() {
-   return this.courseRank;
-}
-
 private String term;
 
 public void setTerm(String value) {
-   this.term = value;
-}
-
+this.term = value;
+    }
 public String getTerm() {
-   return this.term;
-}
-
+return this.term;
+    }
 private String courseName;
 
 public void setCourseName(String value) {
-   this.courseName = value;
-}
-
+this.courseName = value;
+    }
 public String getCourseName() {
-   return this.courseName;
-}
+return this.courseName;
+    }
+private Integer courseRank;
 
+public void setCourseRank(Integer value) {
+this.courseRank = value;
+    }
+public Integer getCourseRank() {
+return this.courseRank;
+    }
 private Cooperator cooperator;
 
 @ManyToOne(optional=false)

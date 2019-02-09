@@ -1,16 +1,31 @@
 package ca.mcgill.ecse321.academicmanager.model;
-import javax.persistence.OneToMany;
-import java.util.Set;
-import javax.persistence.Enumerated;
 
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.OneToOne;
-import javax.persistence.ManyToOne;
 import javax.persistence.Id;
+import java.util.Set;
+import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 @Entity
-public class CoopTermRegistration {
+public class CoopTermRegistration{
+private String registrationID;
+   
+   public void setRegistrationID(String value) {
+this.registrationID = value;
+    }
+@Id
+public String getRegistrationID() {
+return this.registrationID;
+    }
+private TermStatus termStatus;
+
+public void setTermStatus(TermStatus value) {
+this.termStatus = value;
+    }
+public TermStatus getTermStatus() {
+return this.termStatus;
+    }
 private Set<Form> form;
 
 @OneToMany(mappedBy="coopTermRegistration")
@@ -22,49 +37,34 @@ public void setForm(Set<Form> forms) {
    this.form = forms;
 }
 
+private Term term;
 
-	@Enumerated(EnumType.STRING)
-	private TermStatus coopTermStatus;
+@ManyToOne
+public Term getTerm() {
+   return this.term;
+}
 
-	public void setCoopTermStatus(TermStatus value) {
-		this.coopTermStatus = value;
-	}
+public void setTerm(Term term) {
+   this.term = term;
+}
 
-	public TermStatus getCoopTermStatus() {
-		return this.coopTermStatus;
-	}
+private String jobID;
 
-	private Student student;
+public void setJobID(String value) {
+this.jobID = value;
+    }
+public String getJobID() {
+return this.jobID;
+    }
+private Student student;
 
-	@OneToOne(optional = false)
-	public Student getStudent() {
-		return this.student;
-	}
+@OneToOne(mappedBy="coopTermRegistration")
+public Student getStudent() {
+   return this.student;
+}
 
-	public void setStudent(Student student) {
-		this.student = student;
-	}
+public void setStudent(Student student) {
+   this.student = student;
+}
 
-	private CoopPosition coopCourse;
-
-	@ManyToOne(optional = false)
-	public CoopPosition getCoopCourse() {
-		return this.coopCourse;
-	}
-
-	public void setCoopCourse(CoopPosition coopCourse) {
-		this.coopCourse = coopCourse;
-	}
-
-
-	private String registrationID;
-
-	public void setRegistrationID(String value) {
-		this.registrationID = value;
-	}
-
-	@Id
-	public String getRegistrationID() {
-		return this.registrationID;
-	}
 }
