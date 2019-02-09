@@ -1,7 +1,6 @@
 language: java
 script:
 - ./gradlew build -xtest
-- ./gradlew fatJar
 notifications:
   slack: ecse321-group18:tJheLEmh0qxP7QBcS8dSegUe
 jdk:
