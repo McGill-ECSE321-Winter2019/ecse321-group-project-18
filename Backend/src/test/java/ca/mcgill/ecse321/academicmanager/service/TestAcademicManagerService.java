@@ -1,0 +1,105 @@
+package ca.mcgill.ecse321.academicmanager.service;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
+import java.sql.Date;
+import java.sql.Time;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.List;
+
+import org.junit.After;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import ca.mcgill.ecse321.academicmanager.dao.CoopPositionRepository;
+import ca.mcgill.ecse321.academicmanager.dao.CoopTermRegistrationRepository;
+import ca.mcgill.ecse321.academicmanager.dao.CourseRepository;
+import ca.mcgill.ecse321.academicmanager.dao.FormRepository;
+import ca.mcgill.ecse321.academicmanager.dao.StudentRepository;
+
+import ca.mcgill.ecse321.academicmanager.model.Cooperator;
+import ca.mcgill.ecse321.academicmanager.model.CoopPosition;
+import ca.mcgill.ecse321.academicmanager.model.CoopTermRegistration;
+import ca.mcgill.ecse321.academicmanager.model.Course;
+import ca.mcgill.ecse321.academicmanager.model.Form;
+//import ca.mcgill.ecse321.academicmanager.model.FormType;
+import ca.mcgill.ecse321.academicmanager.model.Student;
+//import ca.mcgill.ecse321.academicmanager.model.TermStatus;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest
+public class TestAcademicManagerService {
+	
+	@Autowired
+	private AcademicManagerService service;
+	
+	@Autowired
+	private CoopPositionRepository coopPositionRepository;
+	@Autowired
+	private CoopTermRegistrationRepository coopTermRegistrationRepository;
+	@Autowired
+	private CourseRepository courseRepository;
+	@Autowired
+	private FormRepository formRepository;
+	@Autowired
+	private StudentRepository studentRepository;
+	
+	@After
+	public void clearDatabase() {
+		courseRepository.deleteAll();
+		formRepository.deleteAll();
+		coopPositionRepository.deleteAll();
+		coopTermRegistrationRepository.deleteAll();
+		studentRepository.deleteAll();
+	}
+	
+	@Test
+	public void testCreateStudent() {
+		assertEquals(0, service.getAllStudents().size());
+
+		String firstname = "Saleh";
+		String lastname = "Bakhit";
+		Integer studentID = 260632353;
+
+		try {
+			service.createStudent(studentID, firstname, lastname);
+		} catch (IllegalArgumentException e) {
+			// Check that no error occurred
+			fail();
+		}
+
+		List<Student> allPersons = service.getAllStudents();
+
+		assertEquals(1, allPersons.size());
+		assertEquals(studentID, allPersons.get(0).getStudentID());
+	}
+
+	@Test
+	public void testCreatePersonNull() {
+		assertEquals(0, service.getAllStudents().size());
+
+		String firstname = null;
+		String lasttname = null;
+		Integer studentID = null;
+		String error = null;
+
+		try {
+			service.createStudent(studentID, firstname, lasttname);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+
+		// check error
+		assertEquals("Person name cannot be empty!", error);
+
+		// check no change in memory
+		assertEquals(0, service.getAllStudents().size());
+	}
+	
+}
