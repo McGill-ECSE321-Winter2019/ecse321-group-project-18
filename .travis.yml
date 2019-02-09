@@ -10,4 +10,4 @@ jdk:
 deploy:
   provider: heroku
   api_key: 704328de-5957-4c7a-ac06-6d94a658d8dc
-app: cooperatorapp-backend-18 
+
