@@ -6,6 +6,17 @@ import javax.persistence.ManyToOne;
 
 @Entity
 public class Form{
+private CoopTermRegistration coopTermRegistration;
+
+@ManyToOne
+public CoopTermRegistration getCoopTermRegistration() {
+   return this.coopTermRegistration;
+}
+
+public void setCoopTermRegistration(CoopTermRegistration coopTermRegistration) {
+   this.coopTermRegistration = coopTermRegistration;
+}
+
 private String name;
 
 public void setName(String value) {
@@ -42,15 +53,5 @@ this.pdfLink = value;
 public String getPdfLink() {
 return this.pdfLink;
     }
-private CoopTermRegistration coopTermRegistration;
-
-@ManyToOne(optional=false)
-public CoopTermRegistration getCoopTermRegistration() {
-   return this.coopTermRegistration;
-}
-
-public void setCoopTermRegistration(CoopTermRegistration coopTermRegistration) {
-   this.coopTermRegistration = coopTermRegistration;
-}
 
 }
