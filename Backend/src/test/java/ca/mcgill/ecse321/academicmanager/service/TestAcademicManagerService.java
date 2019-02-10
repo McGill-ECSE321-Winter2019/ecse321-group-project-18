@@ -257,4 +257,65 @@ public class TestAcademicManagerService {
 		service.updateCoopTermRegistration(tmpCTR, TermStatus.FINISHED, null, tmpStudent, null);
 		assertEquals(TermStatus.FINISHED, tmpCTR.getTermStatus());
 	}
+	
+	/**
+	 * Test if the service can successfully create a Meeting object.
+	 * @author Bach Tran
+	 * @since 2019-02-10
+	 */
+	@Test
+	public void testCreateMeeting()
+	{		
+		String error = null;
+		assertEquals(0, service.getAllMeetings().size());
+		// list of test instances
+		String meetingID = "123456";
+		String location = "sample location";
+		String details = "sample details";
+		Date date = Date.valueOf("2019-01-01");
+		Time startTime = Time.valueOf("18:00:00");
+		Time endTime = Time.valueOf("16:00:00");
+		Set<Student> students = service.getAllStudents();
+		try {
+			service.createMeeting(meetingID, location, details, date, startTime, endTime, students);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		// check error
+		assertEquals("endTime need to happen after startTime.", error);
+		
+		// check no change in memory
+		assertEquals(0, service.getAllStudents().size());
+	}
+	/**
+	 * Test case: a null Meeting object
+	 * @author Bach Tran
+	 * @since 2019-02-10
+	 */
+	@Test
+	public void testCreateMeetingNull()
+	{
+		String error = null;
+		assertEquals(0, service.getAllMeetings().size());
+		// list of test instances
+		String meetingID = null;
+		String location = null;
+		String details = null;
+		Date date = Date.valueOf("2019-01-01");
+		Time startTime = Time.valueOf("18:00:00");
+		Time endTime = Time.valueOf("16:00:00");
+		Set<Student> students = service.getAllStudents();
+		try {
+			service.createMeeting(meetingID, location, details, date, startTime, endTime, students);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		// check error
+		assertEquals("one or more argument(s) is/are null/empty", error);
+		
+		// check no change in memory
+		assertEquals(0, service.getAllStudents().size());
+	}
 }

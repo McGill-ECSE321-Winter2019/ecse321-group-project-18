@@ -7,66 +7,73 @@ import java.util.Set;
 import javax.persistence.ManyToMany;
 import java.sql.Date;
 
+/**
+ * Represent a Meeting between students and the Academic Program Manager.
+ * Date constraint: the Meeting should take place in one day only.
+ * Time constraint: endTime has to happen after startTime.
+ * @author ecse321-winter2019-group18
+ */
 @Entity
-public class Meeting{
-private Time startTime;
+public class Meeting
+{
+	private Time startTime;
    
-   public void setStartTime(Time value) {
-this.startTime = value;
+	public void setStartTime(Time value) {
+		this.startTime = value;
     }
-public Time getStartTime() {
-return this.startTime;
-    }
-private Time endTime;
+	public Time getStartTime() {
+		return this.startTime;
+	}
+	private Time endTime;
+	
+	public void setEndTime(Time value) {
+		this.endTime = value;
+	}
+	public Time getEndTime() {
+		return this.endTime;
+	}
+	private String location;
+	
+	public void setLocation(String value) {
+		this.location = value;
+	}
+	public String getLocation() {
+		return this.location;
+	}
+	private String details;
+	
+	public void setDetails(String value) {
+		this.details = value;
+	}
+	public String getDetails() {
+		return this.details;
+	}
+	private String meetingID;
+	
+	public void setMeetingID(String value) {
+		this.meetingID = value;
+	}
+	@Id
+	public String getMeetingID() {
+		return this.meetingID;
+	}
+	private Set<Student> student;
+	
+	@ManyToMany
+	public Set<Student> getStudent() {
+	   return this.student;
+	}
+	
+	public void setStudent(Set<Student> students) {
+	   this.student = students;
+	}
 
-public void setEndTime(Time value) {
-this.endTime = value;
+	private Date date;
+	
+	public void setDate(Date value) {
+		this.date = value;
+	}
+	public Date getDate() {
+		return this.date;
     }
-public Time getEndTime() {
-return this.endTime;
-    }
-private String location;
-
-public void setLocation(String value) {
-this.location = value;
-    }
-public String getLocation() {
-return this.location;
-    }
-private String details;
-
-public void setDetails(String value) {
-this.details = value;
-    }
-public String getDetails() {
-return this.details;
-    }
-private String meetingID;
-
-public void setMeetingID(String value) {
-this.meetingID = value;
-    }
-@Id
-public String getMeetingID() {
-return this.meetingID;
-    }
-private Set<Student> student;
-
-@ManyToMany
-public Set<Student> getStudent() {
-   return this.student;
 }
-
-public void setStudent(Set<Student> students) {
-   this.student = students;
-}
-
-private Date date;
-
-public void setDate(Date value) {
-this.date = value;
-    }
-public Date getDate() {
-return this.date;
-       }
-   }
