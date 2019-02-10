@@ -267,7 +267,7 @@ public class AcademicManagerService {
 	//---Student---
 	@Transactional
 	public Student createStudent(String studentID, String firstname, String lastname, Grade grade, Cooperator c) {
-		if(!checkArg(studentID) || !checkArg(firstname) || !checkArg(lastname) || !checkArg(c)) {
+		if(!checkArg(studentID) || !checkArg(firstname) || !checkArg(lastname) || !checkArg(grade) || !checkArg(c)) {
 			throw new IllegalArgumentException("one or more argument(s) is/are null/empty");
 		}
 		
@@ -312,6 +312,14 @@ public class AcademicManagerService {
 	@Transactional
 	public Set<Student> getAllStudents() {
 		return toSet(studentRepository.findAll());
+	}
+	
+	@Transactional
+	public Grade getStudentGrade(String studentID) {
+		Grade grade;
+		Student student = getStudent(studentID);
+		grade = student.getGrade();
+		return grade;
 	}
 	//---Student---
 	
