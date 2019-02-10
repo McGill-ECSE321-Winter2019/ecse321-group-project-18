@@ -6,6 +6,8 @@ import static org.junit.Assert.fail;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.HashSet;
+import java.util.List;
 /*
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -127,6 +129,7 @@ public class TestAcademicManagerService {
 		course = service.updateCourseRank(course, courseRank);
 		
 		assertEquals(courseRank, course.getCourseRank());
+		assertEquals(1, service.getAllCourses().size());
 	}
 	
 	@Test
@@ -206,33 +209,43 @@ public class TestAcademicManagerService {
 	
 	@Test
 	public void testCreateForm() {
-		String studentID = "142142";
-		String firstname = "1";
-		String lastname = "1";
-		Grade grade = Grade.A;
-		
-		Student tmpStudent = service.createStudent(studentID, firstname, lastname, grade, cooperator);
-		
-		String registrationID = "1214214";
-		String jobID = "1512521";
-		TermStatus status = TermStatus.FAILED;
-		
-		CoopTermRegistration tmpCTR = service.createCoopTermRegistration(registrationID, jobID, status, tmpStudent);
-		
-		/*String formID = "142142";
+		String formID = "142142";
 		String pdfLink = "1";
 		String formName = "1";
 		FormType formType = FormType.STUDENTEVALUATION;
 		try{
-			Form form = service.createForm(formID, formName, pdfLink, formType, tmpCTR);
+			Form form = service.createForm(formID, formName, pdfLink, formType, null);
+			assertEquals(1, formRepository.count());
+			assertEquals("142142", form.getFormID());
 		} catch (IllegalArgumentException e) {
 			fail();
 		}	
-		assertEquals(1, formRepository.count());
-		assertEquals("142142", form.getFormID());*/
 	}
 	
 	@Test
+	public void testUpdateForm() {
+		String formID = "142142";
+		String pdfLink = "1";
+		String formName = "1";
+		FormType formType = FormType.STUDENTEVALUATION;
+		
+		Form form = service.createForm(formID, formName, pdfLink, formType, null);
+		
+		pdfLink = "2";
+		formName = "2";
+		formType = FormType.COOPEVALUATION;
+		
+		form = service.updateForm(form, null, formName, pdfLink, formType, null);
+		
+		assertEquals(1, formRepository.count());
+		assertEquals("142142", form.getFormID());
+		assertEquals("2", form.getPdfLink());
+		assertEquals("2", form.getName());
+		assertEquals(FormType.COOPEVALUATION, form.getFormType());
+	}
+	
+	
+	/*@Test
 	public void testViewEmployerEvalForms() {
 		
 		String studentID = "142142";
@@ -248,7 +261,7 @@ public class TestAcademicManagerService {
 		
 		CoopTermRegistration tmpCTR = service.createCoopTermRegistration(registrationID, jobID, status, tmpStudent);
 		
-		/*String formID = "142142";
+		String formID = "142142";
 		String pdfLink = "1";
 		String formName = "1";
 		FormType formType = FormType.STUDENTEVALUATION;
@@ -262,8 +275,8 @@ public class TestAcademicManagerService {
 		
 		for(Form f : forms) {
 			assertEquals(FormType.STUDENTEVALUATION, f.getFormType());
-		}*/
-	}
+		}
+	}*/
 	
 	@Test
 	public void testViewProblematicStudents() {
@@ -416,16 +429,17 @@ public class TestAcademicManagerService {
 	}
 	
 	@Test
-	public void testUpdateTermDeadlines() {
+	public void testUpdateTerm() {
 		Term term;
 		
 		Set<CoopTermRegistration> ctrs = new HashSet<CoopTermRegistration>();
 		
 		String termID = "1";
+		String termName = "Winter2019";
 		Date studentEvalFormDeadline = Date.valueOf("2015-06-01");
 		Date coopEvalFormDeadline = Date.valueOf("2015-06-01");
 		
-		term = service.createTerm(termID, studentEvalFormDeadline, coopEvalFormDeadline, ctrs);
+		term = service.createTerm(termID, termName, studentEvalFormDeadline, coopEvalFormDeadline, ctrs);
 		
 		studentEvalFormDeadline = Date.valueOf("2017-06-01");
 		coopEvalFormDeadline = Date.valueOf("2017-06-01");

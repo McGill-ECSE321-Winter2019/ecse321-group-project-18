@@ -89,3 +89,17 @@ public class Term
 	
 	
 }
+
+public void setCoopTermRegistration(Set<CoopTermRegistration> coopTermRegistrations) {
+   this.coopTermRegistration = coopTermRegistrations;
+}
+
+private String termName;
+
+public void setTermName(String value) {
+this.termName = value;
+    }
+public String getTermName() {
+return this.termName;
+       }
+   }
