@@ -7,6 +7,12 @@ import java.util.Set;
 import javax.persistence.ManyToMany;
 import java.sql.Date;
 
+/**
+ * Represent a Meeting between students and the Academic Program Manager.
+ * Date constraint: the Meeting should take place in one day only.
+ * Time constraint: endTime has to happen after startTime.
+ * @author ecse321-winter2019-group18
+ */
 @Entity
 public class Meeting
 {
@@ -62,12 +68,12 @@ public class Meeting
 	   this.student = students;
 	}
 
-private Date date;
-
-public void setDate(Date value) {
-this.date = value;
+	private Date date;
+	
+	public void setDate(Date value) {
+		this.date = value;
+	}
+	public Date getDate() {
+		return this.date;
     }
-public Date getDate() {
-return this.date;
-       }
-   }
+}

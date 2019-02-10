@@ -161,31 +161,61 @@ public class TestAcademicManagerService {
 	/**
 	 * Test if the service can successfully create a Meeting object.
 	 * @author Bach Tran
-	 * @since 09 Feb 2019
+	 * @since 2019-02-10
 	 */
 	@Test
 	public void testCreateMeeting()
-	{
-		Set<Cooperator> allCooperators = service.getAllCooperators();
-		assertEquals(1, allCooperators.size());
-		Cooperator cooperator = allCooperators.iterator().next();
-		
+	{		
+		String error = null;
 		assertEquals(0, service.getAllMeetings().size());
-		
 		// list of test instances
 		String meetingID = "123456";
 		String location = "sample location";
 		String details = "sample details";
-		@SuppressWarnings("deprecation")
-		Time startTime = new Time(3, 40, 0);
-		@SuppressWarnings("deprecation")
-		Time endTime = new Time(4, 40, 0);
+		Date date = Date.valueOf("2019-01-01");
+		Time startTime = Time.valueOf("18:00:00");
+		Time endTime = Time.valueOf("16:00:00");
 		Set<Student> students = service.getAllStudents();
 		try {
-			service.createMeeting(meetingID, location, details, startTime, endTime, students);
+			service.createMeeting(meetingID, location, details, date, startTime, endTime, students);
 		} catch (IllegalArgumentException e) {
-			fail();
+			error = e.getMessage();
 		}
+		
+		// check error
+		assertEquals("endTime need to happen after startTime.", error);
+		
+		// check no change in memory
+		assertEquals(0, service.getAllStudents().size());
 	}
-	
+	/**
+	 * Test case: a null Meeting object
+	 * @author Bach Tran
+	 * @since 2019-02-10
+	 */
+	@Test
+	public void testCreateMeetingNull()
+	{
+		String error = null;
+		assertEquals(0, service.getAllMeetings().size());
+		// list of test instances
+		String meetingID = null;
+		String location = null;
+		String details = null;
+		Date date = Date.valueOf("2019-01-01");
+		Time startTime = Time.valueOf("18:00:00");
+		Time endTime = Time.valueOf("16:00:00");
+		Set<Student> students = service.getAllStudents();
+		try {
+			service.createMeeting(meetingID, location, details, date, startTime, endTime, students);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		// check error
+		assertEquals("one or more argument(s) is/are null/empty", error);
+		
+		// check no change in memory
+		assertEquals(0, service.getAllStudents().size());
+	}
 }

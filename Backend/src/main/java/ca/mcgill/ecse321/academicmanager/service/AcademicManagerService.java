@@ -207,17 +207,24 @@ public class AcademicManagerService {
 	
 	//---Meeting---
 	@Transactional
-	public Meeting createMeeting(String meetingID, String location, String details, Time startTime, Time endTime, Set<Student> students) 
+	public Meeting createMeeting(String meetingID, String location, String details, Date date, Time startTime, Time endTime, Set<Student> students) 
 	{
+		// check for nulls
 		if(!checkArg(meetingID) || !checkArg(location) || !checkArg(startTime) || !checkArg(endTime)) {
 			throw new IllegalArgumentException("one or more argument(s) is/are null/empty");
+		}
+		
+		// check for invalid time constraints
+		if (endTime.compareTo(startTime) < 0) {
+			throw new IllegalArgumentException("endTime need to happen after startTime.");
 		}
 		
 		Meeting meeting = new Meeting();
 		meeting.setMeetingID(meetingID);
 		meeting.setLocation(location);
-		meeting.setEndTime(endTime);
+		meeting.setDate(date);
 		meeting.setStartTime(startTime);
+		meeting.setEndTime(endTime);
 		
 		if(checkArg(details)) {
 			meeting.setDetails(details);
@@ -271,6 +278,7 @@ public class AcademicManagerService {
 		if(!checkArg(studentID) || !checkArg(firstname) || !checkArg(lastname) || !checkArg(grade) || !checkArg(c)) {
 			throw new IllegalArgumentException("one or more argument(s) is/are null/empty");
 		}
+		
 		
 		Student student = new Student();
 		
