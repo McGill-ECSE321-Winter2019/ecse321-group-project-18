@@ -180,7 +180,7 @@ public class AcademicManagerService {
 	//---Form---
 	@Transactional
 	public Form createForm(String formID, String name, String pdflink, FormType formtype, CoopTermRegistration ctr) {
-		if(!checkArg(name) || !checkArg(pdflink) || !checkArg(formtype) || !checkArg(ctr)) {
+		if(!checkArg(name) || !checkArg(pdflink) || !checkArg(formtype)) {
 			throw new IllegalArgumentException("one or more argument(s) is/are null/empty");
 		}
 		
@@ -191,17 +191,44 @@ public class AcademicManagerService {
 		form.setFormType(formtype);
 		form.setCoopTermRegistration(ctr);
 		
-		Set<Form> forms = ctr.getForm();
-		
-		if(!checkArg(forms)) {
-			forms = new HashSet<Form>();
+		if(checkArg(ctr)) {
+			Set<Form> forms = ctr.getForm();
+			
+			if(!checkArg(forms)) {
+				forms = new HashSet<Form>();
+			}
+			
+			forms.add(form);
+			ctr.setForm(forms);
 		}
-		
-		forms.add(form);
-		ctr.setForm(forms);
 		
 		return formRepository.save(form);
 	}
+	
+	@Transactional
+	Form updateForm(Form form, String formID, String name, String pdflink, FormType formtype, CoopTermRegistration ctr) {
+		if(!checkArg(form)) {
+			throw new IllegalArgumentException("form is null");
+		}
+		if(checkArg(formID)) {
+			form.setFormID(formID);
+		}
+		if(checkArg(name)) {
+			form.setName(name);
+		}
+		if(checkArg(pdflink)) {
+			form.setPdfLink(pdflink);
+		}
+		if(checkArg(formtype)) {
+			form.setFormType(formtype);
+		}
+		if(checkArg(ctr)) {
+			form.setCoopTermRegistration(ctr);
+		}
+		
+		return formRepository.save(form);
+	}
+
 	
 	@Transactional
 	public Set<Form> getAllStudentEvalFormsOfStudent(Student student) {

@@ -3,7 +3,7 @@
   <uml:Model xmi:id="_1Z3nkCcWEemj-ZTemeLm7A" name="ca_mcgill_ecse321_academicmanger_model">
     <eAnnotations xmi:id="_1j-l0CcWEemj-ZTemeLm7A" source="http://ns.yatta.de/umllab">
       <contents xmi:type="ecore:EAnnotation" xmi:id="_1j_M4CcWEemj-ZTemeLm7A" source="codegen">
-        <details xmi:id="_JUgMMCcmEemj-ZTemeLm7A" key="AssociatedSourceCode" value="/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/Course.java;2627089704/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/Cooperator.java;2928446457/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/Form.java;2471138712/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/Student.java;1851346806/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/TermStatus.java;1228062307/1;/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/FormType.java;120648881/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/CoopTermRegistration.java;381478680/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/Term.java;26657551/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/Grade.java;4204005706/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/Meeting.java;1196727997/1;"/>
+        <details xmi:id="_JUgMMCcmEemj-ZTemeLm7A" key="AssociatedSourceCode" value="/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/Course.java;2627089704/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/Cooperator.java;2928446457/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/Form.java;2471138712/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/Student.java;1851346806/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/TermStatus.java;2470404642/1;/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/FormType.java;120648881/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/CoopTermRegistration.java;2610368415/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/Term.java;946227767/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/Grade.java;4204005706/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/Meeting.java;1196727997/1;"/>
         <details xmi:id="_5pMJECnGEemS0IHJqlSUCQ" key="codegenDirectory" value="/Backend/src/main/java"/>
       </contents>
       <contents xmi:type="ecore:EAnnotation" xmi:id="_jRw9ICsQEemFupWFI64o_g" source="preferences">
@@ -81,6 +81,14 @@
                 </ownedAttribute>
               </packagedElement>
               <packagedElement xmi:type="uml:Enumeration" xmi:id="_9-w_kCoxEemCfou_SGwekQ" name="TermStatus">
+                <ownedComment xmi:id="_JkeNcC1eEemZZ94joFKfEg">
+                  <body>A Term may have 3 statuses:
+Ongoing (in progress), Finished (the term is finished and the Student has passed the course),
+Failed (the term is finished but the Student failed the course).
+@author ecse321-winter2019-group18
+@see Term
+ *</body>
+                </ownedComment>
                 <ownedLiteral xmi:id="_BMW88CoyEemCfou_SGwekQ" name="ONGOING"/>
                 <ownedLiteral xmi:id="_NYaesCslEemqKpWaCqKr0g" name="FINISHED"/>
                 <ownedLiteral xmi:id="_Fr64gCoyEemCfou_SGwekQ" name="FAILED"/>
@@ -98,6 +106,13 @@
                 <ownedEnd xmi:id="_lHtLECsQEemFupWFI64o_g" name="" type="_1bXrgCdaEemLvsCkKRozoQ" association="_lHskACsQEemFupWFI64o_g"/>
               </packagedElement>
               <packagedElement xmi:type="uml:Class" xmi:id="_4P8ckCyXEem7_r_-bjr0Lg" name="CoopTermRegistration">
+                <ownedComment xmi:id="_JkdmYC1eEemZZ94joFKfEg">
+                  <body>A CoopTermRegistration object is created when a Student register for a course.
+Each registration has a unique ID and therefore stores necessary information on the course
+and its term.
+@author ecse321-winter2019-group18
+@since 2019-02-10</body>
+                </ownedComment>
                 <ownedAttribute xmi:id="_6SKzACyXEem7_r_-bjr0Lg" name="registrationID" visibility="public">
                   <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
                 </ownedAttribute>
@@ -120,11 +135,18 @@
               </packagedElement>
               <packagedElement xmi:type="uml:Association" xmi:id="_2RtY0CyYEem7_r_-bjr0Lg" name="" memberEnd="_2Rum8CyYEem7_r_-bjr0Lg _2RvOACyYEem7_r_-bjr0Lg"/>
               <packagedElement xmi:type="uml:Class" xmi:id="_a_YaoCyZEem7_r_-bjr0Lg" name="Term">
+                <ownedComment xmi:id="_OpF94C1eEemZZ94joFKfEg">
+                  <body>Represents a Term (semester) in a school year.
+A deadline to submit evaluation forms is determined for each term.
+@see Form
+@author ecse321-winter2019-group18
+ *</body>
+                </ownedComment>
                 <ownedAttribute xmi:id="_dZPN8CyZEem7_r_-bjr0Lg" name="termID" visibility="public">
                   <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
                 </ownedAttribute>
-                <ownedAttribute xmi:id="_oVF3gCyZEem7_r_-bjr0Lg" name="studentEvalFormDeadline" visibility="public" type="_8iMVgCdgEemLvsCkKRozoQ"/>
-                <ownedAttribute xmi:id="_sxqJcCyZEem7_r_-bjr0Lg" name="coopEvalFormDeadline" visibility="public" type="_8iMVgCdgEemLvsCkKRozoQ"/>
+                <ownedAttribute xmi:id="_oVF3gCyZEem7_r_-bjr0Lg" name="studentEvalFormDeadline" visibility="public" type="_8iMVgCdgEemLvsCkKRozoQ" association="_OpGk8C1eEemZZ94joFKfEg"/>
+                <ownedAttribute xmi:id="_sxqJcCyZEem7_r_-bjr0Lg" name="coopEvalFormDeadline" visibility="public" type="_8iMVgCdgEemLvsCkKRozoQ" association="_OpHzEC1eEemZZ94joFKfEg"/>
                 <ownedAttribute xmi:id="_3hLAICyZEem7_r_-bjr0Lg" name="coopTermRegistration" type="_4P8ckCyXEem7_r_-bjr0Lg" association="_3hH80CyZEem7_r_-bjr0Lg">
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_3hLnMCyZEem7_r_-bjr0Lg"/>
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_3hLnMSyZEem7_r_-bjr0Lg" value="*"/>
@@ -225,6 +247,12 @@ Time constraint: endTime has to happen after startTime.
               <packagedElement xmi:type="uml:Association" xmi:id="_2I7ssC1bEem-ZdZYBcPN7Q" name="" memberEnd="_JWL2ECzrEem7_r_-bjr0Lg _2JDBcC1bEem-ZdZYBcPN7Q">
                 <ownedEnd xmi:id="_2JDBcC1bEem-ZdZYBcPN7Q" name="" type="_QP6KwCyaEem7_r_-bjr0Lg" association="_2I7ssC1bEem-ZdZYBcPN7Q"/>
               </packagedElement>
+              <packagedElement xmi:type="uml:Association" xmi:id="_OpGk8C1eEemZZ94joFKfEg" name="" memberEnd="_oVF3gCyZEem7_r_-bjr0Lg _OpHMAC1eEemZZ94joFKfEg">
+                <ownedEnd xmi:id="_OpHMAC1eEemZZ94joFKfEg" name="" type="_a_YaoCyZEem7_r_-bjr0Lg" association="_OpGk8C1eEemZZ94joFKfEg"/>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Association" xmi:id="_OpHzEC1eEemZZ94joFKfEg" name="" memberEnd="_sxqJcCyZEem7_r_-bjr0Lg _OpHzES1eEemZZ94joFKfEg">
+                <ownedEnd xmi:id="_OpHzES1eEemZZ94joFKfEg" name="" type="_a_YaoCyZEem7_r_-bjr0Lg" association="_OpHzEC1eEemZZ94joFKfEg"/>
+              </packagedElement>
             </packagedElement>
             <packagedElement xmi:type="uml:Class" xmi:id="_8bbn4CseEem5tvRJPUOIkA" name="Cooperator"/>
           </packagedElement>
@@ -291,7 +319,6 @@ Time constraint: endTime has to happen after startTime.
   <UMLLabProfile:Reference xmi:id="_V2pTcCseEem5tvRJPUOIkA" base_Element="_V2e7YCseEem5tvRJPUOIkA"/>
   <UMLLabProfile:Reference xmi:id="_8bsGkCseEem5tvRJPUOIkA" base_Element="_8bbn4CseEem5tvRJPUOIkA"/>
   <UMLLabProfile:Reference xmi:id="_xS5-0CsfEemqKpWaCqKr0g" base_Element="_xSlOsCsfEemqKpWaCqKr0g"/>
-  <UMLLabProfile:LegacyStyledElement xmi:id="_NYZ3oCslEemqKpWaCqKr0g" base_Element="_9-w_kCoxEemCfou_SGwekQ"/>
   <UMLLabProfile:Reference xmi:id="_XF5QoCslEemqKpWaCqKr0g" base_Element="_XFzxECslEemqKpWaCqKr0g"/>
   <UMLLabProfile:Reference xmi:id="_pnC3oCslEemqKpWaCqKr0g" base_Element="_pm8xACslEemqKpWaCqKr0g"/>
   <UMLLabProfile:Reference xmi:id="_rbuhUCslEemqKpWaCqKr0g" base_Element="_rbl-cCslEemqKpWaCqKr0g"/>
@@ -313,4 +340,8 @@ Time constraint: endTime has to happen after startTime.
   <UMLLabProfile:StyledElement xmi:id="_2GTPcC1bEem-ZdZYBcPN7Q" base_Element="_XIZFgCyaEem7_r_-bjr0Lg"/>
   <UMLLabProfile:StyledElement xmi:id="_2GVEoC1bEem-ZdZYBcPN7Q" base_Element="_JWL2ECzrEem7_r_-bjr0Lg"/>
   <UMLLabProfile:Reference xmi:id="_2HvZ4C1bEem-ZdZYBcPN7Q" base_Element="_2Gqb0C1bEem-ZdZYBcPN7Q"/>
+  <UMLLabProfile:StyledElement xmi:id="_JkVDgC1eEemZZ94joFKfEg" base_Element="_9-w_kCoxEemCfou_SGwekQ"/>
+  <UMLLabProfile:StyledElement xmi:id="_OpBFYC1eEemZZ94joFKfEg" base_Element="_oVF3gCyZEem7_r_-bjr0Lg"/>
+  <UMLLabProfile:StyledElement xmi:id="_OpBscC1eEemZZ94joFKfEg" base_Element="_sxqJcCyZEem7_r_-bjr0Lg"/>
+  <UMLLabProfile:StyledElement xmi:id="_OpCTgC1eEemZZ94joFKfEg" base_Element="_7jw9sC1bEem-ZdZYBcPN7Q"/>
 </xmi:XMI>
