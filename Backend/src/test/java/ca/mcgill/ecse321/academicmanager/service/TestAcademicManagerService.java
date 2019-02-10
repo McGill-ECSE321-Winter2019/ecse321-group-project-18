@@ -415,10 +415,11 @@ public class TestAcademicManagerService {
 	public void testCreateTerm() {
 		Set<CoopTermRegistration> ctrs = new HashSet<CoopTermRegistration>();
 		String termID = "696969";
+		String termName = "Winter 2019";
 		Date studentEvalFormDeadline = Date.valueOf("2015-06-01");
 		Date coopEvalFormDeadline = Date.valueOf("2015-06-01");
 		try {
-			Term term = service.createTerm(termID, studentEvalFormDeadline, coopEvalFormDeadline, ctrs);
+			Term term = service.createTerm(termID, termName, studentEvalFormDeadline, coopEvalFormDeadline, ctrs);
 			//assertEquals(term.getTermID(), termID);
 			//assertEquals(term.getStudentEvalFormDeadline(), studentEvalFormDeadline);
 			//assertEquals(term.getCoopEvalFormDeadline(), coopEvalFormDeadline);
@@ -434,7 +435,7 @@ public class TestAcademicManagerService {
 		
 		Set<CoopTermRegistration> ctrs = new HashSet<CoopTermRegistration>();
 		
-		String termID = "1";
+		String termID = "696969";
 		String termName = "Winter2019";
 		Date studentEvalFormDeadline = Date.valueOf("2015-06-01");
 		Date coopEvalFormDeadline = Date.valueOf("2015-06-01");

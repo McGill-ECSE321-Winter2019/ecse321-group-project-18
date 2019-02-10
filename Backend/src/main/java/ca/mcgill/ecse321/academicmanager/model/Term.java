@@ -24,6 +24,15 @@ public class Term
 	public String getTermID() {
 		return this.termID;
 	}
+	
+	private String termName;
+
+	public void setTermName(String value) {
+		this.termName = value;
+	}
+	public String getTermName() {
+		return this.termName;
+	}
 	private Date studentEvalFormDeadline;
 	
 	public void setStudentEvalFormDeadline(Date value) {
@@ -85,21 +94,5 @@ public class Term
 		} else if (!termID.equals(other.termID))
 			return false;
 		return true;
-	}
-	
-	
+	}	
 }
-
-public void setCoopTermRegistration(Set<CoopTermRegistration> coopTermRegistrations) {
-   this.coopTermRegistration = coopTermRegistrations;
-}
-
-private String termName;
-
-public void setTermName(String value) {
-this.termName = value;
-    }
-public String getTermName() {
-return this.termName;
-       }
-   }

@@ -415,7 +415,7 @@ public class AcademicManagerService {
 	
 	//---Term---
 	@Transactional
-	public Term createTerm(String termID, Date studentEvalFormDeadline, Date coopEvalFormDeadline, Set<CoopTermRegistration> CTRs) {
+	public Term createTerm(String termID, String termName, Date studentEvalFormDeadline, Date coopEvalFormDeadline, Set<CoopTermRegistration> CTRs) {
 		if(!checkArg(termID)) {
 			throw new NullArgumentException();
 		}
