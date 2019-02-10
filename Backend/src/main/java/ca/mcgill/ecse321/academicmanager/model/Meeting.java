@@ -5,6 +5,7 @@ import java.sql.Time;
 import javax.persistence.Id;
 import java.util.Set;
 import javax.persistence.ManyToMany;
+import java.sql.Date;
 
 @Entity
 public class Meeting
@@ -61,4 +62,12 @@ public class Meeting
 	   this.student = students;
 	}
 
-}
+private Date date;
+
+public void setDate(Date value) {
+this.date = value;
+    }
+public Date getDate() {
+return this.date;
+       }
+   }

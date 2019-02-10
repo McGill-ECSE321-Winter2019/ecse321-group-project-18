@@ -22,6 +22,7 @@ import ca.mcgill.ecse321.academicmanager.model.CoopTermRegistration;
 import ca.mcgill.ecse321.academicmanager.model.Course;
 import ca.mcgill.ecse321.academicmanager.model.Form;
 import ca.mcgill.ecse321.academicmanager.model.FormType;
+import ca.mcgill.ecse321.academicmanager.model.Grade;
 import ca.mcgill.ecse321.academicmanager.model.Meeting;
 import ca.mcgill.ecse321.academicmanager.model.Student;
 import ca.mcgill.ecse321.academicmanager.model.Term;
@@ -266,8 +267,8 @@ public class AcademicManagerService {
 	
 	//---Student---
 	@Transactional
-	public Student createStudent(String studentID, String firstname, String lastname, Cooperator c) {
-		if(!checkArg(studentID) || !checkArg(firstname) || !checkArg(lastname) || !checkArg(c)) {
+	public Student createStudent(String studentID, String firstname, String lastname, Grade grade, Cooperator c) {
+		if(!checkArg(studentID) || !checkArg(firstname) || !checkArg(lastname) || !checkArg(grade) || !checkArg(c)) {
 			throw new IllegalArgumentException("one or more argument(s) is/are null/empty");
 		}
 		
@@ -276,7 +277,7 @@ public class AcademicManagerService {
 		student.setStudentID(studentID);
 		student.setFirstName(firstname);
 		student.setLastName(lastname);
-		
+		student.setGrade(grade);
 		student.setCooperator(c);
 		
 		return studentRepository.save(student);
@@ -312,6 +313,14 @@ public class AcademicManagerService {
 	@Transactional
 	public Set<Student> getAllStudents() {
 		return toSet(studentRepository.findAll());
+	}
+	
+	@Transactional
+	public Grade getStudentGrade(String studentID) {
+		Grade grade;
+		Student student = getStudent(studentID);
+		grade = student.getGrade();
+		return grade;
 	}
 	//---Student---
 	
