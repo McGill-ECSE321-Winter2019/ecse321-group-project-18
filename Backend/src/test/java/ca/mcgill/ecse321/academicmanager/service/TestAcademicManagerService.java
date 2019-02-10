@@ -9,6 +9,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.Before;
 import org.junit.After;
@@ -30,11 +31,11 @@ import ca.mcgill.ecse321.academicmanager.model.Cooperator;
 import ca.mcgill.ecse321.academicmanager.model.CoopTermRegistration;
 import ca.mcgill.ecse321.academicmanager.model.Course;
 import ca.mcgill.ecse321.academicmanager.model.Form;
-//import ca.mcgill.ecse321.academicmanager.model.FormType;
+import ca.mcgill.ecse321.academicmanager.model.FormType;
 import ca.mcgill.ecse321.academicmanager.model.Meeting;
 import ca.mcgill.ecse321.academicmanager.model.Student;
 import ca.mcgill.ecse321.academicmanager.model.Term;
-//import ca.mcgill.ecse321.academicmanager.model.TermStatus;
+import ca.mcgill.ecse321.academicmanager.model.TermStatus;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -75,66 +76,68 @@ public class TestAcademicManagerService {
 	
 	@Test
 	public void testCreateCourse() {	
-		List<Cooperator> allCooperators = service.getAllCooperators();
+		Set<Cooperator> allCooperators = service.getAllCooperators();
 		assertEquals(1, allCooperators.size());
-		Cooperator cooperator = allCooperators.get(0);
+		Cooperator cooperator = allCooperators.iterator().next();
 		
 		assertEquals(0, service.getAllCourses().size());
 
 		String courseID = "ECSE321";
-		String courseName = "Introduction to Software Engineering";
 		String term = "Winter2019";
+		String courseName = "Introduction to Software Engineering";
+		Integer courseRank = null;
 
 		try {
-			service.createCourse(courseID, courseName, term, cooperator);
+			service.createCourse(courseID, term, courseName, courseRank, cooperator);
 		} catch (IllegalArgumentException e) {
 			// Check that no error occurred
 			fail();
 		}
 
-		List<Course> allCourses = service.getAllCourses();
+		Set<Course> allCourses = service.getAllCourses();
 
 		assertEquals(1, allCourses.size());
-		assertEquals(courseID, allCourses.get(0).getCourseID());
-		assertEquals(term, allCourses.get(0).getTerm());
+		Course tmp = allCourses.iterator().next();
+		assertEquals(courseID, tmp.getCourseID());
+		assertEquals(term, tmp.getTerm());
 	}
 	
 	@Test
 	public void testCreateStudent() {
-		List<Cooperator> allCooperators = service.getAllCooperators();
+		Set<Cooperator> allCooperators = service.getAllCooperators();
 		assertEquals(1, allCooperators.size());
-		Cooperator cooperator = allCooperators.get(0);
+		Cooperator cooperator = allCooperators.iterator().next();
 		
 		assertEquals(0, service.getAllStudents().size());
 
+		String studentID = "260632353";
 		String firstname = "Saleh";
 		String lastname = "Bakhit";
-		String studentID = "260632353";
 
 		try {
 			service.createStudent(studentID, firstname, lastname, cooperator);
 		} catch (IllegalArgumentException e) {
-			// Check that no error occurred
 			fail();
 		}
 
-		List<Student> allStudents = service.getAllStudents();
+		Set<Student> allStudents = service.getAllStudents();
 
 		assertEquals(1, allStudents.size());
-		assertEquals(studentID, allStudents.get(0).getStudentID());
+		Student tmp = allStudents.iterator().next();
+		assertEquals(studentID, tmp.getStudentID());
 	}
 	
 	@Test
 	public void testCreateStudentNull() {
-		List<Cooperator> allCooperators = service.getAllCooperators();
+		Set<Cooperator> allCooperators = service.getAllCooperators();
 		assertEquals(1, allCooperators.size());
-		Cooperator cooperator = allCooperators.get(0);
+		Cooperator cooperator = allCooperators.iterator().next();
 		
 		assertEquals(0, service.getAllStudents().size());
-
+		
+		String studentID = null;
 		String firstname = null;
 		String lasttname = null;
-		String studentID = null;
 		String error = null;
 
 		try {
