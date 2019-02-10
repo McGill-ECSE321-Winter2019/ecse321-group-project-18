@@ -6,6 +6,12 @@ import java.sql.Date;
 import java.util.Set;
 import javax.persistence.OneToMany;
 
+/**
+ * Represents a Term (semester) in a school year.
+ * A deadline to submit evaluation forms is determined for each term.
+ * @see Form
+ * @author ecse321-winter2019-group18
+ * */
 @Entity
 public class Term{
 private String termID;

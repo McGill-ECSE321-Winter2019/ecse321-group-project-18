@@ -7,9 +7,17 @@ import javax.persistence.OneToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+/**
+ * A CoopTermRegistration object is created when a Student register for a course.
+ * Each registration has a unique ID and therefore stores necessary information on the course
+ * and its term.
+ * @author ecse321-winter2019-group18
+ * @since 2019-02-10
+ */
 @Entity
-public class CoopTermRegistration{
-private String registrationID;
+public class CoopTermRegistration
+{
+	private String registrationID;
    
    public void setRegistrationID(String value) {
 this.registrationID = value;

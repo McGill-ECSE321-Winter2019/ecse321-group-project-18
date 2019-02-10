@@ -6,11 +6,15 @@ import static org.junit.Assert.fail;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.HashSet;
+import java.util.List;
+/*
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
+*/
 import java.util.Set;
 
 import org.junit.Before;
@@ -303,7 +307,7 @@ public class TestAcademicManagerService {
 	}
 	
 	/**
-	 * Test if the service can successfully create a Meeting object.
+	 * Test time constraint of the Meeting object.
 	 * @author Bach Tran
 	 * @since 2019-02-10
 	 */
