@@ -108,6 +108,22 @@ public class TestAcademicManagerService {
 	}
 	
 	@Test
+	public void testUpdateCourseRank() {
+		String courseID = "ECSE321";
+		String term = "Winter2019";
+		String courseName = "Introduction to Software Engineering";
+		Integer courseRank = 2;
+
+		Course course = service.createCourse(courseID, term, courseName, courseRank, cooperator);
+		assertEquals(course.getCourseRank(), courseRank);
+		
+		courseRank = 1;
+		course = service.updateCourseRank(course, courseRank);
+		
+		assertEquals(courseRank, course.getCourseRank());
+	}
+	
+	@Test
 	public void testCreateStudent() {	
 		assertEquals(0, service.getAllStudents().size());
 
@@ -186,6 +202,34 @@ public class TestAcademicManagerService {
 
 		// check no change in memory
 		assertEquals(0, service.getAllStudents().size());
+	}
+	
+	@Test
+	public void testCreateForm() {
+		String studentID = "142142";
+		String firstname = "1";
+		String lastname = "1";
+		Grade grade = Grade.A;
+		
+		Student tmpStudent = service.createStudent(studentID, firstname, lastname, grade, cooperator);
+		
+		String registrationID = "1214214";
+		String jobID = "1512521";
+		TermStatus status = TermStatus.FAILED;
+		
+		CoopTermRegistration tmpCTR = service.createCoopTermRegistration(registrationID, jobID, status, tmpStudent);
+		
+		/*String formID = "142142";
+		String pdfLink = "1";
+		String formName = "1";
+		FormType formType = FormType.STUDENTEVALUATION;
+		try{
+			Form form = service.createForm(formID, formName, pdfLink, formType, tmpCTR);
+		} catch (IllegalArgumentException e) {
+			fail();
+		}	
+		assertEquals(1, formRepository.count());
+		assertEquals("142142", form.getFormID());*/
 	}
 	
 	@Test
@@ -317,5 +361,90 @@ public class TestAcademicManagerService {
 		
 		// check no change in memory
 		assertEquals(0, service.getAllStudents().size());
+	}
+	
+	@Test
+	public void testCreateCoopTermRegistration() {
+
+		String studentID = "142142";
+		String firstname = "1";
+		String lastname = "1";
+		Grade grade = Grade.A;
+		
+		Student tmpStudent = service.createStudent(studentID, firstname, lastname, grade, cooperator);
+		
+		String registrationID = "1214214";
+		String jobID = "1512521";
+		TermStatus status = TermStatus.FAILED;
+		
+		try {
+			CoopTermRegistration tmpCTR = service.createCoopTermRegistration(registrationID, jobID, status, tmpStudent);
+			assertEquals(tmpCTR.getRegistrationID(), registrationID);
+			assertEquals(tmpCTR.getJobID(), jobID);
+			assertEquals(tmpCTR.getTermStatus(), status);
+		} catch (IllegalArgumentException e) {
+			fail();
+		}
+	}
+	
+	@Test
+	public void testUpdateCoopTermRegistrationsStatus() {
+
+		String studentID = "142142";
+		String firstname = "1";
+		String lastname = "1";
+		Grade grade = Grade.A;
+		
+		Student tmpStudent = service.createStudent(studentID, firstname, lastname, grade, cooperator);
+		
+		String registrationID = "1214214";
+		String jobID = "1512521";
+		TermStatus status = TermStatus.FAILED;
+		
+		CoopTermRegistration tmpCTR = service.createCoopTermRegistration(registrationID, jobID, status, tmpStudent);
+		
+		tmpCTR = service.updateCoopTermRegistration(tmpCTR, TermStatus.FINISHED, null, null, null);
+		
+		assertEquals(tmpCTR.getTermStatus(), TermStatus.FINISHED);
+	}
+	
+	@Test
+	public void testCreateTerm() {
+		Term term;
+		
+		Set<CoopTermRegistration> ctrs = new HashSet<CoopTermRegistration>();
+		
+		String termID = "1";
+		Date studentEvalFormDeadline = Date.valueOf("2015-06-01");
+		Date coopEvalFormDeadline = Date.valueOf("2015-06-01");
+		try {
+			term = service.createTerm(termID, studentEvalFormDeadline, coopEvalFormDeadline, ctrs);
+			assertEquals(term.getTermID(), termID);
+			assertEquals(term.getStudentEvalFormDeadline(), studentEvalFormDeadline);
+			assertEquals(term.getCoopEvalFormDeadline(), coopEvalFormDeadline);
+		} catch (IllegalArgumentException e) {
+			fail();
+		}
+	}
+	
+	@Test
+	public void testUpdateTermDeadlines() {
+		Term term;
+		
+		Set<CoopTermRegistration> ctrs = new HashSet<CoopTermRegistration>();
+		
+		String termID = "1";
+		Date studentEvalFormDeadline = Date.valueOf("2015-06-01");
+		Date coopEvalFormDeadline = Date.valueOf("2015-06-01");
+		
+		term = service.createTerm(termID, studentEvalFormDeadline, coopEvalFormDeadline, ctrs);
+		
+		studentEvalFormDeadline = Date.valueOf("2017-06-01");
+		coopEvalFormDeadline = Date.valueOf("2017-06-01");
+		
+		term = service.updateTerm(term, studentEvalFormDeadline, coopEvalFormDeadline, null);
+		
+		assertEquals(term.getCoopEvalFormDeadline(), coopEvalFormDeadline);
+		assertEquals(term.getStudentEvalFormDeadline(), studentEvalFormDeadline);
 	}
 }
