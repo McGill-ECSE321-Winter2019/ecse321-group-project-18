@@ -8,11 +8,12 @@ Here are available records to our [Meeting Minutes and Key Decisions](https://gi
 
 ## Deliverable 1
 
-|Team member's name      |Total hours|Responsibility                                                       |
-|------------------------|-----------|---------------------------------------------------------------------|
-|Moetassem Abdelazim     |   18 hours|CTO (a bit of all with more emphasis on Requirements & Domain Model) |
-|Saleh Bakhit            |   25 hours|Database Interfaces                                                  |
-|Yen-Vi Huynh            |   26 hours|CI and Heroku Setup                                                  |
-|Edward Huang            |   32 hours|Domain Model and Database Testing                                    |
-|Bach Tran               |   23 hours|Database Testing                                                     |
---
+|Team member's name      |Total hours |Responsibility                                                       |
+|------------------------|------------|---------------------------------------------------------------------|
+|Moetassem Abdelazim     |   18 hours*|CTO (a bit of all with more emphasis on Requirements & Domain Model) |
+|Saleh Bakhit            |   25 hours |Database Interfaces                                                  |
+|Yen-Vi Huynh            |   26 hours |CI and Heroku Setup                                                  |
+|Edward Huang            |   32 hours |Domain Model and Database Testing                                    |
+|Bach Tran               |   23 hours |Database Testing                                                     |
+
+\*The lower number of hours by Moetassem is because of personal problems that were communicated and understood by the team.
