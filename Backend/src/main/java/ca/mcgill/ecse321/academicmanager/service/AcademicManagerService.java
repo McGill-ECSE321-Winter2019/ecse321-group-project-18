@@ -206,7 +206,8 @@ public class AcademicManagerService {
 	
 	//---Meeting---
 	@Transactional
-	public Meeting createMeeting(String meetingID, String location, String details, Time startTime, Time endTime, Set<Student> students) {
+	public Meeting createMeeting(String meetingID, String location, String details, Time startTime, Time endTime, Set<Student> students) 
+	{
 		if(!checkArg(meetingID) || !checkArg(location) || !checkArg(startTime) || !checkArg(endTime)) {
 			throw new IllegalArgumentException("one or more argument(s) is/are null/empty");
 		}

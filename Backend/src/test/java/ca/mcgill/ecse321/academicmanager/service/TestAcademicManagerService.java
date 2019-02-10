@@ -152,5 +152,34 @@ public class TestAcademicManagerService {
 		// check no change in memory
 		assertEquals(0, service.getAllStudents().size());
 	}
+	/**
+	 * Test if the service can successfully create a Meeting object.
+	 * @author Bach Tran
+	 * @since 09 Feb 2019
+	 */
+	@Test
+	public void testCreateMeeting()
+	{
+		Set<Cooperator> allCooperators = service.getAllCooperators();
+		assertEquals(1, allCooperators.size());
+		Cooperator cooperator = allCooperators.iterator().next();
+		
+		assertEquals(0, service.getAllMeetings().size());
+		
+		// list of test instances
+		String meetingID = "123456";
+		String location = "sample location";
+		String details = "sample details";
+		@SuppressWarnings("deprecation")
+		Time startTime = new Time(3, 40, 0);
+		@SuppressWarnings("deprecation")
+		Time endTime = new Time(4, 40, 0);
+		Set<Student> students = service.getAllStudents();
+		try {
+			service.createMeeting(meetingID, location, details, startTime, endTime, students);
+		} catch (IllegalArgumentException e) {
+			fail();
+		}
+	}
 	
 }
