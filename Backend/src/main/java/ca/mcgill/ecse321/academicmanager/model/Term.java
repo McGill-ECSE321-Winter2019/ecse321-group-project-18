@@ -44,4 +44,12 @@ public void setCoopTermRegistration(Set<CoopTermRegistration> coopTermRegistrati
    this.coopTermRegistration = coopTermRegistrations;
 }
 
-}
+private String termName;
+
+public void setTermName(String value) {
+this.termName = value;
+    }
+public String getTermName() {
+return this.termName;
+       }
+   }

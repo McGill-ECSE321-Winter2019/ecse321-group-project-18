@@ -415,11 +415,13 @@ public class TestAcademicManagerService {
 		Set<CoopTermRegistration> ctrs = new HashSet<CoopTermRegistration>();
 		
 		String termID = "1";
+		String termName = "Fall2019";
 		Date studentEvalFormDeadline = Date.valueOf("2015-06-01");
 		Date coopEvalFormDeadline = Date.valueOf("2015-06-01");
 		try {
-			term = service.createTerm(termID, studentEvalFormDeadline, coopEvalFormDeadline, ctrs);
+			term = service.createTerm(termID, termName, studentEvalFormDeadline, coopEvalFormDeadline, ctrs);
 			assertEquals(term.getTermID(), termID);
+			assertEquals(term.getTermName(), termName);
 			assertEquals(term.getStudentEvalFormDeadline(), studentEvalFormDeadline);
 			assertEquals(term.getCoopEvalFormDeadline(), coopEvalFormDeadline);
 		} catch (IllegalArgumentException e) {
@@ -428,16 +430,17 @@ public class TestAcademicManagerService {
 	}
 	
 	@Test
-	public void testUpdateTermDeadlines() {
+	public void testUpdateTerm() {
 		Term term;
 		
 		Set<CoopTermRegistration> ctrs = new HashSet<CoopTermRegistration>();
 		
 		String termID = "1";
+		String termName = "Winter2019";
 		Date studentEvalFormDeadline = Date.valueOf("2015-06-01");
 		Date coopEvalFormDeadline = Date.valueOf("2015-06-01");
 		
-		term = service.createTerm(termID, studentEvalFormDeadline, coopEvalFormDeadline, ctrs);
+		term = service.createTerm(termID, termName, studentEvalFormDeadline, coopEvalFormDeadline, ctrs);
 		
 		studentEvalFormDeadline = Date.valueOf("2017-06-01");
 		coopEvalFormDeadline = Date.valueOf("2017-06-01");

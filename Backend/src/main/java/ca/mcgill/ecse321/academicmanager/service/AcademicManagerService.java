@@ -386,13 +386,14 @@ public class AcademicManagerService {
 	
 	//---Term---
 	@Transactional
-	public Term createTerm(String termID, Date studentEvalFormDeadline, Date coopEvalFormDeadline, Set<CoopTermRegistration> CTRs) {
-		if(!checkArg(termID)) {
+	public Term createTerm(String termID, String termName, Date studentEvalFormDeadline, Date coopEvalFormDeadline, Set<CoopTermRegistration> CTRs) {
+		if(!checkArg(termID) || !checkArg(termName)) {
 			throw new IllegalArgumentException("one or more argument(s) is/are null/empty");
 		}
 		
 		Term term = new Term();
 		term.setTermID(termID);
+		term.setTermName(termName);
 		term.setStudentEvalFormDeadline(studentEvalFormDeadline);
 		term.setCoopEvalFormDeadline(coopEvalFormDeadline);
 		
