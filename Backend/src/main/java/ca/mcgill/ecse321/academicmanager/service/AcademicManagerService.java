@@ -182,7 +182,7 @@ public class AcademicManagerService {
 	//---Form---
 	@Transactional
 	public Form createForm(String formID, String name, String pdflink, FormType formtype, CoopTermRegistration ctr) {
-		if(!checkArg(name) || !checkArg(pdflink) || !checkArg(formtype) || !checkArg(ctr)) {
+		if(!checkArg(name) || !checkArg(pdflink) || !checkArg(formtype) /*|| !checkArg(ctr)*/) {
 			throw new NullArgumentException();
 		}
 		

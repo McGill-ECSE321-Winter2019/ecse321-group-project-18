@@ -102,7 +102,7 @@ public class TestAcademicManagerService {
 
 		try {
 			service.createCourse(courseID, term, courseName, courseRank, cooperator);
-		} catch (IllegalArgumentException e) {
+		} catch (Exception e) {
 			// Check that no error occurred
 			fail();
 		}
@@ -113,6 +113,21 @@ public class TestAcademicManagerService {
 		Course tmp = allCourses.iterator().next();
 		assertEquals(courseID, tmp.getCourseID());
 		assertEquals(term, tmp.getTerm());
+	}
+	
+	@Test
+	public void testCreateCourseNull()
+	{
+		assertEquals(0, service.getAllCourses().size());
+		
+		try {
+			service.createCourse(null, null, "Nothing", null, cooperator);
+		} catch (NullArgumentException e) {
+			// assert no changes in memory
+			assertEquals(0, service.getAllCourses().size());
+		} catch (Exception e) {
+			fail();
+		}
 	}
 	
 	@Test
@@ -217,9 +232,22 @@ public class TestAcademicManagerService {
 			Form form = service.createForm(formID, formName, pdfLink, formType, null);
 			assertEquals(1, formRepository.count());
 			assertEquals("142142", form.getFormID());
-		} catch (IllegalArgumentException e) {
+		} catch (Exception e) {
 			fail();
 		}	
+	}
+	
+	@Test
+	public void testCreateFormNull()
+	{
+		try {
+			service.createForm(null, "nullForm", null, FormType.STUDENTEVALUATION, null);
+		} catch (NullArgumentException e) {
+			// check no changes in memory
+			assertEquals(0, formRepository.count());
+		} catch (Exception e) {
+			fail();
+		}
 	}
 	
 	@Test
@@ -344,7 +372,6 @@ public class TestAcademicManagerService {
 	@Test
 	public void testCreateMeeting()
 	{		
-		String error = null;
 		assertEquals(0, service.getAllMeetings().size());
 		// list of test instances
 		String meetingID = "123456";
@@ -356,14 +383,10 @@ public class TestAcademicManagerService {
 		Set<Student> students = service.getAllStudents();
 		try {
 			Meeting meeting = service.createMeeting(meetingID, location, details, date, startTime, endTime, students);
-			assertEquals(meeting.getMeetingID(), meetingID);
-			assertEquals(meeting.getLocation(), location);
-			assertEquals(meeting.getDetails(), details);
-			assertEquals(meeting.getDate(), date);
-			assertEquals(meeting.getStartTime(), startTime);
-			assertEquals(meeting.getEndTime(), endTime);
-		} catch (IllegalArgumentException e) {
-			error = e.getMessage();
+			assertEquals(1, meetingRepository.count());
+			assertEquals(meeting, meetingRepository.findByMeetingID(meetingID));
+		} catch (Exception e) {
+			fail();
 		}
 	}
 	
@@ -479,6 +502,20 @@ public class TestAcademicManagerService {
 			//assertEquals(term.getStudentEvalFormDeadline(), studentEvalFormDeadline);
 			//assertEquals(term.getCoopEvalFormDeadline(), coopEvalFormDeadline);
 			assertEquals(term, service.getTerm(termID));
+		} catch (Exception e) {
+			fail();
+		}
+	}
+	
+	@Test 
+	public void testCreateTermNull()
+	{
+		assertEquals(0, termRepository.count());
+		
+		try {
+			service.createTerm(null, null, null, null, null);
+		} catch (NullArgumentException e) {
+			assertEquals(0, termRepository.count());
 		} catch (Exception e) {
 			fail();
 		}
