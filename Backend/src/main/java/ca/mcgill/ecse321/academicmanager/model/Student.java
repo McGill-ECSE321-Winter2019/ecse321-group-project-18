@@ -75,4 +75,12 @@ public void setCooperator(Cooperator cooperator) {
    this.cooperator = cooperator;
 }
 
-}
+private Grade grade;
+
+public void setGrade(Grade value) {
+this.grade = value;
+    }
+public Grade getGrade() {
+return this.grade;
+       }
+   }

@@ -3,7 +3,7 @@
   <uml:Model xmi:id="_1Z3nkCcWEemj-ZTemeLm7A" name="ca_mcgill_ecse321_academicmanger_model">
     <eAnnotations xmi:id="_1j-l0CcWEemj-ZTemeLm7A" source="http://ns.yatta.de/umllab">
       <contents xmi:type="ecore:EAnnotation" xmi:id="_1j_M4CcWEemj-ZTemeLm7A" source="codegen">
-        <details xmi:id="_JUgMMCcmEemj-ZTemeLm7A" key="AssociatedSourceCode" value="/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/Course.java;2627089704/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/Cooperator.java;2928446457/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/Form.java;3434954116/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/Student.java;2510023471/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/TermStatus.java;1228062307/1;/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/FormType.java;120648881/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/CoopTermRegistration.java;2833941972/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/Term.java;3035127489/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/Meeting.java;2522579278/1;"/>
+        <details xmi:id="_JUgMMCcmEemj-ZTemeLm7A" key="AssociatedSourceCode" value="/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/Course.java;2627089704/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/Cooperator.java;2928446457/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/Form.java;3434954116/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/Student.java;219754695/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/TermStatus.java;1228062307/1;/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/FormType.java;120648881/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/CoopTermRegistration.java;2833941972/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/Term.java;3035127489/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/Grade.java;1171237329/1;"/>
         <details xmi:id="_5pMJECnGEemS0IHJqlSUCQ" key="codegenDirectory" value="/Backend/src/main/java"/>
       </contents>
       <contents xmi:type="ecore:EAnnotation" xmi:id="_jRw9ICsQEemFupWFI64o_g" source="preferences">
@@ -170,6 +170,7 @@
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_GhujUSycEem7_r_-bjr0Lg" value="1"/>
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_GhujUiycEem7_r_-bjr0Lg" value="1"/>
                 </ownedAttribute>
+                <ownedAttribute xmi:id="_ZWOSkCzoEem7_r_-bjr0Lg" name="grade" visibility="public" type="_aqyjsCzmEem7_r_-bjr0Lg"/>
               </packagedElement>
               <packagedElement xmi:type="uml:Association" xmi:id="_Ght8QCycEem7_r_-bjr0Lg" name="" memberEnd="_GhujUCycEem7_r_-bjr0Lg _GhvKYCycEem7_r_-bjr0Lg"/>
               <packagedElement xmi:type="uml:Class" xmi:id="_XpANUCycEem7_r_-bjr0Lg" name="Course">
@@ -191,6 +192,13 @@
                 </ownedAttribute>
               </packagedElement>
               <packagedElement xmi:type="uml:Association" xmi:id="_MPRfgCydEem7_r_-bjr0Lg" name="" memberEnd="_MPSGkCydEem7_r_-bjr0Lg _MPTUsCydEem7_r_-bjr0Lg"/>
+              <packagedElement xmi:type="uml:Enumeration" xmi:id="_aqyjsCzmEem7_r_-bjr0Lg" name="Grade">
+                <ownedLiteral xmi:id="_uxU0ICzmEem7_r_-bjr0Lg" name="A"/>
+                <ownedLiteral xmi:id="_uxVbMCzmEem7_r_-bjr0Lg" name="B"/>
+                <ownedLiteral xmi:id="_uxVbMSzmEem7_r_-bjr0Lg" name="C"/>
+                <ownedLiteral xmi:id="_uxVbMizmEem7_r_-bjr0Lg" name="D"/>
+                <ownedLiteral xmi:id="_uxWCQCzmEem7_r_-bjr0Lg" name="F"/>
+              </packagedElement>
             </packagedElement>
             <packagedElement xmi:type="uml:Class" xmi:id="_8bbn4CseEem5tvRJPUOIkA" name="Cooperator"/>
           </packagedElement>
@@ -269,4 +277,5 @@
   <Persistency:PrimaryKey xmi:id="_9Zo9cCybEem7_r_-bjr0Lg" base_Property="_3qBIMCybEem7_r_-bjr0Lg"/>
   <Persistency:PrimaryKey xmi:id="_O0IeYCycEem7_r_-bjr0Lg" base_Property="_dZPN8CyZEem7_r_-bjr0Lg"/>
   <Persistency:PrimaryKey xmi:id="_JGUKgCydEem7_r_-bjr0Lg" base_Property="_YiVpECycEem7_r_-bjr0Lg"/>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_uxUNECzmEem7_r_-bjr0Lg" base_Element="_aqyjsCzmEem7_r_-bjr0Lg"/>
 </xmi:XMI>

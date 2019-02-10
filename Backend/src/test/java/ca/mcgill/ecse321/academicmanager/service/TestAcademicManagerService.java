@@ -32,6 +32,7 @@ import ca.mcgill.ecse321.academicmanager.model.CoopTermRegistration;
 import ca.mcgill.ecse321.academicmanager.model.Course;
 import ca.mcgill.ecse321.academicmanager.model.Form;
 import ca.mcgill.ecse321.academicmanager.model.FormType;
+import ca.mcgill.ecse321.academicmanager.model.Grade;
 import ca.mcgill.ecse321.academicmanager.model.Meeting;
 import ca.mcgill.ecse321.academicmanager.model.Student;
 import ca.mcgill.ecse321.academicmanager.model.Term;
@@ -70,6 +71,7 @@ public class TestAcademicManagerService {
 		formRepository.deleteAll();
 		termRepository.deleteAll();
 		coopTermRegistrationRepository.deleteAll();
+		meetingRepository.deleteAll();
 		studentRepository.deleteAll();
 		cooperatorRepository.deleteAll();
 	}
@@ -113,9 +115,11 @@ public class TestAcademicManagerService {
 		String studentID = "260632353";
 		String firstname = "Saleh";
 		String lastname = "Bakhit";
+		
+		Grade grade = Grade.A;
 
 		try {
-			service.createStudent(studentID, firstname, lastname, cooperator);
+			service.createStudent(studentID, firstname, lastname, grade, cooperator);
 		} catch (IllegalArgumentException e) {
 			fail();
 		}
@@ -139,9 +143,11 @@ public class TestAcademicManagerService {
 		String firstname = null;
 		String lasttname = null;
 		String error = null;
+		
+		Grade grade = null;
 
 		try {
-			service.createStudent(studentID, firstname, lasttname, cooperator);
+			service.createStudent(studentID, firstname, lasttname, grade, cooperator);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
