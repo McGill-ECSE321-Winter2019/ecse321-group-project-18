@@ -1,6 +1,7 @@
 package ca.mcgill.ecse321.academicmanager.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.sql.Date;
@@ -9,6 +10,7 @@ import java.sql.Time;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
 */
 import java.util.Set;
@@ -62,9 +64,14 @@ public class TestAcademicManagerService {
 	@Autowired
 	private TermRepository termRepository;
 	
+	Cooperator cooperator;
+	
 	@Before
 	public void createCooperator() {
 		service.createCooperator(1);
+		Set<Cooperator> allCooperators = service.getAllCooperators();
+		assertEquals(1, allCooperators.size());
+		cooperator = allCooperators.iterator().next();
 	}
 	
 	@After
@@ -79,11 +86,7 @@ public class TestAcademicManagerService {
 	}
 	
 	@Test
-	public void testCreateCourse() {	
-		Set<Cooperator> allCooperators = service.getAllCooperators();
-		assertEquals(1, allCooperators.size());
-		Cooperator cooperator = allCooperators.iterator().next();
-		
+	public void testCreateCourse() {			
 		assertEquals(0, service.getAllCourses().size());
 
 		String courseID = "ECSE321";
@@ -107,11 +110,23 @@ public class TestAcademicManagerService {
 	}
 	
 	@Test
-	public void testCreateStudent() {
-		Set<Cooperator> allCooperators = service.getAllCooperators();
-		assertEquals(1, allCooperators.size());
-		Cooperator cooperator = allCooperators.iterator().next();
+	public void testUpdateCourseRank() {
+		String courseID = "ECSE321";
+		String term = "Winter2019";
+		String courseName = "Introduction to Software Engineering";
+		Integer courseRank = 2;
+
+		Course course = service.createCourse(courseID, term, courseName, courseRank, cooperator);
+		assertEquals(course.getCourseRank(), courseRank);
 		
+		courseRank = 1;
+		course = service.updateCourseRank(course, courseRank);
+		
+		assertEquals(courseRank, course.getCourseRank());
+	}
+	
+	@Test
+	public void testCreateStudent() {	
 		assertEquals(0, service.getAllStudents().size());
 
 		String studentID = "260632353";
@@ -134,11 +149,41 @@ public class TestAcademicManagerService {
 	}
 	
 	@Test
-	public void testCreateStudentNull() {
-		Set<Cooperator> allCooperators = service.getAllCooperators();
-		assertEquals(1, allCooperators.size());
-		Cooperator cooperator = allCooperators.iterator().next();
+	public void viewAllStudents() {
+		String studentID = "1";
+		String firstname = "1";
+		String lastname = "1";
+		Grade grade = Grade.A;
 		
+		service.createStudent(studentID, firstname, lastname, grade, cooperator);
+		
+		studentID = "2";
+		firstname = "2";
+		lastname = "2";
+		grade = Grade.A;
+		
+		service.createStudent(studentID, firstname, lastname, grade, cooperator);
+		
+		Set<Student> students = service.getAllStudents();
+		
+		assertTrue(students.size() == 2);
+	}
+	
+	@Test
+	public void testViewStudentGrade() {
+		String studentID = "1";
+		String firstname = "1";
+		String lastname = "1";
+		Grade grade = Grade.A;
+		
+		service.createStudent(studentID, firstname, lastname, grade, cooperator);
+		Grade returnedGrade = service.getStudentGrade("1");
+		
+		assertEquals(returnedGrade, Grade.A);
+	}
+	
+	@Test
+	public void testCreateStudentNull() {
 		assertEquals(0, service.getAllStudents().size());
 		
 		String studentID = null;
@@ -160,6 +205,105 @@ public class TestAcademicManagerService {
 		// check no change in memory
 		assertEquals(0, service.getAllStudents().size());
 	}
+	
+	@Test
+	public void testCreateForm() {
+		String studentID = "142142";
+		String firstname = "1";
+		String lastname = "1";
+		Grade grade = Grade.A;
+		
+		Student tmpStudent = service.createStudent(studentID, firstname, lastname, grade, cooperator);
+		
+		String registrationID = "1214214";
+		String jobID = "1512521";
+		TermStatus status = TermStatus.FAILED;
+		
+		CoopTermRegistration tmpCTR = service.createCoopTermRegistration(registrationID, jobID, status, tmpStudent);
+		
+		/*String formID = "142142";
+		String pdfLink = "1";
+		String formName = "1";
+		FormType formType = FormType.STUDENTEVALUATION;
+		try{
+			Form form = service.createForm(formID, formName, pdfLink, formType, tmpCTR);
+		} catch (IllegalArgumentException e) {
+			fail();
+		}	
+		assertEquals(1, formRepository.count());
+		assertEquals("142142", form.getFormID());*/
+	}
+	
+	@Test
+	public void testViewEmployerEvalForms() {
+		
+		String studentID = "142142";
+		String firstname = "1";
+		String lastname = "1";
+		Grade grade = Grade.A;
+		
+		Student tmpStudent = service.createStudent(studentID, firstname, lastname, grade, cooperator);
+		
+		String registrationID = "1214214";
+		String jobID = "1512521";
+		TermStatus status = TermStatus.FAILED;
+		
+		CoopTermRegistration tmpCTR = service.createCoopTermRegistration(registrationID, jobID, status, tmpStudent);
+		
+		/*String formID = "142142";
+		String pdfLink = "1";
+		String formName = "1";
+		FormType formType = FormType.STUDENTEVALUATION;
+
+		Form form = service.createForm(formID, formName, pdfLink, formType, tmpCTR);	
+		assertEquals(1, formRepository.count());
+		assertEquals("142142", form.getFormID());
+		
+		
+		Set<Form> forms = tmpCTR.getForm();
+		
+		for(Form f : forms) {
+			assertEquals(FormType.STUDENTEVALUATION, f.getFormType());
+		}*/
+	}
+	
+	@Test
+	public void testViewProblematicStudents() {
+		String studentID = "142142";
+		String firstname = "1";
+		String lastname = "1";
+		Grade grade = Grade.A;
+		
+		Student student = service.createStudent(studentID, firstname, lastname, grade, cooperator);
+		service.updateStudentProblematicStatus(student, true);
+		
+		List<Student> students = service.getAllProblematicStudents();
+		
+		for(Student s : students) {
+			assertEquals(true, s.isIsProblematic());
+		}
+	}
+	
+	@Test
+	public void testAdjudicateTermStatus() {
+		
+		String studentID = "142142";
+		String firstname = "1";
+		String lastname = "1";
+		Grade grade = Grade.A;
+		
+		Student tmpStudent = service.createStudent(studentID, firstname, lastname, grade, cooperator);
+		
+		String registrationID = "1214214";
+		String jobID = "1512521";
+		TermStatus status = TermStatus.FAILED;
+		
+		CoopTermRegistration tmpCTR = service.createCoopTermRegistration(registrationID, jobID, status, tmpStudent);
+		assertEquals(TermStatus.FAILED, tmpCTR.getTermStatus());
+		service.updateCoopTermRegistration(tmpCTR, TermStatus.FINISHED, null, tmpStudent, null);
+		assertEquals(TermStatus.FINISHED, tmpCTR.getTermStatus());
+	}
+	
 	/**
 	 * Test time constraint of the Meeting object.
 	 * @author Bach Tran
@@ -219,5 +363,90 @@ public class TestAcademicManagerService {
 		
 		// check no change in memory
 		assertEquals(0, service.getAllStudents().size());
+	}
+	
+	@Test
+	public void testCreateCoopTermRegistration() {
+
+		String studentID = "142142";
+		String firstname = "1";
+		String lastname = "1";
+		Grade grade = Grade.A;
+		
+		Student tmpStudent = service.createStudent(studentID, firstname, lastname, grade, cooperator);
+		
+		String registrationID = "1214214";
+		String jobID = "1512521";
+		TermStatus status = TermStatus.FAILED;
+		
+		try {
+			CoopTermRegistration tmpCTR = service.createCoopTermRegistration(registrationID, jobID, status, tmpStudent);
+			assertEquals(tmpCTR.getRegistrationID(), registrationID);
+			assertEquals(tmpCTR.getJobID(), jobID);
+			assertEquals(tmpCTR.getTermStatus(), status);
+		} catch (IllegalArgumentException e) {
+			fail();
+		}
+	}
+	
+	@Test
+	public void testUpdateCoopTermRegistrationsStatus() {
+
+		String studentID = "142142";
+		String firstname = "1";
+		String lastname = "1";
+		Grade grade = Grade.A;
+		
+		Student tmpStudent = service.createStudent(studentID, firstname, lastname, grade, cooperator);
+		
+		String registrationID = "1214214";
+		String jobID = "1512521";
+		TermStatus status = TermStatus.FAILED;
+		
+		CoopTermRegistration tmpCTR = service.createCoopTermRegistration(registrationID, jobID, status, tmpStudent);
+		
+		tmpCTR = service.updateCoopTermRegistration(tmpCTR, TermStatus.FINISHED, null, null, null);
+		
+		assertEquals(tmpCTR.getTermStatus(), TermStatus.FINISHED);
+	}
+	
+	@Test
+	public void testCreateTerm() {
+		Term term;
+		
+		Set<CoopTermRegistration> ctrs = new HashSet<CoopTermRegistration>();
+		
+		String termID = "1";
+		Date studentEvalFormDeadline = Date.valueOf("2015-06-01");
+		Date coopEvalFormDeadline = Date.valueOf("2015-06-01");
+		try {
+			term = service.createTerm(termID, studentEvalFormDeadline, coopEvalFormDeadline, ctrs);
+			assertEquals(term.getTermID(), termID);
+			assertEquals(term.getStudentEvalFormDeadline(), studentEvalFormDeadline);
+			assertEquals(term.getCoopEvalFormDeadline(), coopEvalFormDeadline);
+		} catch (IllegalArgumentException e) {
+			fail();
+		}
+	}
+	
+	@Test
+	public void testUpdateTermDeadlines() {
+		Term term;
+		
+		Set<CoopTermRegistration> ctrs = new HashSet<CoopTermRegistration>();
+		
+		String termID = "1";
+		Date studentEvalFormDeadline = Date.valueOf("2015-06-01");
+		Date coopEvalFormDeadline = Date.valueOf("2015-06-01");
+		
+		term = service.createTerm(termID, studentEvalFormDeadline, coopEvalFormDeadline, ctrs);
+		
+		studentEvalFormDeadline = Date.valueOf("2017-06-01");
+		coopEvalFormDeadline = Date.valueOf("2017-06-01");
+		
+		term = service.updateTerm(term, studentEvalFormDeadline, coopEvalFormDeadline, null);
+		
+		assertEquals(term.getCoopEvalFormDeadline(), coopEvalFormDeadline);
+		assertEquals(term.getStudentEvalFormDeadline(), studentEvalFormDeadline);
 	}
 }

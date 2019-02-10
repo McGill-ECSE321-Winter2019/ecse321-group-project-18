@@ -3,6 +3,8 @@ package ca.mcgill.ecse321.academicmanager.service;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,8 +94,8 @@ public class AcademicManagerService {
 	
 	//---CoopTermRegistration---
 	@Transactional
-	public CoopTermRegistration createCoopTermRegistration(String registrationID, String jobID, TermStatus status) {
-		if(!checkArg(registrationID) || !checkArg(jobID)) {
+	public CoopTermRegistration createCoopTermRegistration(String registrationID, String jobID, TermStatus status, Student student) {
+		if(!checkArg(registrationID) || !checkArg(jobID) || !checkArg(student) || !checkArg(status)) {
 			throw new IllegalArgumentException("one or more argument(s) is/are null/empty");
 		}
 		
@@ -101,7 +103,9 @@ public class AcademicManagerService {
 		CTR.setRegistrationID(registrationID);
 		CTR.setTermStatus(status);
 		CTR.setJobID(jobID);
-		
+		CTR.setStudent(student);
+		student.setCoopTermRegistration(CTR);
+
 		return coopTermRegistrationRepository.save(CTR);
 	}
 	
@@ -175,33 +179,74 @@ public class AcademicManagerService {
 	
 	//---Form---
 	@Transactional
-	public Form createForm(String name, String pdflink, FormType formtype, CoopTermRegistration CTR) {
-		if(!checkArg(name) || !checkArg(pdflink) || !checkArg(formtype) || !checkArg(CTR)) {
+	public Form createForm(String formID, String name, String pdflink, FormType formtype, CoopTermRegistration ctr) {
+		if(!checkArg(name) || !checkArg(pdflink) || !checkArg(formtype) || !checkArg(ctr)) {
 			throw new IllegalArgumentException("one or more argument(s) is/are null/empty");
 		}
 		
 		Form form = new Form();
+		form.setFormID(formID);
 		form.setName(name);
 		form.setPdfLink(pdflink);
 		form.setFormType(formtype);
-		form.setCoopTermRegistration(CTR);
+		form.setCoopTermRegistration(ctr);
+		
+		Set<Form> forms = ctr.getForm();
+		
+		if(!checkArg(forms)) {
+			forms = new HashSet<Form>();
+		}
+		
+		forms.add(form);
+		ctr.setForm(forms);
 		
 		return formRepository.save(form);
 	}
 	
 	@Transactional
-	public Form getFormByLink(String pdfLink) {
-		return formRepository.findFormByPdfLink(pdfLink);
+	public Set<Form> getAllStudentEvalFormsOfStudent(Student student) {
+		if(!checkArg(student)) {
+			throw new IllegalArgumentException("one or more argument(s) is/are null/empty");
+		}
+		
+		CoopTermRegistration ctr = student.getCoopTermRegistration();
+		
+		if(!checkArg(ctr) ) {
+			throw new IllegalArgumentException("student is not registered for a term");
+		}
+		
+		Set<Form> forms = ctr.getForm();
+		
+		for(Form form : forms) {
+			if(form.getFormType() != FormType.STUDENTEVALUATION) {
+				forms.remove(form);
+			}
+		}
+		
+		return forms;
 	}
 	
 	@Transactional
-	public Form getForm(String name) {
-		return formRepository.findFormByName(name);
-	}
-	
-	@Transactional
-	public Set<Form> getAllForms() {
-		return toSet(formRepository.findAll());
+	public Set<Form> getAllEmployerEvalFormsOfStudent(Student student) {
+		if(!checkArg(student)) {
+			throw new IllegalArgumentException("one or more argument(s) is/are null/empty");
+		}
+		
+		CoopTermRegistration ctr = student.getCoopTermRegistration();
+		
+		if(!checkArg(ctr) ) {
+			throw new IllegalArgumentException("student is not registered for a term");
+		}
+		
+		Set<Form> forms = ctr.getForm();
+		
+		for(Form form : forms) {
+			if(form.getFormType() != FormType.COOPEVALUATION) {
+				forms.remove(form);
+			}
+		}
+		
+		return forms;
 	}
 	//---Form---
 	
@@ -287,8 +332,15 @@ public class AcademicManagerService {
 		student.setLastName(lastname);
 		student.setGrade(grade);
 		student.setCooperator(c);
+		student.setIsProblematic(false);
 		
 		return studentRepository.save(student);
+	}
+	
+	@Transactional
+	public List<Student> getAllProblematicStudents(){
+		List<Student> students = studentRepository.findByIsProblematic(true);
+		return students;
 	}
 	
 	@Transactional
