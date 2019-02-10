@@ -50,4 +50,42 @@ public class Term
 	public void setCoopTermRegistration(Set<CoopTermRegistration> coopTermRegistrations) {
 	   this.coopTermRegistration = coopTermRegistrations;
 	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((coopEvalFormDeadline == null) ? 0 : coopEvalFormDeadline.hashCode());
+		result = prime * result + ((coopTermRegistration == null) ? 0 : coopTermRegistration.hashCode());
+		result = prime * result + ((studentEvalFormDeadline == null) ? 0 : studentEvalFormDeadline.hashCode());
+		result = prime * result + ((termID == null) ? 0 : termID.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Term other = (Term) obj;
+		if (coopEvalFormDeadline == null) {
+			if (other.coopEvalFormDeadline != null)
+				return false;
+		} else if (!coopEvalFormDeadline.equals(other.coopEvalFormDeadline))
+			return false;
+		if (studentEvalFormDeadline == null) {
+			if (other.studentEvalFormDeadline != null)
+				return false;
+		} else if (!studentEvalFormDeadline.equals(other.studentEvalFormDeadline))
+			return false;
+		if (termID == null) {
+			if (other.termID != null)
+				return false;
+		} else if (!termID.equals(other.termID))
+			return false;
+		return true;
+	}
+	
+	
 }

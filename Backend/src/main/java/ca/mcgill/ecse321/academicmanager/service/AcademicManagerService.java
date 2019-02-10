@@ -19,6 +19,8 @@ import ca.mcgill.ecse321.academicmanager.dao.MeetingRepository;
 import ca.mcgill.ecse321.academicmanager.dao.StudentRepository;
 import ca.mcgill.ecse321.academicmanager.dao.TermRepository;
 
+import ca.mcgill.ecse321.academicmanager.exceptions.*;
+
 import ca.mcgill.ecse321.academicmanager.model.Cooperator;
 import ca.mcgill.ecse321.academicmanager.model.CoopTermRegistration;
 import ca.mcgill.ecse321.academicmanager.model.Course;
@@ -52,7 +54,7 @@ public class AcademicManagerService {
 	@Transactional
 	public Cooperator createCooperator(Integer id) {
 		if(!checkArg(id)) {
-			throw new IllegalArgumentException("one or more argument(s) is/are null/empty");
+			throw new NullArgumentException();
 		}
 		
 		Cooperator c = new Cooperator();
@@ -96,7 +98,7 @@ public class AcademicManagerService {
 	@Transactional
 	public CoopTermRegistration createCoopTermRegistration(String registrationID, String jobID, TermStatus status, Student student) {
 		if(!checkArg(registrationID) || !checkArg(jobID) || !checkArg(student) || !checkArg(status)) {
-			throw new IllegalArgumentException("one or more argument(s) is/are null/empty");
+			throw new NullArgumentException();
 		}
 		
 		CoopTermRegistration CTR = new CoopTermRegistration();
@@ -146,7 +148,7 @@ public class AcademicManagerService {
 	@Transactional
 	public Course createCourse(String courseID, String term, String courseName, Integer rank, Cooperator c) {
 		if(!checkArg(courseID) || !checkArg(term) || !checkArg(courseName) || !checkArg(c)) {
-			throw new IllegalArgumentException("one or more argument(s) is/are null/empty");
+			throw new NullArgumentException();
 		}
 		
 		Course course = new Course();
@@ -181,7 +183,7 @@ public class AcademicManagerService {
 	@Transactional
 	public Form createForm(String formID, String name, String pdflink, FormType formtype, CoopTermRegistration ctr) {
 		if(!checkArg(name) || !checkArg(pdflink) || !checkArg(formtype) || !checkArg(ctr)) {
-			throw new IllegalArgumentException("one or more argument(s) is/are null/empty");
+			throw new NullArgumentException();
 		}
 		
 		Form form = new Form();
@@ -206,7 +208,7 @@ public class AcademicManagerService {
 	@Transactional
 	public Set<Form> getAllStudentEvalFormsOfStudent(Student student) {
 		if(!checkArg(student)) {
-			throw new IllegalArgumentException("one or more argument(s) is/are null/empty");
+			throw new NullArgumentException();
 		}
 		
 		CoopTermRegistration ctr = student.getCoopTermRegistration();
@@ -229,7 +231,7 @@ public class AcademicManagerService {
 	@Transactional
 	public Set<Form> getAllEmployerEvalFormsOfStudent(Student student) {
 		if(!checkArg(student)) {
-			throw new IllegalArgumentException("one or more argument(s) is/are null/empty");
+			throw new NullArgumentException();
 		}
 		
 		CoopTermRegistration ctr = student.getCoopTermRegistration();
@@ -256,12 +258,12 @@ public class AcademicManagerService {
 	{
 		// check for nulls
 		if(!checkArg(meetingID) || !checkArg(location) || !checkArg(startTime) || !checkArg(endTime)) {
-			throw new IllegalArgumentException("one or more argument(s) is/are null/empty");
+			throw new NullArgumentException();
 		}
 		
 		// check for invalid time constraints
 		if (endTime.compareTo(startTime) < 0) {
-			throw new IllegalArgumentException("endTime need to happen after startTime.");
+			throw new InvalidEndTimeException();
 		}
 		
 		Meeting meeting = new Meeting();
@@ -321,7 +323,7 @@ public class AcademicManagerService {
 	@Transactional
 	public Student createStudent(String studentID, String firstname, String lastname, Grade grade, Cooperator c) {
 		if(!checkArg(studentID) || !checkArg(firstname) || !checkArg(lastname) || !checkArg(grade) || !checkArg(c)) {
-			throw new IllegalArgumentException("one or more argument(s) is/are null/empty");
+			throw new NullArgumentException();
 		}
 		
 		
@@ -388,7 +390,7 @@ public class AcademicManagerService {
 	@Transactional
 	public Term createTerm(String termID, Date studentEvalFormDeadline, Date coopEvalFormDeadline, Set<CoopTermRegistration> CTRs) {
 		if(!checkArg(termID)) {
-			throw new IllegalArgumentException("one or more argument(s) is/are null/empty");
+			throw new NullArgumentException();
 		}
 		
 		Term term = new Term();

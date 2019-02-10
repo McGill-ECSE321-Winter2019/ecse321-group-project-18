@@ -14,6 +14,8 @@ import java.util.HashSet;
 import java.util.List;
 */
 import java.util.Set;
+import java.util.HashSet;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.After;
@@ -30,6 +32,8 @@ import ca.mcgill.ecse321.academicmanager.dao.FormRepository;
 import ca.mcgill.ecse321.academicmanager.dao.MeetingRepository;
 import ca.mcgill.ecse321.academicmanager.dao.StudentRepository;
 import ca.mcgill.ecse321.academicmanager.dao.TermRepository;
+
+import ca.mcgill.ecse321.academicmanager.exceptions.*;
 
 import ca.mcgill.ecse321.academicmanager.model.Cooperator;
 import ca.mcgill.ecse321.academicmanager.model.CoopTermRegistration;
@@ -189,21 +193,15 @@ public class TestAcademicManagerService {
 		String studentID = null;
 		String firstname = null;
 		String lasttname = null;
-		String error = null;
-		
 		Grade grade = null;
 
 		try {
 			service.createStudent(studentID, firstname, lasttname, grade, cooperator);
-		} catch (IllegalArgumentException e) {
-			error = e.getMessage();
+		} catch (NullArgumentException e) {
+			assertEquals(0, service.getAllStudents().size());
+		} catch (Exception e) {
+			fail();
 		}
-
-		// check error
-		assertEquals("one or more argument(s) is/are null/empty", error);
-
-		// check no change in memory
-		assertEquals(0, service.getAllStudents().size());
 	}
 	
 	@Test
@@ -306,13 +304,12 @@ public class TestAcademicManagerService {
 	
 	/**
 	 * Test time constraint of the Meeting object.
-	 * @author Bach Tran
+	 * @author ecse321-winter2019-group18
 	 * @since 2019-02-10
 	 */
 	@Test
 	public void testCreateMeeting()
 	{		
-		String error = null;
 		assertEquals(0, service.getAllMeetings().size());
 		// list of test instances
 		String meetingID = "123456";
@@ -324,25 +321,20 @@ public class TestAcademicManagerService {
 		Set<Student> students = service.getAllStudents();
 		try {
 			service.createMeeting(meetingID, location, details, date, startTime, endTime, students);
-		} catch (IllegalArgumentException e) {
-			error = e.getMessage();
+		} catch (InvalidEndTimeException e) {
+			assertEquals(0, service.getAllMeetings().size());
+		} catch (Exception e) {
+			fail();
 		}
-		
-		// check error
-		assertEquals("endTime need to happen after startTime.", error);
-		
-		// check no change in memory
-		assertEquals(0, service.getAllStudents().size());
 	}
 	/**
 	 * Test case: a null Meeting object
-	 * @author Bach Tran
+	 * @author ecse321-winter2019-group18
 	 * @since 2019-02-10
 	 */
 	@Test
 	public void testCreateMeetingNull()
 	{
-		String error = null;
 		assertEquals(0, service.getAllMeetings().size());
 		// list of test instances
 		String meetingID = null;
@@ -354,15 +346,11 @@ public class TestAcademicManagerService {
 		Set<Student> students = service.getAllStudents();
 		try {
 			service.createMeeting(meetingID, location, details, date, startTime, endTime, students);
-		} catch (IllegalArgumentException e) {
-			error = e.getMessage();
+		} catch (NullArgumentException e) {
+			assertEquals(0, service.getAllMeetings().size());
+		} catch (Exception e) {
+			fail();
 		}
-		
-		// check error
-		assertEquals("one or more argument(s) is/are null/empty", error);
-		
-		// check no change in memory
-		assertEquals(0, service.getAllStudents().size());
 	}
 	
 	@Test
@@ -412,19 +400,17 @@ public class TestAcademicManagerService {
 	
 	@Test
 	public void testCreateTerm() {
-		Term term;
-		
 		Set<CoopTermRegistration> ctrs = new HashSet<CoopTermRegistration>();
-		
-		String termID = "1";
+		String termID = "696969";
 		Date studentEvalFormDeadline = Date.valueOf("2015-06-01");
 		Date coopEvalFormDeadline = Date.valueOf("2015-06-01");
 		try {
-			term = service.createTerm(termID, studentEvalFormDeadline, coopEvalFormDeadline, ctrs);
-			assertEquals(term.getTermID(), termID);
-			assertEquals(term.getStudentEvalFormDeadline(), studentEvalFormDeadline);
-			assertEquals(term.getCoopEvalFormDeadline(), coopEvalFormDeadline);
-		} catch (IllegalArgumentException e) {
+			Term term = service.createTerm(termID, studentEvalFormDeadline, coopEvalFormDeadline, ctrs);
+			//assertEquals(term.getTermID(), termID);
+			//assertEquals(term.getStudentEvalFormDeadline(), studentEvalFormDeadline);
+			//assertEquals(term.getCoopEvalFormDeadline(), coopEvalFormDeadline);
+			assertEquals(term, service.getTerm(termID));
+		} catch (Exception e) {
 			fail();
 		}
 	}
