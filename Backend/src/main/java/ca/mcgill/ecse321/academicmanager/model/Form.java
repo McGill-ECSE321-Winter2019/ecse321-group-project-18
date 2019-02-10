@@ -17,6 +17,15 @@ public void setCoopTermRegistration(CoopTermRegistration coopTermRegistration) {
    this.coopTermRegistration = coopTermRegistration;
 }
 
+private String formID;
+
+public void setFormID(String value) {
+this.formID = value;
+    }
+@Id
+public String getFormID() {
+return this.formID;
+    }
 private String name;
 
 public void setName(String value) {
@@ -49,7 +58,6 @@ private String pdfLink;
 public void setPdfLink(String value) {
 this.pdfLink = value;
     }
-@Id
 public String getPdfLink() {
 return this.pdfLink;
     }

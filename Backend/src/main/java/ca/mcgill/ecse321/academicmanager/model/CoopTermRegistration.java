@@ -58,7 +58,7 @@ return this.jobID;
     }
 private Student student;
 
-@OneToOne(mappedBy="coopTermRegistration")
+@OneToOne(mappedBy="coopTermRegistration", optional=false)
 public Student getStudent() {
    return this.student;
 }

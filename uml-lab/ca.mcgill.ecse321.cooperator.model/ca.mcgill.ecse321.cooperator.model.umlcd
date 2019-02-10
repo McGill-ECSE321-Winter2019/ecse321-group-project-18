@@ -137,7 +137,7 @@
       <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#__iYLkCybEem7_r_-bjr0Lg"/>
       <visualProperties xmi:id="__koOUCybEem7_r_-bjr0Lg" position="-58.0,25.0"/>
       <visibility xmi:id="__icdByybEem7_r_-bjr0Lg" label="+"/>
-      <cardinality xmi:id="__icdCCybEem7_r_-bjr0Lg" label="0..1" max="1"/>
+      <cardinality xmi:id="__icdCCybEem7_r_-bjr0Lg" label="1" max="1" min="1"/>
     </targetRole>
   </edges>
   <edges xsi:type="com.yattasolutions.diagrams:ContainmentVisual" xmi:id="_EkdlYCycEem7_r_-bjr0Lg" sourceAnchor="92.0,0.0" targetAnchor="47.0,60.0" enclosingItem="_Lfql8CnIEemS0IHJqlSUCQ" containedItem="_2yEzkCybEem7_r_-bjr0Lg">
@@ -288,6 +288,18 @@
       <stereotypes xmi:id="_VEUDYCzmEem7_r_-bjr0Lg" name="EnumerationStyleMapping"/>
       <stereotypes xmi:id="_VEdNUCzmEem7_r_-bjr0Lg" name="StyledElement"/>
       <stereotypes xmi:id="_VEebcCzmEem7_r_-bjr0Lg" name="EnumerationStyleMapping"/>
+      <stereotypes xmi:id="_TcrdkCzuEem7_r_-bjr0Lg" name="StyledElement"/>
+      <stereotypes xmi:id="_TcrdkSzuEem7_r_-bjr0Lg" name="EnumerationStyleMapping"/>
+      <stereotypes xmi:id="_TcsEoCzuEem7_r_-bjr0Lg" name="StyledElement"/>
+      <stereotypes xmi:id="_TcsEoSzuEem7_r_-bjr0Lg" name="EnumerationStyleMapping"/>
+      <stereotypes xmi:id="_Tct50CzuEem7_r_-bjr0Lg" name="StyledElement"/>
+      <stereotypes xmi:id="_Tcug4CzuEem7_r_-bjr0Lg" name="EnumerationStyleMapping"/>
+      <stereotypes xmi:id="_2uwiwCz8Eem-gZh5x8j3ZA" name="StyledElement"/>
+      <stereotypes xmi:id="_2u0NICz8Eem-gZh5x8j3ZA" name="EnumerationStyleMapping"/>
+      <stereotypes xmi:id="_2vDdsCz8Eem-gZh5x8j3ZA" name="StyledElement"/>
+      <stereotypes xmi:id="_2vF58Cz8Eem-gZh5x8j3ZA" name="EnumerationStyleMapping"/>
+      <stereotypes xmi:id="_2vzroCz8Eem-gZh5x8j3ZA" name="StyledElement"/>
+      <stereotypes xmi:id="_2v2H4Cz8Eem-gZh5x8j3ZA" name="EnumerationStyleMapping"/>
       <visibility xmi:id="_il4i4ioxEemCfou_SGwekQ" label="+"/>
       <cardinality xmi:id="_il4i4yoxEemCfou_SGwekQ" label="1" max="1" min="1"/>
       <type xmi:id="_lP6r4CsQEemFupWFI64o_g" name="FormType">
@@ -296,9 +308,6 @@
     </attributes>
     <attributes xmi:id="_uWhl4CsiEemqKpWaCqKr0g" name="pdfLink">
       <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_uWgXwCsiEemqKpWaCqKr0g"/>
-      <stereotypes xmi:id="_wjXQ4CsiEemqKpWaCqKr0g" name="PrimaryKey">
-        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_wjVbsCsiEemqKpWaCqKr0g"/>
-      </stereotypes>
       <visibility xmi:id="_uWhl4SsiEemqKpWaCqKr0g" label="+"/>
       <cardinality xmi:id="_uWhl4isiEemqKpWaCqKr0g" label="1" max="1" min="1"/>
       <type xmi:id="_wIvKYCsiEemqKpWaCqKr0g" name="String">
@@ -311,6 +320,17 @@
       <cardinality xmi:id="_2R0tkiyYEem7_r_-bjr0Lg" label="0..1" max="1"/>
       <type xmi:id="_2R0tkyyYEem7_r_-bjr0Lg" name="CoopTermRegistration">
         <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_4P8ckCyXEem7_r_-bjr0Lg"/>
+      </type>
+    </attributes>
+    <attributes xmi:id="_UdidoCzuEem7_r_-bjr0Lg" name="formID">
+      <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_UdhPgCzuEem7_r_-bjr0Lg"/>
+      <stereotypes xmi:id="_V_uCECzuEem7_r_-bjr0Lg" name="PrimaryKey">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_V_sz8CzuEem7_r_-bjr0Lg"/>
+      </stereotypes>
+      <visibility xmi:id="_UdidoSzuEem7_r_-bjr0Lg" label="+"/>
+      <cardinality xmi:id="_UdidoizuEem7_r_-bjr0Lg" label="1" max="1" min="1"/>
+      <type xmi:id="_VIL9ICzuEem7_r_-bjr0Lg" name="String">
+        <modelElement href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
       </type>
     </attributes>
   </nodes>
@@ -408,7 +428,7 @@
     <attributes xmi:id="__ie5QCybEem7_r_-bjr0Lg" name="student">
       <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#__iYLkCybEem7_r_-bjr0Lg"/>
       <visibility xmi:id="__ie5QSybEem7_r_-bjr0Lg" label="+"/>
-      <cardinality xmi:id="__ie5QiybEem7_r_-bjr0Lg" label="0..1" max="1"/>
+      <cardinality xmi:id="__ie5QiybEem7_r_-bjr0Lg" label="1" max="1" min="1"/>
       <type xmi:id="__ie5QyybEem7_r_-bjr0Lg" name="Student">
         <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_2yC-YCybEem7_r_-bjr0Lg"/>
       </type>
