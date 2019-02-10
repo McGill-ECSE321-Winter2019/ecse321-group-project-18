@@ -321,7 +321,7 @@ public class TestAcademicManagerService {
 	 * @since 2019-02-10
 	 */
 	@Test
-	public void testCreateMeeting()
+	public void testCreateMeetingStartTimeAfterEndTime()
 	{		
 		assertEquals(0, service.getAllMeetings().size());
 		// list of test instances
@@ -340,6 +340,33 @@ public class TestAcademicManagerService {
 			fail();
 		}
 	}
+	
+	@Test
+	public void testCreateMeeting()
+	{		
+		String error = null;
+		assertEquals(0, service.getAllMeetings().size());
+		// list of test instances
+		String meetingID = "123456";
+		String location = "sample location";
+		String details = "sample details";
+		Date date = Date.valueOf("2019-01-01");
+		Time startTime = Time.valueOf("16:00:00");
+		Time endTime = Time.valueOf("18:00:00");
+		Set<Student> students = service.getAllStudents();
+		try {
+			Meeting meeting = service.createMeeting(meetingID, location, details, date, startTime, endTime, students);
+			assertEquals(meeting.getMeetingID(), meetingID);
+			assertEquals(meeting.getLocation(), location);
+			assertEquals(meeting.getDetails(), details);
+			assertEquals(meeting.getDate(), date);
+			assertEquals(meeting.getStartTime(), startTime);
+			assertEquals(meeting.getEndTime(), endTime);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+	}
+	
 	/**
 	 * Test case: a null Meeting object
 	 * @author ecse321-winter2019-group18
@@ -354,8 +381,8 @@ public class TestAcademicManagerService {
 		String location = null;
 		String details = null;
 		Date date = Date.valueOf("2019-01-01");
-		Time startTime = Time.valueOf("18:00:00");
-		Time endTime = Time.valueOf("16:00:00");
+		Time startTime = Time.valueOf("16:00:00");
+		Time endTime = Time.valueOf("18:00:00");
 		Set<Student> students = service.getAllStudents();
 		try {
 			service.createMeeting(meetingID, location, details, date, startTime, endTime, students);
@@ -364,6 +391,34 @@ public class TestAcademicManagerService {
 		} catch (Exception e) {
 			fail();
 		}
+	}
+	
+	@Test
+	public void testUpdateMeeting() {
+		String meetingID = "123456";
+		String location = "sample location";
+		String details = "sample details";
+		Date date = Date.valueOf("2019-01-01");
+		Time startTime = Time.valueOf("16:00:00");
+		Time endTime = Time.valueOf("18:00:00");
+		Set<Student> students = service.getAllStudents();
+		
+		Meeting meeting = service.createMeeting(meetingID, location, details, date, startTime, endTime, students);
+		
+		location = "new location";
+		details = "new deatils";
+		date = Date.valueOf("2019-01-02");
+		startTime = Time.valueOf("15:00:00");
+		endTime = Time.valueOf("17:00:00");
+		
+		meeting = service.updateMeeting(meeting, location, details, date, startTime, endTime, null);
+		
+		assertEquals(service.getAllMeetings().size(), 1);
+		assertEquals(meeting.getLocation(), location);
+		assertEquals(meeting.getDetails(), details);
+		assertEquals(meeting.getDate(), date);
+		assertEquals(meeting.getStartTime(), startTime);
+		assertEquals(meeting.getEndTime(), endTime);
 	}
 	
 	@Test

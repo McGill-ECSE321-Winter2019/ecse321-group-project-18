@@ -311,12 +311,15 @@ public class AcademicManagerService {
 	}
 	
 	@Transactional
-	public Meeting updateMeeting(Meeting meeting, String location, String details, Time startTime, Time endTime, Student student) {
+	public Meeting updateMeeting(Meeting meeting, String location, String details, Date date, Time startTime, Time endTime, Student student) {
 		if(checkArg(location)) {
 			meeting.setLocation(location);
 		}
 		if(checkArg(details)) {
 			meeting.setDetails(details);
+		}
+		if(checkArg(date)) {
+			meeting.setDate(date);
 		}
 		if(checkArg(startTime)) {
 			meeting.setStartTime(startTime);
