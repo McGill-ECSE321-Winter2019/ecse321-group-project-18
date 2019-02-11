@@ -78,22 +78,12 @@ public class Student{
 	public void setCooperator(Cooperator cooperator) {
 	   this.cooperator = cooperator;
 	}
-	
-	private Grade grade;
-	
-	public void setGrade(Grade value) {
-		this.grade = value;
-	}
-	public Grade getGrade() {
-		return this.grade;
-	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((cooperator == null) ? 0 : cooperator.hashCode());
 		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
-		result = prime * result + ((grade == null) ? 0 : grade.hashCode());
 		result = prime * result + (isProblematic ? 1231 : 1237);
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
 		result = prime * result + ((studentID == null) ? 0 : studentID.hashCode());
@@ -112,8 +102,6 @@ public class Student{
 			if (other.firstName != null)
 				return false;
 		} else if (!firstName.equals(other.firstName))
-			return false;
-		if (grade != other.grade)
 			return false;
 		if (isProblematic != other.isProblematic)
 			return false;

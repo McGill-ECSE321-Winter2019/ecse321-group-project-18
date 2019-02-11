@@ -17,6 +17,14 @@ import javax.persistence.OneToOne;
 @Entity
 public class CoopTermRegistration
 {
+private Grade grade;
+   
+   public void setGrade(Grade value) {
+this.grade = value;
+    }
+public Grade getGrade() {
+return this.grade;
+    }
 	private String registrationID;
    
    public void setRegistrationID(String value) {

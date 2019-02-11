@@ -96,7 +96,7 @@ public class AcademicManagerService {
 	
 	//---CoopTermRegistration---
 	@Transactional
-	public CoopTermRegistration createCoopTermRegistration(String registrationID, String jobID, TermStatus status, Student student) {
+	public CoopTermRegistration createCoopTermRegistration(String registrationID, String jobID, TermStatus status, Grade grade, Student student) {
 		if(!checkArg(registrationID) || !checkArg(jobID) || !checkArg(student) || !checkArg(status)) {
 			throw new NullArgumentException();
 		}
@@ -106,13 +106,14 @@ public class AcademicManagerService {
 		CTR.setTermStatus(status);
 		CTR.setJobID(jobID);
 		CTR.setStudent(student);
+		CTR.setGrade(grade);
 		student.setCoopTermRegistration(CTR);
 
 		return coopTermRegistrationRepository.save(CTR);
 	}
 	
 	@Transactional
-	public CoopTermRegistration updateCoopTermRegistration(CoopTermRegistration CTR, TermStatus status, Form form, Student student, Term term) {
+	public CoopTermRegistration updateCoopTermRegistration(CoopTermRegistration CTR, TermStatus status, Form form, Student student, Grade grade, Term term) {
 		if(checkArg(status)) {
 			CTR.setTermStatus(status);
 		}
@@ -128,6 +129,9 @@ public class AcademicManagerService {
 		}
 		if(checkArg(term)) {
 			CTR.setTerm(term);
+		}
+		if(checkArg(grade)) {
+			CTR.setGrade(grade);
 		}
 		
 		return coopTermRegistrationRepository.save(CTR);
@@ -351,8 +355,8 @@ public class AcademicManagerService {
 	
 	//---Student---
 	@Transactional
-	public Student createStudent(String studentID, String firstname, String lastname, Grade grade, Cooperator c) {
-		if(!checkArg(studentID) || !checkArg(firstname) || !checkArg(lastname) || !checkArg(grade) || !checkArg(c)) {
+	public Student createStudent(String studentID, String firstname, String lastname, Cooperator c) {
+		if(!checkArg(studentID) || !checkArg(firstname) || !checkArg(lastname) || !checkArg(c)) {
 			throw new NullArgumentException();
 		}
 		
@@ -362,7 +366,6 @@ public class AcademicManagerService {
 		student.setStudentID(studentID);
 		student.setFirstName(firstname);
 		student.setLastName(lastname);
-		student.setGrade(grade);
 		student.setCooperator(c);
 		student.setIsProblematic(false);
 		
@@ -408,10 +411,9 @@ public class AcademicManagerService {
 	}
 	
 	@Transactional
-	public Grade getStudentGrade(String studentID) {
-		Grade grade;
-		Student student = getStudent(studentID);
-		grade = student.getGrade();
+	public Grade getStudentGrade(CoopTermRegistration ctr) {
+		Grade grade;;
+		grade = ctr.getGrade();
 		return grade;
 	}
 	//---Student---

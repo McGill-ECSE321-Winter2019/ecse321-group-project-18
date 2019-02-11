@@ -154,11 +154,9 @@ public class TestAcademicManagerService {
 		String studentID = "260632353";
 		String firstname = "Saleh";
 		String lastname = "Bakhit";
-		
-		Grade grade = Grade.A;
 
 		try {
-			service.createStudent(studentID, firstname, lastname, grade, cooperator);
+			service.createStudent(studentID, firstname, lastname, cooperator);
 		} catch (IllegalArgumentException e) {
 			fail();
 		}
@@ -175,16 +173,14 @@ public class TestAcademicManagerService {
 		String studentID = "1";
 		String firstname = "1";
 		String lastname = "1";
-		Grade grade = Grade.A;
 		
-		service.createStudent(studentID, firstname, lastname, grade, cooperator);
+		service.createStudent(studentID, firstname, lastname, cooperator);
 		
 		studentID = "2";
 		firstname = "2";
 		lastname = "2";
-		grade = Grade.A;
 		
-		service.createStudent(studentID, firstname, lastname, grade, cooperator);
+		service.createStudent(studentID, firstname, lastname, cooperator);
 		
 		Set<Student> students = service.getAllStudents();
 		
@@ -193,15 +189,20 @@ public class TestAcademicManagerService {
 	
 	@Test
 	public void testViewStudentGrade() {
-		String studentID = "1";
+		String studentID = "142142";
 		String firstname = "1";
 		String lastname = "1";
-		Grade grade = Grade.A;
 		
-		service.createStudent(studentID, firstname, lastname, grade, cooperator);
-		Grade returnedGrade = service.getStudentGrade("1");
+		Student tmpStudent = service.createStudent(studentID, firstname, lastname, cooperator);
 		
-		assertEquals(returnedGrade, Grade.A);
+		String registrationID = "1214214";
+		String jobID = "1512521";
+		TermStatus status = TermStatus.FAILED;
+		Grade grade = Grade.NotGraded;
+		
+		CoopTermRegistration tmpCTR = service.createCoopTermRegistration(registrationID, jobID, status, grade, tmpStudent);
+		
+		service.getStudentGrade(tmpCTR);
 	}
 	
 	@Test
@@ -211,10 +212,9 @@ public class TestAcademicManagerService {
 		String studentID = null;
 		String firstname = null;
 		String lasttname = null;
-		Grade grade = null;
 
 		try {
-			service.createStudent(studentID, firstname, lasttname, grade, cooperator);
+			service.createStudent(studentID, firstname, lasttname, cooperator);
 		} catch (NullArgumentException e) {
 			assertEquals(0, service.getAllStudents().size());
 		} catch (Exception e) {
@@ -311,9 +311,8 @@ public class TestAcademicManagerService {
 		String studentID = "142142";
 		String firstname = "1";
 		String lastname = "1";
-		Grade grade = Grade.A;
 		
-		Student student = service.createStudent(studentID, firstname, lastname, grade, cooperator);
+		Student student = service.createStudent(studentID, firstname, lastname, cooperator);
 		service.updateStudentProblematicStatus(student, true);
 		
 		List<Student> students = service.getAllProblematicStudents();
@@ -329,17 +328,17 @@ public class TestAcademicManagerService {
 		String studentID = "142142";
 		String firstname = "1";
 		String lastname = "1";
-		Grade grade = Grade.A;
 		
-		Student tmpStudent = service.createStudent(studentID, firstname, lastname, grade, cooperator);
+		Student tmpStudent = service.createStudent(studentID, firstname, lastname, cooperator);
 		
 		String registrationID = "1214214";
 		String jobID = "1512521";
 		TermStatus status = TermStatus.FAILED;
+		Grade grade = Grade.A;
 		
-		CoopTermRegistration tmpCTR = service.createCoopTermRegistration(registrationID, jobID, status, tmpStudent);
+		CoopTermRegistration tmpCTR = service.createCoopTermRegistration(registrationID, jobID, status, grade, tmpStudent);
 		assertEquals(TermStatus.FAILED, tmpCTR.getTermStatus());
-		service.updateCoopTermRegistration(tmpCTR, TermStatus.FINISHED, null, tmpStudent, null);
+		service.updateCoopTermRegistration(tmpCTR, TermStatus.FINISHED, null, tmpStudent, grade, null);
 		assertEquals(TermStatus.FINISHED, tmpCTR.getTermStatus());
 	}
 	
@@ -450,19 +449,20 @@ public class TestAcademicManagerService {
 		String studentID = "142142";
 		String firstname = "1";
 		String lastname = "1";
-		Grade grade = Grade.A;
 		
-		Student tmpStudent = service.createStudent(studentID, firstname, lastname, grade, cooperator);
+		Student tmpStudent = service.createStudent(studentID, firstname, lastname, cooperator);
 		
 		String registrationID = "1214214";
 		String jobID = "1512521";
 		TermStatus status = TermStatus.FAILED;
+		Grade grade = Grade.A;
 		
 		try {
-			CoopTermRegistration tmpCTR = service.createCoopTermRegistration(registrationID, jobID, status, tmpStudent);
+			CoopTermRegistration tmpCTR = service.createCoopTermRegistration(registrationID, jobID, status, grade, tmpStudent);
 			assertEquals(tmpCTR.getRegistrationID(), registrationID);
 			assertEquals(tmpCTR.getJobID(), jobID);
 			assertEquals(tmpCTR.getTermStatus(), status);
+			assertEquals(tmpCTR.getGrade(), Grade.A);
 		} catch (IllegalArgumentException e) {
 			fail();
 		}
@@ -474,17 +474,17 @@ public class TestAcademicManagerService {
 		String studentID = "142142";
 		String firstname = "1";
 		String lastname = "1";
-		Grade grade = Grade.A;
 		
-		Student tmpStudent = service.createStudent(studentID, firstname, lastname, grade, cooperator);
+		Student tmpStudent = service.createStudent(studentID, firstname, lastname, cooperator);
 		
 		String registrationID = "1214214";
 		String jobID = "1512521";
 		TermStatus status = TermStatus.FAILED;
+		Grade grade = Grade.A;
 		
-		CoopTermRegistration tmpCTR = service.createCoopTermRegistration(registrationID, jobID, status, tmpStudent);
+		CoopTermRegistration tmpCTR = service.createCoopTermRegistration(registrationID, jobID, status, grade, tmpStudent);
 		
-		tmpCTR = service.updateCoopTermRegistration(tmpCTR, TermStatus.FINISHED, null, null, null);
+		tmpCTR = service.updateCoopTermRegistration(tmpCTR, TermStatus.FINISHED, null, null, null, null);
 		
 		assertEquals(tmpCTR.getTermStatus(), TermStatus.FINISHED);
 	}
