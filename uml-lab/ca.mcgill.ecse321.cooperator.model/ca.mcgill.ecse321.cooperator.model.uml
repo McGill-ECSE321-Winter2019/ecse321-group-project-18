@@ -3,7 +3,7 @@
   <uml:Model xmi:id="_1Z3nkCcWEemj-ZTemeLm7A" name="ca_mcgill_ecse321_academicmanger_model">
     <eAnnotations xmi:id="_1j-l0CcWEemj-ZTemeLm7A" source="http://ns.yatta.de/umllab">
       <contents xmi:type="ecore:EAnnotation" xmi:id="_1j_M4CcWEemj-ZTemeLm7A" source="codegen">
-        <details xmi:id="_JUgMMCcmEemj-ZTemeLm7A" key="AssociatedSourceCode" value="/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/Course.java;2627089704/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/Cooperator.java;2928446457/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/Form.java;2471138712/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/Student.java;1851346806/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/TermStatus.java;2470404642/1;/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/FormType.java;120648881/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/CoopTermRegistration.java;2610368415/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/Term.java;946227767/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/Grade.java;4204005706/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/Meeting.java;1196727997/1;"/>
+        <details xmi:id="_JUgMMCcmEemj-ZTemeLm7A" key="AssociatedSourceCode" value="/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/Course.java;737757981/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/Cooperator.java;106388064/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/Form.java;3813680443/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/Student.java;93873736/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/TermStatus.java;2470404642/1;/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/FormType.java;1184161189/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/CoopTermRegistration.java;1919205170/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/Term.java;1551512350/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/Grade.java;4204005706/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/Meeting.java;3466626275/1;"/>
         <details xmi:id="_5pMJECnGEemS0IHJqlSUCQ" key="codegenDirectory" value="/Backend/src/main/java"/>
       </contents>
       <contents xmi:type="ecore:EAnnotation" xmi:id="_jRw9ICsQEemFupWFI64o_g" source="preferences">
@@ -63,6 +63,51 @@
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_MPT7wCydEem7_r_-bjr0Lg"/>
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_MPUi0CydEem7_r_-bjr0Lg" value="*"/>
                 </ownedAttribute>
+                <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_F4540C2ZEemf1YJ4WA-EJA" name="hashCode" specification="_F18rcC2ZEemf1YJ4WA-EJA">
+                  <ownedParameter xmi:id="_F4540S2ZEemf1YJ4WA-EJA" direction="return">
+                    <name xsi:nil="true"/>
+                    <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+                  </ownedParameter>
+                  <language>java</language>
+                  <body>final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	</body>
+                </ownedBehavior>
+                <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_F488IC2ZEemf1YJ4WA-EJA" name="equals" specification="_F4QYkC2ZEemf1YJ4WA-EJA">
+                  <ownedParameter xmi:id="_F488IS2ZEemf1YJ4WA-EJA" name="obj" type="_F3xQYC2ZEemf1YJ4WA-EJA"/>
+                  <ownedParameter xmi:id="_F488Ii2ZEemf1YJ4WA-EJA" direction="return">
+                    <name xsi:nil="true"/>
+                    <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+                  </ownedParameter>
+                  <language>java</language>
+                  <body>if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Cooperator other = (Cooperator) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
+	</body>
+                </ownedBehavior>
+                <ownedOperation xmi:id="_F18rcC2ZEemf1YJ4WA-EJA" name="hashCode" method="_F4540C2ZEemf1YJ4WA-EJA">
+                  <ownedParameter xmi:id="_F3RhIC2ZEemf1YJ4WA-EJA" direction="return">
+                    <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+                  </ownedParameter>
+                </ownedOperation>
+                <ownedOperation xmi:id="_F4QYkC2ZEemf1YJ4WA-EJA" name="equals" method="_F488IC2ZEemf1YJ4WA-EJA">
+                  <ownedParameter xmi:id="_F4Q_oC2ZEemf1YJ4WA-EJA" name="obj" type="_F3xQYC2ZEemf1YJ4WA-EJA"/>
+                  <ownedParameter xmi:id="_F4RmsC2ZEemf1YJ4WA-EJA" direction="return">
+                    <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+                  </ownedParameter>
+                </ownedOperation>
               </packagedElement>
               <packagedElement xmi:type="uml:Class" xmi:id="_1bXrgCdaEemLvsCkKRozoQ" name="Form">
                 <ownedAttribute xmi:id="_Uur2ECdeEemLvsCkKRozoQ" name="name" visibility="public">
@@ -79,6 +124,57 @@
                 <ownedAttribute xmi:id="_UdhPgCzuEem7_r_-bjr0Lg" name="formID" visibility="public">
                   <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
                 </ownedAttribute>
+                <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_F4_YYC2ZEemf1YJ4WA-EJA" name="hashCode" specification="_F2OYQC2ZEemf1YJ4WA-EJA">
+                  <ownedParameter xmi:id="_F4_YYS2ZEemf1YJ4WA-EJA" direction="return">
+                    <name xsi:nil="true"/>
+                    <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+                  </ownedParameter>
+                  <language>java</language>
+                  <body>final int prime = 31;
+		int result = 1;
+		result = prime * result + ((formID == null) ? 0 : formID.hashCode());
+		result = prime * result + ((pdfLink == null) ? 0 : pdfLink.hashCode());
+		return result;
+	</body>
+                </ownedBehavior>
+                <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_F4__cC2ZEemf1YJ4WA-EJA" name="equals" specification="_F4fCEC2ZEemf1YJ4WA-EJA">
+                  <ownedParameter xmi:id="_F4__cS2ZEemf1YJ4WA-EJA" name="obj" type="_F3xQYC2ZEemf1YJ4WA-EJA"/>
+                  <ownedParameter xmi:id="_F4__ci2ZEemf1YJ4WA-EJA" direction="return">
+                    <name xsi:nil="true"/>
+                    <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+                  </ownedParameter>
+                  <language>java</language>
+                  <body>if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Form other = (Form) obj;
+		if (formID == null) {
+			if (other.formID != null)
+				return false;
+		} else if (!formID.equals(other.formID))
+			return false;
+		if (pdfLink == null) {
+			if (other.pdfLink != null)
+				return false;
+		} else if (!pdfLink.equals(other.pdfLink))
+			return false;
+		return true;
+	</body>
+                </ownedBehavior>
+                <ownedOperation xmi:id="_F2OYQC2ZEemf1YJ4WA-EJA" name="hashCode" method="_F4_YYC2ZEemf1YJ4WA-EJA">
+                  <ownedParameter xmi:id="_F3XAsC2ZEemf1YJ4WA-EJA" direction="return">
+                    <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+                  </ownedParameter>
+                </ownedOperation>
+                <ownedOperation xmi:id="_F4fCEC2ZEemf1YJ4WA-EJA" name="equals" method="_F4__cC2ZEemf1YJ4WA-EJA">
+                  <ownedParameter xmi:id="_F4fCES2ZEemf1YJ4WA-EJA" name="obj" type="_F3xQYC2ZEemf1YJ4WA-EJA"/>
+                  <ownedParameter xmi:id="_F4fpIC2ZEemf1YJ4WA-EJA" direction="return">
+                    <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+                  </ownedParameter>
+                </ownedOperation>
               </packagedElement>
               <packagedElement xmi:type="uml:Enumeration" xmi:id="_9-w_kCoxEemCfou_SGwekQ" name="TermStatus">
                 <ownedComment xmi:id="_JkeNcC1eEemZZ94joFKfEg">
@@ -132,6 +228,76 @@ and its term.
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="__iZZsCybEem7_r_-bjr0Lg" value="1"/>
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__iaAwCybEem7_r_-bjr0Lg" value="1"/>
                 </ownedAttribute>
+                <ownedAttribute xmi:id="_OAkjgC2ZEemf1YJ4WA-EJA" name="grade" visibility="public" type="_aqyjsCzmEem7_r_-bjr0Lg"/>
+                <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_F4zLIC2ZEemf1YJ4WA-EJA" name="hashCode" specification="_F13y8C2ZEemf1YJ4WA-EJA">
+                  <ownedParameter xmi:id="_F4zLIS2ZEemf1YJ4WA-EJA" direction="return">
+                    <name xsi:nil="true"/>
+                    <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+                  </ownedParameter>
+                  <language>java</language>
+                  <body>final int prime = 31;
+		int result = 1;
+		result = prime * result + ((form == null) ? 0 : form.hashCode());
+		result = prime * result + ((jobID == null) ? 0 : jobID.hashCode());
+		result = prime * result + ((registrationID == null) ? 0 : registrationID.hashCode());
+		result = prime * result + ((student == null) ? 0 : student.hashCode());
+		result = prime * result + ((term == null) ? 0 : term.hashCode());
+		return result;
+	</body>
+                </ownedBehavior>
+                <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_F421gC2ZEemf1YJ4WA-EJA" name="equals" specification="_F4GnkC2ZEemf1YJ4WA-EJA">
+                  <ownedParameter xmi:id="_F421gS2ZEemf1YJ4WA-EJA" name="obj" type="_F3xQYC2ZEemf1YJ4WA-EJA"/>
+                  <ownedParameter xmi:id="_F421gi2ZEemf1YJ4WA-EJA" direction="return">
+                    <name xsi:nil="true"/>
+                    <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+                  </ownedParameter>
+                  <language>java</language>
+                  <body>if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CoopTermRegistration other = (CoopTermRegistration) obj;
+		if (form == null) {
+			if (other.form != null)
+				return false;
+		} else if (!form.equals(other.form))
+			return false;
+		if (jobID == null) {
+			if (other.jobID != null)
+				return false;
+		} else if (!jobID.equals(other.jobID))
+			return false;
+		if (registrationID == null) {
+			if (other.registrationID != null)
+				return false;
+		} else if (!registrationID.equals(other.registrationID))
+			return false;
+		if (student == null) {
+			if (other.student != null)
+				return false;
+		} else if (!student.equals(other.student))
+			return false;
+		if (term == null) {
+			if (other.term != null)
+				return false;
+		} else if (!term.equals(other.term))
+			return false;
+		return true;
+	</body>
+                </ownedBehavior>
+                <ownedOperation xmi:id="_F13y8C2ZEemf1YJ4WA-EJA" name="hashCode" method="_F4zLIC2ZEemf1YJ4WA-EJA">
+                  <ownedParameter xmi:id="_F3MooC2ZEemf1YJ4WA-EJA" direction="return">
+                    <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+                  </ownedParameter>
+                </ownedOperation>
+                <ownedOperation xmi:id="_F4GnkC2ZEemf1YJ4WA-EJA" name="equals" method="_F421gC2ZEemf1YJ4WA-EJA">
+                  <ownedParameter xmi:id="_F4HOoC2ZEemf1YJ4WA-EJA" name="obj" type="_F3xQYC2ZEemf1YJ4WA-EJA"/>
+                  <ownedParameter xmi:id="_F4H1sC2ZEemf1YJ4WA-EJA" direction="return">
+                    <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+                  </ownedParameter>
+                </ownedOperation>
               </packagedElement>
               <packagedElement xmi:type="uml:Association" xmi:id="_2RtY0CyYEem7_r_-bjr0Lg" name="" memberEnd="_2Rum8CyYEem7_r_-bjr0Lg _2RvOACyYEem7_r_-bjr0Lg"/>
               <packagedElement xmi:type="uml:Class" xmi:id="_a_YaoCyZEem7_r_-bjr0Lg" name="Term">
@@ -154,6 +320,64 @@ A deadline to submit evaluation forms is determined for each term.
                 <ownedAttribute xmi:id="_7jw9sC1bEem-ZdZYBcPN7Q" name="termName" visibility="public">
                   <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
                 </ownedAttribute>
+                <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_F5DCwC2ZEemf1YJ4WA-EJA" name="hashCode" specification="_F2zAAC2ZEemf1YJ4WA-EJA">
+                  <ownedParameter xmi:id="_F5DCwS2ZEemf1YJ4WA-EJA" direction="return">
+                    <name xsi:nil="true"/>
+                    <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+                  </ownedParameter>
+                  <language>java</language>
+                  <body>final int prime = 31;
+		int result = 1;
+		result = prime * result + ((coopEvalFormDeadline == null) ? 0 : coopEvalFormDeadline.hashCode());
+		result = prime * result + ((coopTermRegistration == null) ? 0 : coopTermRegistration.hashCode());
+		result = prime * result + ((studentEvalFormDeadline == null) ? 0 : studentEvalFormDeadline.hashCode());
+		result = prime * result + ((termID == null) ? 0 : termID.hashCode());
+		return result;
+	</body>
+                </ownedBehavior>
+                <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_F5Dp0C2ZEemf1YJ4WA-EJA" name="equals" specification="_F4vgwC2ZEemf1YJ4WA-EJA">
+                  <ownedParameter xmi:id="_F5Dp0S2ZEemf1YJ4WA-EJA" name="obj" type="_F3xQYC2ZEemf1YJ4WA-EJA"/>
+                  <ownedParameter xmi:id="_F5Dp0i2ZEemf1YJ4WA-EJA" direction="return">
+                    <name xsi:nil="true"/>
+                    <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+                  </ownedParameter>
+                  <language>java</language>
+                  <body>if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Term other = (Term) obj;
+		if (coopEvalFormDeadline == null) {
+			if (other.coopEvalFormDeadline != null)
+				return false;
+		} else if (!coopEvalFormDeadline.equals(other.coopEvalFormDeadline))
+			return false;
+		if (studentEvalFormDeadline == null) {
+			if (other.studentEvalFormDeadline != null)
+				return false;
+		} else if (!studentEvalFormDeadline.equals(other.studentEvalFormDeadline))
+			return false;
+		if (termID == null) {
+			if (other.termID != null)
+				return false;
+		} else if (!termID.equals(other.termID))
+			return false;
+		return true;
+	</body>
+                </ownedBehavior>
+                <ownedOperation xmi:id="_F2zAAC2ZEemf1YJ4WA-EJA" name="hashCode" method="_F5DCwC2ZEemf1YJ4WA-EJA">
+                  <ownedParameter xmi:id="_F3duYC2ZEemf1YJ4WA-EJA" direction="return">
+                    <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+                  </ownedParameter>
+                </ownedOperation>
+                <ownedOperation xmi:id="_F4vgwC2ZEemf1YJ4WA-EJA" name="equals" method="_F5Dp0C2ZEemf1YJ4WA-EJA">
+                  <ownedParameter xmi:id="_F4wH0C2ZEemf1YJ4WA-EJA" name="obj" type="_F3xQYC2ZEemf1YJ4WA-EJA"/>
+                  <ownedParameter xmi:id="_F4wH0S2ZEemf1YJ4WA-EJA" direction="return">
+                    <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+                  </ownedParameter>
+                </ownedOperation>
               </packagedElement>
               <packagedElement xmi:type="uml:Class" xmi:id="_QP6KwCyaEem7_r_-bjr0Lg" name="Meeting">
                 <ownedComment xmi:id="_2IgO4C1bEem-ZdZYBcPN7Q">
@@ -178,9 +402,82 @@ Time constraint: endTime has to happen after startTime.
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__TaigCybEem7_r_-bjr0Lg" value="*"/>
                 </ownedAttribute>
                 <ownedAttribute xmi:id="_JWL2ECzrEem7_r_-bjr0Lg" name="date" visibility="public" type="_8iMVgCdgEemLvsCkKRozoQ" association="_2I7ssC1bEem-ZdZYBcPN7Q"/>
+                <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_F5AmgC2ZEemf1YJ4WA-EJA" name="hashCode" specification="_F2Z-cC2ZEemf1YJ4WA-EJA">
+                  <ownedParameter xmi:id="_F5AmgS2ZEemf1YJ4WA-EJA" direction="return">
+                    <name xsi:nil="true"/>
+                    <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+                  </ownedParameter>
+                  <language>java</language>
+                  <body>final int prime = 31;
+		int result = 1;
+		result = prime * result + ((date == null) ? 0 : date.hashCode());
+		result = prime * result + ((endTime == null) ? 0 : endTime.hashCode());
+		result = prime * result + ((location == null) ? 0 : location.hashCode());
+		result = prime * result + ((meetingID == null) ? 0 : meetingID.hashCode());
+		result = prime * result + ((startTime == null) ? 0 : startTime.hashCode());
+		return result;
+	</body>
+                </ownedBehavior>
+                <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_F5Amgi2ZEemf1YJ4WA-EJA" name="equals" specification="_F4heUC2ZEemf1YJ4WA-EJA">
+                  <ownedParameter xmi:id="_F5Amgy2ZEemf1YJ4WA-EJA" name="obj" type="_F3xQYC2ZEemf1YJ4WA-EJA"/>
+                  <ownedParameter xmi:id="_F5AmhC2ZEemf1YJ4WA-EJA" direction="return">
+                    <name xsi:nil="true"/>
+                    <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+                  </ownedParameter>
+                  <language>java</language>
+                  <body>if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Meeting other = (Meeting) obj;
+		if (date == null) {
+			if (other.date != null)
+				return false;
+		} else if (!date.equals(other.date))
+			return false;
+		if (endTime == null) {
+			if (other.endTime != null)
+				return false;
+		} else if (!endTime.equals(other.endTime))
+			return false;
+		if (location == null) {
+			if (other.location != null)
+				return false;
+		} else if (!location.equals(other.location))
+			return false;
+		if (meetingID == null) {
+			if (other.meetingID != null)
+				return false;
+		} else if (!meetingID.equals(other.meetingID))
+			return false;
+		if (startTime == null) {
+			if (other.startTime != null)
+				return false;
+		} else if (!startTime.equals(other.startTime))
+			return false;
+		return true;
+	</body>
+                </ownedBehavior>
+                <ownedOperation xmi:id="_F2Z-cC2ZEemf1YJ4WA-EJA" name="hashCode" method="_F5AmgC2ZEemf1YJ4WA-EJA">
+                  <ownedParameter xmi:id="_F3Y14C2ZEemf1YJ4WA-EJA" direction="return">
+                    <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+                  </ownedParameter>
+                </ownedOperation>
+                <ownedOperation xmi:id="_F4heUC2ZEemf1YJ4WA-EJA" name="equals" method="_F5Amgi2ZEemf1YJ4WA-EJA">
+                  <ownedParameter xmi:id="_F4iFYC2ZEemf1YJ4WA-EJA" name="obj" type="_F3xQYC2ZEemf1YJ4WA-EJA"/>
+                  <ownedParameter xmi:id="_F4iscC2ZEemf1YJ4WA-EJA" direction="return">
+                    <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+                  </ownedParameter>
+                </ownedOperation>
               </packagedElement>
               <packagedElement xmi:type="uml:Association" xmi:id="__iVIQCybEem7_r_-bjr0Lg" name="" memberEnd="__iVvUCybEem7_r_-bjr0Lg __iYLkCybEem7_r_-bjr0Lg"/>
               <packagedElement xmi:type="uml:Class" xmi:id="_2yC-YCybEem7_r_-bjr0Lg" name="Student">
+                <ownedComment xmi:id="_F5E38C2ZEemf1YJ4WA-EJA">
+                  <body>Student Entity.
+@author ecse321-winter2019-group18</body>
+                </ownedComment>
                 <ownedAttribute xmi:id="_3qBIMCybEem7_r_-bjr0Lg" name="studentID" visibility="public">
                   <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
                 </ownedAttribute>
@@ -205,7 +502,70 @@ Time constraint: endTime has to happen after startTime.
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_GhujUSycEem7_r_-bjr0Lg" value="1"/>
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_GhujUiycEem7_r_-bjr0Lg" value="1"/>
                 </ownedAttribute>
-                <ownedAttribute xmi:id="_ZWOSkCzoEem7_r_-bjr0Lg" name="grade" visibility="public" type="_aqyjsCzmEem7_r_-bjr0Lg"/>
+                <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_F5B0oC2ZEemf1YJ4WA-EJA" name="hashCode" specification="_F2oA4C2ZEemf1YJ4WA-EJA">
+                  <ownedParameter xmi:id="_F5B0oS2ZEemf1YJ4WA-EJA" direction="return">
+                    <name xsi:nil="true"/>
+                    <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+                  </ownedParameter>
+                  <language>java</language>
+                  <body>final int prime = 31;
+		int result = 1;
+		result = prime * result + ((cooperator == null) ? 0 : cooperator.hashCode());
+		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
+		result = prime * result + ((grade == null) ? 0 : grade.hashCode());
+		result = prime * result + (isProblematic ? 1231 : 1237);
+		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
+		result = prime * result + ((studentID == null) ? 0 : studentID.hashCode());
+		return result;
+	</body>
+                </ownedBehavior>
+                <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_F5B0oi2ZEemf1YJ4WA-EJA" name="equals" specification="_F4m94C2ZEemf1YJ4WA-EJA">
+                  <ownedParameter xmi:id="_F5B0oy2ZEemf1YJ4WA-EJA" name="obj" type="_F3xQYC2ZEemf1YJ4WA-EJA"/>
+                  <ownedParameter xmi:id="_F5B0pC2ZEemf1YJ4WA-EJA" direction="return">
+                    <name xsi:nil="true"/>
+                    <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+                  </ownedParameter>
+                  <language>java</language>
+                  <body>if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Student other = (Student) obj;
+		if (firstName == null) {
+			if (other.firstName != null)
+				return false;
+		} else if (!firstName.equals(other.firstName))
+			return false;
+		if (grade != other.grade)
+			return false;
+		if (isProblematic != other.isProblematic)
+			return false;
+		if (lastName == null) {
+			if (other.lastName != null)
+				return false;
+		} else if (!lastName.equals(other.lastName))
+			return false;
+		if (studentID == null) {
+			if (other.studentID != null)
+				return false;
+		} else if (!studentID.equals(other.studentID))
+			return false;
+		return true;
+	</body>
+                </ownedBehavior>
+                <ownedOperation xmi:id="_F2oA4C2ZEemf1YJ4WA-EJA" name="hashCode" method="_F5B0oC2ZEemf1YJ4WA-EJA">
+                  <ownedParameter xmi:id="_F3b5MC2ZEemf1YJ4WA-EJA" direction="return">
+                    <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+                  </ownedParameter>
+                </ownedOperation>
+                <ownedOperation xmi:id="_F4m94C2ZEemf1YJ4WA-EJA" name="equals" method="_F5B0oi2ZEemf1YJ4WA-EJA">
+                  <ownedParameter xmi:id="_F4ozEC2ZEemf1YJ4WA-EJA" name="obj" type="_F3xQYC2ZEemf1YJ4WA-EJA"/>
+                  <ownedParameter xmi:id="_F4sdcC2ZEemf1YJ4WA-EJA" direction="return">
+                    <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+                  </ownedParameter>
+                </ownedOperation>
               </packagedElement>
               <packagedElement xmi:type="uml:Association" xmi:id="_Ght8QCycEem7_r_-bjr0Lg" name="" memberEnd="_GhujUCycEem7_r_-bjr0Lg _GhvKYCycEem7_r_-bjr0Lg"/>
               <packagedElement xmi:type="uml:Class" xmi:id="_XpANUCycEem7_r_-bjr0Lg" name="Course">
@@ -225,6 +585,75 @@ Time constraint: endTime has to happen after startTime.
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_MPSGkSydEem7_r_-bjr0Lg" value="1"/>
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_MPStoCydEem7_r_-bjr0Lg" value="1"/>
                 </ownedAttribute>
+                <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_F4-KQC2ZEemf1YJ4WA-EJA" name="hashCode" specification="_F2HDgC2ZEemf1YJ4WA-EJA">
+                  <ownedParameter xmi:id="_F4-KQS2ZEemf1YJ4WA-EJA" direction="return">
+                    <name xsi:nil="true"/>
+                    <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+                  </ownedParameter>
+                  <language>java</language>
+                  <body>final int prime = 31;
+		int result = 1;
+		result = prime * result + ((cooperator == null) ? 0 : cooperator.hashCode());
+		result = prime * result + ((courseID == null) ? 0 : courseID.hashCode());
+		result = prime * result + ((courseName == null) ? 0 : courseName.hashCode());
+		result = prime * result + ((courseRank == null) ? 0 : courseRank.hashCode());
+		result = prime * result + ((term == null) ? 0 : term.hashCode());
+		return result;
+	</body>
+                </ownedBehavior>
+                <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_F4-xUC2ZEemf1YJ4WA-EJA" name="equals" specification="_F4UC8C2ZEemf1YJ4WA-EJA">
+                  <ownedParameter xmi:id="_F4-xUS2ZEemf1YJ4WA-EJA" name="obj" type="_F3xQYC2ZEemf1YJ4WA-EJA"/>
+                  <ownedParameter xmi:id="_F4-xUi2ZEemf1YJ4WA-EJA" direction="return">
+                    <name xsi:nil="true"/>
+                    <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+                  </ownedParameter>
+                  <language>java</language>
+                  <body>if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Course other = (Course) obj;
+		if (cooperator == null) {
+			if (other.cooperator != null)
+				return false;
+		} else if (!cooperator.equals(other.cooperator))
+			return false;
+		if (courseID == null) {
+			if (other.courseID != null)
+				return false;
+		} else if (!courseID.equals(other.courseID))
+			return false;
+		if (courseName == null) {
+			if (other.courseName != null)
+				return false;
+		} else if (!courseName.equals(other.courseName))
+			return false;
+		if (courseRank == null) {
+			if (other.courseRank != null)
+				return false;
+		} else if (!courseRank.equals(other.courseRank))
+			return false;
+		if (term == null) {
+			if (other.term != null)
+				return false;
+		} else if (!term.equals(other.term))
+			return false;
+		return true;
+	</body>
+                </ownedBehavior>
+                <ownedOperation xmi:id="_F2HDgC2ZEemf1YJ4WA-EJA" name="hashCode" method="_F4-KQC2ZEemf1YJ4WA-EJA">
+                  <ownedParameter xmi:id="_F3VLgC2ZEemf1YJ4WA-EJA" direction="return">
+                    <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+                  </ownedParameter>
+                </ownedOperation>
+                <ownedOperation xmi:id="_F4UC8C2ZEemf1YJ4WA-EJA" name="equals" method="_F4-xUC2ZEemf1YJ4WA-EJA">
+                  <ownedParameter xmi:id="_F4UqAC2ZEemf1YJ4WA-EJA" name="obj" type="_F3xQYC2ZEemf1YJ4WA-EJA"/>
+                  <ownedParameter xmi:id="_F4V4IC2ZEemf1YJ4WA-EJA" direction="return">
+                    <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+                  </ownedParameter>
+                </ownedOperation>
               </packagedElement>
               <packagedElement xmi:type="uml:Association" xmi:id="_MPRfgCydEem7_r_-bjr0Lg" name="" memberEnd="_MPSGkCydEem7_r_-bjr0Lg _MPTUsCydEem7_r_-bjr0Lg"/>
               <packagedElement xmi:type="uml:Enumeration" xmi:id="_aqyjsCzmEem7_r_-bjr0Lg" name="Grade">
@@ -253,6 +682,7 @@ Time constraint: endTime has to happen after startTime.
               <packagedElement xmi:type="uml:Association" xmi:id="_OpHzEC1eEemZZ94joFKfEg" name="" memberEnd="_sxqJcCyZEem7_r_-bjr0Lg _OpHzES1eEemZZ94joFKfEg">
                 <ownedEnd xmi:id="_OpHzES1eEemZZ94joFKfEg" name="" type="_a_YaoCyZEem7_r_-bjr0Lg" association="_OpHzEC1eEemZZ94joFKfEg"/>
               </packagedElement>
+              <packagedElement xmi:type="uml:Class" xmi:id="_F3xQYC2ZEemf1YJ4WA-EJA" name="Object"/>
             </packagedElement>
             <packagedElement xmi:type="uml:Class" xmi:id="_8bbn4CseEem5tvRJPUOIkA" name="Cooperator"/>
           </packagedElement>
@@ -322,7 +752,6 @@ Time constraint: endTime has to happen after startTime.
   <UMLLabProfile:Reference xmi:id="_XF5QoCslEemqKpWaCqKr0g" base_Element="_XFzxECslEemqKpWaCqKr0g"/>
   <UMLLabProfile:Reference xmi:id="_pnC3oCslEemqKpWaCqKr0g" base_Element="_pm8xACslEemqKpWaCqKr0g"/>
   <UMLLabProfile:Reference xmi:id="_rbuhUCslEemqKpWaCqKr0g" base_Element="_rbl-cCslEemqKpWaCqKr0g"/>
-  <UMLLabProfile:LegacyStyledElement xmi:id="_8Jj7ICsmEemqKpWaCqKr0g" base_Element="_lGOkYCsQEemFupWFI64o_g"/>
   <Persistency:EnumerationStyleMapping xmi:id="_AQmpACsnEemqKpWaCqKr0g" base_Property="_ilEDgCoxEemCfou_SGwekQ"/>
   <Persistency:PrimaryKey xmi:id="_dlQ14CsnEemqKpWaCqKr0g" base_Property="_YGDbMCsnEemqKpWaCqKr0g"/>
   <Persistency:PrimaryKey xmi:id="__GT3cCyXEem7_r_-bjr0Lg" base_Property="_6SKzACyXEem7_r_-bjr0Lg"/>
@@ -344,4 +773,69 @@ Time constraint: endTime has to happen after startTime.
   <UMLLabProfile:StyledElement xmi:id="_OpBFYC1eEemZZ94joFKfEg" base_Element="_oVF3gCyZEem7_r_-bjr0Lg"/>
   <UMLLabProfile:StyledElement xmi:id="_OpBscC1eEemZZ94joFKfEg" base_Element="_sxqJcCyZEem7_r_-bjr0Lg"/>
   <UMLLabProfile:StyledElement xmi:id="_OpCTgC1eEemZZ94joFKfEg" base_Element="_7jw9sC1bEem-ZdZYBcPN7Q"/>
+  <UMLLabProfile:StyledElement xmi:id="_F1v3IC2ZEemf1YJ4WA-EJA" base_Element="_lGOkYCsQEemFupWFI64o_g"/>
+  <UMLLabProfile:Annotations xmi:id="_F14aAC2ZEemf1YJ4WA-EJA" base_Element="_F13y8C2ZEemf1YJ4WA-EJA">
+    <annotations xmi:id="_F14aAS2ZEemf1YJ4WA-EJA" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="_F19SgC2ZEemf1YJ4WA-EJA" base_Element="_F18rcC2ZEemf1YJ4WA-EJA">
+    <annotations xmi:id="_F195kC2ZEemf1YJ4WA-EJA" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="_F2HqkC2ZEemf1YJ4WA-EJA" base_Element="_F2HDgC2ZEemf1YJ4WA-EJA">
+    <annotations xmi:id="_F2HqkS2ZEemf1YJ4WA-EJA" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="_F2RbkC2ZEemf1YJ4WA-EJA" base_Element="_F2OYQC2ZEemf1YJ4WA-EJA">
+    <annotations xmi:id="_F2SCoC2ZEemf1YJ4WA-EJA" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="_F2algC2ZEemf1YJ4WA-EJA" base_Element="_F2Z-cC2ZEemf1YJ4WA-EJA">
+    <annotations xmi:id="_F2algS2ZEemf1YJ4WA-EJA" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="_F2on8C2ZEemf1YJ4WA-EJA" base_Element="_F2oA4C2ZEemf1YJ4WA-EJA">
+    <annotations xmi:id="_F2on8S2ZEemf1YJ4WA-EJA" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="_F201MC2ZEemf1YJ4WA-EJA" base_Element="_F2zAAC2ZEemf1YJ4WA-EJA">
+    <annotations xmi:id="_F201MS2ZEemf1YJ4WA-EJA" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_F234gC2ZEemf1YJ4WA-EJA" base_Element="_F13y8C2ZEemf1YJ4WA-EJA"/>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_F25tsC2ZEemf1YJ4WA-EJA" base_Element="_F18rcC2ZEemf1YJ4WA-EJA"/>
+  <UMLLabProfile:StyledElement xmi:id="_F26UwC2ZEemf1YJ4WA-EJA" base_Element="_Z814MCycEem7_r_-bjr0Lg"/>
+  <UMLLabProfile:StyledElement xmi:id="_F2670C2ZEemf1YJ4WA-EJA" base_Element="_beYjcCycEem7_r_-bjr0Lg"/>
+  <UMLLabProfile:StyledElement xmi:id="_F27i4C2ZEemf1YJ4WA-EJA" base_Element="_HwvesCydEem7_r_-bjr0Lg"/>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_F28J8C2ZEemf1YJ4WA-EJA" base_Element="_F2HDgC2ZEemf1YJ4WA-EJA"/>
+  <UMLLabProfile:StyledElement xmi:id="_F2_0UC2ZEemf1YJ4WA-EJA" base_Element="_uWgXwCsiEemqKpWaCqKr0g"/>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_F3BCcC2ZEemf1YJ4WA-EJA" base_Element="_F2OYQC2ZEemf1YJ4WA-EJA"/>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_F3EFwC2ZEemf1YJ4WA-EJA" base_Element="_F2Z-cC2ZEemf1YJ4WA-EJA"/>
+  <UMLLabProfile:StyledElement xmi:id="_F3Es0C2ZEemf1YJ4WA-EJA" base_Element="_4x4vMCybEem7_r_-bjr0Lg"/>
+  <UMLLabProfile:StyledElement xmi:id="_F3FT4C2ZEemf1YJ4WA-EJA" base_Element="_6iKaACybEem7_r_-bjr0Lg"/>
+  <UMLLabProfile:StyledElement xmi:id="_F3FT4S2ZEemf1YJ4WA-EJA" base_Element="_6i_gcCybEem7_r_-bjr0Lg"/>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_F3GiAC2ZEemf1YJ4WA-EJA" base_Element="_F2oA4C2ZEemf1YJ4WA-EJA"/>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_F3IXMC2ZEemf1YJ4WA-EJA" base_Element="_F2zAAC2ZEemf1YJ4WA-EJA"/>
+  <UMLLabProfile:Reference xmi:id="_F4GAgC2ZEemf1YJ4WA-EJA" base_Element="_F3xQYC2ZEemf1YJ4WA-EJA"/>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_F4N8UC2ZEemf1YJ4WA-EJA" base_Element="_F4GnkC2ZEemf1YJ4WA-EJA"/>
+  <UMLLabProfile:Annotations xmi:id="_F4PKcC2ZEemf1YJ4WA-EJA" base_Element="_F4GnkC2ZEemf1YJ4WA-EJA">
+    <annotations xmi:id="_F4PKcS2ZEemf1YJ4WA-EJA" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_F4SNwC2ZEemf1YJ4WA-EJA" base_Element="_F4QYkC2ZEemf1YJ4WA-EJA"/>
+  <UMLLabProfile:Annotations xmi:id="_F4S00C2ZEemf1YJ4WA-EJA" base_Element="_F4QYkC2ZEemf1YJ4WA-EJA">
+    <annotations xmi:id="_F4S00S2ZEemf1YJ4WA-EJA" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_F4XGQC2ZEemf1YJ4WA-EJA" base_Element="_F4UC8C2ZEemf1YJ4WA-EJA"/>
+  <UMLLabProfile:Annotations xmi:id="_F4awoC2ZEemf1YJ4WA-EJA" base_Element="_F4UC8C2ZEemf1YJ4WA-EJA">
+    <annotations xmi:id="_F4b-wC2ZEemf1YJ4WA-EJA" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_F4gQMC2ZEemf1YJ4WA-EJA" base_Element="_F4fCEC2ZEemf1YJ4WA-EJA"/>
+  <UMLLabProfile:Annotations xmi:id="_F4g3QC2ZEemf1YJ4WA-EJA" base_Element="_F4fCEC2ZEemf1YJ4WA-EJA">
+    <annotations xmi:id="_F4g3QS2ZEemf1YJ4WA-EJA" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_F4j6kC2ZEemf1YJ4WA-EJA" base_Element="_F4heUC2ZEemf1YJ4WA-EJA"/>
+  <UMLLabProfile:Annotations xmi:id="_F4lIsC2ZEemf1YJ4WA-EJA" base_Element="_F4heUC2ZEemf1YJ4WA-EJA">
+    <annotations xmi:id="_F4lIsS2ZEemf1YJ4WA-EJA" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_F4trkC2ZEemf1YJ4WA-EJA" base_Element="_F4m94C2ZEemf1YJ4WA-EJA"/>
+  <UMLLabProfile:Annotations xmi:id="_F4u5sC2ZEemf1YJ4WA-EJA" base_Element="_F4m94C2ZEemf1YJ4WA-EJA">
+    <annotations xmi:id="_F4u5sS2ZEemf1YJ4WA-EJA" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_F4wu4C2ZEemf1YJ4WA-EJA" base_Element="_F4vgwC2ZEemf1YJ4WA-EJA"/>
+  <UMLLabProfile:Annotations xmi:id="_F4xV8C2ZEemf1YJ4WA-EJA" base_Element="_F4vgwC2ZEemf1YJ4WA-EJA">
+    <annotations xmi:id="_F4xV8S2ZEemf1YJ4WA-EJA" name="Override"/>
+  </UMLLabProfile:Annotations>
 </xmi:XMI>

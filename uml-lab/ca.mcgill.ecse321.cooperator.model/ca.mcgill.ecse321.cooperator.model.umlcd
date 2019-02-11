@@ -298,6 +298,7 @@
     </targetRole>
   </edges>
   <edges xsi:type="com.yattasolutions.diagrams:ConnectionVisual" xmi:id="_Or8dkC1eEemZZ94joFKfEg" targetItem="_a_aP0CyZEem7_r_-bjr0Lg" sourceItem="_Or7PcC1eEemZZ94joFKfEg"/>
+  <edges xsi:type="com.yattasolutions.diagrams:ConnectionVisual" xmi:id="_GAaPAC2ZEemf1YJ4WA-EJA" targetItem="_2yEzkCybEem7_r_-bjr0Lg" sourceItem="_GAYZ0C2ZEemf1YJ4WA-EJA"/>
   <nodes xsi:type="com.yattasolutions.uml.diagrams.classifier:ClassifierVisual" xmi:id="_caYOsCmIEem4X72wVnqehw" containment="_Vk3UUCnIEemS0IHJqlSUCQ" name="Cooperator" package="_Lfql8CnIEemS0IHJqlSUCQ" associationsOut="_Ghw_kCycEem7_r_-bjr0Lg _MPXmICydEem7_r_-bjr0Lg">
     <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_caXnoCmIEem4X72wVnqehw"/>
     <visualProperties xmi:id="_caYOsSmIEem4X72wVnqehw" position="308.0,-106.0" size="186.0,64.0"/>
@@ -329,6 +330,47 @@
         <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_XpANUCycEem7_r_-bjr0Lg"/>
       </type>
     </attributes>
+    <operations xmi:id="_F7mngC2ZEemf1YJ4WA-EJA" name="hashCode">
+      <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F18rcC2ZEemf1YJ4WA-EJA"/>
+      <stereotypes xmi:id="_F7mngS2ZEemf1YJ4WA-EJA" name="Annotations">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F19SgC2ZEemf1YJ4WA-EJA"/>
+      </stereotypes>
+      <stereotypes xmi:id="_F7mngi2ZEemf1YJ4WA-EJA" name="LegacyStyledElement">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F25tsC2ZEemf1YJ4WA-EJA"/>
+      </stereotypes>
+      <visibility xmi:id="_F7mngy2ZEemf1YJ4WA-EJA" label="+"/>
+      <cardinality xmi:id="_F7mnhC2ZEemf1YJ4WA-EJA" label="1" max="1" min="1"/>
+      <outParameters xmi:id="_F7mnhS2ZEemf1YJ4WA-EJA">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F3RhIC2ZEemf1YJ4WA-EJA"/>
+        <type xmi:id="_F7mnhi2ZEemf1YJ4WA-EJA" name="int">
+          <modelElement href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+        </type>
+      </outParameters>
+    </operations>
+    <operations xmi:id="_F79z4C2ZEemf1YJ4WA-EJA" name="equals">
+      <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F4QYkC2ZEemf1YJ4WA-EJA"/>
+      <stereotypes xmi:id="_F79z4S2ZEemf1YJ4WA-EJA" name="LegacyStyledElement">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F4SNwC2ZEemf1YJ4WA-EJA"/>
+      </stereotypes>
+      <stereotypes xmi:id="_F79z4i2ZEemf1YJ4WA-EJA" name="Annotations">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F4S00C2ZEemf1YJ4WA-EJA"/>
+      </stereotypes>
+      <visibility xmi:id="_F79z4y2ZEemf1YJ4WA-EJA" label="+"/>
+      <cardinality xmi:id="_F79z5C2ZEemf1YJ4WA-EJA" label="1" max="1" min="1"/>
+      <outParameters xmi:id="_F79z5S2ZEemf1YJ4WA-EJA">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F4RmsC2ZEemf1YJ4WA-EJA"/>
+        <type xmi:id="_F79z5i2ZEemf1YJ4WA-EJA" name="boolean">
+          <modelElement href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+        </type>
+      </outParameters>
+      <parameters xmi:id="_F79z5y2ZEemf1YJ4WA-EJA" name="obj">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F4Q_oC2ZEemf1YJ4WA-EJA"/>
+        <cardinality xmi:id="_F79z6C2ZEemf1YJ4WA-EJA" label="1" max="1" min="1"/>
+        <type xmi:id="_F79z6S2ZEemf1YJ4WA-EJA" name="Object">
+          <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F3xQYC2ZEemf1YJ4WA-EJA"/>
+        </type>
+      </parameters>
+    </operations>
   </nodes>
   <nodes xsi:type="com.yattasolutions.uml.diagrams.classifier:ClassifierVisual" xmi:id="_1baHwCdaEemLvsCkKRozoQ" containment="_Lx5AkCnXEemCfou_SGwekQ" name="Form" package="_Lfql8CnIEemS0IHJqlSUCQ" associationsIn="_lSvWYCsQEemFupWFI64o_g _2Ry4YCyYEem7_r_-bjr0Lg">
     <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_1bXrgCdaEemLvsCkKRozoQ"/>
@@ -418,6 +460,18 @@
       <stereotypes xmi:id="_EHx7QC1eEemZZ94joFKfEg" name="EnumerationStyleMapping"/>
       <stereotypes xmi:id="_EIRDcC1eEemZZ94joFKfEg" name="StyledElement"/>
       <stereotypes xmi:id="_EIRqgC1eEemZZ94joFKfEg" name="EnumerationStyleMapping"/>
+      <stereotypes xmi:id="_1nrSYC1eEemf1YJ4WA-EJA" name="StyledElement"/>
+      <stereotypes xmi:id="_1ntHkC1eEemf1YJ4WA-EJA" name="EnumerationStyleMapping"/>
+      <stereotypes xmi:id="_1nwx8C1eEemf1YJ4WA-EJA" name="StyledElement"/>
+      <stereotypes xmi:id="_1nxZAC1eEemf1YJ4WA-EJA" name="EnumerationStyleMapping"/>
+      <stereotypes xmi:id="_1oLosC1eEemf1YJ4WA-EJA" name="StyledElement"/>
+      <stereotypes xmi:id="_1oMPwC1eEemf1YJ4WA-EJA" name="EnumerationStyleMapping"/>
+      <stereotypes xmi:id="_EZkNAC2ZEemf1YJ4WA-EJA" name="StyledElement"/>
+      <stereotypes xmi:id="_EZrhwC2ZEemf1YJ4WA-EJA" name="EnumerationStyleMapping"/>
+      <stereotypes xmi:id="_EaSlwC2ZEemf1YJ4WA-EJA" name="StyledElement"/>
+      <stereotypes xmi:id="_EaTz4C2ZEemf1YJ4WA-EJA" name="EnumerationStyleMapping"/>
+      <stereotypes xmi:id="_EcpWMC2ZEemf1YJ4WA-EJA" name="StyledElement"/>
+      <stereotypes xmi:id="_EcrLYC2ZEemf1YJ4WA-EJA" name="EnumerationStyleMapping"/>
       <visibility xmi:id="_il4i4ioxEemCfou_SGwekQ" label="+"/>
       <cardinality xmi:id="_il4i4yoxEemCfou_SGwekQ" label="1" max="1" min="1"/>
       <type xmi:id="_lP6r4CsQEemFupWFI64o_g" name="FormType">
@@ -426,6 +480,9 @@
     </attributes>
     <attributes xmi:id="_uWhl4CsiEemqKpWaCqKr0g" name="pdfLink">
       <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_uWgXwCsiEemqKpWaCqKr0g"/>
+      <stereotypes xmi:id="_GBInwC2ZEemf1YJ4WA-EJA" name="StyledElement">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F2_0UC2ZEemf1YJ4WA-EJA"/>
+      </stereotypes>
       <visibility xmi:id="_uWhl4SsiEemqKpWaCqKr0g" label="+"/>
       <cardinality xmi:id="_uWhl4isiEemqKpWaCqKr0g" label="1" max="1" min="1"/>
       <type xmi:id="_wIvKYCsiEemqKpWaCqKr0g" name="String">
@@ -451,6 +508,47 @@
         <modelElement href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
       </type>
     </attributes>
+    <operations xmi:id="_F9EAEC2ZEemf1YJ4WA-EJA" name="hashCode">
+      <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F2OYQC2ZEemf1YJ4WA-EJA"/>
+      <stereotypes xmi:id="_F9EAES2ZEemf1YJ4WA-EJA" name="Annotations">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F2RbkC2ZEemf1YJ4WA-EJA"/>
+      </stereotypes>
+      <stereotypes xmi:id="_F9EAEi2ZEemf1YJ4WA-EJA" name="LegacyStyledElement">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F3BCcC2ZEemf1YJ4WA-EJA"/>
+      </stereotypes>
+      <visibility xmi:id="_F9EAEy2ZEemf1YJ4WA-EJA" label="+"/>
+      <cardinality xmi:id="_F9EAFC2ZEemf1YJ4WA-EJA" label="1" max="1" min="1"/>
+      <outParameters xmi:id="_F9EAFS2ZEemf1YJ4WA-EJA">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F3XAsC2ZEemf1YJ4WA-EJA"/>
+        <type xmi:id="_F9EAFi2ZEemf1YJ4WA-EJA" name="int">
+          <modelElement href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+        </type>
+      </outParameters>
+    </operations>
+    <operations xmi:id="_F9LU0C2ZEemf1YJ4WA-EJA" name="equals">
+      <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F4fCEC2ZEemf1YJ4WA-EJA"/>
+      <stereotypes xmi:id="_F9LU0S2ZEemf1YJ4WA-EJA" name="LegacyStyledElement">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F4gQMC2ZEemf1YJ4WA-EJA"/>
+      </stereotypes>
+      <stereotypes xmi:id="_F9LU0i2ZEemf1YJ4WA-EJA" name="Annotations">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F4g3QC2ZEemf1YJ4WA-EJA"/>
+      </stereotypes>
+      <visibility xmi:id="_F9LU0y2ZEemf1YJ4WA-EJA" label="+"/>
+      <cardinality xmi:id="_F9LU1C2ZEemf1YJ4WA-EJA" label="1" max="1" min="1"/>
+      <outParameters xmi:id="_F9LU1S2ZEemf1YJ4WA-EJA">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F4fpIC2ZEemf1YJ4WA-EJA"/>
+        <type xmi:id="_F9LU1i2ZEemf1YJ4WA-EJA" name="boolean">
+          <modelElement href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+        </type>
+      </outParameters>
+      <parameters xmi:id="_F9LU1y2ZEemf1YJ4WA-EJA" name="obj">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F4fCES2ZEemf1YJ4WA-EJA"/>
+        <cardinality xmi:id="_F9LU2C2ZEemf1YJ4WA-EJA" label="1" max="1" min="1"/>
+        <type xmi:id="_F9LU2S2ZEemf1YJ4WA-EJA" name="Object">
+          <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F3xQYC2ZEemf1YJ4WA-EJA"/>
+        </type>
+      </parameters>
+    </operations>
   </nodes>
   <nodes xsi:type="com.yattasolutions.uml.diagrams.classifier:PackageVisual" xmi:id="_Lfql8CnIEemS0IHJqlSUCQ" containment="_OC1GQCnIEemS0IHJqlSUCQ" containments="_Vk3UUCnIEemS0IHJqlSUCQ _Lx5AkCnXEemCfou_SGwekQ _SkDzICozEemCfou_SGwekQ _R6xksCsnEemqKpWaCqKr0g _K9ybwCyYEem7_r_-bjr0Lg _hX0G4CyaEem7_r_-bjr0Lg _hvBF8CyaEem7_r_-bjr0Lg _EkdlYCycEem7_r_-bjr0Lg _Ldby4CydEem7_r_-bjr0Lg _oI2EQCzmEem7_r_-bjr0Lg" classes="_caYOsCmIEem4X72wVnqehw _1baHwCdaEemLvsCkKRozoQ _9-xmoCoxEemCfou_SGwekQ _2K0r0CsmEemqKpWaCqKr0g _4P_f4CyXEem7_r_-bjr0Lg _a_aP0CyZEem7_r_-bjr0Lg _QP7Y4CyaEem7_r_-bjr0Lg _2yEzkCybEem7_r_-bjr0Lg _XpCpkCycEem7_r_-bjr0Lg _aqyjsSzmEem7_r_-bjr0Lg" name="model">
     <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_LfpX0CnIEemS0IHJqlSUCQ"/>
@@ -474,9 +572,11 @@
     <attributes xmi:id="_oVHssCyZEem7_r_-bjr0Lg" name="studentEvalFormDeadline">
       <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_oVF3gCyZEem7_r_-bjr0Lg"/>
       <stereotypes xmi:id="_OsKgAC1eEemZZ94joFKfEg" name="StyledElement"/>
-      <stereotypes xmi:id="_OspoMC1eEemZZ94joFKfEg" name="StyledElement">
-        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_OpBFYC1eEemZZ94joFKfEg"/>
-      </stereotypes>
+      <stereotypes xmi:id="_1oGwMC1eEemf1YJ4WA-EJA" name="StyledElement"/>
+      <stereotypes xmi:id="_1oH-UC1eEemf1YJ4WA-EJA" name="StyledElement"/>
+      <stereotypes xmi:id="_1oQhMC1eEemf1YJ4WA-EJA" name="StyledElement"/>
+      <stereotypes xmi:id="_EbvXQC2ZEemf1YJ4WA-EJA" name="StyledElement"/>
+      <stereotypes xmi:id="_EcassC2ZEemf1YJ4WA-EJA" name="StyledElement"/>
       <visibility xmi:id="_oVHssSyZEem7_r_-bjr0Lg" label="+"/>
       <cardinality xmi:id="_oVHssiyZEem7_r_-bjr0Lg" label="1" max="1" min="1"/>
       <type xmi:id="_ryt08CyZEem7_r_-bjr0Lg" name="Date">
@@ -486,9 +586,11 @@
     <attributes xmi:id="_sxrXkCyZEem7_r_-bjr0Lg" name="coopEvalFormDeadline">
       <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_sxqJcCyZEem7_r_-bjr0Lg"/>
       <stereotypes xmi:id="_OsZJgC1eEemZZ94joFKfEg" name="StyledElement"/>
-      <stereotypes xmi:id="_OssrgC1eEemZZ94joFKfEg" name="StyledElement">
-        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_OpBscC1eEemZZ94joFKfEg"/>
-      </stereotypes>
+      <stereotypes xmi:id="_1oIlYC1eEemf1YJ4WA-EJA" name="StyledElement"/>
+      <stereotypes xmi:id="_1oJzgC1eEemf1YJ4WA-EJA" name="StyledElement"/>
+      <stereotypes xmi:id="_1oRvUC1eEemf1YJ4WA-EJA" name="StyledElement"/>
+      <stereotypes xmi:id="_Eb2E8C2ZEemf1YJ4WA-EJA" name="StyledElement"/>
+      <stereotypes xmi:id="_EcYQcC2ZEemf1YJ4WA-EJA" name="StyledElement"/>
       <visibility xmi:id="_sxrXkSyZEem7_r_-bjr0Lg" label="+"/>
       <cardinality xmi:id="_sxrXkiyZEem7_r_-bjr0Lg" label="1" max="1" min="1"/>
       <type xmi:id="_sxrXkyyZEem7_r_-bjr0Lg" name="Date">
@@ -514,69 +616,47 @@
         <modelElement href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
       </type>
     </attributes>
-  </nodes>
-  <nodes xsi:type="com.yattasolutions.uml.diagrams.classifier:ClassifierVisual" xmi:id="_4P_f4CyXEem7_r_-bjr0Lg" comments="_JkpMkC1eEemZZ94joFKfEg" targetConnectionVisual="_Jkro0C1eEemZZ94joFKfEg" containment="_K9ybwCyYEem7_r_-bjr0Lg" name="CoopTermRegistration" package="_Lfql8CnIEemS0IHJqlSUCQ" associationsIn="_3hSU4CyZEem7_r_-bjr0Lg _2M8qAC1bEem-ZdZYBcPN7Q" associationsOut="_2Ry4YCyYEem7_r_-bjr0Lg __icdACybEem7_r_-bjr0Lg">
-    <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_4P8ckCyXEem7_r_-bjr0Lg"/>
-    <visualProperties xmi:id="_4P_f4SyXEem7_r_-bjr0Lg" position="477.0,316.0" size="246.0,-1.0"/>
-    <visibility xmi:id="_4P_f4iyXEem7_r_-bjr0Lg" label="+"/>
-    <attributes xmi:id="_6SMBICyXEem7_r_-bjr0Lg" name="registrationID">
-      <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_6SKzACyXEem7_r_-bjr0Lg"/>
-      <stereotypes xmi:id="__GWTsCyXEem7_r_-bjr0Lg" name="PrimaryKey">
-        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#__GT3cCyXEem7_r_-bjr0Lg"/>
+    <operations xmi:id="_GAkAAC2ZEemf1YJ4WA-EJA" name="hashCode">
+      <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F2zAAC2ZEemf1YJ4WA-EJA"/>
+      <stereotypes xmi:id="_GAkAAS2ZEemf1YJ4WA-EJA" name="Annotations">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F201MC2ZEemf1YJ4WA-EJA"/>
       </stereotypes>
-      <visibility xmi:id="_6SMBISyXEem7_r_-bjr0Lg" label="+"/>
-      <cardinality xmi:id="_6SMBIiyXEem7_r_-bjr0Lg" label="1" max="1" min="1"/>
-      <type xmi:id="_7KNOQCyXEem7_r_-bjr0Lg" name="String">
-        <modelElement href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
-      </type>
-    </attributes>
-    <attributes xmi:id="_8PJdECyXEem7_r_-bjr0Lg" name="termStatus">
-      <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_8PIO8CyXEem7_r_-bjr0Lg"/>
-      <stereotypes xmi:id="_2WQXAC1bEem-ZdZYBcPN7Q" name="StyledElement"/>
-      <stereotypes xmi:id="_EICZ8C1eEemZZ94joFKfEg" name="StyledElement"/>
-      <stereotypes xmi:id="_EIEPIC1eEemZZ94joFKfEg" name="StyledElement"/>
-      <stereotypes xmi:id="_EIZmUC1eEemZZ94joFKfEg" name="StyledElement"/>
-      <visibility xmi:id="_8PJdESyXEem7_r_-bjr0Lg" label="+"/>
-      <cardinality xmi:id="_8PJdEiyXEem7_r_-bjr0Lg" label="1" max="1" min="1"/>
-      <type xmi:id="_9Ma9oCyXEem7_r_-bjr0Lg" name="TermStatus">
-        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_9-w_kCoxEemCfou_SGwekQ"/>
-      </type>
-    </attributes>
-    <attributes xmi:id="_2R3J0CyYEem7_r_-bjr0Lg" name="form">
-      <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_2RvOACyYEem7_r_-bjr0Lg"/>
-      <visibility xmi:id="_2R3J0SyYEem7_r_-bjr0Lg" label="+"/>
-      <cardinality xmi:id="_2R3J0iyYEem7_r_-bjr0Lg" label="*" max="-1"/>
-      <type xmi:id="_2R3J0yyYEem7_r_-bjr0Lg" name="Form">
-        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_1bXrgCdaEemLvsCkKRozoQ"/>
-      </type>
-    </attributes>
-    <attributes xmi:id="_3hWmUCyZEem7_r_-bjr0Lg" name="term">
-      <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_3hJK8CyZEem7_r_-bjr0Lg"/>
-      <visibility xmi:id="_3hWmUSyZEem7_r_-bjr0Lg" label="+"/>
-      <cardinality xmi:id="_3hWmUiyZEem7_r_-bjr0Lg" label="0..1" max="1"/>
-      <type xmi:id="_3hWmUyyZEem7_r_-bjr0Lg" name="Term">
-        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_a_YaoCyZEem7_r_-bjr0Lg"/>
-      </type>
-    </attributes>
-    <attributes xmi:id="_ASGqQCyaEem7_r_-bjr0Lg" name="jobID">
-      <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_ASDm8CyaEem7_r_-bjr0Lg"/>
-      <stereotypes xmi:id="_2WrNwC1bEem-ZdZYBcPN7Q" name="StyledElement">
-        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_2GHpQC1bEem-ZdZYBcPN7Q"/>
+      <stereotypes xmi:id="_GAkAAi2ZEemf1YJ4WA-EJA" name="LegacyStyledElement">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F3IXMC2ZEemf1YJ4WA-EJA"/>
       </stereotypes>
-      <visibility xmi:id="_ASGqQSyaEem7_r_-bjr0Lg" label="+"/>
-      <cardinality xmi:id="_ASGqQiyaEem7_r_-bjr0Lg" label="1" max="1" min="1"/>
-      <type xmi:id="_BQj2kCyaEem7_r_-bjr0Lg" name="String">
-        <modelElement href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
-      </type>
-    </attributes>
-    <attributes xmi:id="__ie5QCybEem7_r_-bjr0Lg" name="student">
-      <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#__iYLkCybEem7_r_-bjr0Lg"/>
-      <visibility xmi:id="__ie5QSybEem7_r_-bjr0Lg" label="+"/>
-      <cardinality xmi:id="__ie5QiybEem7_r_-bjr0Lg" label="1" max="1" min="1"/>
-      <type xmi:id="__ie5QyybEem7_r_-bjr0Lg" name="Student">
-        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_2yC-YCybEem7_r_-bjr0Lg"/>
-      </type>
-    </attributes>
+      <visibility xmi:id="_GAkAAy2ZEemf1YJ4WA-EJA" label="+"/>
+      <cardinality xmi:id="_GAkABC2ZEemf1YJ4WA-EJA" label="1" max="1" min="1"/>
+      <outParameters xmi:id="_GAkABS2ZEemf1YJ4WA-EJA">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F3duYC2ZEemf1YJ4WA-EJA"/>
+        <type xmi:id="_GAkABi2ZEemf1YJ4WA-EJA" name="int">
+          <modelElement href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+        </type>
+      </outParameters>
+    </operations>
+    <operations xmi:id="_GAtJ8C2ZEemf1YJ4WA-EJA" name="equals">
+      <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F4vgwC2ZEemf1YJ4WA-EJA"/>
+      <stereotypes xmi:id="_GAtJ8S2ZEemf1YJ4WA-EJA" name="LegacyStyledElement">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F4wu4C2ZEemf1YJ4WA-EJA"/>
+      </stereotypes>
+      <stereotypes xmi:id="_GAtJ8i2ZEemf1YJ4WA-EJA" name="Annotations">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F4xV8C2ZEemf1YJ4WA-EJA"/>
+      </stereotypes>
+      <visibility xmi:id="_GAtJ8y2ZEemf1YJ4WA-EJA" label="+"/>
+      <cardinality xmi:id="_GAtJ9C2ZEemf1YJ4WA-EJA" label="1" max="1" min="1"/>
+      <outParameters xmi:id="_GAtJ9S2ZEemf1YJ4WA-EJA">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F4wH0S2ZEemf1YJ4WA-EJA"/>
+        <type xmi:id="_GAtJ9i2ZEemf1YJ4WA-EJA" name="boolean">
+          <modelElement href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+        </type>
+      </outParameters>
+      <parameters xmi:id="_GAtJ9y2ZEemf1YJ4WA-EJA" name="obj">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F4wH0C2ZEemf1YJ4WA-EJA"/>
+        <cardinality xmi:id="_GAtJ-C2ZEemf1YJ4WA-EJA" label="1" max="1" min="1"/>
+        <type xmi:id="_GAtJ-S2ZEemf1YJ4WA-EJA" name="Object">
+          <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F3xQYC2ZEemf1YJ4WA-EJA"/>
+        </type>
+      </parameters>
+    </operations>
   </nodes>
   <nodes xsi:type="com.yattasolutions.uml.diagrams.classifier:UMLDataTypeVisual" xmi:id="_8iMVgSdgEemLvsCkKRozoQ" name="Date" associationsOut="_2Ue1YC1bEem-ZdZYBcPN7Q _OquVkC1eEemZZ94joFKfEg _Or4zMC1eEemZZ94joFKfEg">
     <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_8iMVgCdgEemLvsCkKRozoQ"/>
@@ -605,6 +685,9 @@
     </attributes>
     <attributes xmi:id="_Z83tYCycEem7_r_-bjr0Lg" name="term">
       <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_Z814MCycEem7_r_-bjr0Lg"/>
+      <stereotypes xmi:id="_GA5-QC2ZEemf1YJ4WA-EJA" name="StyledElement">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F26UwC2ZEemf1YJ4WA-EJA"/>
+      </stereotypes>
       <visibility xmi:id="_Z83tYSycEem7_r_-bjr0Lg" label="+"/>
       <cardinality xmi:id="_Z83tYiycEem7_r_-bjr0Lg" label="1" max="1" min="1"/>
       <type xmi:id="_a0sGMCycEem7_r_-bjr0Lg" name="String">
@@ -613,6 +696,9 @@
     </attributes>
     <attributes xmi:id="_beZxkCycEem7_r_-bjr0Lg" name="courseName">
       <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_beYjcCycEem7_r_-bjr0Lg"/>
+      <stereotypes xmi:id="_GA9BkC2ZEemf1YJ4WA-EJA" name="StyledElement">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F2670C2ZEemf1YJ4WA-EJA"/>
+      </stereotypes>
       <visibility xmi:id="_beZxkSycEem7_r_-bjr0Lg" label="+"/>
       <cardinality xmi:id="_beZxkiycEem7_r_-bjr0Lg" label="1" max="1" min="1"/>
       <type xmi:id="_HUH0ICydEem7_r_-bjr0Lg" name="String">
@@ -621,6 +707,9 @@
     </attributes>
     <attributes xmi:id="_Hwws0CydEem7_r_-bjr0Lg" name="courseRank">
       <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_HwvesCydEem7_r_-bjr0Lg"/>
+      <stereotypes xmi:id="_GBB6EC2ZEemf1YJ4WA-EJA" name="StyledElement">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F27i4C2ZEemf1YJ4WA-EJA"/>
+      </stereotypes>
       <visibility xmi:id="_Hwws0SydEem7_r_-bjr0Lg" label="+"/>
       <cardinality xmi:id="_Hwws0iydEem7_r_-bjr0Lg" label="1" max="1" min="1"/>
       <type xmi:id="_Igb2QCydEem7_r_-bjr0Lg" name="Integer">
@@ -635,12 +724,53 @@
         <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_caXnoCmIEem4X72wVnqehw"/>
       </type>
     </attributes>
+    <operations xmi:id="_F8VnUC2ZEemf1YJ4WA-EJA" name="hashCode">
+      <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F2HDgC2ZEemf1YJ4WA-EJA"/>
+      <stereotypes xmi:id="_F8VnUS2ZEemf1YJ4WA-EJA" name="Annotations">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F2HqkC2ZEemf1YJ4WA-EJA"/>
+      </stereotypes>
+      <stereotypes xmi:id="_F8VnUi2ZEemf1YJ4WA-EJA" name="LegacyStyledElement">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F28J8C2ZEemf1YJ4WA-EJA"/>
+      </stereotypes>
+      <visibility xmi:id="_F8VnUy2ZEemf1YJ4WA-EJA" label="+"/>
+      <cardinality xmi:id="_F8VnVC2ZEemf1YJ4WA-EJA" label="1" max="1" min="1"/>
+      <outParameters xmi:id="_F8VnVS2ZEemf1YJ4WA-EJA">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F3VLgC2ZEemf1YJ4WA-EJA"/>
+        <type xmi:id="_F8VnVi2ZEemf1YJ4WA-EJA" name="int">
+          <modelElement href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+        </type>
+      </outParameters>
+    </operations>
+    <operations xmi:id="_F8pwYC2ZEemf1YJ4WA-EJA" name="equals">
+      <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F4UC8C2ZEemf1YJ4WA-EJA"/>
+      <stereotypes xmi:id="_F8pwYS2ZEemf1YJ4WA-EJA" name="LegacyStyledElement">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F4XGQC2ZEemf1YJ4WA-EJA"/>
+      </stereotypes>
+      <stereotypes xmi:id="_F8pwYi2ZEemf1YJ4WA-EJA" name="Annotations">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F4awoC2ZEemf1YJ4WA-EJA"/>
+      </stereotypes>
+      <visibility xmi:id="_F8pwYy2ZEemf1YJ4WA-EJA" label="+"/>
+      <cardinality xmi:id="_F8pwZC2ZEemf1YJ4WA-EJA" label="1" max="1" min="1"/>
+      <outParameters xmi:id="_F8pwZS2ZEemf1YJ4WA-EJA">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F4V4IC2ZEemf1YJ4WA-EJA"/>
+        <type xmi:id="_F8pwZi2ZEemf1YJ4WA-EJA" name="boolean">
+          <modelElement href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+        </type>
+      </outParameters>
+      <parameters xmi:id="_F8pwZy2ZEemf1YJ4WA-EJA" name="obj">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F4UqAC2ZEemf1YJ4WA-EJA"/>
+        <cardinality xmi:id="_F8pwaC2ZEemf1YJ4WA-EJA" label="1" max="1" min="1"/>
+        <type xmi:id="_F8pwaS2ZEemf1YJ4WA-EJA" name="Object">
+          <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F3xQYC2ZEemf1YJ4WA-EJA"/>
+        </type>
+      </parameters>
+    </operations>
   </nodes>
   <nodes xsi:type="com.yattasolutions.uml.diagrams.classifier:EnumerationVisual" xmi:id="_2K0r0CsmEemqKpWaCqKr0g" containment="_R6xksCsnEemqKpWaCqKr0g" name="FormType" package="_Lfql8CnIEemS0IHJqlSUCQ" associationsOut="_lSvWYCsQEemFupWFI64o_g">
     <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_lGOkYCsQEemFupWFI64o_g"/>
     <visualProperties xmi:id="_2K0r0SsmEemqKpWaCqKr0g" position="942.0,648.0" size="101.0,48.0"/>
-    <stereotypes xmi:id="_8JpasCsmEemqKpWaCqKr0g" name="LegacyStyledElement">
-      <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_8Jj7ICsmEemqKpWaCqKr0g"/>
+    <stereotypes xmi:id="_F5sjAC2ZEemf1YJ4WA-EJA" name="StyledElement">
+      <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F1v3IC2ZEemf1YJ4WA-EJA"/>
     </stereotypes>
     <visibility xmi:id="_2K0r0ismEemqKpWaCqKr0g" label="+"/>
     <literals xmi:id="_8JlwUCsmEemqKpWaCqKr0g" name="STUDENTEVALUATION">
@@ -693,7 +823,7 @@
       <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_Bz_FYCzqEem7_r_-bjr0Lg"/>
     </literals>
   </nodes>
-  <nodes xsi:type="com.yattasolutions.uml.diagrams.classifier:ClassifierVisual" xmi:id="_2yEzkCybEem7_r_-bjr0Lg" containment="_EkdlYCycEem7_r_-bjr0Lg" name="Student" package="_Lfql8CnIEemS0IHJqlSUCQ" associationsIn="__icdACybEem7_r_-bjr0Lg _Ghw_kCycEem7_r_-bjr0Lg" associationsOut="__TgCECybEem7_r_-bjr0Lg">
+  <nodes xsi:type="com.yattasolutions.uml.diagrams.classifier:ClassifierVisual" xmi:id="_2yEzkCybEem7_r_-bjr0Lg" comments="_GAYZ0C2ZEemf1YJ4WA-EJA" targetConnectionVisual="_GAaPAC2ZEemf1YJ4WA-EJA" containment="_EkdlYCycEem7_r_-bjr0Lg" name="Student" package="_Lfql8CnIEemS0IHJqlSUCQ" associationsIn="__icdACybEem7_r_-bjr0Lg _Ghw_kCycEem7_r_-bjr0Lg" associationsOut="__TgCECybEem7_r_-bjr0Lg">
     <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_2yC-YCybEem7_r_-bjr0Lg"/>
     <visualProperties xmi:id="_2yEzkSybEem7_r_-bjr0Lg" position="485.0,76.0" size="-1.0,-1.0"/>
     <visibility xmi:id="_2yEzkiybEem7_r_-bjr0Lg" label="+"/>
@@ -710,6 +840,9 @@
     </attributes>
     <attributes xmi:id="_4x5WQCybEem7_r_-bjr0Lg" name="firstName">
       <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_4x4vMCybEem7_r_-bjr0Lg"/>
+      <stereotypes xmi:id="_GBLrEC2ZEemf1YJ4WA-EJA" name="StyledElement">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F3Es0C2ZEemf1YJ4WA-EJA"/>
+      </stereotypes>
       <visibility xmi:id="_4x5WQSybEem7_r_-bjr0Lg" label="+"/>
       <cardinality xmi:id="_4x5WQiybEem7_r_-bjr0Lg" label="1" max="1" min="1"/>
       <type xmi:id="_5nloICybEem7_r_-bjr0Lg" name="String">
@@ -718,6 +851,9 @@
     </attributes>
     <attributes xmi:id="_6iMPMCybEem7_r_-bjr0Lg" name="lastName">
       <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_6iKaACybEem7_r_-bjr0Lg"/>
+      <stereotypes xmi:id="_GBPVcC2ZEemf1YJ4WA-EJA" name="StyledElement">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F3FT4C2ZEemf1YJ4WA-EJA"/>
+      </stereotypes>
       <visibility xmi:id="_6iMPMSybEem7_r_-bjr0Lg" label="+"/>
       <cardinality xmi:id="_6iMPMiybEem7_r_-bjr0Lg" label="1" max="1" min="1"/>
       <type xmi:id="_721t8CybEem7_r_-bjr0Lg" name="String">
@@ -726,6 +862,9 @@
     </attributes>
     <attributes xmi:id="_6i_gcSybEem7_r_-bjr0Lg" name="isProblematic">
       <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_6i_gcCybEem7_r_-bjr0Lg"/>
+      <stereotypes xmi:id="_GBS_0C2ZEemf1YJ4WA-EJA" name="StyledElement">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F3FT4S2ZEemf1YJ4WA-EJA"/>
+      </stereotypes>
       <visibility xmi:id="_6i_gciybEem7_r_-bjr0Lg" label="+"/>
       <cardinality xmi:id="_6i_gcyybEem7_r_-bjr0Lg" label="1" max="1" min="1"/>
       <type xmi:id="_8zMogCybEem7_r_-bjr0Lg" name="boolean">
@@ -756,14 +895,47 @@
         <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_caXnoCmIEem4X72wVnqehw"/>
       </type>
     </attributes>
-    <attributes xmi:id="_ZWPgsCzoEem7_r_-bjr0Lg" name="grade">
-      <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_ZWOSkCzoEem7_r_-bjr0Lg"/>
-      <visibility xmi:id="_ZWPgsSzoEem7_r_-bjr0Lg" label="+"/>
-      <cardinality xmi:id="_ZWPgsizoEem7_r_-bjr0Lg" label="1" max="1" min="1"/>
-      <type xmi:id="_aZshwCzoEem7_r_-bjr0Lg" name="Grade">
-        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_aqyjsCzmEem7_r_-bjr0Lg"/>
-      </type>
-    </attributes>
+    <operations xmi:id="_F-LaYC2ZEemf1YJ4WA-EJA" name="hashCode">
+      <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F2oA4C2ZEemf1YJ4WA-EJA"/>
+      <stereotypes xmi:id="_F-LaYS2ZEemf1YJ4WA-EJA" name="Annotations">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F2on8C2ZEemf1YJ4WA-EJA"/>
+      </stereotypes>
+      <stereotypes xmi:id="_F-LaYi2ZEemf1YJ4WA-EJA" name="LegacyStyledElement">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F3GiAC2ZEemf1YJ4WA-EJA"/>
+      </stereotypes>
+      <visibility xmi:id="_F-LaYy2ZEemf1YJ4WA-EJA" label="+"/>
+      <cardinality xmi:id="_F-LaZC2ZEemf1YJ4WA-EJA" label="1" max="1" min="1"/>
+      <outParameters xmi:id="_F-LaZS2ZEemf1YJ4WA-EJA">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F3b5MC2ZEemf1YJ4WA-EJA"/>
+        <type xmi:id="_F-LaZi2ZEemf1YJ4WA-EJA" name="int">
+          <modelElement href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+        </type>
+      </outParameters>
+    </operations>
+    <operations xmi:id="_F-e8YC2ZEemf1YJ4WA-EJA" name="equals">
+      <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F4m94C2ZEemf1YJ4WA-EJA"/>
+      <stereotypes xmi:id="_F-e8YS2ZEemf1YJ4WA-EJA" name="LegacyStyledElement">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F4trkC2ZEemf1YJ4WA-EJA"/>
+      </stereotypes>
+      <stereotypes xmi:id="_F-e8Yi2ZEemf1YJ4WA-EJA" name="Annotations">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F4u5sC2ZEemf1YJ4WA-EJA"/>
+      </stereotypes>
+      <visibility xmi:id="_F-e8Yy2ZEemf1YJ4WA-EJA" label="+"/>
+      <cardinality xmi:id="_F-e8ZC2ZEemf1YJ4WA-EJA" label="1" max="1" min="1"/>
+      <outParameters xmi:id="_F-e8ZS2ZEemf1YJ4WA-EJA">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F4sdcC2ZEemf1YJ4WA-EJA"/>
+        <type xmi:id="_F-e8Zi2ZEemf1YJ4WA-EJA" name="boolean">
+          <modelElement href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+        </type>
+      </outParameters>
+      <parameters xmi:id="_F-e8Zy2ZEemf1YJ4WA-EJA" name="obj">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F4ozEC2ZEemf1YJ4WA-EJA"/>
+        <cardinality xmi:id="_F-e8aC2ZEemf1YJ4WA-EJA" label="1" max="1" min="1"/>
+        <type xmi:id="_F-e8aS2ZEemf1YJ4WA-EJA" name="Object">
+          <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F3xQYC2ZEemf1YJ4WA-EJA"/>
+        </type>
+      </parameters>
+    </operations>
   </nodes>
   <nodes xsi:type="com.yattasolutions.uml.diagrams.classifier:ClassifierVisual" xmi:id="_QP7Y4CyaEem7_r_-bjr0Lg" comments="_2UmKIC1bEem-ZdZYBcPN7Q" targetConnectionVisual="_2VSGoC1bEem-ZdZYBcPN7Q" containment="_hvBF8CyaEem7_r_-bjr0Lg" name="Meeting" package="_Lfql8CnIEemS0IHJqlSUCQ" associationsIn="__TgCECybEem7_r_-bjr0Lg _2OrIUC1bEem-ZdZYBcPN7Q _2SAwMC1bEem-ZdZYBcPN7Q _2Ue1YC1bEem-ZdZYBcPN7Q">
     <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_QP6KwCyaEem7_r_-bjr0Lg"/>
@@ -775,6 +947,11 @@
       <stereotypes xmi:id="_EIGEUC1eEemZZ94joFKfEg" name="StyledElement"/>
       <stereotypes xmi:id="_EIHScC1eEemZZ94joFKfEg" name="StyledElement"/>
       <stereotypes xmi:id="_EIfF4C1eEemZZ94joFKfEg" name="StyledElement"/>
+      <stereotypes xmi:id="_1oACgC1eEemf1YJ4WA-EJA" name="StyledElement"/>
+      <stereotypes xmi:id="_1oBQoC1eEemf1YJ4WA-EJA" name="StyledElement"/>
+      <stereotypes xmi:id="_1oYdAC1eEemf1YJ4WA-EJA" name="StyledElement"/>
+      <stereotypes xmi:id="_Ebii8C2ZEemf1YJ4WA-EJA" name="StyledElement"/>
+      <stereotypes xmi:id="_EcSw4C2ZEemf1YJ4WA-EJA" name="StyledElement"/>
       <visibility xmi:id="_Slnd4SyaEem7_r_-bjr0Lg" label="+"/>
       <cardinality xmi:id="_Slnd4iyaEem7_r_-bjr0Lg" label="1" max="1" min="1"/>
       <type xmi:id="_TPqgcCyaEem7_r_-bjr0Lg" name="Time">
@@ -787,6 +964,11 @@
       <stereotypes xmi:id="_EIJHoC1eEemZZ94joFKfEg" name="StyledElement"/>
       <stereotypes xmi:id="_EIK80C1eEemZZ94joFKfEg" name="StyledElement"/>
       <stereotypes xmi:id="_EIg7EC1eEemZZ94joFKfEg" name="StyledElement"/>
+      <stereotypes xmi:id="_1oB3sC1eEemf1YJ4WA-EJA" name="StyledElement"/>
+      <stereotypes xmi:id="_1oDF0C1eEemf1YJ4WA-EJA" name="StyledElement"/>
+      <stereotypes xmi:id="_1oZrIC1eEemf1YJ4WA-EJA" name="StyledElement"/>
+      <stereotypes xmi:id="_EbopkC2ZEemf1YJ4WA-EJA" name="StyledElement"/>
+      <stereotypes xmi:id="_EcQUoC2ZEemf1YJ4WA-EJA" name="StyledElement"/>
       <visibility xmi:id="_UOF3kSyaEem7_r_-bjr0Lg" label="+"/>
       <cardinality xmi:id="_UOF3kiyaEem7_r_-bjr0Lg" label="1" max="1" min="1"/>
       <type xmi:id="_VjK0ICyaEem7_r_-bjr0Lg" name="Time">
@@ -840,12 +1022,58 @@
       <stereotypes xmi:id="_EIMyAC1eEemZZ94joFKfEg" name="StyledElement"/>
       <stereotypes xmi:id="_EIOAIC1eEemZZ94joFKfEg" name="StyledElement"/>
       <stereotypes xmi:id="_EIjXUC1eEemZZ94joFKfEg" name="StyledElement"/>
+      <stereotypes xmi:id="_1oET8C1eEemf1YJ4WA-EJA" name="StyledElement"/>
+      <stereotypes xmi:id="_1oFiEC1eEemf1YJ4WA-EJA" name="StyledElement"/>
+      <stereotypes xmi:id="_1ocHYC1eEemf1YJ4WA-EJA" name="StyledElement"/>
+      <stereotypes xmi:id="_EbsT8C2ZEemf1YJ4WA-EJA" name="StyledElement"/>
+      <stereotypes xmi:id="_EcKOAC2ZEemf1YJ4WA-EJA" name="StyledElement"/>
       <visibility xmi:id="_JWMdISzrEem7_r_-bjr0Lg" label="+"/>
       <cardinality xmi:id="_JWMdIizrEem7_r_-bjr0Lg" label="1" max="1" min="1"/>
       <type xmi:id="_KRMFwCzrEem7_r_-bjr0Lg" name="Date">
         <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_8iMVgCdgEemLvsCkKRozoQ"/>
       </type>
     </attributes>
+    <operations xmi:id="_F9YwMC2ZEemf1YJ4WA-EJA" name="hashCode">
+      <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F2Z-cC2ZEemf1YJ4WA-EJA"/>
+      <stereotypes xmi:id="_F9YwMS2ZEemf1YJ4WA-EJA" name="Annotations">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F2algC2ZEemf1YJ4WA-EJA"/>
+      </stereotypes>
+      <stereotypes xmi:id="_F9YwMi2ZEemf1YJ4WA-EJA" name="LegacyStyledElement">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F3EFwC2ZEemf1YJ4WA-EJA"/>
+      </stereotypes>
+      <visibility xmi:id="_F9YwMy2ZEemf1YJ4WA-EJA" label="+"/>
+      <cardinality xmi:id="_F9YwNC2ZEemf1YJ4WA-EJA" label="1" max="1" min="1"/>
+      <outParameters xmi:id="_F9YwNS2ZEemf1YJ4WA-EJA">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F3Y14C2ZEemf1YJ4WA-EJA"/>
+        <type xmi:id="_F9YwNi2ZEemf1YJ4WA-EJA" name="int">
+          <modelElement href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+        </type>
+      </outParameters>
+    </operations>
+    <operations xmi:id="_F9h6IC2ZEemf1YJ4WA-EJA" name="equals">
+      <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F4heUC2ZEemf1YJ4WA-EJA"/>
+      <stereotypes xmi:id="_F9h6IS2ZEemf1YJ4WA-EJA" name="LegacyStyledElement">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F4j6kC2ZEemf1YJ4WA-EJA"/>
+      </stereotypes>
+      <stereotypes xmi:id="_F9h6Ii2ZEemf1YJ4WA-EJA" name="Annotations">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F4lIsC2ZEemf1YJ4WA-EJA"/>
+      </stereotypes>
+      <visibility xmi:id="_F9h6Iy2ZEemf1YJ4WA-EJA" label="+"/>
+      <cardinality xmi:id="_F9h6JC2ZEemf1YJ4WA-EJA" label="1" max="1" min="1"/>
+      <outParameters xmi:id="_F9h6JS2ZEemf1YJ4WA-EJA">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F4iscC2ZEemf1YJ4WA-EJA"/>
+        <type xmi:id="_F9h6Ji2ZEemf1YJ4WA-EJA" name="boolean">
+          <modelElement href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+        </type>
+      </outParameters>
+      <parameters xmi:id="_F9h6Jy2ZEemf1YJ4WA-EJA" name="obj">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F4iFYC2ZEemf1YJ4WA-EJA"/>
+        <cardinality xmi:id="_F9h6KC2ZEemf1YJ4WA-EJA" label="1" max="1" min="1"/>
+        <type xmi:id="_F9h6KS2ZEemf1YJ4WA-EJA" name="Object">
+          <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F3xQYC2ZEemf1YJ4WA-EJA"/>
+        </type>
+      </parameters>
+    </operations>
   </nodes>
   <nodes xsi:type="com.yattasolutions.diagrams:CommentVisual" xmi:id="_2UmKIC1bEem-ZdZYBcPN7Q" sourceConnectionVisual="_2VSGoC1bEem-ZdZYBcPN7Q" text="Represent a Meeting between students and the Academic Program Manager.&#xA;Date constraint: the Meeting should take place in one day only.&#xA;Time constraint: endTime has to happen after startTime.&#xA;@author ecse321-winter2019-group18" item="_QP7Y4CyaEem7_r_-bjr0Lg">
     <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_2IgO4C1bEem-ZdZYBcPN7Q"/>
@@ -858,5 +1086,125 @@
   </nodes>
   <nodes xsi:type="com.yattasolutions.diagrams:CommentVisual" xmi:id="_Or7PcC1eEemZZ94joFKfEg" sourceConnectionVisual="_Or8dkC1eEemZZ94joFKfEg" text="Represents a Term (semester) in a school year.&#xA;A deadline to submit evaluation forms is determined for each term.&#xA;@see Form&#xA;@author ecse321-winter2019-group18&#xA; *" item="_a_aP0CyZEem7_r_-bjr0Lg">
     <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_OpF94C1eEemZZ94joFKfEg"/>
+  </nodes>
+  <nodes xsi:type="com.yattasolutions.diagrams:CommentVisual" xmi:id="_GAYZ0C2ZEemf1YJ4WA-EJA" sourceConnectionVisual="_GAaPAC2ZEemf1YJ4WA-EJA" text="Student Entity.&#xA;@author ecse321-winter2019-group18" item="_2yEzkCybEem7_r_-bjr0Lg">
+    <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F5E38C2ZEemf1YJ4WA-EJA"/>
+  </nodes>
+  <nodes xsi:type="com.yattasolutions.uml.diagrams.classifier:ClassifierVisual" xmi:id="_4P_f4CyXEem7_r_-bjr0Lg" comments="_JkpMkC1eEemZZ94joFKfEg" targetConnectionVisual="_Jkro0C1eEemZZ94joFKfEg" containment="_K9ybwCyYEem7_r_-bjr0Lg" name="CoopTermRegistration" package="_Lfql8CnIEemS0IHJqlSUCQ" associationsIn="_3hSU4CyZEem7_r_-bjr0Lg _2M8qAC1bEem-ZdZYBcPN7Q" associationsOut="_2Ry4YCyYEem7_r_-bjr0Lg __icdACybEem7_r_-bjr0Lg">
+    <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_4P8ckCyXEem7_r_-bjr0Lg"/>
+    <visualProperties xmi:id="_4P_f4SyXEem7_r_-bjr0Lg" position="477.0,316.0" size="246.0,-1.0"/>
+    <visibility xmi:id="_4P_f4iyXEem7_r_-bjr0Lg" label="+"/>
+    <attributes xmi:id="_6SMBICyXEem7_r_-bjr0Lg" name="registrationID">
+      <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_6SKzACyXEem7_r_-bjr0Lg"/>
+      <stereotypes xmi:id="__GWTsCyXEem7_r_-bjr0Lg" name="PrimaryKey">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#__GT3cCyXEem7_r_-bjr0Lg"/>
+      </stereotypes>
+      <visibility xmi:id="_6SMBISyXEem7_r_-bjr0Lg" label="+"/>
+      <cardinality xmi:id="_6SMBIiyXEem7_r_-bjr0Lg" label="1" max="1" min="1"/>
+      <type xmi:id="_7KNOQCyXEem7_r_-bjr0Lg" name="String">
+        <modelElement href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      </type>
+    </attributes>
+    <attributes xmi:id="_8PJdECyXEem7_r_-bjr0Lg" name="termStatus">
+      <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_8PIO8CyXEem7_r_-bjr0Lg"/>
+      <stereotypes xmi:id="_2WQXAC1bEem-ZdZYBcPN7Q" name="StyledElement"/>
+      <stereotypes xmi:id="_EICZ8C1eEemZZ94joFKfEg" name="StyledElement"/>
+      <stereotypes xmi:id="_EIEPIC1eEemZZ94joFKfEg" name="StyledElement"/>
+      <stereotypes xmi:id="_EIZmUC1eEemZZ94joFKfEg" name="StyledElement"/>
+      <stereotypes xmi:id="_1n9mQC1eEemf1YJ4WA-EJA" name="StyledElement"/>
+      <stereotypes xmi:id="_1n-0YC1eEemf1YJ4WA-EJA" name="StyledElement"/>
+      <stereotypes xmi:id="_1oTkgC1eEemf1YJ4WA-EJA" name="StyledElement"/>
+      <stereotypes xmi:id="_EbQPEC2ZEemf1YJ4WA-EJA" name="StyledElement"/>
+      <stereotypes xmi:id="_EchaYC2ZEemf1YJ4WA-EJA" name="StyledElement"/>
+      <visibility xmi:id="_8PJdESyXEem7_r_-bjr0Lg" label="+"/>
+      <cardinality xmi:id="_8PJdEiyXEem7_r_-bjr0Lg" label="1" max="1" min="1"/>
+      <type xmi:id="_9Ma9oCyXEem7_r_-bjr0Lg" name="TermStatus">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_9-w_kCoxEemCfou_SGwekQ"/>
+      </type>
+    </attributes>
+    <attributes xmi:id="_2R3J0CyYEem7_r_-bjr0Lg" name="form">
+      <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_2RvOACyYEem7_r_-bjr0Lg"/>
+      <visibility xmi:id="_2R3J0SyYEem7_r_-bjr0Lg" label="+"/>
+      <cardinality xmi:id="_2R3J0iyYEem7_r_-bjr0Lg" label="*" max="-1"/>
+      <type xmi:id="_2R3J0yyYEem7_r_-bjr0Lg" name="Form">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_1bXrgCdaEemLvsCkKRozoQ"/>
+      </type>
+    </attributes>
+    <attributes xmi:id="_3hWmUCyZEem7_r_-bjr0Lg" name="term">
+      <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_3hJK8CyZEem7_r_-bjr0Lg"/>
+      <visibility xmi:id="_3hWmUSyZEem7_r_-bjr0Lg" label="+"/>
+      <cardinality xmi:id="_3hWmUiyZEem7_r_-bjr0Lg" label="0..1" max="1"/>
+      <type xmi:id="_3hWmUyyZEem7_r_-bjr0Lg" name="Term">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_a_YaoCyZEem7_r_-bjr0Lg"/>
+      </type>
+    </attributes>
+    <attributes xmi:id="_ASGqQCyaEem7_r_-bjr0Lg" name="jobID">
+      <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_ASDm8CyaEem7_r_-bjr0Lg"/>
+      <stereotypes xmi:id="_2WrNwC1bEem-ZdZYBcPN7Q" name="StyledElement">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_2GHpQC1bEem-ZdZYBcPN7Q"/>
+      </stereotypes>
+      <visibility xmi:id="_ASGqQSyaEem7_r_-bjr0Lg" label="+"/>
+      <cardinality xmi:id="_ASGqQiyaEem7_r_-bjr0Lg" label="1" max="1" min="1"/>
+      <type xmi:id="_BQj2kCyaEem7_r_-bjr0Lg" name="String">
+        <modelElement href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      </type>
+    </attributes>
+    <attributes xmi:id="__ie5QCybEem7_r_-bjr0Lg" name="student">
+      <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#__iYLkCybEem7_r_-bjr0Lg"/>
+      <visibility xmi:id="__ie5QSybEem7_r_-bjr0Lg" label="+"/>
+      <cardinality xmi:id="__ie5QiybEem7_r_-bjr0Lg" label="1" max="1" min="1"/>
+      <type xmi:id="__ie5QyybEem7_r_-bjr0Lg" name="Student">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_2yC-YCybEem7_r_-bjr0Lg"/>
+      </type>
+    </attributes>
+    <attributes xmi:id="_OAo08C2ZEemf1YJ4WA-EJA" name="grade">
+      <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_OAkjgC2ZEemf1YJ4WA-EJA"/>
+      <visibility xmi:id="_OAo08S2ZEemf1YJ4WA-EJA" label="+"/>
+      <cardinality xmi:id="_OAo08i2ZEemf1YJ4WA-EJA" label="1" max="1" min="1"/>
+      <type xmi:id="_O8rmcC2ZEemf1YJ4WA-EJA" name="Grade">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_aqyjsCzmEem7_r_-bjr0Lg"/>
+      </type>
+    </attributes>
+    <operations xmi:id="_F68gMC2ZEemf1YJ4WA-EJA" name="hashCode">
+      <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F13y8C2ZEemf1YJ4WA-EJA"/>
+      <stereotypes xmi:id="_F68gMS2ZEemf1YJ4WA-EJA" name="Annotations">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F14aAC2ZEemf1YJ4WA-EJA"/>
+      </stereotypes>
+      <stereotypes xmi:id="_F68gMi2ZEemf1YJ4WA-EJA" name="LegacyStyledElement">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F234gC2ZEemf1YJ4WA-EJA"/>
+      </stereotypes>
+      <visibility xmi:id="_F68gMy2ZEemf1YJ4WA-EJA" label="+"/>
+      <cardinality xmi:id="_F68gNC2ZEemf1YJ4WA-EJA" label="1" max="1" min="1"/>
+      <outParameters xmi:id="_F68gNS2ZEemf1YJ4WA-EJA">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F3MooC2ZEemf1YJ4WA-EJA"/>
+        <type xmi:id="_F68gNi2ZEemf1YJ4WA-EJA" name="int">
+          <modelElement href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+        </type>
+      </outParameters>
+    </operations>
+    <operations xmi:id="_F7ZzMC2ZEemf1YJ4WA-EJA" name="equals">
+      <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F4GnkC2ZEemf1YJ4WA-EJA"/>
+      <stereotypes xmi:id="_F7ZzMS2ZEemf1YJ4WA-EJA" name="LegacyStyledElement">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F4N8UC2ZEemf1YJ4WA-EJA"/>
+      </stereotypes>
+      <stereotypes xmi:id="_F7ZzMi2ZEemf1YJ4WA-EJA" name="Annotations">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F4PKcC2ZEemf1YJ4WA-EJA"/>
+      </stereotypes>
+      <visibility xmi:id="_F7ZzMy2ZEemf1YJ4WA-EJA" label="+"/>
+      <cardinality xmi:id="_F7ZzNC2ZEemf1YJ4WA-EJA" label="1" max="1" min="1"/>
+      <outParameters xmi:id="_F7ZzNS2ZEemf1YJ4WA-EJA">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F4H1sC2ZEemf1YJ4WA-EJA"/>
+        <type xmi:id="_F7ZzNi2ZEemf1YJ4WA-EJA" name="boolean">
+          <modelElement href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+        </type>
+      </outParameters>
+      <parameters xmi:id="_F7ZzNy2ZEemf1YJ4WA-EJA" name="obj">
+        <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F4HOoC2ZEemf1YJ4WA-EJA"/>
+        <cardinality xmi:id="_F7ZzOC2ZEemf1YJ4WA-EJA" label="1" max="1" min="1"/>
+        <type xmi:id="_F7ZzOS2ZEemf1YJ4WA-EJA" name="Object">
+          <modelElement href="ca.mcgill.ecse321.cooperator.model.uml#_F3xQYC2ZEemf1YJ4WA-EJA"/>
+        </type>
+      </parameters>
+    </operations>
   </nodes>
 </com.yattasolutions.uml.diagrams.classifier:ClassDiagram>
