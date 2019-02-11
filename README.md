@@ -21,4 +21,4 @@ For the domain model with reasoning of some important factors, refer to this wik
 |Edward Huang            |   32 hours |Domain Model and Database Testing                                    |
 |Bach Tran               |   24 hours |Database Testing                                                     |
 
-\*The lower number of hours by Moetassem is because of personal problems that were communicated and understood by the team.
+\*The slight lower number of hours by Moetassem is because of personal problems that were communicated and understood by the team.
