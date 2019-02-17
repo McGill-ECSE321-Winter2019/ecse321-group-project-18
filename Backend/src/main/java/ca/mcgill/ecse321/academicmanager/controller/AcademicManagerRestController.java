@@ -28,13 +28,6 @@ public class AcademicManagerRestController {
 	// This method is just for testing only , for the provisionning .
     private void Provision () {
     	//clear the database
-		//courseRepository.deleteAll();
-		//formRepository.deleteAll();
-		//termRepository.deleteAll();
-		//coopTermRegistrationRepository.deleteAll();
-		//meetingRepository.deleteAll();
-		//studentRepository.deleteAll();
-		//cooperatorRepository.deleteAll();
 		
 		cooperator=service.createCooperator(1);
 		
@@ -142,8 +135,6 @@ public class AcademicManagerRestController {
 	public List<StudentDto> getProblematicStudents() throws IllegalArgumentException {
 	// @formatter:on
     	
-    	// this line is for testing purpose, need to remove when we have a good database
-		Provision();
 		
 		List<Student> students = service.getAllProblematicStudents();
 		List<StudentDto> mylist = new ArrayList<StudentDto>();
