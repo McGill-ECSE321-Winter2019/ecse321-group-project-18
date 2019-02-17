@@ -27,7 +27,6 @@ public class AcademicManagerRestController {
 	
 	// This method is just for testing only , for the provisionning .
     private void Provision () {
-    	//clear the database
 		
 		cooperator=service.createCooperator(1);
 		
