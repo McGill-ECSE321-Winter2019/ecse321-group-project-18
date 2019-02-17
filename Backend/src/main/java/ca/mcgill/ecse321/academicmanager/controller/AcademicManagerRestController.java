@@ -134,9 +134,9 @@ public class AcademicManagerRestController {
 	
 	
 	// this method is to report a list of problematic students
-    //http://localhost:8082/student/problematic
-    //curl localhost:8082/student/problematic
-    @RequestMapping("/student/problematic")
+    //http://localhost:8082/Student/problematic
+    //curl localhost:8082/Students/problematic
+    @RequestMapping("/Students/problematic")
     @ResponseBody
 	public List<StudentDto> getProblematicStudents() throws IllegalArgumentException {
 	// @formatter:on
