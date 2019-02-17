@@ -1,12 +1,11 @@
 language: java
 script:
-- ./gradlew build -xtest
+- ./gradlew build
 - bash checkdir.sh
 notifications:
   slack: ecse321-group18:tJheLEmh0qxP7QBcS8dSegUe
 jdk:
   - oraclejdk9
-
 deploy:
   provider: heroku
   api_key: b8a6d769-7c14-4eab-ace5-69e0824c7c58 
