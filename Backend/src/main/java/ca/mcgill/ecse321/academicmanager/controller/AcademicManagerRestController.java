@@ -114,7 +114,8 @@ public class AcademicManagerRestController {
 		
     }
 	
-	
+    @RequestMapping("/Students")
+    @ResponseBody
 	public StudentDto createStudent(@PathVariable("studentID") String studentID, 
 									@PathVariable("firstName") String firstName,
 									@PathVariable("lastName") String lastName) throws IllegalArgumentException {

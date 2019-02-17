@@ -11,4 +11,3 @@ deploy:
   provider: heroku
   api_key: b8a6d769-7c14-4eab-ace5-69e0824c7c58 
   app: cooperatorapp-backend-18
-  on: restfulAPI
