@@ -1,4 +1,6 @@
 package ca.mcgill.ecse321.academicmanager.controller;
+import ca.mcgill.ecse321.academicmanager.dao.FormRepository;
+import ca.mcgill.ecse321.academicmanager.dao.MeetingRepository;
 import ca.mcgill.ecse321.academicmanager.dto.*;
 import ca.mcgill.ecse321.academicmanager.model.*;
 import ca.mcgill.ecse321.academicmanager.service.*;
@@ -21,90 +23,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class AcademicManagerRestController {
 	@Autowired
 	AcademicManagerService service;
+	@Autowired
+	private FormRepository formRepository;
+
+	
+	
 	Cooperator cooperator;
 	@PostMapping(value = { "/Students/{name}", "/Students/{name}/" })
 	
 	
-	// This method is just for testing only , for the provisionning .
-    private void Provision () {
-		
-		cooperator=service.createCooperator(1);
-		
-		
-		String courseID = "ECSE321";
-		String term = "Winter2019";
-		String courseName = "Introduction to Software Engineering";
-		Integer courseRank = null;
-		try {
-			service.createCourse(courseID, term, courseName, courseRank, cooperator);
-		} catch (Exception e) {
-			// Check that no error occurred
 
-		}		
-				
-	
-		String studentID = "260632353";
-		String firstname = "Yen Vi";
-		String lastname = "Huynh";
-		
-
-		Cooperator cooperator=service.createCooperator(1);
-
-		Student student=service.createStudent(studentID, firstname, lastname, cooperator);
-				
-		service.updateStudentProblematicStatus(student, true);
-		
-		studentID = "260632354";
-		firstname = "Bach";
-		lastname = "Tran";
-		
-
-		cooperator=service.createCooperator(1);
-
-		try {
-			service.createStudent(studentID, firstname, lastname, cooperator);
-		} catch (IllegalArgumentException e) {
-	
-		}
-		
-		
-		studentID = "260632355";
-		firstname = "Saleh";
-		lastname = "Bakhit";
-		
-
-		cooperator=service.createCooperator(1);
-
-		student=service.createStudent(studentID, firstname, lastname, cooperator);
-		
-		service.updateStudentProblematicStatus(student, true);
-		
-		studentID = "260632356";
-		firstname = "Moetassem";
-		lastname = "Abdelazim";
-		
-
-		cooperator=service.createCooperator(1);
-
-		try {
-			service.createStudent(studentID, firstname, lastname, cooperator);
-		} catch (IllegalArgumentException e) {
-	
-		}
-		studentID = "260632357";
-		firstname = "Edward";
-		lastname = "Huang";
-		
-
-		cooperator=service.createCooperator(1);
-
-		try {
-			service.createStudent(studentID, firstname, lastname, cooperator);
-		} catch (IllegalArgumentException e) {
-	
-		}
-		
-    }
 	
     @RequestMapping("/Students")
     @ResponseBody
@@ -146,6 +74,45 @@ public class AcademicManagerRestController {
 		return mylist;
 	}
 
+    //http://localhost:8082/Student/list
+    //curl localhost:8082/Students/list
+    @RequestMapping("/Students/list")
+    @ResponseBody
+	public List<StudentDto> getListStudents() throws IllegalArgumentException {
+	// @formatter:on
+    	
+		
+		Set<Student> students = service.getAllStudents();
+		List<StudentDto> mylist = new ArrayList<StudentDto>();
+	
+		//check for every student;
+		for(Student s : students) {
+			mylist.add(convertToDto(s));
+		}
+		
+		return mylist;
+	}
+    
+    @RequestMapping("/Students/form/{studentid}")
+    @ResponseBody
+	public List<StudentDto> getStudentReport(@PathVariable("studentID") String studentID) throws IllegalArgumentException {
+	// @formatter:on
+    	
+
+    	Student mystudent=service.getStudent(studentID);
+    	Set<Form> myformlist=service.getAllStudentEvalFormsOfStudent(mystudent);
+
+
+		Set<Student> students = service.getAllStudents();
+		List<StudentDto> mylist = new ArrayList<StudentDto>();
+	
+		//check for every student;
+		for(Student s : students) {
+			mylist.add(convertToDto(s));
+		}
+		
+		return mylist;
+	}
     
     
 }
