@@ -138,14 +138,13 @@ public class AcademicManagerRestController {
     //curl localhost:8082/student/problematic
     @RequestMapping("/student/problematic")
     @ResponseBody
-	public List<StudentDto> getProblematic() throws IllegalArgumentException {
+	public List<StudentDto> getProblematicStudents() throws IllegalArgumentException {
 	// @formatter:on
+    	
+    	// this line is for testing purpose, need to remove when we have a good database
 		Provision();
 		
 		List<Student> students = service.getAllProblematicStudents();
-		
-		ArrayList<StudentDto> studentsproblematic = new ArrayList<StudentDto>();
-		
 		List<StudentDto> mylist = new ArrayList<StudentDto>();
 	
 		//check for every student;
