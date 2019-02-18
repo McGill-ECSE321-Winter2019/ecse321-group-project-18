@@ -4,8 +4,6 @@ import ca.mcgill.ecse321.academicmanager.dto.*;
 import ca.mcgill.ecse321.academicmanager.model.*;
 import ca.mcgill.ecse321.academicmanager.service.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 import java.util.*;
 
