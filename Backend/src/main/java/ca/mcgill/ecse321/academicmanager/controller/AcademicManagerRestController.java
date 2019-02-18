@@ -1,32 +1,25 @@
 package ca.mcgill.ecse321.academicmanager.controller;
-import ca.mcgill.ecse321.academicmanager.dao.FormRepository;
-import ca.mcgill.ecse321.academicmanager.dao.MeetingRepository;
+
 import ca.mcgill.ecse321.academicmanager.dto.*;
 import ca.mcgill.ecse321.academicmanager.model.*;
 import ca.mcgill.ecse321.academicmanager.service.*;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
 import java.util.*;
 
-import javax.xml.ws.Service;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "*")
 @RestController
 public class AcademicManagerRestController {
 	@Autowired
 	AcademicManagerService service;
-	@Autowired
-	private FormRepository formRepository;
 
-	
 	
 	Cooperator cooperator;
 	@PostMapping(value = { "/Students/{name}", "/Students/{name}/" })
@@ -53,12 +46,18 @@ public class AcademicManagerRestController {
 		return studentDto;
 	}
 	
+	private FormDto convertFormToDto(Form e) {
+		if (e == null) {
+			throw new IllegalArgumentException("There student doens't exist in this Cooperator!");
+		}
+		FormDto formDto = new FormDto(e.getFormID(),e.getName(),e.getPdfLink());
+		return formDto;
+	}
 	
 	// this method is to report a list of problematic students
     //http://localhost:8082/Student/problematic
     //curl localhost:8082/Students/problematic
-    @RequestMapping("/Students/problematic")
-    @ResponseBody
+	@GetMapping(value = { "/Students/problematic", "/Students/problematic" })
 	public List<StudentDto> getProblematicStudents() throws IllegalArgumentException {
 	// @formatter:on
     	
@@ -76,8 +75,8 @@ public class AcademicManagerRestController {
 
     //http://localhost:8082/Student/list
     //curl localhost:8082/Students/list
-    @RequestMapping("/Students/list")
-    @ResponseBody
+
+    @GetMapping(value = { "/Students/list", "/Students/list" })
 	public List<StudentDto> getListStudents() throws IllegalArgumentException {
 	// @formatter:on
     	
@@ -92,26 +91,32 @@ public class AcademicManagerRestController {
 		
 		return mylist;
 	}
-    
-    @RequestMapping("/Students/form/{studentid}")
-    @ResponseBody
-	public List<StudentDto> getStudentReport(@PathVariable("studentID") String studentID) throws IllegalArgumentException {
+
+    @GetMapping(value = { "/Students/report/{studentID}", "/Students/report/{studentID}" })
+	public Set<Form> getStudentReport(@PathVariable("studentID") String studentID) throws IllegalArgumentException {
 	// @formatter:on
     	
 
     	Student mystudent=service.getStudent(studentID);
-    	Set<Form> myformlist=service.getAllStudentEvalFormsOfStudent(mystudent);
+    	
+    	if (mystudent != null ) {
+			Set<Form> myformlist=service.getAllStudentEvalFormsOfStudent(mystudent);
+			String myname = mystudent.getFirstName() + " " +  mystudent.getLastName();
+			List<FormDto> arrayList = new ArrayList<FormDto>();
+			for(Form f : myformlist) {
+				FormDto myform=convertFormToDto(f);
+				arrayList.add(myform);
+			};
+			StudentformDto mystudentforms= new StudentformDto(myname,arrayList);
+			//return mystudentforms;
+			return myformlist;
+    	}
 
-
-		Set<Student> students = service.getAllStudents();
-		List<StudentDto> mylist = new ArrayList<StudentDto>();
-	
-		//check for every student;
-		for(Student s : students) {
-			mylist.add(convertToDto(s));
-		}
+			
+		 return null;
 		
-		return mylist;
+		
+		
 	}
     
     
