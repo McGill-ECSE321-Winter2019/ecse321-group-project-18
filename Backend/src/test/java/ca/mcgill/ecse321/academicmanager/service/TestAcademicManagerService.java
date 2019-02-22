@@ -273,7 +273,7 @@ public class TestAcademicManagerService {
 	}
 	
 	
-	/*@Test
+	@Test
 	public void testViewEmployerEvalForms() {
 		
 		String studentID = "142142";
@@ -281,19 +281,21 @@ public class TestAcademicManagerService {
 		String lastname = "1";
 		Grade grade = Grade.A;
 		
-		Student tmpStudent = service.createStudent(studentID, firstname, lastname, grade, cooperator);
+		Student tmpStudent = service.createStudent(studentID, firstname, lastname, cooperator);
 		
 		String registrationID = "1214214";
 		String jobID = "1512521";
 		TermStatus status = TermStatus.FAILED;
 		
-		CoopTermRegistration tmpCTR = service.createCoopTermRegistration(registrationID, jobID, status, tmpStudent);
+		CoopTermRegistration tmpCTR = service.createCoopTermRegistration(registrationID, jobID, status, grade, tmpStudent);
 		
 		String formID = "142142";
 		String pdfLink = "1";
 		String formName = "1";
 		FormType formType = FormType.STUDENTEVALUATION;
 
+		
+		
 		Form form = service.createForm(formID, formName, pdfLink, formType, tmpCTR);	
 		assertEquals(1, formRepository.count());
 		assertEquals("142142", form.getFormID());
@@ -304,7 +306,7 @@ public class TestAcademicManagerService {
 		for(Form f : forms) {
 			assertEquals(FormType.STUDENTEVALUATION, f.getFormType());
 		}
-	}*/
+	}
 	
 	@Test
 	public void testViewProblematicStudents() {
