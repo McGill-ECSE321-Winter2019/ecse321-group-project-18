@@ -91,7 +91,7 @@ public class AcademicManagerRestController {
 	}
 
     @GetMapping(value = { "/Students/report/{studentID}", "/Students/report/{studentID}" })
-	public Set<Form> getStudentReport(@PathVariable("studentID") String studentID) throws IllegalArgumentException {
+	public StudentformDto getStudentReport(@PathVariable("studentID") String studentID) throws IllegalArgumentException {
 	// @formatter:on
     	
 
@@ -107,7 +107,7 @@ public class AcademicManagerRestController {
 			};
 			StudentformDto mystudentforms= new StudentformDto(myname,arrayList);
 			//return mystudentforms;
-			return myformlist;
+			return mystudentforms;
     	}
 
 			
