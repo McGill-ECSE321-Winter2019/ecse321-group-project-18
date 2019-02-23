@@ -1,36 +1,53 @@
 package ca.mcgill.ecse321.academicmanager.dto;
 
+import ca.mcgill.ecse321.academicmanager.model.Grade;
+import ca.mcgill.ecse321.academicmanager.model.Student;
+import ca.mcgill.ecse321.academicmanager.model.TermStatus;
+
 public class CoopTermRegistrationDto {
 	
-	
+	private String registrationID;
+	private String jobID;
+	private TermStatus status;
+	private Grade grade;
+	private Student student;
 	
 	public CoopTermRegistrationDto() {
 	}
 	
-//	public CoopTermRegistrationDto(String studentID, String firstName, String lastName) {
-//		this(studentID, firstName, lastName, false);
-//	}
+	public CoopTermRegistrationDto(String registrationID, String jobID, TermStatus status) {
+		this(registrationID, jobID, status, Grade.NotGraded, null);
+	}
 
-//	public CoopTermRegistrationDto(String studentID, String firstName, String lastName, boolean isProblematic) {
-//		this.studentID = studentID;
-//		this.firstName = firstName;
-//		this.lastName = lastName;
-//		this.isProblematic = isProblematic;
-//	}
-//	
-//	public String getStudentID() {
-//		return studentID;
-//	}
-//
-//	public String getFirstName() {
-//		return firstName;
-//	}
-//
-//	public String getLastName() {
-//		return lastName;
-//	}
-//
-//	public boolean getStudentProblematicStatus() {
-//		return isProblematic;
-//	}
+	public CoopTermRegistrationDto(String registrationID, String jobID, TermStatus status, Grade grade) {
+		this(registrationID, jobID, status, grade, null);
+	}
+	
+	public CoopTermRegistrationDto(String registrationID, String jobID, TermStatus status, Grade grade, Student student) {
+		this.registrationID = registrationID;
+		this.jobID = jobID;
+		this.status = status;
+		this.grade = grade;
+		this.student = student;
+	}
+	
+	public String getRegistrationID() {
+		return registrationID;
+	}
+
+	public String getjobID() {
+		return jobID;
+	}
+
+	public TermStatus getTermStatus() {
+		return status;
+	}
+
+	public Grade getGrade() {
+		return grade;
+	}
+	
+	public Student getStudent() {
+		return student;
+	}
 }
