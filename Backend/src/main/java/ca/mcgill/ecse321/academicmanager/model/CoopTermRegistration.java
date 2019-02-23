@@ -1,5 +1,6 @@
 package ca.mcgill.ecse321.academicmanager.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.util.Set;
@@ -74,7 +75,7 @@ return this.grade;
 	}
 	private Student student;
 	
-	@OneToOne(mappedBy="coopTermRegistration", optional=false)
+	@OneToOne(mappedBy="coopTermRegistration", optional=false,cascade = CascadeType.ALL)
 	public Student getStudent() {
 	   return this.student;
 	}
