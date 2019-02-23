@@ -52,9 +52,10 @@ public class AcademicManagerRestController {
 		return formDto;
 	}
 	
-	// this method is to report a list of problematic students
-    //http://localhost:8082/Student/problematic
-    //curl localhost:8082/Students/problematic
+	
+	// This method is to report a list of problematic students
+    // http://localhost:8082/Student/problematic
+    // curl localhost:8082/Students/problematic
 	@GetMapping(value = { "/Students/problematic", "/Students/problematic" })
 	public List<StudentDto> getProblematicStudents() throws IllegalArgumentException {
 	// @formatter:on
@@ -70,7 +71,8 @@ public class AcademicManagerRestController {
 		
 		return mylist;
 	}
-
+   
+	// This method is to report a list of students
     //http://localhost:8082/Student/list
     //curl localhost:8082/Students/list
 
@@ -90,6 +92,8 @@ public class AcademicManagerRestController {
 		return mylist;
 	}
 
+    // Method is to get the student evaluation report 
+    // curl localhost:8082/Students/report/2602231111
     @GetMapping(value = { "/Students/report/{studentID}", "/Students/report/{studentID}" })
 	public StudentformDto getStudentReport(@PathVariable("studentID") String studentID) throws IllegalArgumentException {
 	// @formatter:on
