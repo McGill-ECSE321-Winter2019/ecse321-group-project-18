@@ -21,7 +21,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class AcademicManagerRestController {
 	@Autowired
 	AcademicManagerService service;
-	Cooperator cooperator;	
+	Cooperator cooperator;
+	@PostMapping(value = { "/Students/{name}", "/Students/{name}/" })
 	
 	// This method is just for testing only , for the provisionning .
     private void Provision() {
@@ -142,8 +143,8 @@ public class AcademicManagerRestController {
 	}
 	
 	// this method is to report a list of problematic students
-    //http://localhost:8082/Student/problematic
-    //curl localhost:8082/Students/problematic
+    //http://localhost:8081/Students/problematic
+    //curl localhost:8081/Students/problematic
     @RequestMapping("/Students/problematic")
     @ResponseBody
 	public List<StudentDto> getProblematicStudents() throws IllegalArgumentException {
@@ -162,8 +163,8 @@ public class AcademicManagerRestController {
 	}
 
     // this method is to view the grades for internships
-    //http://localhost:8082/CoopTermRegistration/Grades
-    //curl localhost:8082/CoopTermRegistration/Grades
+    // http://localhost:8081/CoopTermRegistration/Grades
+    //curl localhost:8081/CoopTermRegistration/Grades
     @RequestMapping("/CoopTermRegistration/Grade")
     @ResponseBody
 	public Set<Grade> viewGrades() throws IllegalArgumentException {
