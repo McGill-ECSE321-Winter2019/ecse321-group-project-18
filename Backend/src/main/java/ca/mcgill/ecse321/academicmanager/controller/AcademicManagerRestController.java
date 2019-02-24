@@ -21,12 +21,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class AcademicManagerRestController {
 	@Autowired
 	AcademicManagerService service;
-	Cooperator cooperator;
-	@PostMapping(value = { "/Students/{name}", "/Students/{name}/" })
-	
+	Cooperator cooperator;	
 	
 	// This method is just for testing only , for the provisionning .
-    private void Provision () {
+    private void Provision() {
 		
 		cooperator=service.createCooperator(1);
 		
@@ -125,6 +123,23 @@ public class AcademicManagerRestController {
 		return studentDto;
 	}
 	
+	public CoopTermRegistrationDto createCoopTermRegistration(@PathVariable("registrationID") String registrationID, 
+												@PathVariable("jobID") String jobID,
+												@PathVariable("status") TermStatus status,
+												@PathVariable("grade") Grade grade,
+												@PathVariable("student") Student student) throws IllegalArgumentException {
+
+		CoopTermRegistration internship = service.createCoopTermRegistration(registrationID, jobID, status, grade, student);
+		return convertToDto(internship);
+	}
+	
+	private CoopTermRegistrationDto convertToDto(CoopTermRegistration e) {
+		if (e == null) {
+			throw new IllegalArgumentException("There student doens't exist in this Cooperator!");
+		}
+		CoopTermRegistrationDto coopTermRegistrationDto = new CoopTermRegistrationDto(e.getRegistrationID(),e.getJobID(),e.getTermStatus(), e.getGrade(), e.getStudent());
+		return coopTermRegistrationDto;
+	}
 	
 	// this method is to report a list of problematic students
     //http://localhost:8082/Student/problematic
@@ -146,6 +161,21 @@ public class AcademicManagerRestController {
 		return mylist;
 	}
 
+    // this method is to view the grades for internships
+    //http://localhost:8082/CoopTermRegistration/Grades
+    //curl localhost:8082/CoopTermRegistration/Grades
+    @RequestMapping("/CoopTermRegistration/Grade")
+    @ResponseBody
+	public Set<Grade> viewGrades() throws IllegalArgumentException {
+	
+    	Set<CoopTermRegistration> internships = service.getAllCoopTermRegistration();
+    	Set<Grade> grades = new HashSet<Grade>();
+    	
+    	for(CoopTermRegistration intern : internships) {
+    		grades.add(intern.getGrade());
+		}
+    	return grades;
+	}
     
     
 }
