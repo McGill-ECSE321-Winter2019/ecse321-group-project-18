@@ -22,7 +22,6 @@ public class AcademicManagerRestController {
 	@Autowired
 	AcademicManagerService service;
 	Cooperator cooperator;
-	@PostMapping(value = { "/Students/{name}", "/Students/{name}/" })
 	
 	// This method is just for testing only , for the provisionning .
     private void Provision() {
@@ -62,6 +61,7 @@ public class AcademicManagerRestController {
 
 		try {
 			service.createStudent(studentID, firstname, lastname, cooperator);
+			service.createCoopTermRegistration("testregID23", "123", TermStatus.ONGOING, Grade.NotGraded, student);
 		} catch (IllegalArgumentException e) {
 	
 		}
@@ -105,16 +105,18 @@ public class AcademicManagerRestController {
 		
     }
 	
-    @RequestMapping("/Students")
+    @RequestMapping("/students")
     @ResponseBody
 	public StudentDto createStudent(@PathVariable("studentID") String studentID, 
 									@PathVariable("firstName") String firstName,
 									@PathVariable("lastName") String lastName) throws IllegalArgumentException {
 		// @formatter:on
+    	Provision();
 		Cooperator coop = service.createCooperator(1);
 		Student student = service.createStudent(studentID, firstName, lastName, coop);
 		return convertToDto(student);
 	}
+    
 	
 	private StudentDto convertToDto(Student e) {
 		if (e == null) {
@@ -124,6 +126,9 @@ public class AcademicManagerRestController {
 		return studentDto;
 	}
 	
+	
+    @RequestMapping("/cooptermregistrations")
+    @ResponseBody
 	public CoopTermRegistrationDto createCoopTermRegistration(@PathVariable("registrationID") String registrationID, 
 												@PathVariable("jobID") String jobID,
 												@PathVariable("status") TermStatus status,
@@ -134,7 +139,8 @@ public class AcademicManagerRestController {
 		return convertToDto(internship);
 	}
 	
-	private CoopTermRegistrationDto convertToDto(CoopTermRegistration e) {
+	
+    private CoopTermRegistrationDto convertToDto(CoopTermRegistration e) {
 		if (e == null) {
 			throw new IllegalArgumentException("There student doens't exist in this Cooperator!");
 		}
@@ -142,10 +148,11 @@ public class AcademicManagerRestController {
 		return coopTermRegistrationDto;
 	}
 	
-	// this method is to report a list of problematic students
-    //http://localhost:8081/Students/problematic
-    //curl localhost:8081/Students/problematic
-    @RequestMapping("/Students/problematic")
+	
+    // this method is to report a list of problematic students
+    //http://localhost:8081/students/problematic
+    //curl localhost:8081/students/problematic
+    @RequestMapping("/students/problematic")
     @ResponseBody
 	public List<StudentDto> getProblematicStudents() throws IllegalArgumentException {
 	// @formatter:on
@@ -165,10 +172,11 @@ public class AcademicManagerRestController {
     // this method is to view the grades for internships
     // http://localhost:8081/CoopTermRegistration/Grades
     //curl localhost:8081/CoopTermRegistration/Grades
-    @RequestMapping("/CoopTermRegistration/Grade")
+    @RequestMapping("/CoopTermRegistration/Grades")
     @ResponseBody
 	public Set<Grade> viewGrades() throws IllegalArgumentException {
 	
+    	Provision();
     	Set<CoopTermRegistration> internships = service.getAllCoopTermRegistration();
     	Set<Grade> grades = new HashSet<Grade>();
     	
@@ -177,6 +185,5 @@ public class AcademicManagerRestController {
 		}
     	return grades;
 	}
-    
     
 }
