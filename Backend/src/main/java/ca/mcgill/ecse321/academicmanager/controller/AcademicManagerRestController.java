@@ -1,27 +1,27 @@
 package ca.mcgill.ecse321.academicmanager.controller;
+
 import ca.mcgill.ecse321.academicmanager.dto.*;
 import ca.mcgill.ecse321.academicmanager.model.*;
 import ca.mcgill.ecse321.academicmanager.service.*;
 
+
 import java.util.*;
 
-import javax.xml.ws.Service;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "*")
 @RestController
 public class AcademicManagerRestController {
-	@Autowired
-	AcademicManagerService service;
-	Cooperator cooperator;
+		@Autowired
+		AcademicManagerService service;
+	
+		
+		Cooperator cooperator;
+		@PostMapping(value = { "/Students/{name}", "/Students/{name}/" })
+	
 	
 	// This method is just for testing only , for the provisionning .
     private void Provision() {
@@ -35,12 +35,9 @@ public class AcademicManagerRestController {
 		Integer courseRank = null;
 		try {
 			service.createCourse(courseID, term, courseName, courseRank, cooperator);
-		} catch (Exception e) {
+		} catch (Exception e) {}
 			// Check that no error occurred
 
-		}		
-				
-	
 		String studentID = "260632353";
 		String firstname = "Yen Vi";
 		String lastname = "Huynh";
@@ -62,71 +59,23 @@ public class AcademicManagerRestController {
 		try {
 			service.createStudent(studentID, firstname, lastname, cooperator);
 			service.createCoopTermRegistration("testregID23", "123", TermStatus.ONGOING, Grade.NotGraded, student);
-		} catch (IllegalArgumentException e) {
+		} catch (IllegalArgumentException e) {}	
+	}
 	
-		}
-		
-		
-		studentID = "260632355";
-		firstname = "Saleh";
-		lastname = "Bakhit";
-		
-
-		cooperator=service.createCooperator(1);
-
-		student=service.createStudent(studentID, firstname, lastname, cooperator);
-		
-		service.updateStudentProblematicStatus(student, true);
-		
-		studentID = "260632356";
-		firstname = "Moetassem";
-		lastname = "Abdelazim";
-		
-
-		cooperator=service.createCooperator(1);
-
-		try {
-			service.createStudent(studentID, firstname, lastname, cooperator);
-		} catch (IllegalArgumentException e) {
 	
-		}
-		studentID = "260632357";
-		firstname = "Edward";
-		lastname = "Huang";
-		
-
-		cooperator=service.createCooperator(1);
-
-		try {
-			service.createStudent(studentID, firstname, lastname, cooperator);
-		} catch (IllegalArgumentException e) {
+	/************* CREATE OBJECTS METHODS ************/
 	
-		}
-		
-    }
-	
-    @RequestMapping("/students")
+    @RequestMapping("/Students")
     @ResponseBody
 	public StudentDto createStudent(@PathVariable("studentID") String studentID, 
 									@PathVariable("firstName") String firstName,
 									@PathVariable("lastName") String lastName) throws IllegalArgumentException {
 		// @formatter:on
-    	Provision();
 		Cooperator coop = service.createCooperator(1);
 		Student student = service.createStudent(studentID, firstName, lastName, coop);
 		return convertToDto(student);
 	}
     
-	
-	private StudentDto convertToDto(Student e) {
-		if (e == null) {
-			throw new IllegalArgumentException("There student doens't exist in this Cooperator!");
-		}
-		StudentDto studentDto = new StudentDto(e.getStudentID(),e.getFirstName(),e.getLastName(), e.isIsProblematic());
-		return studentDto;
-	}
-	
-	
     @RequestMapping("/cooptermregistrations")
     @ResponseBody
 	public CoopTermRegistrationDto createCoopTermRegistration(@PathVariable("registrationID") String registrationID, 
@@ -139,8 +88,18 @@ public class AcademicManagerRestController {
 		return convertToDto(internship);
 	}
 	
+    
+    /********** START OF convertToDto METHODS ************/
+    
+	private StudentDto convertToDto(Student e) {
+		if (e == null) {
+			throw new IllegalArgumentException("There student doens't exist in this Cooperator!");
+		}
+		StudentDto studentDto = new StudentDto(e.getStudentID(),e.getFirstName(),e.getLastName(), e.isIsProblematic());
+		return studentDto;
+	}
 	
-    private CoopTermRegistrationDto convertToDto(CoopTermRegistration e) {
+	private CoopTermRegistrationDto convertToDto(CoopTermRegistration e) {
 		if (e == null) {
 			throw new IllegalArgumentException("There student doens't exist in this Cooperator!");
 		}
@@ -148,12 +107,19 @@ public class AcademicManagerRestController {
 		return coopTermRegistrationDto;
 	}
 	
+	private FormDto convertFormToDto(Form e) {
+		if (e == null) {
+			throw new IllegalArgumentException("There student doens't exist in this Cooperator!");
+		}
+		FormDto formDto = new FormDto(e.getFormID(),e.getName(),e.getPdfLink());
+		return formDto;
+	}
 	
-    // this method is to report a list of problematic students
-    //http://localhost:8081/students/problematic
-    //curl localhost:8081/students/problematic
-    @RequestMapping("/students/problematic")
-    @ResponseBody
+	/*********** START OF USE CASES METHODS ************/
+	// This method is to report a list of problematic students
+    // http://localhost:8082/Student/problematic
+    // curl localhost:8082/Students/problematic
+	@GetMapping(value = { "/Students/problematic", "/Students/problematic" })
 	public List<StudentDto> getProblematicStudents() throws IllegalArgumentException {
 	// @formatter:on
     	
@@ -168,6 +134,54 @@ public class AcademicManagerRestController {
 		
 		return mylist;
 	}
+   
+	// This method is to report a list of students
+    //http://localhost:8082/Student/list
+    //curl localhost:8082/Students/list
+    @GetMapping(value = { "/Students/list", "/Students/list" })
+	public List<StudentDto> getListStudents() throws IllegalArgumentException {
+	// @formatter:on
+    	
+		
+		Set<Student> students = service.getAllStudents();
+		List<StudentDto> mylist = new ArrayList<StudentDto>();
+	
+		//check for every student;
+		for(Student s : students) {
+			mylist.add(convertToDto(s));
+		}
+		
+		return mylist;
+	}
+
+    // Method is to get the student evaluation report 
+    // curl localhost:8082/Students/report/2602231111
+    @GetMapping(value = { "/Students/report/{studentID}", "/Students/report/{studentID}" })
+	public StudentformDto getStudentReport(@PathVariable("studentID") String studentID) throws IllegalArgumentException {
+	// @formatter:on
+    	
+
+    	Student mystudent=service.getStudent(studentID);
+    	
+    	if (mystudent != null ) {
+			Set<Form> myformlist=service.getAllStudentEvalFormsOfStudent(mystudent);
+			String myname = mystudent.getFirstName() + " " +  mystudent.getLastName();
+			List<FormDto> arrayList = new ArrayList<FormDto>();
+			for(Form f : myformlist) {
+				FormDto myform=convertFormToDto(f);
+				arrayList.add(myform);
+			};
+			StudentformDto mystudentforms= new StudentformDto(myname,arrayList);
+			//return mystudentforms;
+			return mystudentforms;
+    	}
+
+			
+		 return null;
+		
+		
+		
+	}   
 
     // this method is to view the grades for internships
     // http://localhost:8081/CoopTermRegistration/Grades
@@ -185,5 +199,5 @@ public class AcademicManagerRestController {
 		}
     	return grades;
 	}
-    
+
 }
