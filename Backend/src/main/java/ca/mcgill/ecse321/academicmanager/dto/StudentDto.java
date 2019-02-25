@@ -36,4 +36,8 @@ public class StudentDto {
 	public boolean getStudentProblematicStatus() {
 		return isProblematic;
 	}
+	
+	public void setStudentProblematicStatus(boolean isProblematic) {
+		this.isProblematic = isProblematic;
+	}
 }
