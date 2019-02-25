@@ -15,30 +15,9 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "*")
 @RestController
 public class AcademicManagerRestController {
-		@Autowired
-		AcademicManagerService service;
-		
-		Cooperator cooperator;
-		//@PostMapping(value = { "/Students/{name}", "/Students/{name}/" })
-	
-	
-	// This method is just for testing only , for the provisionning .
-    private void Provision() {
-		
-		//cooperator=service.createCooperator(1);
-    	Cooperator cooperator=service.createCooperator(1);
-
-		String studentID = "260632353";
-		String firstname = "Yen Vi";
-		String lastname = "Huynh";
-		
-		Student student=service.createStudent(studentID, firstname, lastname, cooperator);
-				
-		service.updateStudentProblematicStatus(student, true);
-		CoopTermRegistration registration = service.createCoopTermRegistration("testregID23", "123", TermStatus.ONGOING, Grade.NotGraded, student);
-
-    }
-	
+	@Autowired
+	AcademicManagerService service;	
+	Cooperator cooperator;	
 	
 	/************* CREATE OBJECTS METHODS ************/
 	
@@ -94,7 +73,7 @@ public class AcademicManagerRestController {
 	
 	/*********** START OF USE CASES METHODS ************/
 	// This method is to report a list of problematic students
-    // http://localhost:8082/Student/problematic
+    // http://localhost:8082/Students/problematic
     // curl localhost:8082/Students/problematic
 	@GetMapping(value = { "/Students/problematic", "/Students/problematic" })
 	public List<StudentDto> getProblematicStudents() throws IllegalArgumentException {
@@ -118,7 +97,6 @@ public class AcademicManagerRestController {
     @GetMapping(value = { "/Students/list", "/Students/list" })
 	public List<StudentDto> getListStudents() throws IllegalArgumentException {
 	// @formatter:on
-    	Provision();
 		Set<Student> students = service.getAllStudents();
 		List<StudentDto> mylist = new ArrayList<StudentDto>();
 	
