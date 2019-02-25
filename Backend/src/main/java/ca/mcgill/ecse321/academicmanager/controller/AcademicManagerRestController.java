@@ -17,50 +17,27 @@ import org.springframework.web.bind.annotation.*;
 public class AcademicManagerRestController {
 		@Autowired
 		AcademicManagerService service;
-	
 		
 		Cooperator cooperator;
-		@PostMapping(value = { "/Students/{name}", "/Students/{name}/" })
+		//@PostMapping(value = { "/Students/{name}", "/Students/{name}/" })
 	
 	
 	// This method is just for testing only , for the provisionning .
     private void Provision() {
 		
-		cooperator=service.createCooperator(1);
-		
-		
-		String courseID = "ECSE321";
-		String term = "Winter2019";
-		String courseName = "Introduction to Software Engineering";
-		Integer courseRank = null;
-		try {
-			service.createCourse(courseID, term, courseName, courseRank, cooperator);
-		} catch (Exception e) {}
-			// Check that no error occurred
+		//cooperator=service.createCooperator(1);
+    	Cooperator cooperator=service.createCooperator(1);
 
 		String studentID = "260632353";
 		String firstname = "Yen Vi";
 		String lastname = "Huynh";
 		
-
-		Cooperator cooperator=service.createCooperator(1);
-
 		Student student=service.createStudent(studentID, firstname, lastname, cooperator);
 				
 		service.updateStudentProblematicStatus(student, true);
-		
-		studentID = "260632354";
-		firstname = "Bach";
-		lastname = "Tran";
-		
+		CoopTermRegistration registration = service.createCoopTermRegistration("testregID23", "123", TermStatus.ONGOING, Grade.NotGraded, student);
 
-		cooperator=service.createCooperator(1);
-
-		try {
-			service.createStudent(studentID, firstname, lastname, cooperator);
-			service.createCoopTermRegistration("testregID23", "123", TermStatus.ONGOING, Grade.NotGraded, student);
-		} catch (IllegalArgumentException e) {}	
-	}
+    }
 	
 	
 	/************* CREATE OBJECTS METHODS ************/
@@ -76,7 +53,7 @@ public class AcademicManagerRestController {
 		return convertToDto(student);
 	}
     
-    @RequestMapping("/cooptermregistrations")
+    @RequestMapping("/CoopTermRegistrations")
     @ResponseBody
 	public CoopTermRegistrationDto createCoopTermRegistration(@PathVariable("registrationID") String registrationID, 
 												@PathVariable("jobID") String jobID,
@@ -136,13 +113,12 @@ public class AcademicManagerRestController {
 	}
    
 	// This method is to report a list of students
-    //http://localhost:8082/Student/list
+    //http://localhost:8082/Students/list
     //curl localhost:8082/Students/list
     @GetMapping(value = { "/Students/list", "/Students/list" })
 	public List<StudentDto> getListStudents() throws IllegalArgumentException {
 	// @formatter:on
-    	
-		
+    	Provision();
 		Set<Student> students = service.getAllStudents();
 		List<StudentDto> mylist = new ArrayList<StudentDto>();
 	
@@ -172,25 +148,37 @@ public class AcademicManagerRestController {
 				arrayList.add(myform);
 			};
 			StudentformDto mystudentforms= new StudentformDto(myname,arrayList);
-			//return mystudentforms;
 			return mystudentforms;
     	}
-
-			
-		 return null;
-		
-		
-		
+		return null;		
 	}   
 
     // this method is to view the grades for internships
-    // http://localhost:8081/CoopTermRegistration/Grades
-    //curl localhost:8081/CoopTermRegistration/Grades
-    @RequestMapping("/CoopTermRegistration/Grades")
+    // http://localhost:8082/CoopTermRegistrations
+    // curl localhost:8082/CoopTermRegistrations
+    @GetMapping("/CoopTermRegistrations/list")
+    @ResponseBody
+	public List<CoopTermRegistrationDto> viewCoopTermRegistrations() throws IllegalArgumentException {	
+    	// @formatter:on
+
+    	Set<CoopTermRegistration> internships = service.getAllCoopTermRegistration();
+    	List<CoopTermRegistrationDto> internshipsDto = new ArrayList<CoopTermRegistrationDto>();
+    			
+    	if (internships != null) {
+			for(CoopTermRegistration intern : internships) {
+    			internshipsDto.add(convertToDto(intern));
+			}
+    	}
+    	return internshipsDto;
+	}
+    
+    // this method is to view the grades for internships
+    // http://localhost:8082/CoopTermRegistrations/Grades
+    //curl localhost:8082/CoopTermRegistrations/Grades
+    @GetMapping("/CoopTermRegistrations/Grades")
     @ResponseBody
 	public Set<Grade> viewGrades() throws IllegalArgumentException {
 	
-    	Provision();
     	Set<CoopTermRegistration> internships = service.getAllCoopTermRegistration();
     	Set<Grade> grades = new HashSet<Grade>();
     	
@@ -199,5 +187,4 @@ public class AcademicManagerRestController {
 		}
     	return grades;
 	}
-
 }
