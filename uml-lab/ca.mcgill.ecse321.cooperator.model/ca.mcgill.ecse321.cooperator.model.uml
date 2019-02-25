@@ -3,7 +3,7 @@
   <uml:Model xmi:id="_1Z3nkCcWEemj-ZTemeLm7A" name="ca_mcgill_ecse321_academicmanger_model">
     <eAnnotations xmi:id="_1j-l0CcWEemj-ZTemeLm7A" source="http://ns.yatta.de/umllab">
       <contents xmi:type="ecore:EAnnotation" xmi:id="_1j_M4CcWEemj-ZTemeLm7A" source="codegen">
-        <details xmi:id="_JUgMMCcmEemj-ZTemeLm7A" key="AssociatedSourceCode" value="/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/Course.java;737757981/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/Cooperator.java;106388064/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/Form.java;3813680443/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/Student.java;93873736/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/TermStatus.java;2470404642/1;/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/FormType.java;1184161189/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/CoopTermRegistration.java;1919205170/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/Term.java;1551512350/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/Grade.java;4204005706/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/Meeting.java;3466626275/1;"/>
+        <details xmi:id="_JUgMMCcmEemj-ZTemeLm7A" key="AssociatedSourceCode" value="/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/Course.java;737757981/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/Cooperator.java;106388064/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/Form.java;3813680443/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/Student.java;2332348132/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/TermStatus.java;2470404642/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/CoopTermRegistration.java;1976614847/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/Term.java;1551512350/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/Grade.java;4204005706/1;/ecse321-group-project-18/Backend/src/main/java/ca/mcgill/ecse321/academicmanager/model/Meeting.java;3466626275/1;"/>
         <details xmi:id="_5pMJECnGEemS0IHJqlSUCQ" key="codegenDirectory" value="/Backend/src/main/java"/>
       </contents>
       <contents xmi:type="ecore:EAnnotation" xmi:id="_jRw9ICsQEemFupWFI64o_g" source="preferences">
@@ -224,11 +224,11 @@ and its term.
                 <ownedAttribute xmi:id="_ASDm8CyaEem7_r_-bjr0Lg" name="jobID" visibility="public">
                   <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
                 </ownedAttribute>
-                <ownedAttribute xmi:id="__iYLkCybEem7_r_-bjr0Lg" name="student" type="_2yC-YCybEem7_r_-bjr0Lg" association="__iVIQCybEem7_r_-bjr0Lg">
-                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="__iZZsCybEem7_r_-bjr0Lg" value="1"/>
-                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__iaAwCybEem7_r_-bjr0Lg" value="1"/>
+                <ownedAttribute xmi:id="_OAkjgC2ZEemf1YJ4WA-EJA" name="grade" visibility="public" type="_aqyjsCzmEem7_r_-bjr0Lg" association="_axlLkDlEEemT7uDJWg8iTA"/>
+                <ownedAttribute xmi:id="_USvDYDlFEemT7uDJWg8iTA" name="student" type="_2yC-YCybEem7_r_-bjr0Lg" association="_USucUDlFEemT7uDJWg8iTA">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_USvDYTlFEemT7uDJWg8iTA" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_USvqcDlFEemT7uDJWg8iTA" value="1"/>
                 </ownedAttribute>
-                <ownedAttribute xmi:id="_OAkjgC2ZEemf1YJ4WA-EJA" name="grade" visibility="public" type="_aqyjsCzmEem7_r_-bjr0Lg"/>
                 <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_F4zLIC2ZEemf1YJ4WA-EJA" name="hashCode" specification="_F13y8C2ZEemf1YJ4WA-EJA">
                   <ownedParameter xmi:id="_F4zLIS2ZEemf1YJ4WA-EJA" direction="return">
                     <name xsi:nil="true"/>
@@ -472,7 +472,6 @@ Time constraint: endTime has to happen after startTime.
                   </ownedParameter>
                 </ownedOperation>
               </packagedElement>
-              <packagedElement xmi:type="uml:Association" xmi:id="__iVIQCybEem7_r_-bjr0Lg" name="" memberEnd="__iVvUCybEem7_r_-bjr0Lg __iYLkCybEem7_r_-bjr0Lg"/>
               <packagedElement xmi:type="uml:Class" xmi:id="_2yC-YCybEem7_r_-bjr0Lg" name="Student">
                 <ownedComment xmi:id="_F5E38C2ZEemf1YJ4WA-EJA">
                   <body>Student Entity.
@@ -494,13 +493,13 @@ Time constraint: endTime has to happen after startTime.
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="__TbJkCybEem7_r_-bjr0Lg"/>
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__TbwoCybEem7_r_-bjr0Lg" value="*"/>
                 </ownedAttribute>
-                <ownedAttribute xmi:id="__iVvUCybEem7_r_-bjr0Lg" name="coopTermRegistration" type="_4P8ckCyXEem7_r_-bjr0Lg" association="__iVIQCybEem7_r_-bjr0Lg">
-                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="__iVvUSybEem7_r_-bjr0Lg"/>
-                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__iW9cCybEem7_r_-bjr0Lg" value="1"/>
-                </ownedAttribute>
                 <ownedAttribute xmi:id="_GhujUCycEem7_r_-bjr0Lg" name="cooperator" type="_caXnoCmIEem4X72wVnqehw" association="_Ght8QCycEem7_r_-bjr0Lg">
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_GhujUSycEem7_r_-bjr0Lg" value="1"/>
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_GhujUiycEem7_r_-bjr0Lg" value="1"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_USvqcTlFEemT7uDJWg8iTA" name="coopTermRegistration" type="_4P8ckCyXEem7_r_-bjr0Lg" association="_USucUDlFEemT7uDJWg8iTA">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_USvqcjlFEemT7uDJWg8iTA"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_USwRgDlFEemT7uDJWg8iTA" value="*"/>
                 </ownedAttribute>
                 <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_F5B0oC2ZEemf1YJ4WA-EJA" name="hashCode" specification="_F2oA4C2ZEemf1YJ4WA-EJA">
                   <ownedParameter xmi:id="_F5B0oS2ZEemf1YJ4WA-EJA" direction="return">
@@ -512,7 +511,6 @@ Time constraint: endTime has to happen after startTime.
 		int result = 1;
 		result = prime * result + ((cooperator == null) ? 0 : cooperator.hashCode());
 		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
-		result = prime * result + ((grade == null) ? 0 : grade.hashCode());
 		result = prime * result + (isProblematic ? 1231 : 1237);
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
 		result = prime * result + ((studentID == null) ? 0 : studentID.hashCode());
@@ -537,8 +535,6 @@ Time constraint: endTime has to happen after startTime.
 			if (other.firstName != null)
 				return false;
 		} else if (!firstName.equals(other.firstName))
-			return false;
-		if (grade != other.grade)
 			return false;
 		if (isProblematic != other.isProblematic)
 			return false;
@@ -683,6 +679,10 @@ Time constraint: endTime has to happen after startTime.
                 <ownedEnd xmi:id="_OpHzES1eEemZZ94joFKfEg" name="" type="_a_YaoCyZEem7_r_-bjr0Lg" association="_OpHzEC1eEemZZ94joFKfEg"/>
               </packagedElement>
               <packagedElement xmi:type="uml:Class" xmi:id="_F3xQYC2ZEemf1YJ4WA-EJA" name="Object"/>
+              <packagedElement xmi:type="uml:Association" xmi:id="_axlLkDlEEemT7uDJWg8iTA" name="" memberEnd="_OAkjgC2ZEemf1YJ4WA-EJA _axlyoDlEEemT7uDJWg8iTA">
+                <ownedEnd xmi:id="_axlyoDlEEemT7uDJWg8iTA" name="" type="_4P8ckCyXEem7_r_-bjr0Lg" association="_axlLkDlEEemT7uDJWg8iTA"/>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Association" xmi:id="_USucUDlFEemT7uDJWg8iTA" name="" memberEnd="_USvDYDlFEemT7uDJWg8iTA _USvqcTlFEemT7uDJWg8iTA"/>
             </packagedElement>
             <packagedElement xmi:type="uml:Class" xmi:id="_8bbn4CseEem5tvRJPUOIkA" name="Cooperator"/>
           </packagedElement>
@@ -838,4 +838,6 @@ Time constraint: endTime has to happen after startTime.
   <UMLLabProfile:Annotations xmi:id="_F4xV8C2ZEemf1YJ4WA-EJA" base_Element="_F4vgwC2ZEemf1YJ4WA-EJA">
     <annotations xmi:id="_F4xV8S2ZEemf1YJ4WA-EJA" name="Override"/>
   </UMLLabProfile:Annotations>
+  <UMLLabProfile:StyledElement xmi:id="_axJGsDlEEemT7uDJWg8iTA" base_Element="_OAkjgC2ZEemf1YJ4WA-EJA"/>
+  <UMLLabProfile:Patch xmi:id="_bq6nUDlEEemT7uDJWg8iTA" base_Element="_lGOkYCsQEemFupWFI64o_g" patchText="@@ -1,119 +0,0 @@&#xA;-package ca.mcgill.ecse321.academicmanager.model;%0D%0A%0D%0A%0D%0Apublic enum FormType %7B%0D%0ASTUDENTEVALUATION, COOPEVALUATION;%0D%0A%0D%0A%7D%0D%0A&#xA;" conflicting="false"/>
 </xmi:XMI>

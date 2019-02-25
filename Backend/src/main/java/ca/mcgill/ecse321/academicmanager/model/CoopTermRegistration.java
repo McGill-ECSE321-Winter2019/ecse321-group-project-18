@@ -18,6 +18,17 @@ import javax.persistence.OneToOne;
 @Entity
 public class CoopTermRegistration
 {
+private Student student;
+
+@ManyToOne(optional=false)
+public Student getStudent() {
+   return this.student;
+}
+
+public void setStudent(Student student) {
+   this.student = student;
+}
+
 private Grade grade;
    
    public void setGrade(Grade value) {
@@ -72,16 +83,6 @@ return this.grade;
 	}
 	public String getJobID() {
 		return this.jobID;
-	}
-	private Student student;
-	
-	@OneToOne(mappedBy="coopTermRegistration", optional=false,cascade = CascadeType.ALL)
-	public Student getStudent() {
-	   return this.student;
-	}
-	
-	public void setStudent(Student student) {
-	   this.student = student;
 	}
 	@Override
 	public int hashCode() {
