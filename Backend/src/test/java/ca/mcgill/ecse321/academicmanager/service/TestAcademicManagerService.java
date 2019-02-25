@@ -27,26 +27,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import ca.mcgill.ecse321.academicmanager.dao.CooperatorRepository;
-import ca.mcgill.ecse321.academicmanager.dao.CoopTermRegistrationRepository;
-import ca.mcgill.ecse321.academicmanager.dao.CourseRepository;
-import ca.mcgill.ecse321.academicmanager.dao.FormRepository;
-import ca.mcgill.ecse321.academicmanager.dao.MeetingRepository;
-import ca.mcgill.ecse321.academicmanager.dao.StudentRepository;
-import ca.mcgill.ecse321.academicmanager.dao.TermRepository;
+import ca.mcgill.ecse321.academicmanager.dao.*;
 
 import ca.mcgill.ecse321.academicmanager.exceptions.*;
 
-import ca.mcgill.ecse321.academicmanager.model.Cooperator;
-import ca.mcgill.ecse321.academicmanager.model.CoopTermRegistration;
-import ca.mcgill.ecse321.academicmanager.model.Course;
-import ca.mcgill.ecse321.academicmanager.model.Form;
-import ca.mcgill.ecse321.academicmanager.model.FormType;
-import ca.mcgill.ecse321.academicmanager.model.Grade;
-import ca.mcgill.ecse321.academicmanager.model.Meeting;
-import ca.mcgill.ecse321.academicmanager.model.Student;
-import ca.mcgill.ecse321.academicmanager.model.Term;
-import ca.mcgill.ecse321.academicmanager.model.TermStatus;
+import ca.mcgill.ecse321.academicmanager.model.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
