@@ -174,20 +174,33 @@ public class TestAcademicManagerService {
 	
 	@Test
 	public void testViewStudentGrade() {
-		String studentID = "142142";
-		String firstname = "1";
-		String lastname = "1";
+		courseRepository.deleteAll();
+		formRepository.deleteAll();
+		termRepository.deleteAll();
+		coopTermRegistrationRepository.deleteAll();
+		meetingRepository.deleteAll();
+		studentRepository.deleteAll();
+//		cooperatorRepository.deleteAll();
 		
-		Student tmpStudent = service.createStudent(studentID, firstname, lastname, cooperator);
+		Student student = service.createStudent("142142", "1", "1", cooperator);
+		Term term = service.createTerm("Winter2019", "Winter 2019", null, null);
 		
 		String registrationID = "1214214";
 		String jobID = "1512521";
 		TermStatus status = TermStatus.FAILED;
 		Grade grade = Grade.NotGraded;
 		
-		CoopTermRegistration tmpCTR = service.createCoopTermRegistration(registrationID, jobID, status, grade, tmpStudent);
+		CoopTermRegistration ctr = null;
+		try {
+			ctr = service.createCoopTermRegistration(registrationID, jobID, status, grade, student, term);
+		}
+		catch(Exception e) {
+			fail();
+		}
 		
-		service.getStudentGrade(tmpCTR);
+		Term t = service.getTerm("Winter2019");
+		Student s = service.getStudent("142142");
+		assertEquals(grade, service.getStudentGrade(ctr));
 	}
 	
 	@Test
@@ -237,18 +250,22 @@ public class TestAcademicManagerService {
 	
 	@Test
 	public void testUpdateForm() {
+		Student tmpStudent = service.createStudent("1", "first", "last", cooperator);
+		Term tmpTerm = service.createTerm("Winter2019", "Winter 2019", null, null);
+		CoopTermRegistration tmpCTR = service.createCoopTermRegistration("0", "123", TermStatus.ONGOING, null, tmpStudent, tmpTerm);
+		
 		String formID = "142142";
 		String pdfLink = "1";
 		String formName = "1";
 		FormType formType = FormType.STUDENTEVALUATION;
 		
-		Form form = service.createForm(formID, formName, pdfLink, formType, null);
+		Form form = service.createForm(formID, formName, pdfLink, formType, tmpCTR);
 		
 		pdfLink = "2";
 		formName = "2";
 		formType = FormType.COOPEVALUATION;
 		
-		form = service.updateForm(form, null, formName, pdfLink, formType, null);
+		form = service.updateForm(form, null, formName, pdfLink, formType);
 		
 		assertEquals(1, formRepository.count());
 		assertEquals("142142", form.getFormID());
@@ -260,33 +277,17 @@ public class TestAcademicManagerService {
 	
 	@Test
 	public void testViewEmployerEvalForms() {
+		Student student = service.createStudent("142142", "1", "1", cooperator);
+		Term term = service.createTerm("Winter2019", "Winter 2019", null, null);
+		CoopTermRegistration ctr = service.createCoopTermRegistration("1214214", "1512521", TermStatus.FAILED, Grade.A, student, term);
 		
-		String studentID = "142142";
-		String firstname = "1";
-		String lastname = "1";
-		Grade grade = Grade.A;
+		Form form = service.createForm("142142", "1", "1", FormType.STUDENTEVALUATION, ctr);	
 		
-		Student tmpStudent = service.createStudent(studentID, firstname, lastname, cooperator);
-		
-		String registrationID = "1214214";
-		String jobID = "1512521";
-		TermStatus status = TermStatus.FAILED;
-		
-		CoopTermRegistration tmpCTR = service.createCoopTermRegistration(registrationID, jobID, status, grade, tmpStudent);
-		
-		String formID = "142142";
-		String pdfLink = "1";
-		String formName = "1";
-		FormType formType = FormType.STUDENTEVALUATION;
-
-		
-		
-		Form form = service.createForm(formID, formName, pdfLink, formType, tmpCTR);	
 		assertEquals(1, formRepository.count());
 		assertEquals("142142", form.getFormID());
 		
 		
-		Set<Form> forms = tmpCTR.getForm();
+		Set<Form> forms = ctr.getForm();
 		
 		for(Form f : forms) {
 			assertEquals(FormType.STUDENTEVALUATION, f.getFormType());
@@ -311,22 +312,14 @@ public class TestAcademicManagerService {
 	
 	@Test
 	public void testAdjudicateTermStatus() {
+		Student student = service.createStudent("142142", "1", "1", cooperator);
+		Term term = service.createTerm("Winter2019", "Winter 2019", null, null);
 		
-		String studentID = "142142";
-		String firstname = "1";
-		String lastname = "1";
+		CoopTermRegistration ctr = service.createCoopTermRegistration("1214214", "1512521", TermStatus.FAILED, Grade.A, student, term);
+		assertEquals(TermStatus.FAILED, ctr.getTermStatus());
 		
-		Student tmpStudent = service.createStudent(studentID, firstname, lastname, cooperator);
-		
-		String registrationID = "1214214";
-		String jobID = "1512521";
-		TermStatus status = TermStatus.FAILED;
-		Grade grade = Grade.A;
-		
-		CoopTermRegistration tmpCTR = service.createCoopTermRegistration(registrationID, jobID, status, grade, tmpStudent);
-		assertEquals(TermStatus.FAILED, tmpCTR.getTermStatus());
-		service.updateCoopTermRegistration(tmpCTR, TermStatus.FINISHED, null, tmpStudent, grade, null);
-		assertEquals(TermStatus.FINISHED, tmpCTR.getTermStatus());
+		service.updateCoopTermRegistration(ctr, TermStatus.FINISHED, null);
+		assertEquals(TermStatus.FINISHED, ctr.getTermStatus());
 	}
 	
 	/**
@@ -345,9 +338,8 @@ public class TestAcademicManagerService {
 		Date date = Date.valueOf("2019-01-01");
 		Time startTime = Time.valueOf("18:00:00");
 		Time endTime = Time.valueOf("16:00:00");
-		Set<Student> students = service.getAllStudents();
 		try {
-			service.createMeeting(meetingID, location, details, date, startTime, endTime, students);
+			service.createMeeting(meetingID, location, details, date, startTime, endTime);
 		} catch (InvalidEndTimeException e) {
 			assertEquals(0, service.getAllMeetings().size());
 		} catch (Exception e) {
@@ -366,9 +358,8 @@ public class TestAcademicManagerService {
 		Date date = Date.valueOf("2019-01-01");
 		Time startTime = Time.valueOf("16:00:00");
 		Time endTime = Time.valueOf("18:00:00");
-		Set<Student> students = service.getAllStudents();
 		try {
-			Meeting meeting = service.createMeeting(meetingID, location, details, date, startTime, endTime, students);
+			Meeting meeting = service.createMeeting(meetingID, location, details, date, startTime, endTime);
 			assertEquals(1, meetingRepository.count());
 			assertEquals(meeting, meetingRepository.findByMeetingID(meetingID));
 		} catch (Exception e) {
@@ -392,9 +383,8 @@ public class TestAcademicManagerService {
 		Date date = Date.valueOf("2019-01-01");
 		Time startTime = Time.valueOf("16:00:00");
 		Time endTime = Time.valueOf("18:00:00");
-		Set<Student> students = service.getAllStudents();
 		try {
-			service.createMeeting(meetingID, location, details, date, startTime, endTime, students);
+			service.createMeeting(meetingID, location, details, date, startTime, endTime);
 		} catch (NullArgumentException e) {
 			assertEquals(0, service.getAllMeetings().size());
 		} catch (Exception e) {
@@ -410,9 +400,8 @@ public class TestAcademicManagerService {
 		Date date = Date.valueOf("2019-01-01");
 		Time startTime = Time.valueOf("16:00:00");
 		Time endTime = Time.valueOf("18:00:00");
-		Set<Student> students = service.getAllStudents();
 		
-		Meeting meeting = service.createMeeting(meetingID, location, details, date, startTime, endTime, students);
+		Meeting meeting = service.createMeeting(meetingID, location, details, date, startTime, endTime);
 		
 		location = "new location";
 		details = "new deatils";
@@ -438,6 +427,7 @@ public class TestAcademicManagerService {
 		String lastname = "1";
 		
 		Student tmpStudent = service.createStudent(studentID, firstname, lastname, cooperator);
+		Term tmpTerm = service.createTerm("Winter2019", "Winter 2019", null, null);
 		
 		String registrationID = "1214214";
 		String jobID = "1512521";
@@ -445,7 +435,7 @@ public class TestAcademicManagerService {
 		Grade grade = Grade.A;
 		
 		try {
-			CoopTermRegistration tmpCTR = service.createCoopTermRegistration(registrationID, jobID, status, grade, tmpStudent);
+			CoopTermRegistration tmpCTR = service.createCoopTermRegistration(registrationID, jobID, status, grade, tmpStudent, tmpTerm);
 			assertEquals(tmpCTR.getRegistrationID(), registrationID);
 			assertEquals(tmpCTR.getJobID(), jobID);
 			assertEquals(tmpCTR.getTermStatus(), status);
@@ -463,28 +453,28 @@ public class TestAcademicManagerService {
 		String lastname = "1";
 		
 		Student tmpStudent = service.createStudent(studentID, firstname, lastname, cooperator);
+		Term tmpTerm = service.createTerm("Winter2019", "Winter 2019", null, null);
 		
 		String registrationID = "1214214";
 		String jobID = "1512521";
 		TermStatus status = TermStatus.FAILED;
 		Grade grade = Grade.A;
 		
-		CoopTermRegistration tmpCTR = service.createCoopTermRegistration(registrationID, jobID, status, grade, tmpStudent);
+		CoopTermRegistration tmpCTR = service.createCoopTermRegistration(registrationID, jobID, status, grade, tmpStudent, tmpTerm);
 		
-		tmpCTR = service.updateCoopTermRegistration(tmpCTR, TermStatus.FINISHED, null, null, null, null);
+		tmpCTR = service.updateCoopTermRegistration(tmpCTR, TermStatus.FINISHED, null);
 		
 		assertEquals(tmpCTR.getTermStatus(), TermStatus.FINISHED);
 	}
 	
 	@Test
 	public void testCreateTerm() {
-		Set<CoopTermRegistration> ctrs = new HashSet<CoopTermRegistration>();
 		String termID = "696969";
 		String termName = "Winter 2019";
 		Date studentEvalFormDeadline = Date.valueOf("2015-06-01");
 		Date coopEvalFormDeadline = Date.valueOf("2015-06-01");
 		try {
-			Term term = service.createTerm(termID, termName, studentEvalFormDeadline, coopEvalFormDeadline, ctrs);
+			Term term = service.createTerm(termID, termName, studentEvalFormDeadline, coopEvalFormDeadline);
 			//assertEquals(term.getTermID(), termID);
 			//assertEquals(term.getStudentEvalFormDeadline(), studentEvalFormDeadline);
 			//assertEquals(term.getCoopEvalFormDeadline(), coopEvalFormDeadline);
@@ -500,7 +490,7 @@ public class TestAcademicManagerService {
 		assertEquals(0, termRepository.count());
 		
 		try {
-			service.createTerm(null, null, null, null, null);
+			service.createTerm(null, null, null, null);
 		} catch (NullArgumentException e) {
 			assertEquals(0, termRepository.count());
 		} catch (Exception e) {
@@ -512,19 +502,17 @@ public class TestAcademicManagerService {
 	public void testUpdateTerm() {
 		Term term;
 		
-		Set<CoopTermRegistration> ctrs = new HashSet<CoopTermRegistration>();
-		
 		String termID = "696969";
 		String termName = "Winter2019";
 		Date studentEvalFormDeadline = Date.valueOf("2015-06-01");
 		Date coopEvalFormDeadline = Date.valueOf("2015-06-01");
 		
-		term = service.createTerm(termID, termName, studentEvalFormDeadline, coopEvalFormDeadline, ctrs);
+		term = service.createTerm(termID, termName, studentEvalFormDeadline, coopEvalFormDeadline);
 		
 		studentEvalFormDeadline = Date.valueOf("2017-06-01");
 		coopEvalFormDeadline = Date.valueOf("2017-06-01");
 		
-		term = service.updateTerm(term, studentEvalFormDeadline, coopEvalFormDeadline, null);
+		term = service.updateTerm(term, null, studentEvalFormDeadline, coopEvalFormDeadline);
 		
 		assertEquals(term.getCoopEvalFormDeadline(), coopEvalFormDeadline);
 		assertEquals(term.getStudentEvalFormDeadline(), studentEvalFormDeadline);
