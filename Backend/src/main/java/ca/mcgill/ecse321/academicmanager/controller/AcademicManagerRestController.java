@@ -19,7 +19,33 @@ public class AcademicManagerRestController {
 	AcademicManagerService service;	
 	Cooperator cooperator;	
 	
-	/************* CREATE OBJECTS METHODS ************/
+	/************* CREATE/POST OBJECTS METHODS ************/
+	
+    // Method is to POST/CREATE cooperator
+    // curl -X POST localhost:8082/Cooperator/1
+    @PostMapping(value = { "/Cooperator/{coopID}"})
+	public CooperatorDto CreateCooperator(@PathVariable("coopID") Integer coopID 			      
+			) throws IllegalArgumentException {
+	// @formatter:on
+    	
+    	service.createCooperator(coopID);
+    	return convertToDto(coopID);
+	}   
+	
+    // Method is to POST/CREATE term
+    // curl -X POST localhost:8082/Terms/2211/Winter2019/2019-3-22/2019-4-4
+    @PostMapping(value = { "/Terms/{termID}/{termName}/{date1}/{date2}", "/Terms/{termID}/{termName}/{date1}/{date2}" })
+	public TermDto CreateTerm(@PathVariable("termID") String termID,@PathVariable("termName") String termName ,
+			@PathVariable("date1") String date1,@PathVariable("date2") String date2       
+			) throws IllegalArgumentException {
+	// @formatter:on
+    	
+    	Set<CoopTermRegistration> ctrs = new HashSet<CoopTermRegistration>();
+		Date studentEvalFormDeadline = Date.valueOf(date1); // form of date: "2015-06-01"
+		Date coopEvalFormDeadline = Date.valueOf(date2);
+    	Term term = service.createTerm(termID, termName, studentEvalFormDeadline, coopEvalFormDeadline, ctrs);
+    	return convertToDto(term);
+	}   
 	
     @RequestMapping("/Students")
     @ResponseBody
@@ -92,33 +118,7 @@ public class AcademicManagerRestController {
 	}
 	
 	/*********** START OF USE CASES METHODS ************/
-	
-	
-    // Method is to POST/CREATE cooperator
-    // curl -X POST localhost:8082/Cooperator/1
-    @PostMapping(value = { "/Cooperator/{coopID}"})
-	public CooperatorDto CreateCooperator(@PathVariable("coopID") Integer coopID 			      
-			) throws IllegalArgumentException {
-	// @formatter:on
-    	
-    	service.createCooperator(coopID);
-    	return convertToDto(coopID);
-	}   
-	
-    // Method is to POST/CREATE term
-    // curl -X POST localhost:8082/Terms/2211/Winter2019/2019-3-22/2019-4-4
-    @PostMapping(value = { "/Terms/{termID}/{termName}/{date1}/{date2}", "/Terms/{termID}/{termName}/{date1}/{date2}" })
-	public TermDto CreateTerm(@PathVariable("termID") String termID,@PathVariable("termName") String termName ,
-			@PathVariable("date1") String date1,@PathVariable("date2") String date2       
-			) throws IllegalArgumentException {
-	// @formatter:on
-    	
-    	Set<CoopTermRegistration> ctrs = new HashSet<CoopTermRegistration>();
-		Date studentEvalFormDeadline = Date.valueOf(date1); // form of date: "2015-06-01"
-		Date coopEvalFormDeadline = Date.valueOf(date2);
-    	Term term = service.createTerm(termID, termName, studentEvalFormDeadline, coopEvalFormDeadline, ctrs);
-    	return convertToDto(term);
-	}   
+
 	
 	// This method is to report a list of problematic students
     // http://localhost:8082/Students/problematic
