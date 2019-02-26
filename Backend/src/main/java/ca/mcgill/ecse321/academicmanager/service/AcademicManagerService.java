@@ -266,20 +266,21 @@ public class AcademicManagerService {
 			throw new NullArgumentException();
 		}
 		
-		CoopTermRegistration ctr = student.getCoopTermRegistration();
+		Set<CoopTermRegistration> ctrs = student.getCoopTermRegistration();
 		
-		if(!checkArg(ctr) ) {
+		if(!checkArg(ctrs) ) {
 			throw new IllegalArgumentException("student is not registered for a term");
 		}
 		
-		Set<Form> forms = ctr.getForm();
-		
-		for(Form form : forms) {
-			if(form.getFormType() != FormType.STUDENTEVALUATION) {
-				forms.remove(form);
+		Set<Form> forms = new HashSet<Form>();
+		for(CoopTermRegistration ctr : ctrs) {	
+			forms.addAll(ctr.getForm());
+			for(Form form : forms) {
+				if(form.getFormType() != FormType.STUDENTEVALUATION) {
+					forms.remove(form);
+				}
 			}
 		}
-		
 		return forms;
 	}
 	
@@ -289,20 +290,21 @@ public class AcademicManagerService {
 			throw new NullArgumentException();
 		}
 		
-		CoopTermRegistration ctr = student.getCoopTermRegistration();
+Set<CoopTermRegistration> ctrs = student.getCoopTermRegistration();
 		
-		if(!checkArg(ctr) ) {
+		if(!checkArg(ctrs) ) {
 			throw new IllegalArgumentException("student is not registered for a term");
 		}
 		
-		Set<Form> forms = ctr.getForm();
-		
-		for(Form form : forms) {
-			if(form.getFormType() != FormType.COOPEVALUATION) {
-				forms.remove(form);
+		Set<Form> forms = new HashSet<Form>();
+		for(CoopTermRegistration ctr : ctrs) {	
+			forms.addAll(ctr.getForm());
+			for(Form form : forms) {
+				if(form.getFormType() != FormType.COOPEVALUATION) {
+					forms.remove(form);
+				}
 			}
 		}
-		
 		return forms;
 	}
 	//---Form---
@@ -417,7 +419,7 @@ public class AcademicManagerService {
 			throw new NullArgumentException();
 		}
 		
-		student.setCoopTermRegistration(ctr);
+		student = addStudentCtr(student, ctr);
 		return studentRepository.save(student);
 	}
 	
