@@ -105,7 +105,7 @@ public class AcademicManagerRestController {
     	return convertToDto(coopID);
 	}   
 	
-    // Method is to POST/CREATE cooperator
+    // Method is to POST/CREATE term
     // curl -X POST localhost:8082/Terms/2211/Winter2019/2019-3-22/2019-4-4
     @PostMapping(value = { "/Terms/{termID}/{termName}/{date1}/{date2}", "/Terms/{termID}/{termName}/{date1}/{date2}" })
 	public TermDto CreateTerm(@PathVariable("termID") String termID,@PathVariable("termName") String termName ,
