@@ -1,4 +1,5 @@
 package ca.mcgill.ecse321.academicmanager.model;
+import javax.persistence.OneToMany;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -13,6 +14,17 @@ import javax.persistence.ManyToOne;
  */
 @Entity
 public class Student{
+private Set<CoopTermRegistration> coopTermRegistration;
+
+@OneToMany(mappedBy="student")
+public Set<CoopTermRegistration> getCoopTermRegistration() {
+   return this.coopTermRegistration;
+}
+
+public void setCoopTermRegistration(Set<CoopTermRegistration> coopTermRegistrations) {
+   this.coopTermRegistration = coopTermRegistrations;
+}
+
 	private String studentID;
    
     public void setStudentID(String value) {
@@ -55,17 +67,6 @@ public class Student{
 	
 	public void setMeeting(Set<Meeting> meetings) {
 	   this.meeting = meetings;
-	}
-	
-	private CoopTermRegistration coopTermRegistration;
-	
-	@OneToOne
-	public CoopTermRegistration getCoopTermRegistration() {
-	   return this.coopTermRegistration;
-	}
-	
-	public void setCoopTermRegistration(CoopTermRegistration coopTermRegistration) {
-	   this.coopTermRegistration = coopTermRegistration;
 	}
 	
 	private Cooperator cooperator;

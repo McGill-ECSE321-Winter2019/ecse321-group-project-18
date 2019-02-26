@@ -123,7 +123,7 @@ public class AcademicManagerService {
 		ctr.setGrade(grade);
 		
 		ctr.setStudent(student);
-		student.setCoopTermRegistration(ctr);
+		student = addStudentCtr(student, ctr);
 		
 		ctr.setTerm(term);
 		term = addTermCtr(term, ctr);
@@ -437,6 +437,24 @@ public class AcademicManagerService {
 		}
 		student.setMeeting(meetings);
 		
+		return studentRepository.save(student);
+	}
+	
+	@Transactional
+	public Student addStudentCtr(Student student, CoopTermRegistration ctr) {
+		if(!checkArg(ctr)) {
+			throw new NullArgumentException();
+		}
+		
+		Set<CoopTermRegistration> ctrs = student.getCoopTermRegistration();
+		try {
+			ctrs.add(ctr);
+		}
+		catch(Exception e) {
+			ctrs = new HashSet<CoopTermRegistration>();
+			ctrs.add(ctr);
+		}
+		student.setCoopTermRegistration(ctrs);
 		return studentRepository.save(student);
 	}
 	
