@@ -4,7 +4,7 @@ import ca.mcgill.ecse321.academicmanager.dto.*;
 import ca.mcgill.ecse321.academicmanager.model.*;
 import ca.mcgill.ecse321.academicmanager.service.*;
 
-
+import java.sql.Date;
 import java.util.*;
 
 
@@ -63,15 +63,63 @@ public class AcademicManagerRestController {
 		return coopTermRegistrationDto;
 	}
 	
+	// convert to Dto cooperator
+	private CooperatorDto convertToDto(Integer e) {
+		if (e == null) {
+			throw new IllegalArgumentException("Cannot create term");
+		}
+		CooperatorDto CoopDto = new CooperatorDto(e);
+		return CoopDto;
+	}
+	
+	// convert to Dto Term
+	private TermDto convertToDto(Term e) {
+		if (e == null) {
+			throw new IllegalArgumentException("Cannot create term");
+		}
+		TermDto termDto = new TermDto(e.getTermID(),e.getTermName(),e.getStudentEvalFormDeadline(),e.getCoopEvalFormDeadline());
+		return termDto;
+	}
+	
+	
+	// convert to Dto Form
 	private FormDto convertFormToDto(Form e) {
 		if (e == null) {
-			throw new IllegalArgumentException("There student doens't exist in this Cooperator!");
+			throw new IllegalArgumentException("Cannot create form!");
 		}
 		FormDto formDto = new FormDto(e.getFormID(),e.getName(),e.getPdfLink());
 		return formDto;
 	}
 	
 	/*********** START OF USE CASES METHODS ************/
+	
+	
+    // Method is to POST/CREATE cooperator
+    // curl -X POST localhost:8082/Cooperator/1
+    @PostMapping(value = { "/Cooperator/{coopID}"})
+	public CooperatorDto CreateCooperator(@PathVariable("coopID") Integer coopID 			      
+			) throws IllegalArgumentException {
+	// @formatter:on
+    	
+    	service.createCooperator(coopID);
+    	return convertToDto(coopID);
+	}   
+	
+    // Method is to POST/CREATE term
+    // curl -X POST localhost:8082/Terms/2211/Winter2019/2019-3-22/2019-4-4
+    @PostMapping(value = { "/Terms/{termID}/{termName}/{date1}/{date2}", "/Terms/{termID}/{termName}/{date1}/{date2}" })
+	public TermDto CreateTerm(@PathVariable("termID") String termID,@PathVariable("termName") String termName ,
+			@PathVariable("date1") String date1,@PathVariable("date2") String date2       
+			) throws IllegalArgumentException {
+	// @formatter:on
+    	
+    	Set<CoopTermRegistration> ctrs = new HashSet<CoopTermRegistration>();
+		Date studentEvalFormDeadline = Date.valueOf(date1); // form of date: "2015-06-01"
+		Date coopEvalFormDeadline = Date.valueOf(date2);
+    	Term term = service.createTerm(termID, termName, studentEvalFormDeadline, coopEvalFormDeadline, ctrs);
+    	return convertToDto(term);
+	}   
+	
 	// This method is to report a list of problematic students
     // http://localhost:8082/Students/problematic
     // curl localhost:8082/Students/problematic
