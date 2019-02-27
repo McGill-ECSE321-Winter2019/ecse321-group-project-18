@@ -49,7 +49,7 @@ public class AcademicManagerService {
 	}
 	
 	@Transactional
-	public Cooperator addCooperatorStudent(Cooperator c, Student student) {
+	public void addCooperatorStudent(Cooperator c, Student student) {
 		if(!checkArg(student)) {
 			throw new NullArgumentException();
 		}
@@ -64,11 +64,11 @@ public class AcademicManagerService {
 		}
 		c.setStudent(students);
 		
-		return cooperatorRepository.save(c);
+//		return cooperatorRepository.save(c);
 	}
 	
 	@Transactional
-	public Cooperator addCooperatorCourse(Cooperator c, Course course) {
+	public void addCooperatorCourse(Cooperator c, Course course) {
 		if(!checkArg(course)) {
 			throw new NullArgumentException();
 		}
@@ -83,7 +83,7 @@ public class AcademicManagerService {
 		}
 		c.setCourse(courses);
 		
-		return cooperatorRepository.save(c);
+//		return cooperatorRepository.save(c);
 	}
 
 	
@@ -125,8 +125,7 @@ public class AcademicManagerService {
 		ctr.setStudent(student);
 		student.setCoopTermRegistration(ctr);
 		
-		ctr.setTerm(term);
-		addTermCtr(term, ctr);
+		term.addCoopTermRegistration(ctr);
 		
 		return coopTermRegistrationRepository.save(ctr);
 	}
@@ -196,8 +195,8 @@ public class AcademicManagerService {
 		course.setCourseName(courseName);
 		course.setCourseRank(rank);
 		
-		course.setCooperator(c);
-		c = addCooperatorCourse(c, course);
+//		course.setCooperator(c);
+		c.addCourse(course);
 		
 		return courseRepository.save(course);
 	}
@@ -340,16 +339,8 @@ public class AcademicManagerService {
 			throw new NullArgumentException();
 		}
 		
-		Set<Student> students = meeting.getStudent();
-		try {
-			students.add(student);
-		}
-		catch(Exception e) {
-			students = new HashSet<>();
-			students.add(student);
-		}
-		meeting.setStudent(students);
-		addStudentMeeting(student, meeting);
+		student.addMeeting(meeting);
+		meeting.addStudent(student);
 		
 		return meetingRepository.save(meeting);
 	}
@@ -405,8 +396,8 @@ public class AcademicManagerService {
 		student.setLastName(lastname);
 		student.setIsProblematic(false);
 		
-		student.setCooperator(c);
-		c = addCooperatorStudent(c, student);
+//		student.setCooperator(c);
+		c.addStudent(student);
 		
 		return studentRepository.save(student);
 	}
@@ -427,15 +418,8 @@ public class AcademicManagerService {
 			throw new NullArgumentException();
 		}
 		
-		Set<Meeting> meetings = student.getMeeting();
-		try {
-			meetings.add(meeting);
-		}
-		catch(Exception e) {
-			meetings = new HashSet<>();
-			meetings.add(meeting);
-		}
-		student.setMeeting(meetings);
+		student.addMeeting(meeting);
+		meeting.addStudent(student);
 		
 		return studentRepository.save(student);
 	}

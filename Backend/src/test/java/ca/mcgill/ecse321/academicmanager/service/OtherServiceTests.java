@@ -93,7 +93,6 @@ public class OtherServiceTests {
 		assertEquals(grade, service.getStudentGrade(ctr));
 	}
 	
-	
 	@Test
 	public void testCreateCourses() {
 		assertEquals(0, service.getAllCourses().size());
@@ -123,13 +122,13 @@ public class OtherServiceTests {
 
 		Set<Course> allCourses = service.getAllCourses();
 		Set<Course> cooperatorCourses = service.getCooperatorCourses(cooperator);
+		
 		assertEquals(2, allCourses.size());
 		assertEquals(2, cooperatorCourses.size());
 		
-		Iterator<Course> itr1 = allCourses.iterator();
-		Iterator<Course> itr2 = cooperatorCourses.iterator();
-		while(itr1.hasNext()) {
-			assertEquals(itr1.next(), itr2.next());
+		Iterator<Course> itr = allCourses.iterator();
+		while(itr.hasNext()) {
+			assertTrue(cooperatorCourses.contains(itr.next()));
 		}
 		
 	}
@@ -161,6 +160,7 @@ public class OtherServiceTests {
 
 		Set<Student> allStudents = service.getAllStudents();
 		Set<Student> cooperatorStudents = service.getCooperatorStudents(cooperator);
+		
 		assertEquals(2, allStudents.size());
 		assertEquals(2, cooperatorStudents.size());
 		
@@ -171,7 +171,6 @@ public class OtherServiceTests {
 		}
 		
 	}
-	
 	
 	@Test
 	public void testSettingMeeting() {
@@ -209,9 +208,11 @@ public class OtherServiceTests {
 		
 		meeting = service.addMeetingStudent(meeting, student);
 		
-		String MeetingId1 = student.getMeeting().iterator().next().getMeetingID();
-		String MeetingId2 = meeting.getStudent().iterator().next().getMeeting().iterator().next().getMeetingID();
-		assertEquals(MeetingId1, MeetingId2);
+		Set<Meeting> studentMeetings= student.getMeeting();
+		Set<Student> meetingStudents = meeting.getStudent();
+		
+		assertTrue(studentMeetings.contains(meeting));
+		assertTrue(meetingStudents.contains(student));
 	}
 //	
 //	@Test

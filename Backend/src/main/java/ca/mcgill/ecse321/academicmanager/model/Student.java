@@ -52,7 +52,7 @@ public class Student{
     }
 	private Set<Meeting> meeting;
 	
-	@ManyToMany(mappedBy="student")
+	@ManyToMany(mappedBy="student", cascade= {CascadeType.ALL})
 	public Set<Meeting> getMeeting() {
 	   return this.meeting;
 	}
@@ -62,7 +62,15 @@ public class Student{
 	}
 	
 	public void addMeeting(Meeting meeting) {
-		this.meeting.add(meeting);
+		try {
+			if(!this.meeting.contains(meeting)) {
+				this.meeting.add(meeting);
+			}
+		}
+		catch(Exception e) {
+			this.meeting = new HashSet<Meeting>();
+			this.meeting.add(meeting);
+		}
 	}
 	
 	private CoopTermRegistration coopTermRegistration;
@@ -86,7 +94,16 @@ public class Student{
 	public void setCooperator(Cooperator cooperator) {
 	   this.cooperator = cooperator;
 	}
-	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
+		result = prime * result + (isProblematic ? 1231 : 1237);
+		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
+		result = prime * result + ((studentID == null) ? 0 : studentID.hashCode());
+		return result;
+	}
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -115,4 +132,6 @@ public class Student{
 			return false;
 		return true;
 	}
+	
+	
 }

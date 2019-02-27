@@ -52,9 +52,9 @@ public class Term
 	public Date getCoopEvalFormDeadline() {
 		return this.coopEvalFormDeadline;
 	}
-	private Set<CoopTermRegistration> coopTermRegistration = new HashSet<CoopTermRegistration>();
+	private Set<CoopTermRegistration> coopTermRegistration;
 	
-	@OneToMany(mappedBy="term", cascade= {CascadeType.ALL}, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy="term", cascade= {CascadeType.ALL})
 	public Set<CoopTermRegistration> getCoopTermRegistration() {
 		return this.coopTermRegistration;
 	}
@@ -63,10 +63,29 @@ public class Term
 	   this.coopTermRegistration = coopTermRegistrations;
 	}
 
-	public void addCoopTermRegistration(CoopTermRegistration ctr) {		
-		this.coopTermRegistration.add(ctr);
+	public void addCoopTermRegistration(CoopTermRegistration coopTermRegistrations) {
+		try {
+			if(!this.coopTermRegistration.contains(coopTermRegistrations)) {
+				this.coopTermRegistration.add(coopTermRegistrations);
+				coopTermRegistrations.setTerm(this);
+			}
+		}
+		catch(Exception e) {
+			this.coopTermRegistration = new HashSet<CoopTermRegistration>();
+			this.coopTermRegistration.add(coopTermRegistrations);
+			coopTermRegistrations.setTerm(this);
+		}
 	}
-	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((coopEvalFormDeadline == null) ? 0 : coopEvalFormDeadline.hashCode());
+		result = prime * result + ((studentEvalFormDeadline == null) ? 0 : studentEvalFormDeadline.hashCode());
+		result = prime * result + ((termID == null) ? 0 : termID.hashCode());
+		result = prime * result + ((termName == null) ? 0 : termName.hashCode());
+		return result;
+	}
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -80,11 +99,6 @@ public class Term
 			if (other.coopEvalFormDeadline != null)
 				return false;
 		} else if (!coopEvalFormDeadline.equals(other.coopEvalFormDeadline))
-			return false;
-		if (coopTermRegistration == null) {
-			if (other.coopTermRegistration != null)
-				return false;
-		} else if (!coopTermRegistration.equals(other.coopTermRegistration))
 			return false;
 		if (studentEvalFormDeadline == null) {
 			if (other.studentEvalFormDeadline != null)
@@ -103,5 +117,6 @@ public class Term
 			return false;
 		return true;
 	}
+	
 	
 }

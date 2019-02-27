@@ -4,6 +4,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.OneToMany;
 import javax.persistence.ManyToOne;
@@ -57,7 +58,17 @@ public class CoopTermRegistration
 	}
 	
 	public void addForm(Form form) {
-		this.form.add(form);
+		try {
+			if(!this.form.contains(form)) {
+				this.form.add(form);
+				form.setCoopTermRegistration(this);
+			}
+		}
+		catch(Exception e) {
+			this.form = new HashSet<Form>();
+			this.form.add(form);
+			form.setCoopTermRegistration(this);
+		}
 	}
 
 	private Term term;
@@ -89,5 +100,47 @@ public class CoopTermRegistration
 	public void setStudent(Student student) {
 	   this.student = student;
 	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((form == null) ? 0 : form.hashCode());
+		result = prime * result + ((grade == null) ? 0 : grade.hashCode());
+		result = prime * result + ((jobID == null) ? 0 : jobID.hashCode());
+		result = prime * result + ((registrationID == null) ? 0 : registrationID.hashCode());
+		result = prime * result + ((termStatus == null) ? 0 : termStatus.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CoopTermRegistration other = (CoopTermRegistration) obj;
+		if (form == null) {
+			if (other.form != null)
+				return false;
+		} else if (!form.equals(other.form))
+			return false;
+		if (grade != other.grade)
+			return false;
+		if (jobID == null) {
+			if (other.jobID != null)
+				return false;
+		} else if (!jobID.equals(other.jobID))
+			return false;
+		if (registrationID == null) {
+			if (other.registrationID != null)
+				return false;
+		} else if (!registrationID.equals(other.registrationID))
+			return false;
+		if (termStatus != other.termStatus)
+			return false;
+		return true;
+	}
+	
 	
 }

@@ -33,15 +33,19 @@ public class Cooperator{
 	
 	public void addStudent(Student student) {
 		try {
-			this.student.add(student);
+			if(!this.student.contains(student)) {
+				this.student.add(student);
+				student.setCooperator(this);
+			}
 		}
 		catch(Exception e) {	
 			this.student = new HashSet<Student>();
 			this.student.add(student);
+			student.setCooperator(this);
 		}
 	}
 	
-	private Set<Course> course = new HashSet<Course>();
+	private Set<Course> course;
 	
 	@OneToMany(mappedBy="cooperator", cascade={CascadeType.ALL})
 	public Set<Course> getCourse() {
@@ -53,16 +57,25 @@ public class Cooperator{
 	}
 	
 	public void addCourse(Course course) {
-		this.course.add(course);
 		try {
-			this.course.add(course);
+			if(!this.course.contains(course)) {
+				this.course.add(course);
+				course.setCooperator(this);
+			}
 		}
 		catch(Exception e) {	
 			this.course = new HashSet<Course>();
 			this.course.add(course);
+			course.setCooperator(this);
 		}
 	}
-	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -79,4 +92,6 @@ public class Cooperator{
 			return false;
 		return true;
 	}
+	
+	
 }
