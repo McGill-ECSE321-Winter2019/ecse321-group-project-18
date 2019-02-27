@@ -19,7 +19,8 @@ public class AcademicManagerRestController {
 
 	/************* CREATE/POST OBJECTS METHODS ************/
 
-	@PostMapping(value = { "/CoopTermRegistrations/{registrationID}", "/CoopTermRegistrations/{registrationID}/" })
+	@PostMapping(value = { "/cooptermregistrations/{registrationID}/adjudicate",
+			"/cooptermregistrations/{registrationID}/adjudicate/" })
 	public CoopTermRegistrationDto adjudicateTermRegistration(@PathVariable("registrationID") String registrationID,
 			@RequestParam("success") boolean success) throws IllegalArgumentException {
 		CoopTermRegistration termRegistration = service.getCoopTermRegistration(registrationID);
@@ -42,7 +43,7 @@ public class AcademicManagerRestController {
 
 	// Method is to POST/CREATE term
 	// curl -X POST -i
-	// 'http://localhost:8082/Terms/Create/?termID="2112"&termName="Winter2019"&date1=2019-3-22&date2=2019-4-4'
+	// http://localhost:8082/terms/create/?id=2112&name=Winter2019&studentdeadline=2019-3-22&coopdeadline=2019-4-4
 	@PostMapping(value = { "/terms/create", "/terms/create/" })
 	public TermDto CreateTerm(@RequestParam("id") String termID, @RequestParam("name") String name,
 			@RequestParam("studentdeadline") String date1, @RequestParam("coopdeadline") String date2) {
@@ -72,7 +73,7 @@ public class AcademicManagerRestController {
 	 *         database.
 	 */
 	// curl -X POST -i
-	// 'http://localhost:8082/students/create/?id="226433222"&firstname="Yen-Vi"&lastname="Huynh"&cooperatorid=1'
+	// 'http://localhost:8082/students/create/?id="226433222"&firstname=Yen-Vi&lastname="Huynh"&cooperatorid=1'
 	@PostMapping(value = { "/students/create", "/students/create/" })
 	public StudentDto createStudent(@RequestParam("id") String studentID, @RequestParam("firstname") String firstName,
 			@RequestParam("lastname") String lastName, @RequestParam("cooperatorid") Integer cooperatorID)
@@ -84,7 +85,7 @@ public class AcademicManagerRestController {
 		return convertToDto(student);
 	}
 
-	// http://localhost:8082/CoopTermRegistrations/Create/?registrationID="1"&jobID="142412"&studentID="226433222"
+	// http://localhost:8082/cooptermregistrations/create/?registrationid=1&jobid=142412&studentid=226433222
 	@PostMapping(value = { "/cooptermregistrations/create", "/cooptermregistrations/create/" })
 	public CoopTermRegistrationDto createCoopTermRegistration(@RequestParam("registrationid") String registrationID,
 			@RequestParam("jobid") String jobID, @RequestParam("studentid") String studentID)
@@ -108,7 +109,7 @@ public class AcademicManagerRestController {
 
 	private CoopTermRegistrationDto convertToDto(CoopTermRegistration e) {
 		if (e == null) {
-			throw new IllegalArgumentException("There student doens't exist in this Cooperator!");
+			throw new IllegalArgumentException("There student doens't exist in this CoopTermRegistration!");
 		}
 		CoopTermRegistrationDto coopTermRegistrationDto = new CoopTermRegistrationDto(e.getRegistrationID(),
 				e.getJobID(), e.getTermStatus(), e.getGrade(), e.getStudent());
@@ -149,6 +150,7 @@ public class AcademicManagerRestController {
 	// http://localhost:8082/Students/problematic
 	// curl localhost:8082/Students/problematic
 	@GetMapping(value = { "/students/problematic", "/students/problematic" })
+	@ResponseBody
 	public List<StudentDto> getProblematicStudents() throws IllegalArgumentException {
 		// @formatter:on
 		List<Student> students = service.getAllProblematicStudents();
@@ -164,6 +166,7 @@ public class AcademicManagerRestController {
 	// http://localhost:8082/Students/list
 	// curl localhost:8082/Students/list
 	@GetMapping(value = { "/students/list", "/students/list", "/students", "/students/" })
+	@ResponseBody
 	public List<StudentDto> getListStudents() throws IllegalArgumentException {
 		// @formatter:on
 		Set<Student> students = service.getAllStudents();
@@ -194,7 +197,6 @@ public class AcademicManagerRestController {
 				FormDto myform = convertFormToDto(f);
 				arrayList.add(myform);
 			}
-			;
 			StudentformDto mystudentforms = new StudentformDto(myname, arrayList);
 			return mystudentforms;
 		}
@@ -215,7 +217,6 @@ public class AcademicManagerRestController {
 				FormDto myform = convertFormToDto(f);
 				arrayList.add(myform);
 			}
-			;
 			EmployerformDto myemployerforms = new EmployerformDto(myname, arrayList);
 			return myemployerforms;
 		}
