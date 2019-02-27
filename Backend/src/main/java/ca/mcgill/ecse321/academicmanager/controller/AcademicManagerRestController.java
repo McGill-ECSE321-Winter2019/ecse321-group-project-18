@@ -85,7 +85,7 @@ public class AcademicManagerRestController {
 	}
 
 	// http://localhost:8082/CoopTermRegistrations/Create/?registrationID="1"&jobID="142412"&studentID="226433222"
-	@PostMapping(value = { "/cooptermregistrations/Create", "/cooptermregistrations/create/" })
+	@PostMapping(value = { "/cooptermregistrations/create", "/cooptermregistrations/create/" })
 	public CoopTermRegistrationDto createCoopTermRegistration(@RequestParam("registrationid") String registrationID,
 			@RequestParam("jobid") String jobID, @RequestParam("studentid") String studentID)
 			throws IllegalArgumentException {
