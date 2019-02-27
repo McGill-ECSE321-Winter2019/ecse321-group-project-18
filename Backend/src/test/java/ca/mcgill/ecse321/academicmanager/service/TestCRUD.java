@@ -131,7 +131,8 @@ public class TestCRUD {
 		assertEquals(term, ctr.getTerm());
 		assertEquals(student, ctr.getStudent());
 		
-		assertEquals(ctr, student.getCoopTermRegistration());
+		Set<CoopTermRegistration> studentCtrs = student.getCoopTermRegistration();
+		assertTrue(studentCtrs.contains(ctr));
 		
 		Set<CoopTermRegistration> termCtrs = term.getCoopTermRegistration();
 		assertTrue(termCtrs.contains(ctr));

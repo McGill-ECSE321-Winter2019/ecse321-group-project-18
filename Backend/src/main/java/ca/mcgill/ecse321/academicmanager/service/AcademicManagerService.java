@@ -122,9 +122,7 @@ public class AcademicManagerService {
 		ctr.setJobID(jobID);
 		ctr.setGrade(grade);
 		
-		ctr.setStudent(student);
-		student.setCoopTermRegistration(ctr);
-		
+		student.addCoopTermRegistration(ctr);
 		term.addCoopTermRegistration(ctr);
 		
 		return coopTermRegistrationRepository.save(ctr);
@@ -265,20 +263,22 @@ public class AcademicManagerService {
 			throw new NullArgumentException();
 		}
 		
-		CoopTermRegistration ctr = student.getCoopTermRegistration();
+		Set<CoopTermRegistration> ctrs = student.getCoopTermRegistration();
 		
-		if(!checkArg(ctr) ) {
+		if(!checkArg(ctrs) ) {
 			throw new IllegalArgumentException("student is not registered for a term");
 		}
 		
-		Set<Form> forms = ctr.getForm();
+		Set<Form> forms = new HashSet<Form>();
 		
-		for(Form form : forms) {
-			if(form.getFormType() != FormType.STUDENTEVALUATION) {
-				forms.remove(form);
+		for (CoopTermRegistration ctr:ctrs) {
+			forms.addAll(ctr.getForm());
+			for(Form form : forms) {	
+				if(form.getFormType() != FormType.STUDENTEVALUATION) {
+					forms.remove(form);
+				}
 			}
 		}
-		
 		return forms;
 	}
 	
@@ -288,20 +288,22 @@ public class AcademicManagerService {
 			throw new NullArgumentException();
 		}
 		
-		CoopTermRegistration ctr = student.getCoopTermRegistration();
+Set<CoopTermRegistration> ctrs = student.getCoopTermRegistration();
 		
-		if(!checkArg(ctr) ) {
+		if(!checkArg(ctrs) ) {
 			throw new IllegalArgumentException("student is not registered for a term");
 		}
 		
-		Set<Form> forms = ctr.getForm();
+		Set<Form> forms = new HashSet<Form>();
 		
-		for(Form form : forms) {
-			if(form.getFormType() != FormType.COOPEVALUATION) {
-				forms.remove(form);
+		for (CoopTermRegistration ctr:ctrs) {
+			forms.addAll(ctr.getForm());
+			for(Form form : forms) {	
+				if(form.getFormType() != FormType.COOPEVALUATION) {
+					forms.remove(form);
+				}
 			}
 		}
-		
 		return forms;
 	}
 	//---Form---
@@ -399,16 +401,6 @@ public class AcademicManagerService {
 //		student.setCooperator(c);
 		c.addStudent(student);
 		
-		return studentRepository.save(student);
-	}
-	
-	@Transactional
-	public Student setStudentCtr(Student student, CoopTermRegistration ctr) {
-		if(!checkArg(ctr)) {
-			throw new NullArgumentException();
-		}
-		
-		student.setCoopTermRegistration(ctr);
 		return studentRepository.save(student);
 	}
 	

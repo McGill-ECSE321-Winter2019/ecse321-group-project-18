@@ -1,6 +1,5 @@
 package ca.mcgill.ecse321.academicmanager.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import java.sql.Time;
 import javax.persistence.Id;

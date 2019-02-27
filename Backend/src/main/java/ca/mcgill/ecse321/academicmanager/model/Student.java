@@ -2,14 +2,13 @@ package ca.mcgill.ecse321.academicmanager.model;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.ManyToOne;
 
 /**
  * Student Entity.
@@ -73,15 +72,29 @@ public class Student{
 		}
 	}
 	
-	private CoopTermRegistration coopTermRegistration;
+	private Set<CoopTermRegistration> coopTermRegistration;
 	
-	@OneToOne
-	public CoopTermRegistration getCoopTermRegistration() {
+	@OneToMany(mappedBy="student", cascade= {CascadeType.ALL})
+	public Set<CoopTermRegistration> getCoopTermRegistration() {
 	   return this.coopTermRegistration;
 	}
 	
-	public void setCoopTermRegistration(CoopTermRegistration coopTermRegistration) {
+	public void setCoopTermRegistration(Set<CoopTermRegistration> coopTermRegistration) {
 	   this.coopTermRegistration = coopTermRegistration;
+	}
+	
+	public void addCoopTermRegistration(CoopTermRegistration coopTermRegistration) {
+		try {
+			if(!this.coopTermRegistration.contains(coopTermRegistration)) {
+				this.coopTermRegistration.add(coopTermRegistration);
+				coopTermRegistration.setStudent(this);
+			}
+		}
+		catch(Exception e) {
+			this.coopTermRegistration = new HashSet<CoopTermRegistration>();
+			this.coopTermRegistration.add(coopTermRegistration);
+			coopTermRegistration.setStudent(this);
+		}
 	}
 	
 	private Cooperator cooperator;
@@ -132,5 +145,6 @@ public class Student{
 			return false;
 		return true;
 	}
+	
 	
 }

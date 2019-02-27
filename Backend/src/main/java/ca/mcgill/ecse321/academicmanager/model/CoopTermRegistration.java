@@ -3,13 +3,11 @@ package ca.mcgill.ecse321.academicmanager.model;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.OneToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.FetchType;
 
 /**
  * A CoopTermRegistration object is created when a Student register for a course.
@@ -92,7 +90,7 @@ public class CoopTermRegistration
 	}
 	private Student student;
 	
-	@OneToOne(mappedBy="coopTermRegistration", optional=false, cascade = CascadeType.ALL)
+	@ManyToOne(optional=false)
 	public Student getStudent() {
 	   return this.student;
 	}
@@ -104,7 +102,6 @@ public class CoopTermRegistration
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((form == null) ? 0 : form.hashCode());
 		result = prime * result + ((grade == null) ? 0 : grade.hashCode());
 		result = prime * result + ((jobID == null) ? 0 : jobID.hashCode());
 		result = prime * result + ((registrationID == null) ? 0 : registrationID.hashCode());
@@ -120,11 +117,6 @@ public class CoopTermRegistration
 		if (getClass() != obj.getClass())
 			return false;
 		CoopTermRegistration other = (CoopTermRegistration) obj;
-		if (form == null) {
-			if (other.form != null)
-				return false;
-		} else if (!form.equals(other.form))
-			return false;
 		if (grade != other.grade)
 			return false;
 		if (jobID == null) {

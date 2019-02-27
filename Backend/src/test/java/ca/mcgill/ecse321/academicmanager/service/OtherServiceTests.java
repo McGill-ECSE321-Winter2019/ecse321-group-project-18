@@ -85,7 +85,9 @@ public class OtherServiceTests {
 			System.out.println(e.getMessage());
 			fail();
 		}
-		assertTrue(student.getCoopTermRegistration().getRegistrationID() == ctr.getRegistrationID());
+		
+		Set<CoopTermRegistration> t = student.getCoopTermRegistration();
+		assertTrue(t.iterator().next().getRegistrationID() == ctr.getRegistrationID());
 		
 		assertEquals(1, term.getCoopTermRegistration().size());
 		assertTrue(term.getCoopTermRegistration().iterator().next().getRegistrationID() == ctr.getRegistrationID());
