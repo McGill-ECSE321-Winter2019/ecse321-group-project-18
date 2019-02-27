@@ -40,10 +40,9 @@ public class AcademicManagerRestController {
 			) throws IllegalArgumentException {
 	// @formatter:on
     	
-    	Set<CoopTermRegistration> ctrs = new HashSet<CoopTermRegistration>();
 		Date studentEvalFormDeadline = Date.valueOf(date1); // form of date: "2015-06-01"
 		Date coopEvalFormDeadline = Date.valueOf(date2);
-    	Term term = service.createTerm(termID, termName, studentEvalFormDeadline, coopEvalFormDeadline, ctrs);
+    	Term term = service.createTerm(termID, termName, studentEvalFormDeadline, coopEvalFormDeadline);
     	return convertToDto(term);
 	}   
 	
@@ -69,9 +68,10 @@ public class AcademicManagerRestController {
 												@PathVariable("jobID") String jobID,
 												@PathVariable("status") TermStatus status,
 												@PathVariable("grade") Grade grade,
-												@PathVariable("student") Student student) throws IllegalArgumentException {
+												@PathVariable("student") Student student,
+												@PathVariable("term") Term term) throws IllegalArgumentException {
 
-		CoopTermRegistration internship = service.createCoopTermRegistration(registrationID, jobID, status, grade, student);
+		CoopTermRegistration internship = service.createCoopTermRegistration(registrationID, jobID, status, grade, student, term);
 		return convertToDto(internship);
 	}
 	
