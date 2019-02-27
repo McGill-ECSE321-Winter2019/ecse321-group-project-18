@@ -2,8 +2,10 @@ package ca.mcgill.ecse321.academicmanager.model;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import java.sql.Date;
+import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.OneToMany;
 
@@ -50,9 +52,9 @@ public class Term
 	public Date getCoopEvalFormDeadline() {
 		return this.coopEvalFormDeadline;
 	}
-	private Set<CoopTermRegistration> coopTermRegistration;
+	private Set<CoopTermRegistration> coopTermRegistration = new HashSet<CoopTermRegistration>();
 	
-	@OneToMany(mappedBy="term", cascade={CascadeType.ALL})
+	@OneToMany(mappedBy="term", cascade= {CascadeType.ALL}, fetch = FetchType.EAGER)
 	public Set<CoopTermRegistration> getCoopTermRegistration() {
 		return this.coopTermRegistration;
 	}
@@ -60,16 +62,11 @@ public class Term
 	public void setCoopTermRegistration(Set<CoopTermRegistration> coopTermRegistrations) {
 	   this.coopTermRegistration = coopTermRegistrations;
 	}
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((coopEvalFormDeadline == null) ? 0 : coopEvalFormDeadline.hashCode());
-		result = prime * result + ((coopTermRegistration == null) ? 0 : coopTermRegistration.hashCode());
-		result = prime * result + ((studentEvalFormDeadline == null) ? 0 : studentEvalFormDeadline.hashCode());
-		result = prime * result + ((termID == null) ? 0 : termID.hashCode());
-		return result;
+
+	public void addCoopTermRegistration(CoopTermRegistration ctr) {		
+		this.coopTermRegistration.add(ctr);
 	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -84,6 +81,11 @@ public class Term
 				return false;
 		} else if (!coopEvalFormDeadline.equals(other.coopEvalFormDeadline))
 			return false;
+		if (coopTermRegistration == null) {
+			if (other.coopTermRegistration != null)
+				return false;
+		} else if (!coopTermRegistration.equals(other.coopTermRegistration))
+			return false;
 		if (studentEvalFormDeadline == null) {
 			if (other.studentEvalFormDeadline != null)
 				return false;
@@ -94,6 +96,12 @@ public class Term
 				return false;
 		} else if (!termID.equals(other.termID))
 			return false;
+		if (termName == null) {
+			if (other.termName != null)
+				return false;
+		} else if (!termName.equals(other.termName))
+			return false;
 		return true;
-	}	
+	}
+	
 }

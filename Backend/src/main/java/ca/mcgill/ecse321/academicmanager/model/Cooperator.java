@@ -1,7 +1,10 @@
 package ca.mcgill.ecse321.academicmanager.model;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+
+import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.OneToMany;
@@ -28,7 +31,17 @@ public class Cooperator{
 	   this.student = students;
 	}
 	
-	private Set<Course> course;
+	public void addStudent(Student student) {
+		try {
+			this.student.add(student);
+		}
+		catch(Exception e) {	
+			this.student = new HashSet<Student>();
+			this.student.add(student);
+		}
+	}
+	
+	private Set<Course> course = new HashSet<Course>();
 	
 	@OneToMany(mappedBy="cooperator", cascade={CascadeType.ALL})
 	public Set<Course> getCourse() {
@@ -38,13 +51,18 @@ public class Cooperator{
 	public void setCourse(Set<Course> courses) {
 	   this.course = courses;
 	}
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
+	
+	public void addCourse(Course course) {
+		this.course.add(course);
+		try {
+			this.course.add(course);
+		}
+		catch(Exception e) {	
+			this.course = new HashSet<Course>();
+			this.course.add(course);
+		}
 	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

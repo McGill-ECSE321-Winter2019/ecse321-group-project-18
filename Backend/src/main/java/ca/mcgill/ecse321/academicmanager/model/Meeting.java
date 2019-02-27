@@ -1,8 +1,11 @@
 package ca.mcgill.ecse321.academicmanager.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import java.sql.Time;
 import javax.persistence.Id;
+
+import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.ManyToMany;
 import java.sql.Date;
@@ -57,15 +60,19 @@ public class Meeting
 	public String getMeetingID() {
 		return this.meetingID;
 	}
-	private Set<Student> student;
+	private Set<Student> student = new HashSet<Student>();
 	
-	@ManyToMany
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	public Set<Student> getStudent() {
 	   return this.student;
 	}
 	
 	public void setStudent(Set<Student> students) {
 	   this.student = students;
+	}
+	
+	public void addStudent(Student student) {
+		this.student.add(student);
 	}
 
 	private Date date;
@@ -76,17 +83,7 @@ public class Meeting
 	public Date getDate() {
 		return this.date;
     }
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((date == null) ? 0 : date.hashCode());
-		result = prime * result + ((endTime == null) ? 0 : endTime.hashCode());
-		result = prime * result + ((location == null) ? 0 : location.hashCode());
-		result = prime * result + ((meetingID == null) ? 0 : meetingID.hashCode());
-		result = prime * result + ((startTime == null) ? 0 : startTime.hashCode());
-		return result;
-	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

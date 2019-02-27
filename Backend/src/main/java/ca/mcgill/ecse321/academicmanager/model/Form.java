@@ -36,13 +36,6 @@ public class Form{
 	   return this.name;
 	}
 	
-	/**
-	 * <pre>
-	 *           1..1     1..1
-	 * Form ------------------------> FormType
-	 *           &lt;       formType
-	 * </pre>
-	 */
 	private FormType formType;
 	
 	public void setFormType(FormType value) {
@@ -61,15 +54,6 @@ public class Form{
 	public String getPdfLink() {
 		return this.pdfLink;
     }
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((formID == null) ? 0 : formID.hashCode());
-		result = prime * result + ((pdfLink == null) ? 0 : pdfLink.hashCode());
-		return result;
-	}
 
 	@Override
 	public boolean equals(Object obj) {

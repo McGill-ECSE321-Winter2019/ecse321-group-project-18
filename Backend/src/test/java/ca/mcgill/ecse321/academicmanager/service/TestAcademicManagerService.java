@@ -173,15 +173,7 @@ public class TestAcademicManagerService {
 	}
 	
 	@Test
-	public void testViewStudentGrade() {
-		courseRepository.deleteAll();
-		formRepository.deleteAll();
-		termRepository.deleteAll();
-		coopTermRegistrationRepository.deleteAll();
-		meetingRepository.deleteAll();
-		studentRepository.deleteAll();
-//		cooperatorRepository.deleteAll();
-		
+	public void testViewStudentGrade() {		
 		Student student = service.createStudent("142142", "1", "1", cooperator);
 		Term term = service.createTerm("Winter2019", "Winter 2019", null, null);
 		
@@ -198,8 +190,6 @@ public class TestAcademicManagerService {
 			fail();
 		}
 		
-		Term t = service.getTerm("Winter2019");
-		Student s = service.getStudent("142142");
 		assertEquals(grade, service.getStudentGrade(ctr));
 	}
 	
