@@ -7,8 +7,6 @@ import ca.mcgill.ecse321.academicmanager.service.*;
 import java.sql.Date;
 import java.util.*;
 
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,230 +14,246 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class AcademicManagerRestController {
 	@Autowired
-	AcademicManagerService service;	
-	Cooperator cooperator;	
-	
+	AcademicManagerService service;
+	Cooperator cooperator;
+
 	/************* CREATE/POST OBJECTS METHODS ************/
-	
-	@PostMapping(value = {"/CoopTermRegistrations/{registrationID}", "/CoopTermRegistrations/{registrationID}/"})
-	public CoopTermRegistrationDto adjudicateTermRegistration(@PathVariable("registrationID") String registrationID, @RequestParam("success") boolean success) throws IllegalArgumentException {
+
+	@PostMapping(value = { "/CoopTermRegistrations/{registrationID}", "/CoopTermRegistrations/{registrationID}/" })
+	public CoopTermRegistrationDto adjudicateTermRegistration(@PathVariable("registrationID") String registrationID,
+			@RequestParam("success") boolean success) throws IllegalArgumentException {
 		CoopTermRegistration termRegistration = service.getCoopTermRegistration(registrationID);
-		if(success)
+		if (success)
 			termRegistration.setTermStatus(TermStatus.FINISHED);
 		else
 			termRegistration.setTermStatus(TermStatus.FAILED);
 		return convertToDto(termRegistration);
 	}
-	
-    // Method is to POST/CREATE cooperator
-    // curl -X POST localhost:8082/Cooperator/1
-    @PostMapping(value = { "/Cooperator/{coopID}"})
-	public CooperatorDto CreateCooperator(@PathVariable("coopID") Integer coopID 			      
-			) throws IllegalArgumentException {
-	// @formatter:on
-    	
-    	service.createCooperator(coopID);
-    	return convertToDto(coopID);
-	}   
-	
-    // Method is to POST/CREATE term
-    // curl -X POST localhost:8082/Terms/2211/Winter2019/2019-3-22/2019-4-4
-    @PostMapping(value = { "/Terms/{termID}/{termName}/{date1}/{date2}", "/Terms/{termID}/{termName}/{date1}/{date2}" })
-	public TermDto CreateTerm(@PathVariable("termID") String termID,@PathVariable("termName") String termName ,
-			@PathVariable("date1") String date1,@PathVariable("date2") String date2       
-			) throws IllegalArgumentException {
-	// @formatter:on
-    	
-    	Set<CoopTermRegistration> ctrs = new HashSet<CoopTermRegistration>();
+
+	// Method is to POST/CREATE cooperator
+	// curl -X POST -i 'http://localhost:8082/Cooperator/Create/?coopID=1'
+	@PostMapping(value = { "/cooperators/create/", "/cooperators/create" })
+	public CooperatorDto CreateCooperator(@RequestParam("id") Integer coopID) throws IllegalArgumentException {
+		// @formatter:on
+
+		service.createCooperator(coopID);
+		return convertToDto(coopID);
+	}
+
+	// Method is to POST/CREATE term
+	// curl -X POST -i
+	// 'http://localhost:8082/Terms/Create/?termID="2112"&termName="Winter2019"&date1=2019-3-22&date2=2019-4-4'
+	@PostMapping(value = { "/terms/create", "/terms/create/" })
+	public TermDto CreateTerm(@RequestParam("id") String termID, @RequestParam("name") String name,
+			@RequestParam("studentdeadline") String date1, @RequestParam("coopdeadline") String date2) {
+		// @formatter:on
+
+		Set<CoopTermRegistration> ctrs = new HashSet<CoopTermRegistration>();
 		Date studentEvalFormDeadline = Date.valueOf(date1); // form of date: "2015-06-01"
 		Date coopEvalFormDeadline = Date.valueOf(date2);
-    	Term term = service.createTerm(termID, termName, studentEvalFormDeadline, coopEvalFormDeadline, ctrs);
-    	return convertToDto(term);
-	}   
-	
-    @RequestMapping("/Students")
-    @ResponseBody
-	public StudentDto createStudent(@PathVariable("studentID") String studentID, 
-									@PathVariable("firstName") String firstName,
-									@PathVariable("lastName") String lastName) throws IllegalArgumentException {
+		Term term = service.createTerm(termID, name, studentEvalFormDeadline, coopEvalFormDeadline, ctrs);
+		return convertToDto(term);
+	}
+
+	/**
+	 * RESTful service: create a new, non-problematic Student. This method
+	 * automatically creates a new Cooperator object and assigns it to this Student.
+	 * 
+	 * @order create
+	 * @param studentID
+	 *            (primary key) unique ID of this Student.
+	 * @param firstName
+	 *            the Student's first name.
+	 * @param lastName
+	 *            the Student's last name.
+	 * @param cooperatorID
+	 *            the ID of the Cooperator of this Student.
+	 * @return a TermDto object that represent the object to be persisted in the
+	 *         database.
+	 */
+	// curl -X POST -i
+	// 'http://localhost:8082/students/create/?id="226433222"&firstname="Yen-Vi"&lastname="Huynh"&cooperatorid=1'
+	@PostMapping(value = { "/students/create", "/students/create/" })
+	public StudentDto createStudent(@RequestParam("id") String studentID, @RequestParam("firstname") String firstName,
+			@RequestParam("lastname") String lastName, @RequestParam("cooperatorid") Integer cooperatorID)
+			throws IllegalArgumentException {
 		// @formatter:on
-		Cooperator coop = service.createCooperator(1);
+		Cooperator coop = service.getCooperator(cooperatorID);
+
 		Student student = service.createStudent(studentID, firstName, lastName, coop);
 		return convertToDto(student);
 	}
-    
-    @RequestMapping("/CoopTermRegistrations")
-    @ResponseBody
-	public CoopTermRegistrationDto createCoopTermRegistration(@PathVariable("registrationID") String registrationID, 
-												@PathVariable("jobID") String jobID,
-												@PathVariable("status") TermStatus status,
-												@PathVariable("grade") Grade grade,
-												@PathVariable("student") Student student) throws IllegalArgumentException {
 
-		CoopTermRegistration internship = service.createCoopTermRegistration(registrationID, jobID, status, grade, student);
+	// http://localhost:8082/CoopTermRegistrations/Create/?registrationID="1"&jobID="142412"&studentID="226433222"
+	@PostMapping(value = { "/cooptermregistrations/Create", "/cooptermregistrations/create/" })
+	public CoopTermRegistrationDto createCoopTermRegistration(@RequestParam("registrationid") String registrationID,
+			@RequestParam("jobid") String jobID, @RequestParam("studentid") String studentID)
+			throws IllegalArgumentException {
+		Student student = service.getStudent(studentID);
+		CoopTermRegistration internship = service.createCoopTermRegistration(registrationID, jobID, TermStatus.ONGOING,
+				Grade.NotGraded, student);
 		return convertToDto(internship);
 	}
-	
-    
-    /********** START OF convertToDto METHODS ************/
-    
+
+	/********** START OF convertToDto METHODS ************/
+
 	private StudentDto convertToDto(Student e) {
 		if (e == null) {
 			throw new IllegalArgumentException("There student doens't exist in this Cooperator!");
 		}
-		StudentDto studentDto = new StudentDto(e.getStudentID(),e.getFirstName(),e.getLastName(), e.isIsProblematic());
+		StudentDto studentDto = new StudentDto(e.getStudentID(), e.getFirstName(), e.getLastName(),
+				e.isIsProblematic());
 		return studentDto;
 	}
-	
+
 	private CoopTermRegistrationDto convertToDto(CoopTermRegistration e) {
 		if (e == null) {
 			throw new IllegalArgumentException("There student doens't exist in this Cooperator!");
 		}
-		CoopTermRegistrationDto coopTermRegistrationDto = new CoopTermRegistrationDto(e.getRegistrationID(),e.getJobID(),e.getTermStatus(), e.getGrade(), e.getStudent());
+		CoopTermRegistrationDto coopTermRegistrationDto = new CoopTermRegistrationDto(e.getRegistrationID(),
+				e.getJobID(), e.getTermStatus(), e.getGrade(), e.getStudent());
 		return coopTermRegistrationDto;
 	}
-	
+
 	// convert to Dto cooperator
 	private CooperatorDto convertToDto(Integer e) {
-		if (e == null) {	
+		if (e == null) {
 			throw new IllegalArgumentException("Cannot create term");
 		}
 		CooperatorDto CoopDto = new CooperatorDto(e);
 		return CoopDto;
 	}
-	
+
 	// convert to Dto Term
 	private TermDto convertToDto(Term e) {
 		if (e == null) {
 			throw new IllegalArgumentException("Cannot create term");
 		}
-		TermDto termDto = new TermDto(e.getTermID(),e.getTermName(),e.getStudentEvalFormDeadline(),e.getCoopEvalFormDeadline());
+		TermDto termDto = new TermDto(e.getTermID(), e.getTermName(), e.getStudentEvalFormDeadline(),
+				e.getCoopEvalFormDeadline());
 		return termDto;
 	}
-	
-	
+
 	// convert to Dto Form
 	private FormDto convertFormToDto(Form e) {
 		if (e == null) {
 			throw new IllegalArgumentException("Cannot create form!");
 		}
-		FormDto formDto = new FormDto(e.getFormID(),e.getName(),e.getPdfLink());
+		FormDto formDto = new FormDto(e.getFormID(), e.getName(), e.getPdfLink());
 		return formDto;
 	}
-	
+
 	/*********** START OF USE CASES METHODS ************/
 
-	
 	// This method is to report a list of problematic students
-    // http://localhost:8082/Students/problematic
-    // curl localhost:8082/Students/problematic
-	@GetMapping(value = { "/Students/problematic", "/Students/problematic" })
+	// http://localhost:8082/Students/problematic
+	// curl localhost:8082/Students/problematic
+	@GetMapping(value = { "/students/problematic", "/students/problematic" })
 	public List<StudentDto> getProblematicStudents() throws IllegalArgumentException {
-	// @formatter:on
-    	
-		
+		// @formatter:on
 		List<Student> students = service.getAllProblematicStudents();
 		List<StudentDto> mylist = new ArrayList<StudentDto>();
-	
-		//check for every student;
-		for(Student s : students) {
+		// check for every student;
+		for (Student s : students) {
 			mylist.add(convertToDto(s));
 		}
-		
 		return mylist;
 	}
-   
+
 	// This method is to report a list of students
-    //http://localhost:8082/Students/list
-    //curl localhost:8082/Students/list
-    @GetMapping(value = { "/Students/list", "/Students/list" })
+	// http://localhost:8082/Students/list
+	// curl localhost:8082/Students/list
+	@GetMapping(value = { "/students/list", "/students/list", "/students", "/students/" })
 	public List<StudentDto> getListStudents() throws IllegalArgumentException {
-	// @formatter:on
+		// @formatter:on
 		Set<Student> students = service.getAllStudents();
 		List<StudentDto> mylist = new ArrayList<StudentDto>();
-	
-		//check for every student;
-		for(Student s : students) {
+
+		// check for every student;
+		for (Student s : students) {
 			mylist.add(convertToDto(s));
 		}
-		
+
 		return mylist;
 	}
 
-    // Method is to get the student evaluation report 
-    // curl localhost:8082/Students/report/2602231111
-    @GetMapping(value = { "/Students/report/{studentID}", "/Students/report/{studentID}" })
-	public StudentformDto getAllStudentReport(@PathVariable("studentID") String studentID) throws IllegalArgumentException {
-	// @formatter:on
-    	
+	// Method is to get the student evaluation report
+	// curl localhost:8082/Students/report/2602231111
+	@GetMapping(value = { "/students/report/{studentID}", "/students/report/{studentID}" })
+	public StudentformDto getStudentReport(@PathVariable("studentID") String studentID)
+			throws IllegalArgumentException {
+		// @formatter:on
 
-    	Student mystudent=service.getStudent(studentID);
-    	
-    	if (mystudent != null ) {
-			Set<Form> myformlist=service.getAllStudentEvalFormsOfStudent(mystudent);
-			String myname = mystudent.getFirstName() + " " +  mystudent.getLastName();
+		Student mystudent = service.getStudent(studentID);
+
+		if (mystudent != null) {
+			Set<Form> myformlist = service.getAllStudentEvalFormsOfStudent(mystudent);
+			String myname = mystudent.getFirstName() + " " + mystudent.getLastName();
 			List<FormDto> arrayList = new ArrayList<FormDto>();
-			for(Form f : myformlist) {
-				FormDto myform=convertFormToDto(f);
+			for (Form f : myformlist) {
+				FormDto myform = convertFormToDto(f);
 				arrayList.add(myform);
-			};
-			StudentformDto mystudentforms= new StudentformDto(myname,arrayList);
-			return mystudentforms;
-    	}
-		return null;		
-	}   
-    
-    @GetMapping(value = { "/Students/EmployerEval/{studentID}", "/Students/EmployerEval/{studentID}" })
-   	public EmployerformDto getAllEmployerEval(@PathVariable("studentID") String studentID) throws IllegalArgumentException {
-       	
-       	Student mystudent=service.getStudent(studentID);
-       	
-       	if (mystudent != null ) {
-   			Set<Form> myformlist=service.getAllEmployerEvalFormsOfStudent(mystudent);
-   			String myname = mystudent.getFirstName() + " " +  mystudent.getLastName();
-   			List<FormDto> arrayList = new ArrayList<FormDto>();
-   			for(Form f : myformlist) {
-   				FormDto myform=convertFormToDto(f);
-   				arrayList.add(myform);
-   			};
-   			EmployerformDto myemployerforms= new EmployerformDto(myname,arrayList);
-   			return myemployerforms;
-       	}
-   		return null;		
-   	}  
-
-    // this method is to view the grades for internships
-    // http://localhost:8082/CoopTermRegistrations
-    // curl localhost:8082/CoopTermRegistrations
-    @GetMapping("/CoopTermRegistrations/list")
-    @ResponseBody
-	public List<CoopTermRegistrationDto> viewCoopTermRegistrations() throws IllegalArgumentException {	
-    	// @formatter:on
-
-    	Set<CoopTermRegistration> internships = service.getAllCoopTermRegistration();
-    	List<CoopTermRegistrationDto> internshipsDto = new ArrayList<CoopTermRegistrationDto>();
-    			
-    	if (internships != null) {
-			for(CoopTermRegistration intern : internships) {
-    			internshipsDto.add(convertToDto(intern));
 			}
-    	}
-    	return internshipsDto;
-	}
-    
-    // this method is to view the grades for internships
-    // http://localhost:8082/CoopTermRegistrations/Grades
-    //curl localhost:8082/CoopTermRegistrations/Grades
-    @GetMapping("/CoopTermRegistrations/Grades")
-    @ResponseBody
-	public Set<Grade> viewGrades() throws IllegalArgumentException {
-	
-    	Set<CoopTermRegistration> internships = service.getAllCoopTermRegistration();
-    	Set<Grade> grades = new HashSet<Grade>();
-    	
-    	for(CoopTermRegistration intern : internships) {
-    		grades.add(intern.getGrade());
+			;
+			StudentformDto mystudentforms = new StudentformDto(myname, arrayList);
+			return mystudentforms;
 		}
-    	return grades;
+		return null;
+	}
+
+	@GetMapping(value = { "/Students/EmployerEval/{studentID}", "/Students/EmployerEval/{studentID}" })
+	public EmployerformDto getAllEmployerEval(@PathVariable("studentID") String studentID)
+			throws IllegalArgumentException {
+
+		Student mystudent = service.getStudent(studentID);
+
+		if (mystudent != null) {
+			Set<Form> myformlist = service.getAllEmployerEvalFormsOfStudent(mystudent);
+			String myname = mystudent.getFirstName() + " " + mystudent.getLastName();
+			List<FormDto> arrayList = new ArrayList<FormDto>();
+			for (Form f : myformlist) {
+				FormDto myform = convertFormToDto(f);
+				arrayList.add(myform);
+			}
+			;
+			EmployerformDto myemployerforms = new EmployerformDto(myname, arrayList);
+			return myemployerforms;
+		}
+		return null;
+	}
+
+	// this method is to view the grades for internships
+	// http://localhost:8082/CoopTermRegistrations
+	// curl localhost:8082/CoopTermRegistrations
+	@GetMapping(value = { "/cooptermregistrations/list", "/cooptermregistrations/list/", "/cooptermregistrations",
+			"/cooptermregistrations/" })
+	@ResponseBody
+	public List<CoopTermRegistrationDto> viewCoopTermRegistrations() {
+		// @formatter:on
+		Set<CoopTermRegistration> internships = service.getAllCoopTermRegistration();
+		List<CoopTermRegistrationDto> internshipsDto = new ArrayList<CoopTermRegistrationDto>();
+
+		if (internships != null) {
+			for (CoopTermRegistration intern : internships) {
+				internshipsDto.add(convertToDto(intern));
+			}
+		}
+		return internshipsDto;
+	}
+
+	// this method is to view the grades for internships
+	// http://localhost:8082/CoopTermRegistrations/Grades
+	// curl localhost:8082/CoopTermRegistrations/Grades
+	@GetMapping(value = { "/cooptermregistrations/grades", "/cooptermregistrations/grades/" })
+	@ResponseBody
+	public Set<Grade> viewGrades() throws IllegalArgumentException {
+
+		Set<CoopTermRegistration> internships = service.getAllCoopTermRegistration();
+		Set<Grade> grades = new HashSet<Grade>();
+
+		for (CoopTermRegistration intern : internships) {
+			grades.add(intern.getGrade());
+		}
+		return grades;
 	}
 }
