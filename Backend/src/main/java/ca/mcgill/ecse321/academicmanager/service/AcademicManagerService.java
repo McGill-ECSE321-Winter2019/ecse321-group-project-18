@@ -126,7 +126,7 @@ public class AcademicManagerService {
 		student = addStudentCtr(student, ctr);
 		
 		ctr.setTerm(term);
-		term = addTermCtr(term, ctr);
+		addTermCtr(term, ctr);
 		
 		return coopTermRegistrationRepository.save(ctr);
 	}
@@ -142,7 +142,7 @@ public class AcademicManagerService {
 	}
 	
 	@Transactional
-	public CoopTermRegistration addCtrForm(CoopTermRegistration ctr, Form form) {
+	public void addCtrForm(CoopTermRegistration ctr, Form form) {
 		if(!checkArg(form)) {
 			throw new NullArgumentException();
 		}
@@ -157,7 +157,7 @@ public class AcademicManagerService {
 		}
 		ctr.setForm(forms);
 		
-		return coopTermRegistrationRepository.save(ctr);
+//		return coopTermRegistrationRepository.save(ctr);
 	}
 	
 	@Transactional
@@ -509,7 +509,7 @@ Set<CoopTermRegistration> ctrs = student.getCoopTermRegistration();
 	}
 	
 	@Transactional
-	public Term addTermCtr(Term term, CoopTermRegistration ctr) {
+	public void addTermCtr(Term term, CoopTermRegistration ctr) {
 		if(!checkArg(ctr)) {
 			throw new NullArgumentException();
 		}
@@ -524,7 +524,7 @@ Set<CoopTermRegistration> ctrs = student.getCoopTermRegistration();
 		}
 		term.setCoopTermRegistration(ctrs);
 		
-		return termRepository.save(term);
+//		return termRepository.save(term);
 	}
 	
 	@Transactional

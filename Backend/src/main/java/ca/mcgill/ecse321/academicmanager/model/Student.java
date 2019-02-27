@@ -1,8 +1,11 @@
 package ca.mcgill.ecse321.academicmanager.model;
-import javax.persistence.OneToMany;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+
+import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
@@ -14,17 +17,6 @@ import javax.persistence.ManyToOne;
  */
 @Entity
 public class Student{
-private Set<CoopTermRegistration> coopTermRegistration;
-
-@OneToMany(mappedBy="student", cascade = CascadeType.ALL)
-public Set<CoopTermRegistration> getCoopTermRegistration() {
-   return this.coopTermRegistration;
-}
-
-public void setCoopTermRegistration(Set<CoopTermRegistration> coopTermRegistrations) {
-   this.coopTermRegistration = coopTermRegistrations;
-}
-
 	private String studentID;
    
     public void setStudentID(String value) {
@@ -69,6 +61,21 @@ public void setCoopTermRegistration(Set<CoopTermRegistration> coopTermRegistrati
 	   this.meeting = meetings;
 	}
 	
+	public void addMeeting(Meeting meeting) {
+		this.meeting.add(meeting);
+	}
+	
+	private CoopTermRegistration coopTermRegistration;
+	
+	@OneToOne
+	public CoopTermRegistration getCoopTermRegistration() {
+	   return this.coopTermRegistration;
+	}
+	
+	public void setCoopTermRegistration(CoopTermRegistration coopTermRegistration) {
+	   this.coopTermRegistration = coopTermRegistration;
+	}
+	
 	private Cooperator cooperator;
 	
 	@ManyToOne(optional=false)
@@ -79,17 +86,7 @@ public void setCoopTermRegistration(Set<CoopTermRegistration> coopTermRegistrati
 	public void setCooperator(Cooperator cooperator) {
 	   this.cooperator = cooperator;
 	}
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((cooperator == null) ? 0 : cooperator.hashCode());
-		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
-		result = prime * result + (isProblematic ? 1231 : 1237);
-		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
-		result = prime * result + ((studentID == null) ? 0 : studentID.hashCode());
-		return result;
-	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

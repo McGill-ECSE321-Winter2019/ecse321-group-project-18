@@ -49,17 +49,7 @@ public class Course{
 	public void setCooperator(Cooperator cooperator) {
 	   this.cooperator = cooperator;
 	}
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((cooperator == null) ? 0 : cooperator.hashCode());
-		result = prime * result + ((courseID == null) ? 0 : courseID.hashCode());
-		result = prime * result + ((courseName == null) ? 0 : courseName.hashCode());
-		result = prime * result + ((courseRank == null) ? 0 : courseRank.hashCode());
-		result = prime * result + ((term == null) ? 0 : term.hashCode());
-		return result;
-	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

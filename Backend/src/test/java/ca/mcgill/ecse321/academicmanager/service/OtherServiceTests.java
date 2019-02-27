@@ -57,16 +57,42 @@ public class OtherServiceTests {
 		cooperator = allCooperators.iterator().next();
 	}
 	
-//	@After
-//	public void clearDatabase() {
-//		courseRepository.deleteAll();
-//		formRepository.deleteAll();
-//		termRepository.deleteAll();
-//		coopTermRegistrationRepository.deleteAll();
-//		meetingRepository.deleteAll();
-//		studentRepository.deleteAll();
-//		cooperatorRepository.deleteAll();
-//	}
+	@After
+	public void clearDatabase() {
+		courseRepository.deleteAll();
+		formRepository.deleteAll();
+		termRepository.deleteAll();
+		coopTermRegistrationRepository.deleteAll();
+		meetingRepository.deleteAll();
+		studentRepository.deleteAll();
+		cooperatorRepository.deleteAll();
+	}
+	
+	@Test
+	public void testViewStudentGrade() {
+		Student student = service.createStudent("142142", "saleh", "bakhit", cooperator);
+		Term term = service.createTerm("Winter2019", "Winter 2019", null, null);
+		
+		String registrationID = "1214214";
+		String jobID = "1512521";
+		TermStatus status = TermStatus.FAILED;
+		Grade grade = Grade.NotGraded;
+		
+		CoopTermRegistration ctr = null;
+		try {
+			ctr = service.createCoopTermRegistration(registrationID, jobID, status, grade, student, term);
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
+			fail();
+		}
+		assertTrue(student.getCoopTermRegistration().getRegistrationID() == ctr.getRegistrationID());
+		
+		assertEquals(1, term.getCoopTermRegistration().size());
+		assertTrue(term.getCoopTermRegistration().iterator().next().getRegistrationID() == ctr.getRegistrationID());
+		
+		assertEquals(grade, service.getStudentGrade(ctr));
+	}
+	
 	
 	@Test
 	public void testCreateCourses() {
@@ -147,45 +173,46 @@ public class OtherServiceTests {
 	}
 	
 	
-//	@Test
-//	public void testSettingMeeting() {
-//		assertEquals(0, service.getAllStudents().size());
-//		assertEquals(0, service.getAllMeetings().size());
-//		
-//		String studentID = "260632355";
-//		String firstname = "saleh";
-//		String lastname = "bakhit";
-//		
-//		Student student = null;
-//		try {
-//			student = service.createStudent(studentID, firstname, lastname, cooperator);
-//		} catch (Exception e) {
-//			// Check that no error occurred
-//			fail();
-//		}
-//		
-//		java.util.Date utilDate = new java.util.Date();
-//		
-//		String meetingID = "0";
-//		String location = "ENGTR 3090";
-//		Date date = new Date(utilDate.getTime());
-//		Time startTime = new Time(503000);
-//		Time endTime = new Time(503010);
-//		
-//		Meeting meeting = null;
-//		try {
-//			meeting = service.createMeeting(meetingID, location, null, date, startTime, endTime);
-//		}
-//		catch(Exception e) {
-//			// Check that no error occurred
-//			fail();	
-//		}
-//		
-//		meeting = service.addMeetingStudent(meeting, student);
-//		
-//		assertTrue(student.getMeeting().contains(meeting));
-//		assertTrue(meeting.getStudent().contains(student));
-//	}
+	@Test
+	public void testSettingMeeting() {
+		assertEquals(0, service.getAllStudents().size());
+		assertEquals(0, service.getAllMeetings().size());
+		
+		String studentID = "260632355";
+		String firstname = "saleh";
+		String lastname = "bakhit";
+		
+		Student student = null;
+		try {
+			student = service.createStudent(studentID, firstname, lastname, cooperator);
+		} catch (Exception e) {
+			// Check that no error occurred
+			fail();
+		}
+		
+		java.util.Date utilDate = new java.util.Date();
+		
+		String meetingID = "0";
+		String location = "ENGTR 3090";
+		Date date = new Date(utilDate.getTime());
+		Time startTime = new Time(503000);
+		Time endTime = new Time(503010);
+		
+		Meeting meeting = null;
+		try {
+			meeting = service.createMeeting(meetingID, location, null, date, startTime, endTime);
+		}
+		catch(Exception e) {
+			// Check that no error occurred
+			fail();	
+		}
+		
+		meeting = service.addMeetingStudent(meeting, student);
+		
+		String MeetingId1 = student.getMeeting().iterator().next().getMeetingID();
+		String MeetingId2 = meeting.getStudent().iterator().next().getMeeting().iterator().next().getMeetingID();
+		assertEquals(MeetingId1, MeetingId2);
+	}
 //	
 //	@Test
 //	public void testAddFromToCtr() {
