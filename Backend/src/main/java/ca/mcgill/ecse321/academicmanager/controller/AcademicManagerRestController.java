@@ -21,6 +21,16 @@ public class AcademicManagerRestController {
 	
 	/************* CREATE/POST OBJECTS METHODS ************/
 	
+	@PostMapping(value = {"/CoopTermRegistrations/{registrationID}", "/CoopTermRegistrations/{registrationID}/"})
+	public CoopTermRegistrationDto adjudicateTermRegistration(@PathVariable("registrationID") String registrationID, @RequestParam("success") boolean success) throws IllegalArgumentException {
+		CoopTermRegistration termRegistration = service.getCoopTermRegistration(registrationID);
+		if(success)
+			termRegistration.setTermStatus(TermStatus.FINISHED);
+		else
+			termRegistration.setTermStatus(TermStatus.FAILED);
+		return convertToDto(termRegistration);
+	}
+	
     // Method is to POST/CREATE cooperator
     // curl -X POST localhost:8082/Cooperator/1
     @PostMapping(value = { "/Cooperator/{coopID}"})
@@ -91,7 +101,7 @@ public class AcademicManagerRestController {
 	
 	// convert to Dto cooperator
 	private CooperatorDto convertToDto(Integer e) {
-		if (e == null) {
+		if (e == null) {	
 			throw new IllegalArgumentException("Cannot create term");
 		}
 		CooperatorDto CoopDto = new CooperatorDto(e);
@@ -159,7 +169,7 @@ public class AcademicManagerRestController {
     // Method is to get the student evaluation report 
     // curl localhost:8082/Students/report/2602231111
     @GetMapping(value = { "/Students/report/{studentID}", "/Students/report/{studentID}" })
-	public StudentformDto getStudentReport(@PathVariable("studentID") String studentID) throws IllegalArgumentException {
+	public StudentformDto getAllStudentReport(@PathVariable("studentID") String studentID) throws IllegalArgumentException {
 	// @formatter:on
     	
 
@@ -178,6 +188,25 @@ public class AcademicManagerRestController {
     	}
 		return null;		
 	}   
+    
+    @GetMapping(value = { "/Students/EmployerEval/{studentID}", "/Students/EmployerEval/{studentID}" })
+   	public EmployerformDto getAllEmployerEval(@PathVariable("studentID") String studentID) throws IllegalArgumentException {
+       	
+       	Student mystudent=service.getStudent(studentID);
+       	
+       	if (mystudent != null ) {
+   			Set<Form> myformlist=service.getAllEmployerEvalFormsOfStudent(mystudent);
+   			String myname = mystudent.getFirstName() + " " +  mystudent.getLastName();
+   			List<FormDto> arrayList = new ArrayList<FormDto>();
+   			for(Form f : myformlist) {
+   				FormDto myform=convertFormToDto(f);
+   				arrayList.add(myform);
+   			};
+   			EmployerformDto myemployerforms= new EmployerformDto(myname,arrayList);
+   			return myemployerforms;
+       	}
+   		return null;		
+   	}  
 
     // this method is to view the grades for internships
     // http://localhost:8082/CoopTermRegistrations
