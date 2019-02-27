@@ -47,13 +47,18 @@ public class AcademicManagerRestController {
     	return convertToDto(term);
 	}   
 	
-    @RequestMapping("/Students")
-    @ResponseBody
+    // Method is to POST/CREATE term
+    // curl -X POST localhost:8082/Students/226433222/Yen-Vi/Huynh/1
+    @PostMapping(value = {"/Students/{studentID}/{firstName}/{lastName}/{coopID}","/Students/{studentID}/{firstName}/{lastName}/{coopID}"} )
 	public StudentDto createStudent(@PathVariable("studentID") String studentID, 
 									@PathVariable("firstName") String firstName,
-									@PathVariable("lastName") String lastName) throws IllegalArgumentException {
+									@PathVariable("lastName") String lastName,
+									@PathVariable("coopID") Integer coopID)  
+											throws IllegalArgumentException {
 		// @formatter:on
-		Cooperator coop = service.createCooperator(1);
+    	Cooperator coop = new Cooperator();
+    	coop.setId(coopID);
+    	
 		Student student = service.createStudent(studentID, firstName, lastName, coop);
 		return convertToDto(student);
 	}
@@ -83,7 +88,7 @@ public class AcademicManagerRestController {
 	
 	private CoopTermRegistrationDto convertToDto(CoopTermRegistration e) {
 		if (e == null) {
-			throw new IllegalArgumentException("There student doens't exist in this Cooperator!");
+			throw new IllegalArgumentException("Cannot Create CoopTermRegistration!");
 		}
 		CoopTermRegistrationDto coopTermRegistrationDto = new CoopTermRegistrationDto(e.getRegistrationID(),e.getJobID(),e.getTermStatus(), e.getGrade(), e.getStudent());
 		return coopTermRegistrationDto;
