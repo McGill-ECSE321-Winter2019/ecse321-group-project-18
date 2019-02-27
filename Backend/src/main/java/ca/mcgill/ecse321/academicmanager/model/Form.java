@@ -36,13 +36,6 @@ public class Form{
 	   return this.name;
 	}
 	
-	/**
-	 * <pre>
-	 *           1..1     1..1
-	 * Form ------------------------> FormType
-	 *           &lt;       formType
-	 * </pre>
-	 */
 	private FormType formType;
 	
 	public void setFormType(FormType value) {
@@ -67,6 +60,8 @@ public class Form{
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((formID == null) ? 0 : formID.hashCode());
+		result = prime * result + ((formType == null) ? 0 : formType.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((pdfLink == null) ? 0 : pdfLink.hashCode());
 		return result;
 	}
@@ -85,6 +80,13 @@ public class Form{
 				return false;
 		} else if (!formID.equals(other.formID))
 			return false;
+		if (formType != other.formType)
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
 		if (pdfLink == null) {
 			if (other.pdfLink != null)
 				return false;
@@ -92,5 +94,6 @@ public class Form{
 			return false;
 		return true;
 	}
+	
 	
 }

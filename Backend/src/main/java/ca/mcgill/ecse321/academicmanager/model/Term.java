@@ -1,8 +1,10 @@
 package ca.mcgill.ecse321.academicmanager.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.sql.Date;
+import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.OneToMany;
 
@@ -51,7 +53,7 @@ public class Term
 	}
 	private Set<CoopTermRegistration> coopTermRegistration;
 	
-	@OneToMany(mappedBy="term")
+	@OneToMany(mappedBy="term", cascade= {CascadeType.ALL})
 	public Set<CoopTermRegistration> getCoopTermRegistration() {
 		return this.coopTermRegistration;
 	}
@@ -59,14 +61,28 @@ public class Term
 	public void setCoopTermRegistration(Set<CoopTermRegistration> coopTermRegistrations) {
 	   this.coopTermRegistration = coopTermRegistrations;
 	}
+
+	public void addCoopTermRegistration(CoopTermRegistration coopTermRegistrations) {
+		try {
+			if(!this.coopTermRegistration.contains(coopTermRegistrations)) {
+				this.coopTermRegistration.add(coopTermRegistrations);
+				coopTermRegistrations.setTerm(this);
+			}
+		}
+		catch(Exception e) {
+			this.coopTermRegistration = new HashSet<CoopTermRegistration>();
+			this.coopTermRegistration.add(coopTermRegistrations);
+			coopTermRegistrations.setTerm(this);
+		}
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((coopEvalFormDeadline == null) ? 0 : coopEvalFormDeadline.hashCode());
-		result = prime * result + ((coopTermRegistration == null) ? 0 : coopTermRegistration.hashCode());
 		result = prime * result + ((studentEvalFormDeadline == null) ? 0 : studentEvalFormDeadline.hashCode());
 		result = prime * result + ((termID == null) ? 0 : termID.hashCode());
+		result = prime * result + ((termName == null) ? 0 : termName.hashCode());
 		return result;
 	}
 	@Override
@@ -93,6 +109,12 @@ public class Term
 				return false;
 		} else if (!termID.equals(other.termID))
 			return false;
+		if (termName == null) {
+			if (other.termName != null)
+				return false;
+		} else if (!termName.equals(other.termName))
+			return false;
 		return true;
-	}	
+	}
+	
 }

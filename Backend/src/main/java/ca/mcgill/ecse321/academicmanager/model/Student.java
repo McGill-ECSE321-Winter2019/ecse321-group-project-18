@@ -1,11 +1,14 @@
 package ca.mcgill.ecse321.academicmanager.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.util.Set;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Student Entity.
@@ -48,7 +51,7 @@ public class Student{
     }
 	private Set<Meeting> meeting;
 	
-	@ManyToMany(mappedBy="student")
+	@ManyToMany(mappedBy="student", cascade= {CascadeType.ALL})
 	public Set<Meeting> getMeeting() {
 	   return this.meeting;
 	}
@@ -57,15 +60,41 @@ public class Student{
 	   this.meeting = meetings;
 	}
 	
-	private CoopTermRegistration coopTermRegistration;
+	public void addMeeting(Meeting meeting) {
+		try {
+			if(!this.meeting.contains(meeting)) {
+				this.meeting.add(meeting);
+			}
+		}
+		catch(Exception e) {
+			this.meeting = new HashSet<Meeting>();
+			this.meeting.add(meeting);
+		}
+	}
 	
-	@OneToOne
-	public CoopTermRegistration getCoopTermRegistration() {
+	private Set<CoopTermRegistration> coopTermRegistration;
+	
+	@OneToMany(mappedBy="student", cascade= {CascadeType.ALL})
+	public Set<CoopTermRegistration> getCoopTermRegistration() {
 	   return this.coopTermRegistration;
 	}
 	
-	public void setCoopTermRegistration(CoopTermRegistration coopTermRegistration) {
+	public void setCoopTermRegistration(Set<CoopTermRegistration> coopTermRegistration) {
 	   this.coopTermRegistration = coopTermRegistration;
+	}
+	
+	public void addCoopTermRegistration(CoopTermRegistration coopTermRegistration) {
+		try {
+			if(!this.coopTermRegistration.contains(coopTermRegistration)) {
+				this.coopTermRegistration.add(coopTermRegistration);
+				coopTermRegistration.setStudent(this);
+			}
+		}
+		catch(Exception e) {
+			this.coopTermRegistration = new HashSet<CoopTermRegistration>();
+			this.coopTermRegistration.add(coopTermRegistration);
+			coopTermRegistration.setStudent(this);
+		}
 	}
 	
 	private Cooperator cooperator;
@@ -82,7 +111,6 @@ public class Student{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((cooperator == null) ? 0 : cooperator.hashCode());
 		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
 		result = prime * result + (isProblematic ? 1231 : 1237);
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
@@ -117,4 +145,6 @@ public class Student{
 			return false;
 		return true;
 	}
+	
+	
 }

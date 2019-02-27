@@ -7,30 +7,16 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import org.dom4j.IllegalAddException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ca.mcgill.ecse321.academicmanager.dao.CooperatorRepository;
-import ca.mcgill.ecse321.academicmanager.dao.CoopTermRegistrationRepository;
-import ca.mcgill.ecse321.academicmanager.dao.CourseRepository;
-import ca.mcgill.ecse321.academicmanager.dao.FormRepository;
-import ca.mcgill.ecse321.academicmanager.dao.MeetingRepository;
-import ca.mcgill.ecse321.academicmanager.dao.StudentRepository;
-import ca.mcgill.ecse321.academicmanager.dao.TermRepository;
+import ca.mcgill.ecse321.academicmanager.dao.*;
 
 import ca.mcgill.ecse321.academicmanager.exceptions.*;
 
-import ca.mcgill.ecse321.academicmanager.model.Cooperator;
-import ca.mcgill.ecse321.academicmanager.model.CoopTermRegistration;
-import ca.mcgill.ecse321.academicmanager.model.Course;
-import ca.mcgill.ecse321.academicmanager.model.Form;
-import ca.mcgill.ecse321.academicmanager.model.FormType;
-import ca.mcgill.ecse321.academicmanager.model.Grade;
-import ca.mcgill.ecse321.academicmanager.model.Meeting;
-import ca.mcgill.ecse321.academicmanager.model.Student;
-import ca.mcgill.ecse321.academicmanager.model.Term;
-import ca.mcgill.ecse321.academicmanager.model.TermStatus;
+import ca.mcgill.ecse321.academicmanager.model.*;
 
 @Service
 public class AcademicManagerService {
@@ -62,26 +48,7 @@ public class AcademicManagerService {
 		
 		return cooperatorRepository.save(c);
 	}
-	
-	@Transactional
-	public Cooperator updateCooperator(Cooperator c, Student student, Course course) {
-		if(checkArg(student)) {
-			Set<Student> students = c.getStudent();
-			if(!students.contains(student)) {
-				students.add(student);
-				c.setStudent(students);		
-			}
-		}
-		if(checkArg(course)) {
-			Set<Course> courses = c.getCourse();
-			if(!courses.contains(course)) {
-				courses.add(course);
-				c.setCourse(courses);
-			}
-		}
-		
-		return cooperatorRepository.save(c);
-	}
+
 	
 	@Transactional
 	public Cooperator getCooperator(Integer id) {
@@ -92,49 +59,58 @@ public class AcademicManagerService {
 	public Set<Cooperator> getAllCooperators() {
 		return toSet(cooperatorRepository.findAll());
 	}
+	
+	@Transactional
+	public Set<Course> getCooperatorCourses(Cooperator c) {
+		return c.getCourse();
+	}
+	
+	@Transactional
+	public Set<Student> getCooperatorStudents(Cooperator c) {		
+		return c.getStudent();
+	}
 	//---Cooperator---
 	
 	//---CoopTermRegistration---
 	@Transactional
-	public CoopTermRegistration createCoopTermRegistration(String registrationID, String jobID, TermStatus status, Grade grade, Student student) {
-		if(!checkArg(registrationID) || !checkArg(jobID) || !checkArg(student) || !checkArg(status)) {
+	public CoopTermRegistration createCoopTermRegistration(String registrationID, String jobID, TermStatus status,
+			Grade grade, Student student, Term term) {
+		if(!checkArg(registrationID) || !checkArg(jobID) || !checkArg(status) || !checkArg(student) || !checkArg(term)) {
 			throw new NullArgumentException();
 		}
 		
-		CoopTermRegistration CTR = new CoopTermRegistration();
-		CTR.setRegistrationID(registrationID);
-		CTR.setTermStatus(status);
-		CTR.setJobID(jobID);
-		CTR.setStudent(student);
-		CTR.setGrade(grade);
-		student.setCoopTermRegistration(CTR);
-
-		return coopTermRegistrationRepository.save(CTR);
+		CoopTermRegistration ctr = new CoopTermRegistration();
+		ctr.setRegistrationID(registrationID);
+		ctr.setTermStatus(status);
+		ctr.setJobID(jobID);
+		ctr.setGrade(grade);
+		
+		// check if student is already registered in that term
+		Set<CoopTermRegistration> StudentCtrs = student.getCoopTermRegistration();
+		if(StudentCtrs != null) {
+			for(CoopTermRegistration ctrTemp : StudentCtrs) {
+				if(ctrTemp.getTerm() == term) {
+					throw new IllegalAddException("Student is already registerd for the given term");
+				}
+			}
+		}
+		
+		student.addCoopTermRegistration(ctr);
+		term.addCoopTermRegistration(ctr);
+		
+		return coopTermRegistrationRepository.save(ctr);
 	}
 	
 	@Transactional
-	public CoopTermRegistration updateCoopTermRegistration(CoopTermRegistration CTR, TermStatus status, Form form, Student student, Grade grade, Term term) {
+	public CoopTermRegistration updateCoopTermRegistration(CoopTermRegistration ctr, TermStatus status, Grade grade) {
 		if(checkArg(status)) {
-			CTR.setTermStatus(status);
-		}
-		if(checkArg(form)) {
-			Set<Form> forms = CTR.getForm();
-			if(!forms.contains(form)) {
-				forms.add(form);
-				CTR.setForm(forms);				
-			}
-		}
-		if(checkArg(student)) {
-			CTR.setStudent(student);
-		}
-		if(checkArg(term)) {
-			CTR.setTerm(term);
+			ctr.setTermStatus(status);
 		}
 		if(checkArg(grade)) {
-			CTR.setGrade(grade);
+			ctr.setGrade(grade);
 		}
 		
-		return coopTermRegistrationRepository.save(CTR);
+		return coopTermRegistrationRepository.save(ctr);
 	}
 	
 	@Transactional
@@ -161,7 +137,8 @@ public class AcademicManagerService {
 		course.setCourseName(courseName);
 		course.setCourseRank(rank);
 		
-		course.setCooperator(c);
+//		course.setCooperator(c);
+		c.addCourse(course);
 		
 		return courseRepository.save(course);
 	}
@@ -186,7 +163,7 @@ public class AcademicManagerService {
 	//---Form---
 	@Transactional
 	public Form createForm(String formID, String name, String pdflink, FormType formtype, CoopTermRegistration ctr) {
-		if(!checkArg(name) || !checkArg(pdflink) || !checkArg(formtype) /*|| !checkArg(ctr)*/) {
+		if(!checkArg(name) || !checkArg(pdflink) || !checkArg(formtype) || !checkArg(ctr)) {
 			throw new NullArgumentException();
 		}
 		
@@ -195,24 +172,14 @@ public class AcademicManagerService {
 		form.setName(name);
 		form.setPdfLink(pdflink);
 		form.setFormType(formtype);
-		form.setCoopTermRegistration(ctr);
 		
-		if(checkArg(ctr)) {
-			Set<Form> forms = ctr.getForm();
-			
-			if(!checkArg(forms)) {
-				forms = new HashSet<Form>();
-			}
-			
-			forms.add(form);
-			ctr.setForm(forms);
-		}
+		ctr.addForm(form);
 		
 		return formRepository.save(form);
 	}
 	
 	@Transactional
-	Form updateForm(Form form, String formID, String name, String pdflink, FormType formtype, CoopTermRegistration ctr) {
+	Form updateForm(Form form, String formID, String name, String pdflink, FormType formtype) {
 		if(!checkArg(form)) {
 			throw new IllegalArgumentException("form is null");
 		}
@@ -228,9 +195,6 @@ public class AcademicManagerService {
 		if(checkArg(formtype)) {
 			form.setFormType(formtype);
 		}
-		if(checkArg(ctr)) {
-			form.setCoopTermRegistration(ctr);
-		}
 		
 		return formRepository.save(form);
 	}
@@ -242,20 +206,22 @@ public class AcademicManagerService {
 			throw new NullArgumentException();
 		}
 		
-		CoopTermRegistration ctr = student.getCoopTermRegistration();
+		Set<CoopTermRegistration> ctrs = student.getCoopTermRegistration();
 		
-		if(!checkArg(ctr) ) {
+		if(!checkArg(ctrs) ) {
 			throw new IllegalArgumentException("student is not registered for a term");
 		}
 		
-		Set<Form> forms = ctr.getForm();
+		Set<Form> forms = new HashSet<Form>();
 		
-		for(Form form : forms) {
-			if(form.getFormType() != FormType.STUDENTEVALUATION) {
-				forms.remove(form);
+		for (CoopTermRegistration ctr:ctrs) {
+			forms.addAll(ctr.getForm());
+			for(Form form : forms) {	
+				if(form.getFormType() != FormType.STUDENTEVALUATION) {
+					forms.remove(form);
+				}
 			}
 		}
-		
 		return forms;
 	}
 	
@@ -265,28 +231,29 @@ public class AcademicManagerService {
 			throw new NullArgumentException();
 		}
 		
-		CoopTermRegistration ctr = student.getCoopTermRegistration();
+		Set<CoopTermRegistration> ctrs = student.getCoopTermRegistration();
 		
-		if(!checkArg(ctr) ) {
+		if(!checkArg(ctrs) ) {
 			throw new IllegalArgumentException("student is not registered for a term");
 		}
 		
-		Set<Form> forms = ctr.getForm();
+		Set<Form> forms = new HashSet<Form>();
 		
-		for(Form form : forms) {
-			if(form.getFormType() != FormType.COOPEVALUATION) {
-				forms.remove(form);
+		for (CoopTermRegistration ctr:ctrs) {
+			forms.addAll(ctr.getForm());
+			for(Form form : forms) {	
+				if(form.getFormType() != FormType.COOPEVALUATION) {
+					forms.remove(form);
+				}
 			}
 		}
-		
 		return forms;
 	}
 	//---Form---
 	
 	//---Meeting---
 	@Transactional
-	public Meeting createMeeting(String meetingID, String location, String details, Date date, Time startTime, Time endTime, Set<Student> students) 
-	{
+	public Meeting createMeeting(String meetingID, String location, String details, Date date, Time startTime, Time endTime) {
 		// check for nulls
 		if(!checkArg(meetingID) || !checkArg(location) || !checkArg(startTime) || !checkArg(endTime)) {
 			throw new NullArgumentException();
@@ -307,9 +274,18 @@ public class AcademicManagerService {
 		if(checkArg(details)) {
 			meeting.setDetails(details);
 		}
-		if(checkArg(students)) {
-			meeting.setStudent(students);
+		
+		return meetingRepository.save(meeting);
+	}
+	
+	@Transactional
+	public Meeting addMeetingStudent(Meeting meeting, Student student) {
+		if(!checkArg(student)) {
+			throw new NullArgumentException();
 		}
+		
+		student.addMeeting(meeting);
+		meeting.addStudent(student);
 		
 		return meetingRepository.save(meeting);
 	}
@@ -331,13 +307,6 @@ public class AcademicManagerService {
 		if(checkArg(endTime)) {
 			meeting.setEndTime(endTime);
 		}
-		if(checkArg(student)) {
-			Set<Student> students = meeting.getStudent();
-			if(!students.contains(student)) {
-				students.add(student);
-				meeting.setStudent(students);
-			}
-		}
 		
 		return meetingRepository.save(meeting);
 	}
@@ -345,6 +314,11 @@ public class AcademicManagerService {
 	@Transactional
 	public Meeting getMeeting(String meetingID) {
 		return meetingRepository.findByMeetingID(meetingID);
+	}
+	
+	@Transactional
+	public Set<Student> getMeetingStudents(Meeting meeting) {
+		return meeting.getStudent();
 	}
 	
 	@Transactional
@@ -360,36 +334,27 @@ public class AcademicManagerService {
 			throw new NullArgumentException();
 		}
 		
-		
 		Student student = new Student();
 		
 		student.setStudentID(studentID);
 		student.setFirstName(firstname);
 		student.setLastName(lastname);
-		student.setCooperator(c);
 		student.setIsProblematic(false);
+		
+//		student.setCooperator(c);
+		c.addStudent(student);
 		
 		return studentRepository.save(student);
 	}
 	
 	@Transactional
-	public List<Student> getAllProblematicStudents(){
-		List<Student> students = studentRepository.findByIsProblematic(true);
-		return students;
-	}
-	
-	@Transactional
-	public Student updateStudent(Student student, CoopTermRegistration coopTermRegistration, Meeting meeting) {
-		if(checkArg(coopTermRegistration)) {
-			student.setCoopTermRegistration(coopTermRegistration);
+	public Student addStudentMeeting(Student student, Meeting meeting) {
+		if(!checkArg(meeting)) {
+			throw new NullArgumentException();
 		}
-		if(checkArg(meeting)) {
-			Set<Meeting> meetings = student.getMeeting();
-			if(!meetings.contains(meeting)) {
-				meetings.add(meeting);
-				student.setMeeting(meetings);
-			}
-		}
+		
+		student.addMeeting(meeting);
+		meeting.addStudent(student);
 		
 		return studentRepository.save(student);
 	}
@@ -401,8 +366,18 @@ public class AcademicManagerService {
 	}
 	
 	@Transactional
+	public List<Student> getAllProblematicStudents(){
+		return studentRepository.findByIsProblematic(true);
+	}
+	
+	@Transactional
 	public Student getStudent(String studentID) {
 		return studentRepository.findByStudentID(studentID);
+	}
+	
+	@Transactional
+	public Set<Meeting> getStudentMeetings(Student student) {
+		return student.getMeeting();
 	}
 
 	@Transactional
@@ -412,15 +387,13 @@ public class AcademicManagerService {
 	
 	@Transactional
 	public Grade getStudentGrade(CoopTermRegistration ctr) {
-		Grade grade;;
-		grade = ctr.getGrade();
-		return grade;
+		return ctr.getGrade();
 	}
 	//---Student---
 	
 	//---Term---
 	@Transactional
-	public Term createTerm(String termID, String termName, Date studentEvalFormDeadline, Date coopEvalFormDeadline, Set<CoopTermRegistration> CTRs) {
+	public Term createTerm(String termID, String termName, Date studentEvalFormDeadline, Date coopEvalFormDeadline) {
 		if(!checkArg(termID)) {
 			throw new NullArgumentException();
 		}
@@ -431,39 +404,38 @@ public class AcademicManagerService {
 		term.setStudentEvalFormDeadline(studentEvalFormDeadline);
 		term.setCoopEvalFormDeadline(coopEvalFormDeadline);
 		
-		if(checkArg(CTRs)) {
-			term.setCoopTermRegistration(CTRs);
-		}
-		
-		return termRepository.save(term);
-	}
-	@Transactional
-	public Term addCoopTermRegistration(Term term, CoopTermRegistration CTR) {
-		if(checkArg(CTR)) {
-			Set<CoopTermRegistration> CTRs = term.getCoopTermRegistration();
-			if(!CTRs.contains(CTR)) {
-				CTRs.add(CTR);
-				term.setCoopTermRegistration(CTRs);
-			}
-		}
-		
 		return termRepository.save(term);
 	}
 	
 	@Transactional
-	public Term updateTerm(Term term, Date studentEvalFormDeadline, Date coopEvalFormDeadline, CoopTermRegistration CTR) {
+	public void addTermCtr(Term term, CoopTermRegistration ctr) {
+		if(!checkArg(ctr)) {
+			throw new NullArgumentException();
+		}
+		
+		Set<CoopTermRegistration> ctrs = term.getCoopTermRegistration();
+		try {
+			ctrs.add(ctr);
+		}
+		catch(Exception e) {
+			ctrs = new HashSet<>();
+			ctrs.add(ctr);
+		}
+		term.setCoopTermRegistration(ctrs);
+		
+//		return termRepository.save(term);
+	}
+	
+	@Transactional
+	public Term updateTerm(Term term, String termName, Date studentEvalFormDeadline, Date coopEvalFormDeadline) {
+		if(checkArg(termName)) {
+			term.setTermName(termName);
+		}
 		if(checkArg(studentEvalFormDeadline)) {
 			term.setStudentEvalFormDeadline(studentEvalFormDeadline);
 		}
 		if(checkArg(coopEvalFormDeadline)) {
 			term.setCoopEvalFormDeadline(coopEvalFormDeadline);
-		}
-		if(checkArg(CTR)) {
-			Set<CoopTermRegistration> CTRs = term.getCoopTermRegistration();
-			if(!CTRs.contains(CTR)) {
-				CTRs.add(CTR);
-				term.setCoopTermRegistration(CTRs);
-			}
 		}
 		
 		return termRepository.save(term);

@@ -3,6 +3,8 @@ package ca.mcgill.ecse321.academicmanager.model;
 import javax.persistence.Entity;
 import java.sql.Time;
 import javax.persistence.Id;
+
+import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.ManyToMany;
 import java.sql.Date;
@@ -67,6 +69,18 @@ public class Meeting
 	public void setStudent(Set<Student> students) {
 	   this.student = students;
 	}
+	
+	public void addStudent(Student student) {
+		try {
+			if(!this.student.contains(student)) {
+				this.student.add(student);
+			}
+		}
+		catch(Exception e) {
+			this.student = new HashSet<Student>();
+			this.student.add(student);
+		}
+	}
 
 	private Date date;
 	
@@ -81,6 +95,7 @@ public class Meeting
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((date == null) ? 0 : date.hashCode());
+		result = prime * result + ((details == null) ? 0 : details.hashCode());
 		result = prime * result + ((endTime == null) ? 0 : endTime.hashCode());
 		result = prime * result + ((location == null) ? 0 : location.hashCode());
 		result = prime * result + ((meetingID == null) ? 0 : meetingID.hashCode());
@@ -100,6 +115,11 @@ public class Meeting
 			if (other.date != null)
 				return false;
 		} else if (!date.equals(other.date))
+			return false;
+		if (details == null) {
+			if (other.details != null)
+				return false;
+		} else if (!details.equals(other.details))
 			return false;
 		if (endTime == null) {
 			if (other.endTime != null)
@@ -123,5 +143,6 @@ public class Meeting
 			return false;
 		return true;
 	}
+	
 	
 }

@@ -2,6 +2,8 @@ package ca.mcgill.ecse321.academicmanager.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+
+import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.OneToMany;
@@ -28,6 +30,20 @@ public class Cooperator{
 	   this.student = students;
 	}
 	
+	public void addStudent(Student student) {
+		try {
+			if(!this.student.contains(student)) {
+				this.student.add(student);
+				student.setCooperator(this);
+			}
+		}
+		catch(Exception e) {	
+			this.student = new HashSet<Student>();
+			this.student.add(student);
+			student.setCooperator(this);
+		}
+	}
+	
 	private Set<Course> course;
 	
 	@OneToMany(mappedBy="cooperator", cascade={CascadeType.ALL})
@@ -37,6 +53,20 @@ public class Cooperator{
 	
 	public void setCourse(Set<Course> courses) {
 	   this.course = courses;
+	}
+	
+	public void addCourse(Course course) {
+		try {
+			if(!this.course.contains(course)) {
+				this.course.add(course);
+				course.setCooperator(this);
+			}
+		}
+		catch(Exception e) {	
+			this.course = new HashSet<Course>();
+			this.course.add(course);
+			course.setCooperator(this);
+		}
 	}
 	@Override
 	public int hashCode() {
@@ -61,4 +91,6 @@ public class Cooperator{
 			return false;
 		return true;
 	}
+	
+	
 }

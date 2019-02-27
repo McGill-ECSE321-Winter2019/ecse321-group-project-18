@@ -53,7 +53,6 @@ public class Course{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((cooperator == null) ? 0 : cooperator.hashCode());
 		result = prime * result + ((courseID == null) ? 0 : courseID.hashCode());
 		result = prime * result + ((courseName == null) ? 0 : courseName.hashCode());
 		result = prime * result + ((courseRank == null) ? 0 : courseRank.hashCode());
@@ -69,11 +68,6 @@ public class Course{
 		if (getClass() != obj.getClass())
 			return false;
 		Course other = (Course) obj;
-		if (cooperator == null) {
-			if (other.cooperator != null)
-				return false;
-		} else if (!cooperator.equals(other.cooperator))
-			return false;
 		if (courseID == null) {
 			if (other.courseID != null)
 				return false;
@@ -96,5 +90,6 @@ public class Course{
 			return false;
 		return true;
 	}
+	
 	
 }
