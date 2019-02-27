@@ -62,7 +62,7 @@ public class Meeting
 	}
 	private Set<Student> student = new HashSet<Student>();
 	
-	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToMany
 	public Set<Student> getStudent() {
 	   return this.student;
 	}

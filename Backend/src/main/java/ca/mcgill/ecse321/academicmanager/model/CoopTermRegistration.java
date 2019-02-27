@@ -47,7 +47,7 @@ public class CoopTermRegistration
 	}
 	private Set<Form> form;
 	
-	@OneToMany(mappedBy="coopTermRegistration")
+	@OneToMany(mappedBy="coopTermRegistration", cascade= {CascadeType.ALL})
 	public Set<Form> getForm() {
 	   return this.form;
 	}

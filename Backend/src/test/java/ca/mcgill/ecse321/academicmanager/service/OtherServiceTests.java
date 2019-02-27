@@ -209,8 +209,9 @@ public class OtherServiceTests {
 		
 		meeting = service.addMeetingStudent(meeting, student);
 		
-		assertTrue(student.getMeeting().contains(meeting));
-		assertTrue(meeting.getStudent().contains(student));
+		String MeetingId1 = student.getMeeting().iterator().next().getMeetingID();
+		String MeetingId2 = meeting.getStudent().iterator().next().getMeeting().iterator().next().getMeetingID();
+		assertEquals(MeetingId1, MeetingId2);
 	}
 //	
 //	@Test

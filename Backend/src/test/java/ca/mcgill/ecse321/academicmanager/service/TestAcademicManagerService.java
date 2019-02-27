@@ -212,12 +212,16 @@ public class TestAcademicManagerService {
 	
 	@Test
 	public void testCreateForm() {
+		Student student = service.createStudent("142142", "1", "1", cooperator);
+		Term term = service.createTerm("Winter2019", "Winter 2019", null, null);
+		CoopTermRegistration ctr = service.createCoopTermRegistration("1214214", "1512521", TermStatus.FAILED, Grade.A, student, term);
+		
 		String formID = "142142";
 		String pdfLink = "1";
 		String formName = "1";
 		FormType formType = FormType.STUDENTEVALUATION;
 		try{
-			Form form = service.createForm(formID, formName, pdfLink, formType, null);
+			Form form = service.createForm(formID, formName, pdfLink, formType, ctr);
 			assertEquals(1, formRepository.count());
 			assertEquals("142142", form.getFormID());
 		} catch (Exception e) {

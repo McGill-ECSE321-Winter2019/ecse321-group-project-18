@@ -142,7 +142,7 @@ public class AcademicManagerService {
 	}
 	
 	@Transactional
-	public CoopTermRegistration addCtrForm(CoopTermRegistration ctr, Form form) {
+	public void addCtrForm(CoopTermRegistration ctr, Form form) {
 		if(!checkArg(form)) {
 			throw new NullArgumentException();
 		}
@@ -157,7 +157,7 @@ public class AcademicManagerService {
 		}
 		ctr.setForm(forms);
 		
-		return coopTermRegistrationRepository.save(ctr);
+//		return coopTermRegistrationRepository.save(ctr);
 	}
 	
 	@Transactional
