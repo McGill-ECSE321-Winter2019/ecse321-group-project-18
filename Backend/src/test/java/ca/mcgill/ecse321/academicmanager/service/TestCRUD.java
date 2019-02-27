@@ -9,16 +9,12 @@ import java.sql.Time;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-/*
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
-*/
 import java.util.Set;
-import java.util.HashSet;
-import java.util.List;
 
 import org.junit.Before;
 import org.junit.After;
@@ -137,6 +133,90 @@ public class TestCRUD {
 		Set<CoopTermRegistration> termCtrs = term.getCoopTermRegistration();
 		assertTrue(termCtrs.contains(ctr));
 		
+		String formID = "0";
+		String name = "testForm";
+		String pdflink = "798fakhj";
+		Form form = service.createForm(formID, name, pdflink, FormType.COOPEVALUATION, ctr);
+		
+		assertEquals(ctr, form.getCoopTermRegistration());
+		assertTrue(ctr.getForm().contains(form));
+		
+	}
+	
+	@Test
+	public void testSettingMeeting() {
+		assertEquals(0, service.getAllStudents().size());
+		assertEquals(0, service.getAllMeetings().size());
+		
+		String studentID = "260632355";
+		String firstname = "saleh";
+		String lastname = "bakhit";
+		
+		Student student = null;
+		try {
+			student = service.createStudent(studentID, firstname, lastname, cooperator);
+		} catch (Exception e) {
+			// Check that no error occurred
+			fail();
+		}
+		
+		java.util.Date utilDate = new java.util.Date();
+		
+		String meetingID = "0";
+		String location = "ENGTR 3090";
+		Date date = new Date(utilDate.getTime());
+		Time startTime = new Time(503000);
+		Time endTime = new Time(503010);
+		
+		Meeting meeting = null;
+		try {
+			meeting = service.createMeeting(meetingID, location, null, date, startTime, endTime);
+		}
+		catch(Exception e) {
+			// Check that no error occurred
+			fail();	
+		}
+		
+		meeting = service.addMeetingStudent(meeting, student);
+		
+		Set<Meeting> studentMeetings= student.getMeeting();
+		Set<Student> meetingStudents = meeting.getStudent();
+		
+		assertTrue(studentMeetings.contains(meeting));
+		assertTrue(meetingStudents.contains(student));
+		
+	}
+	
+	@Test
+	public void testAddCtrsToTerm() {
+		Student s1 = service.createStudent("1", "s1First", "s1Last", cooperator);
+		
+		Term t1 = service.createTerm("1", "1-Term", null, null);
+		Term t2 = service.createTerm("2", "2-Term", null, null);
+		Term t3 = service.createTerm("3", "3-Term", null, null);
+		
+		CoopTermRegistration ctr1 = service.createCoopTermRegistration("1", "1", TermStatus.ONGOING, null, s1, t1);
+		CoopTermRegistration ctr2 = service.createCoopTermRegistration("2", "2", TermStatus.ONGOING, null, s1, t2);
+		CoopTermRegistration ctr3 = service.createCoopTermRegistration("3", "3", TermStatus.ONGOING, null, s1, t3);
+		
+		Set<CoopTermRegistration> studentCtrs = s1.getCoopTermRegistration();
+		
+		assertEquals(3, studentCtrs.size());
+		
+		assertTrue(studentCtrs.contains(ctr1));
+		assertEquals(s1, ctr1.getStudent());
+		assertTrue(t1.getCoopTermRegistration().contains(ctr1));
+		assertEquals(t1, ctr1.getTerm());
+
+		assertTrue(studentCtrs.contains(ctr2));
+		assertEquals(s1, ctr2.getStudent());
+		assertTrue(t2.getCoopTermRegistration().contains(ctr2));
+		assertEquals(t2, ctr2.getTerm());
+
+		assertTrue(studentCtrs.contains(ctr3));
+		assertEquals(s1, ctr3.getStudent());
+		assertTrue(t3.getCoopTermRegistration().contains(ctr3));
+		assertEquals(t3, ctr3.getTerm());
 	}
 	
 }

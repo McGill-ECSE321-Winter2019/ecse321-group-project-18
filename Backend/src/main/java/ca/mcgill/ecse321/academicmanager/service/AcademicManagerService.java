@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import org.dom4j.IllegalAddException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,44 +48,6 @@ public class AcademicManagerService {
 		
 		return cooperatorRepository.save(c);
 	}
-	
-	@Transactional
-	public void addCooperatorStudent(Cooperator c, Student student) {
-		if(!checkArg(student)) {
-			throw new NullArgumentException();
-		}
-		
-		Set<Student> students = c.getStudent();
-		try {
-			students.add(student);
-		}
-		catch(Exception e) {
-			students = new HashSet<Student>();
-			students.add(student);
-		}
-		c.setStudent(students);
-		
-//		return cooperatorRepository.save(c);
-	}
-	
-	@Transactional
-	public void addCooperatorCourse(Cooperator c, Course course) {
-		if(!checkArg(course)) {
-			throw new NullArgumentException();
-		}
-		
-		Set<Course> courses = c.getCourse();
-		try {
-			courses.add(course);
-		}
-		catch(Exception e) {
-			courses = new HashSet<Course>();
-			courses.add(course);
-		}
-		c.setCourse(courses);
-		
-//		return cooperatorRepository.save(c);
-	}
 
 	
 	@Transactional
@@ -122,39 +85,20 @@ public class AcademicManagerService {
 		ctr.setJobID(jobID);
 		ctr.setGrade(grade);
 		
+		// check if student is already registered in that term
+		Set<CoopTermRegistration> StudentCtrs = student.getCoopTermRegistration();
+		if(StudentCtrs != null) {
+			for(CoopTermRegistration ctrTemp : StudentCtrs) {
+				if(ctrTemp.getTerm() == term) {
+					throw new IllegalAddException("Student is already registerd for the given term");
+				}
+			}
+		}
+		
 		student.addCoopTermRegistration(ctr);
 		term.addCoopTermRegistration(ctr);
 		
 		return coopTermRegistrationRepository.save(ctr);
-	}
-	
-	@Transactional
-	public CoopTermRegistration setCtrStudent(CoopTermRegistration ctr, Student student) {
-		if(!checkArg(student)) {
-			throw new NullArgumentException();
-		}
-		
-		ctr.setStudent(student);
-		return coopTermRegistrationRepository.save(ctr);
-	}
-	
-	@Transactional
-	public void addCtrForm(CoopTermRegistration ctr, Form form) {
-		if(!checkArg(form)) {
-			throw new NullArgumentException();
-		}
-		
-		Set<Form> forms = ctr.getForm();
-		try {
-			forms.add(form);
-		}
-		catch(Exception e) {
-			forms = new HashSet<>();
-			forms.add(form);
-		}
-		ctr.setForm(forms);
-		
-//		return coopTermRegistrationRepository.save(ctr);
 	}
 	
 	@Transactional
@@ -229,8 +173,7 @@ public class AcademicManagerService {
 		form.setPdfLink(pdflink);
 		form.setFormType(formtype);
 		
-		form.setCoopTermRegistration(ctr);
-		addCtrForm(ctr, form);
+		ctr.addForm(form);
 		
 		return formRepository.save(form);
 	}
@@ -288,7 +231,7 @@ public class AcademicManagerService {
 			throw new NullArgumentException();
 		}
 		
-Set<CoopTermRegistration> ctrs = student.getCoopTermRegistration();
+		Set<CoopTermRegistration> ctrs = student.getCoopTermRegistration();
 		
 		if(!checkArg(ctrs) ) {
 			throw new IllegalArgumentException("student is not registered for a term");
