@@ -133,7 +133,6 @@ public class OtherServiceTests {
 		}
 		
 	}
-	
 	@Test
 	public void testCreateStudents() {
 		assertEquals(0, service.getAllStudents().size());
