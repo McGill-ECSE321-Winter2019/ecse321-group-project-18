@@ -32,8 +32,8 @@ public class AcademicManagerRestController {
 	}
 
 	// Method is to POST/CREATE cooperator
-	// curl -X POST -i 'http://localhost:8082/Cooperator/Create/?coopID=1'
-	@PostMapping(value = { "/cooperators/create/", "/cooperators/create" })
+	// curl -X POST -i 'http://localhost:8082/cooperators/create/?id=1'
+	@PostMapping(value = { "/cooperators/create", "/cooperators/create/" })
 	public CooperatorDto CreateCooperator(@RequestParam("id") Integer coopID) throws IllegalArgumentException {
 		// @formatter:on
 
@@ -72,8 +72,8 @@ public class AcademicManagerRestController {
 	 * @return a TermDto object that represent the object to be persisted in the
 	 *         database.
 	 */
-	// curl -X POST -i
-	// 'http://localhost:8082/students/create/?id="226433222"&firstname=Yen-Vi&lastname="Huynh"&cooperatorid=1'
+	// curl -X POST -ihttp://localhost:8082/terms/create/?id=2112&name=Winter2019&studentdeadline=2019-3-22&coopdeadline=2019-4-4
+	// http://localhost:8082/students/create/?id=226433222&firstname=Yen-Vi&lastname=Huynh&cooperatorid=1
 	@PostMapping(value = { "/students/create", "/students/create/" })
 	public StudentDto createStudent(@RequestParam("id") String studentID, @RequestParam("firstname") String firstName,
 			@RequestParam("lastname") String lastName, @RequestParam("cooperatorid") Integer cooperatorID)
