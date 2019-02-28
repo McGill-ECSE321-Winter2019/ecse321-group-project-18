@@ -42,7 +42,9 @@ public class AcademicManagerService {
 		if(!checkArg(id)) {
 			throw new NullArgumentException();
 		}
-		
+		if(checkArg(cooperatorRepository.findByid(id)) ) {
+			throw new IllegalArgumentException("cooperator with id already exists");
+		}
 		Cooperator c = new Cooperator();
 		c.setId(id);
 		

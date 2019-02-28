@@ -90,7 +90,7 @@ public class CoopTermRegistration
 	}
 	private Student student;
 	
-	@ManyToOne(optional=false)
+	@ManyToOne(optional=false, cascade={CascadeType.ALL})
 	public Student getStudent() {
 	   return this.student;
 	}
