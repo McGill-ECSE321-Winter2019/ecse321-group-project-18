@@ -48,11 +48,9 @@ public class AcademicManagerRestController {
 	public TermDto CreateTerm(@RequestParam("id") String termID, @RequestParam("name") String name,
 			@RequestParam("studentdeadline") String date1, @RequestParam("coopdeadline") String date2) {
 		// @formatter:on
-
-		Set<CoopTermRegistration> ctrs = new HashSet<CoopTermRegistration>();
 		Date studentEvalFormDeadline = Date.valueOf(date1); // form of date: "2015-06-01"
 		Date coopEvalFormDeadline = Date.valueOf(date2);
-		Term term = service.createTerm(termID, name, studentEvalFormDeadline, coopEvalFormDeadline, ctrs);
+		Term term = service.createTerm(termID, name, studentEvalFormDeadline, coopEvalFormDeadline);
 		return convertToDto(term);
 	}
 
@@ -88,11 +86,14 @@ public class AcademicManagerRestController {
 	// http://localhost:8082/cooptermregistrations/create/?registrationid=1&jobid=142412&studentid=226433222
 	@PostMapping(value = { "/cooptermregistrations/create", "/cooptermregistrations/create/" })
 	public CoopTermRegistrationDto createCoopTermRegistration(@RequestParam("registrationid") String registrationID,
-			@RequestParam("jobid") String jobID, @RequestParam("studentid") String studentID)
+															  @RequestParam("jobid") String jobID,
+															  @RequestParam("studentid") String studentID,
+															  @RequestParam("termid") String termID)
 			throws IllegalArgumentException {
 		Student student = service.getStudent(studentID);
+		Term term = service.getTerm(termID);
 		CoopTermRegistration internship = service.createCoopTermRegistration(registrationID, jobID, TermStatus.ONGOING,
-				Grade.NotGraded, student);
+				Grade.NotGraded, student, term);
 		return convertToDto(internship);
 	}
 
