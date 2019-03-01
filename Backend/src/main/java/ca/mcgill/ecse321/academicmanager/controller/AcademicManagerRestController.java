@@ -19,6 +19,7 @@ public class AcademicManagerRestController {
 
 	/************* CREATE/POST OBJECTS METHODS ************/
 
+	// http://localhost:8082/cooptermregistrations/1/adjudicate/?success=true
 	@PostMapping(value = { "/cooptermregistrations/{registrationID}/adjudicate",
 			"/cooptermregistrations/{registrationID}/adjudicate/" })
 	public CoopTermRegistrationDto adjudicateTermRegistration(@PathVariable("registrationID") String registrationID,
@@ -71,7 +72,7 @@ public class AcademicManagerRestController {
 	 * @return a TermDto object that represent the object to be persisted in the
 	 *         database.
 	 */
-	// curl -X POST -ihttp://localhost:8082/terms/create/?id=2112&name=Winter2019&studentdeadline=2019-3-22&coopdeadline=2019-4-4
+
 	// http://localhost:8082/students/create/?id=226433222&firstname=Yen-Vi&lastname=Huynh&cooperatorid=1
 	@PostMapping(value = { "/students/create", "/students/create/" })
 	public StudentDto createStudent(@RequestParam("id") String studentID, @RequestParam("firstname") String firstName,
@@ -163,8 +164,8 @@ public class AcademicManagerRestController {
 	}
 
 	// This method is to report a list of students
-	// http://localhost:8082/Students/list
-	// curl localhost:8082/Students/list
+	// http://localhost:8082/students/list
+	// curl localhost:8082/students/list
 	@GetMapping(value = { "/students/list", "/students/list", "/students", "/students/" })
 	@ResponseBody
 	public List<StudentDto> getListStudents() throws IllegalArgumentException {
@@ -181,7 +182,7 @@ public class AcademicManagerRestController {
 	}
 
 	// Method is to get the student evaluation report
-	// curl localhost:8082/Students/report/2602231111
+	// curl http://localhost:8082/students/report/226433222
 	@GetMapping(value = { "/students/report/{studentID}", "/students/report/{studentID}" })
 	public StudentformDto getStudentReport(@PathVariable("studentID") String studentID)
 			throws IllegalArgumentException {
@@ -203,7 +204,7 @@ public class AcademicManagerRestController {
 		return null;
 	}
 
-	@GetMapping(value = { "/Students/EmployerEval/{studentID}", "/Students/EmployerEval/{studentID}" })
+	@GetMapping(value = { "/students/employereval/{studentID}", "/students/employereval/{studentID}" })
 	public EmployerformDto getAllEmployerEval(@PathVariable("studentID") String studentID)
 			throws IllegalArgumentException {
 
@@ -243,8 +244,8 @@ public class AcademicManagerRestController {
 	}
 
 	// this method is to view the grades for internships
-	// http://localhost:8082/CoopTermRegistrations/Grades
-	// curl localhost:8082/CoopTermRegistrations/Grades
+	// http://localhost:8082/cooptermregistrations/grades
+	// curl localhost:8082/cooptermregistrations/grades
 	@GetMapping(value = { "/cooptermregistrations/grades", "/cooptermregistrations/grades/" })
 	@ResponseBody
 	public Set<Grade> viewGrades() throws IllegalArgumentException {

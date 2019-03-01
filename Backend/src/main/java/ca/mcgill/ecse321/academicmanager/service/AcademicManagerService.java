@@ -345,7 +345,7 @@ public class AcademicManagerService {
 		
 		
 		student.setCooperator(c);
-		//c.addStudent(student);
+//		c.addStudent(student);
 		
 		return studentRepository.save(student);
 	}
@@ -375,7 +375,7 @@ public class AcademicManagerService {
 	
 	@Transactional
 	public Student getStudent(String studentID) {
-		return studentRepository.findById(studentID).get();
+		return studentRepository.findByStudentID(studentID);
 	}
 	
 	@Transactional
