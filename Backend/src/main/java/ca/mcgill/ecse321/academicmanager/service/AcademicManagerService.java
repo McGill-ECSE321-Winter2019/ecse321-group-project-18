@@ -42,7 +42,6 @@ public class AcademicManagerService {
 		if(!checkArg(id)) {
 			throw new NullArgumentException();
 		}
-		
 		Cooperator c = new Cooperator();
 		c.setId(id);
 		
@@ -95,8 +94,11 @@ public class AcademicManagerService {
 			}
 		}
 		
-		student.addCoopTermRegistration(ctr);
-		term.addCoopTermRegistration(ctr);
+		
+		ctr.setStudent(student);
+		ctr.setTerm(term);
+		//student.addCoopTermRegistration(ctr);
+		//term.addCoopTermRegistration(ctr);
 		
 		return coopTermRegistrationRepository.save(ctr);
 	}
@@ -137,8 +139,8 @@ public class AcademicManagerService {
 		course.setCourseName(courseName);
 		course.setCourseRank(rank);
 		
-//		course.setCooperator(c);
-		c.addCourse(course);
+		course.setCooperator(c);
+		//c.addCourse(course);
 		
 		return courseRepository.save(course);
 	}
@@ -341,8 +343,9 @@ public class AcademicManagerService {
 		student.setLastName(lastname);
 		student.setIsProblematic(false);
 		
-//		student.setCooperator(c);
-		c.addStudent(student);
+		
+		student.setCooperator(c);
+//		c.addStudent(student);
 		
 		return studentRepository.save(student);
 	}

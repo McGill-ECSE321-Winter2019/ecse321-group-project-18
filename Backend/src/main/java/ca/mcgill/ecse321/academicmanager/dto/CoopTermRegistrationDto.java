@@ -1,7 +1,6 @@
 package ca.mcgill.ecse321.academicmanager.dto;
 
 import ca.mcgill.ecse321.academicmanager.model.Grade;
-import ca.mcgill.ecse321.academicmanager.model.Student;
 import ca.mcgill.ecse321.academicmanager.model.TermStatus;
 
 public class CoopTermRegistrationDto {
@@ -10,7 +9,7 @@ public class CoopTermRegistrationDto {
 	private String jobID;
 	private TermStatus status;
 	private Grade grade;
-	private Student student;
+	private String studentID;
 	
 	public CoopTermRegistrationDto() {
 	}
@@ -23,12 +22,12 @@ public class CoopTermRegistrationDto {
 		this(registrationID, jobID, status, grade, null);
 	}
 	
-	public CoopTermRegistrationDto(String registrationID, String jobID, TermStatus status, Grade grade, Student student) {
+	public CoopTermRegistrationDto(String registrationID, String jobID, TermStatus status, Grade grade, String studentID) {
 		this.registrationID = registrationID;
 		this.jobID = jobID;
 		this.status = status;
 		this.grade = grade;
-		this.student = student;
+		this.studentID = studentID;
 	}
 	
 	public String getRegistrationID() {
@@ -47,7 +46,7 @@ public class CoopTermRegistrationDto {
 		return grade;
 	}
 	
-	public Student getStudent() {
-		return student;
+	public String getStudentID() {
+		return studentID;
 	}
 }
