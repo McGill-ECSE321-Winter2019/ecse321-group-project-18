@@ -18,7 +18,7 @@ public class AcademicManagerRestController {
 	Cooperator cooperator;
 
 	/************* CREATE/POST OBJECTS METHODS ************/
-
+  
 	// Method is to POST/CREATE cooperator
 	// curl -X POST -i 'http://localhost:8082/cooperators/create/?id=1'
 	@PostMapping(value = { "/cooperators/create", "/cooperators/create/" })
@@ -36,8 +36,7 @@ public class AcademicManagerRestController {
 	public TermDto CreateTerm(@RequestParam("id") String termID, @RequestParam("name") String name,
 			@RequestParam("studentdeadline") String date1, @RequestParam("coopdeadline") String date2) {
 		// @formatter:on
-
-		Date studentEvalFormDeadline = Date.valueOf(date1); // form of date: "2015-06-01"
+    Date studentEvalFormDeadline = Date.valueOf(date1); // form of date: "2015-06-01"
 		Date coopEvalFormDeadline = Date.valueOf(date2);
 		Term term = service.createTerm(termID, name, studentEvalFormDeadline, coopEvalFormDeadline);
 		return convertToDto(term);
