@@ -139,8 +139,8 @@ public class AcademicManagerService {
 		course.setCourseName(courseName);
 		course.setCourseRank(rank);
 		
-//		course.setCooperator(c);
-		c.addCourse(course);
+		course.setCooperator(c);
+		//c.addCourse(course);
 		
 		return courseRepository.save(course);
 	}

@@ -19,19 +19,6 @@ public class AcademicManagerRestController {
 
 	/************* CREATE/POST OBJECTS METHODS ************/
 
-	// http://localhost:8082/cooptermregistrations/1/adjudicate/?success=true
-	@PostMapping(value = { "/cooptermregistrations/{registrationID}/adjudicate",
-			"/cooptermregistrations/{registrationID}/adjudicate/" })
-	public CoopTermRegistrationDto adjudicateTermRegistration(@PathVariable("registrationID") String registrationID,
-			@RequestParam("success") boolean success) throws IllegalArgumentException {
-		CoopTermRegistration termRegistration = service.getCoopTermRegistration(registrationID);
-		if (success)
-			termRegistration.setTermStatus(TermStatus.FINISHED);
-		else
-			termRegistration.setTermStatus(TermStatus.FAILED);
-		return convertToDto(termRegistration);
-	}
-
 	// Method is to POST/CREATE cooperator
 	// curl -X POST -i 'http://localhost:8082/cooperators/create/?id=1'
 	@PostMapping(value = { "/cooperators/create", "/cooperators/create/" })
@@ -97,8 +84,84 @@ public class AcademicManagerRestController {
 		return convertToDto(internship);
 	}
 
+	//http://localhost:8082/courses/create?id=1234&term=lol&name=hahaha&rank=10&cooperatorid=1
+    @PostMapping(value = { "/courses/create", "/events/create/" })
+    @ResponseBody
+    public CourseDto createCourse(@RequestParam("id") String id, 
+    		@RequestParam("term") String term, 
+    		@RequestParam("name") String name, 
+    		@RequestParam("rank") String rank,
+    		@RequestParam("cooperatorid") Integer cooperatorID) {
+    	    	
+		Cooperator c = service.getCooperator(cooperatorID);
+
+    	Course course = service.createCourse(id, term, name, Integer.parseInt(rank), c);
+    	return convertCourseToDto(course);
+    }
+    
+    /********** GENERAL GET METHODS ****************/
+    
+    // this method is to view the grades for internships
+ 	// http://localhost:8082/CoopTermRegistrations
+ 	// curl localhost:8082/CoopTermRegistrations
+ 	@GetMapping(value = { "/cooptermregistrations/list", "/cooptermregistrations/list/", "/cooptermregistrations",
+ 			"/cooptermregistrations/" })
+ 	@ResponseBody
+ 	public List<CoopTermRegistrationDto> viewCoopTermRegistrations() {
+ 		// @formatter:on
+ 		Set<CoopTermRegistration> internships = service.getAllCoopTermRegistration();
+ 		List<CoopTermRegistrationDto> internshipsDto = new ArrayList<CoopTermRegistrationDto>();
+
+ 		if (internships != null) {
+ 			for (CoopTermRegistration intern : internships) {
+ 				internshipsDto.add(convertToDto(intern));
+ 			}
+ 		}
+ 		return internshipsDto;
+ 	}
+
+ 	// this method is to view the grades for internships
+ 	// http://localhost:8082/cooptermregistrations/grades
+ 	// curl localhost:8082/cooptermregistrations/grades
+ 	@GetMapping(value = { "/cooptermregistrations/grades", "/cooptermregistrations/grades/" })
+ 	@ResponseBody
+ 	public Set<Grade> viewGrades() throws IllegalArgumentException {
+
+ 		Set<CoopTermRegistration> internships = service.getAllCoopTermRegistration();
+ 		Set<Grade> grades = new HashSet<Grade>();
+
+ 		for (CoopTermRegistration intern : internships) {
+ 			grades.add(intern.getGrade());
+ 		}
+ 		return grades;
+ 	}
+ 	
+ 	
+    @GetMapping(value = {"/courses/specific", "/courses/specific/"})
+    @ResponseBody
+    public CourseDto getCourse(@RequestParam("id") String courseID, 
+    		@RequestParam("term") String term) {
+    	if (courseID == null || courseID.isEmpty()) {
+    		throw new IllegalArgumentException();
+    	}
+    	return convertCourseToDto(service.getCourse(courseID, term));
+    }
+    
+    /**
+     * RESTful service: retrieves n first useful course, using courseRank to make comparison.
+     * @param quantity number of courses wanted to retrieve.
+     * @return a list of n useful courses.
+     * */
+    //
+    @GetMapping(value = {"/courses/filter", "courses/filter/"})
+    @ResponseBody
+    public List<CourseDto> getCourses(@RequestParam("quantity")int quantity) {
+    	return new ArrayList<CourseDto>(getCourses().subList(0, (quantity < getCourses().size()) ? quantity : getCourses().size()));
+    }
+    
 	/********** START OF convertToDto METHODS ************/
 
+    // convert to Dto Student
 	private StudentDto convertToDto(Student e) {
 		if (e == null) {
 			throw new IllegalArgumentException("There student doens't exist in this Cooperator!");
@@ -108,6 +171,7 @@ public class AcademicManagerRestController {
 		return studentDto;
 	}
 
+	// convert to Dto CoopTermRegistration
 	private CoopTermRegistrationDto convertToDto(CoopTermRegistration e) {
 		if (e == null) {
 			throw new IllegalArgumentException("There student doens't exist in this CoopTermRegistration!");
@@ -145,7 +209,15 @@ public class AcademicManagerRestController {
 		return formDto;
 	}
 
-	/*********** START OF USE CASES METHODS ************/
+	// convert to Dto Course
+	private CourseDto convertCourseToDto (Course e) throws IllegalArgumentException {
+    	if (e == null) {
+    		throw new IllegalArgumentException("No course to convert!");
+    	}
+    	return new CourseDto(e.getCourseID(), e.getTerm(), e.getCourseName(), e.getCourseRank());
+    }
+	
+	/*********** START OF USE CASES GET METHODS ************/
 
 	// This method is to report a list of problematic students
 	// http://localhost:8082/Students/problematic
@@ -223,39 +295,37 @@ public class AcademicManagerRestController {
 		}
 		return null;
 	}
-
-	// this method is to view the grades for internships
-	// http://localhost:8082/CoopTermRegistrations
-	// curl localhost:8082/CoopTermRegistrations
-	@GetMapping(value = { "/cooptermregistrations/list", "/cooptermregistrations/list/", "/cooptermregistrations",
-			"/cooptermregistrations/" })
-	@ResponseBody
-	public List<CoopTermRegistrationDto> viewCoopTermRegistrations() {
-		// @formatter:on
-		Set<CoopTermRegistration> internships = service.getAllCoopTermRegistration();
-		List<CoopTermRegistrationDto> internshipsDto = new ArrayList<CoopTermRegistrationDto>();
-
-		if (internships != null) {
-			for (CoopTermRegistration intern : internships) {
-				internshipsDto.add(convertToDto(intern));
-			}
-		}
-		return internshipsDto;
-	}
-
-	// this method is to view the grades for internships
-	// http://localhost:8082/cooptermregistrations/grades
-	// curl localhost:8082/cooptermregistrations/grades
-	@GetMapping(value = { "/cooptermregistrations/grades", "/cooptermregistrations/grades/" })
-	@ResponseBody
-	public Set<Grade> viewGrades() throws IllegalArgumentException {
-
-		Set<CoopTermRegistration> internships = service.getAllCoopTermRegistration();
-		Set<Grade> grades = new HashSet<Grade>();
-
-		for (CoopTermRegistration intern : internships) {
-			grades.add(intern.getGrade());
-		}
-		return grades;
-	}
+	
+    /**
+     * RESTful service: retrieves a list of all courses, sorted by their usefulness (courseRank).
+     * @author Bach Tran
+     * @return a sorted List<CourseDto> object by courseRank.
+     * */
+    @GetMapping(value = {"/courses", "/courses/"})
+    @ResponseBody
+    public List<CourseDto> getCourses() {
+    	// dummy...
+    	Set<Course> courseSet = service.getAllCourses();
+    	List<CourseDto> courseList = new ArrayList<CourseDto>();
+    	for (Course course : courseSet) {
+    		courseList.add(convertCourseToDto(course));
+    	}
+    	Collections.sort(courseList);
+    	return courseList;
+    }
+    
+    /************ START OF USE CASES POST METHODS ****************/
+    
+    // http://localhost:8082/cooptermregistrations/1/adjudicate/?success=true
+ 	@PostMapping(value = { "/cooptermregistrations/{registrationID}/adjudicate",
+ 			"/cooptermregistrations/{registrationID}/adjudicate/" })
+ 	public CoopTermRegistrationDto adjudicateTermRegistration(@PathVariable("registrationID") String registrationID,
+ 			@RequestParam("success") boolean success) throws IllegalArgumentException {
+ 		CoopTermRegistration termRegistration = service.getCoopTermRegistration(registrationID);
+ 		if (success)
+ 			termRegistration.setTermStatus(TermStatus.FINISHED);
+ 		else
+ 			termRegistration.setTermStatus(TermStatus.FAILED);
+ 		return convertToDto(termRegistration);
+ 	}
 }
