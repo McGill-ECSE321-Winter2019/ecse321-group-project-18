@@ -5,9 +5,15 @@ import org.junit.Test;
 import static io.restassured.RestAssured.*;
 
 public class TestCooperatorRestController extends TestAcademicManagerRestController {
-    protected String relation_name = "cooperator";
+    protected String relation_name = "cooperators";
     protected String _prefix = HOMEPAGE + relation_name;
     protected String _id = "1";
+
+    @Test
+    public void TestView() {
+        when()
+                .get(_prefix).then().assertThat().statusCode(200);
+    }
 
     @Test
     public void TestCreateNaive() {
@@ -15,7 +21,7 @@ public class TestCooperatorRestController extends TestAcademicManagerRestControl
                 .contentType(ContentType.JSON)
                 .pathParam("id","1")
         .when()
-                .get(relation_name + "/" + _id)
+                .post(relation_name + "/create")
         .then()
                 .statusCode(200);
     }
