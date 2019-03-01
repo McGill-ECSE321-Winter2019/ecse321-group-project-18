@@ -28,6 +28,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	runtimeOnly 'org.postgresql:postgresql'
+    testCompile 'io.rest-assured:rest-assured:3.3.0'
+    compile 'io.rest-assured:json-path:3.3.0'
+    compile 'io.rest-assured:xml-path:3.3.0'
     testImplementation "junit:junit:4.12"
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.1.2.RELEASE'
