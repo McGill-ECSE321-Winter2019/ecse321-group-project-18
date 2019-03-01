@@ -42,9 +42,6 @@ public class AcademicManagerService {
 		if(!checkArg(id)) {
 			throw new NullArgumentException();
 		}
-		if(checkArg(cooperatorRepository.findByid(id)) ) {
-			throw new IllegalArgumentException("cooperator with id already exists");
-		}
 		Cooperator c = new Cooperator();
 		c.setId(id);
 		
@@ -97,8 +94,11 @@ public class AcademicManagerService {
 			}
 		}
 		
-		student.addCoopTermRegistration(ctr);
-		term.addCoopTermRegistration(ctr);
+		
+		ctr.setStudent(student);
+		ctr.setTerm(term);
+		//student.addCoopTermRegistration(ctr);
+		//term.addCoopTermRegistration(ctr);
 		
 		return coopTermRegistrationRepository.save(ctr);
 	}
@@ -343,8 +343,9 @@ public class AcademicManagerService {
 		student.setLastName(lastname);
 		student.setIsProblematic(false);
 		
-//		student.setCooperator(c);
-		c.addStudent(student);
+		
+		student.setCooperator(c);
+		//c.addStudent(student);
 		
 		return studentRepository.save(student);
 	}
@@ -374,7 +375,7 @@ public class AcademicManagerService {
 	
 	@Transactional
 	public Student getStudent(String studentID) {
-		return studentRepository.findByStudentID(studentID);
+		return studentRepository.findById(studentID).get();
 	}
 	
 	@Transactional

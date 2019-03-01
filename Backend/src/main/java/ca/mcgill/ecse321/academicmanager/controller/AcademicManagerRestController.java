@@ -84,11 +84,11 @@ public class AcademicManagerRestController {
 		return convertToDto(student);
 	}
 
-	// http://localhost:8082/cooptermregistrations/create/?registrationid=1&jobid=142412&studentid=226433222
+	// http://localhost:8082/cooptermregistrations/create/?registrationid=1&jobid=142412&studentid=226433222&termid=2112
 	@PostMapping(value = { "/cooptermregistrations/create", "/cooptermregistrations/create/" })
 	public CoopTermRegistrationDto createCoopTermRegistration(@RequestParam("registrationid") String registrationID,
-			@RequestParam("jobid") String jobID, @RequestParam("studentid") String studentID, @RequestParam("termid") String termID)
-			throws IllegalArgumentException {
+			@RequestParam("jobid") String jobID, @RequestParam("studentid") String studentID, @RequestParam("termid") String termID) {
+		//	throws IllegalArgumentException {
 		Student student = service.getStudent(studentID);
 		Term term = service.getTerm(termID);
 		CoopTermRegistration internship = service.createCoopTermRegistration(registrationID, jobID, TermStatus.ONGOING,
@@ -112,7 +112,7 @@ public class AcademicManagerRestController {
 			throw new IllegalArgumentException("There student doens't exist in this CoopTermRegistration!");
 		}
 		CoopTermRegistrationDto coopTermRegistrationDto = new CoopTermRegistrationDto(e.getRegistrationID(),
-				e.getJobID(), e.getTermStatus(), e.getGrade(), e.getStudent());
+				e.getJobID(), e.getTermStatus(), e.getGrade(), e.getStudent().getStudentID());
 		return coopTermRegistrationDto;
 	}
 
