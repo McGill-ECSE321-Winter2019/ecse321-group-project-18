@@ -49,7 +49,7 @@ public class AcademicManagerApplicationTests {
 		
 		@Before
 		public void setStudentMockOutput() {
-		  when(studentDao.findByStudentID(anyString())).thenAnswer( (InvocationOnMock invocation) -> {
+		  when(studentDao.findById(anyString())).thenAnswer( (InvocationOnMock invocation) -> {
 		    if(invocation.getArgument(0).equals(STUDENT_KEY)) {
 		      Student student = new Student();
 		      student.setStudentID(STUDENT_KEY);
