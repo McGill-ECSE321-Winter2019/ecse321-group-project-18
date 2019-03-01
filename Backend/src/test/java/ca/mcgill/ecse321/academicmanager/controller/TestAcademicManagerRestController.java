@@ -1,7 +1,6 @@
 package ca.mcgill.ecse321.academicmanager.controller;
 
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeAll;
 
 import static io.restassured.RestAssured.*;
 //import static org.hamcrest.Matchers.*;
