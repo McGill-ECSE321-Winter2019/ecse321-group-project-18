@@ -23,11 +23,11 @@ public class AcademicManagerRestController {
 	
     // Method is to POST/CREATE cooperator
     // curl -X POST localhost:8082/Cooperator/1
-    @PostMapping(value = { "/Cooperator/{coopID}"})
-	public CooperatorDto CreateCooperator(@PathVariable("coopID") Integer coopID 			      
-			) throws IllegalArgumentException {
+    @PostMapping(value = {"/cooperators/create", "/cooperators/create/"})
+	public CooperatorDto CreateCooperator(@RequestParam("id") int coopID)
+			throws IllegalArgumentException {
 	// @formatter:on
-    	
+
     	service.createCooperator(coopID);
     	return convertToDto(coopID);
 	}   
