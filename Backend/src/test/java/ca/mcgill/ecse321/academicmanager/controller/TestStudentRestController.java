@@ -2,7 +2,6 @@ package ca.mcgill.ecse321.academicmanager.controller;
 
 
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeAll;
 
 import static io.restassured.RestAssured.get;
 import static io.restassured.RestAssured.given;
@@ -10,11 +9,6 @@ import static io.restassured.RestAssured.given;
 public class TestStudentRestController extends TestAcademicManagerRestController {
     private String relation_name = "students/";
     protected String _prefix = HOMEPAGE + relation_name;
-
-    @BeforeAll
-    public void PostCooperator() {
-        get(HOMEPAGE + "cooperators/create?id=1").then().assertThat().statusCode(OK);
-    }
 
     @Test
     public void TestView() {
