@@ -260,7 +260,7 @@ public class AcademicManagerRestController {
 			throws IllegalArgumentException {
 		// @formatter:on
 
-		Student mystudent = service.getStudent(studentID);
+		/*Student mystudent = service.getStudent(studentID);
 
 		if (mystudent != null) {
 			Set<Form> myformlist = service.getAllStudentEvalFormsOfStudent(mystudent);
@@ -273,14 +273,25 @@ public class AcademicManagerRestController {
 			StudentformDto mystudentforms = new StudentformDto(myname, arrayList);
 			return mystudentforms;
 		}
-		return null;
+		return null;*/
+		
+		Set<Form> myformlist = service.getAllStudentEvalForms();
+		List<FormDto> arrayList = new ArrayList<FormDto>();
+		for (Form f : myformlist) {
+			if(f.getCoopTermRegistration().getStudent().getStudentID().equals(studentID)) {
+				FormDto myform = convertFormToDto(f);
+				arrayList.add(myform);
+			}
+		}
+		StudentformDto mystudentforms = new StudentformDto(studentID, arrayList);
+		return mystudentforms;
 	}
 
 	@GetMapping(value = { "/students/employereval/{studentID}", "/students/employereval/{studentID}" })
 	public EmployerformDto getAllEmployerEval(@PathVariable("studentID") String studentID)
 			throws IllegalArgumentException {
 
-		Student mystudent = service.getStudent(studentID);
+/*		Student mystudent = service.getStudent(studentID);
 
 		if (mystudent != null) {
 			Set<Form> myformlist = service.getAllEmployerEvalFormsOfStudent(mystudent);
@@ -293,7 +304,18 @@ public class AcademicManagerRestController {
 			EmployerformDto myemployerforms = new EmployerformDto(myname, arrayList);
 			return myemployerforms;
 		}
-		return null;
+		return null;*/
+		
+		Set<Form> myformlist = service.getAllEmployerEvalForms();
+		List<FormDto> arrayList = new ArrayList<FormDto>();
+		for (Form f : myformlist) {
+			if(f.getCoopTermRegistration().getStudent().getStudentID().equals(studentID)) {
+				FormDto myform = convertFormToDto(f);
+				arrayList.add(myform);
+			}
+		}
+		EmployerformDto myemployerforms = new EmployerformDto(studentID, arrayList);
+		return myemployerforms;
 	}
 	
     /**
