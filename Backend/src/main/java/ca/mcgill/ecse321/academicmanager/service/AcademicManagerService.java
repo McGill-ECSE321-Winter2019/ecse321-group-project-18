@@ -335,17 +335,17 @@ public class AcademicManagerService {
 		return studentRepository.save(student);
 	}
 
-	@Transactional
-	public Student addStudentMeeting(Student student, Meeting meeting) {
-		if (!checkArg(meeting)) {
-			throw new NullArgumentException();
-		}
-
-		student.addMeeting(meeting);
-		meeting.addStudent(student);
-
-		return studentRepository.save(student);
-	}
+//	@Transactional
+//	public Student addStudentMeeting(Student student, Meeting meeting) {
+//		if (!checkArg(meeting)) {
+//			throw new NullArgumentException();
+//		}
+//
+//		student.addMeeting(meeting);
+//		meeting.addStudent(student);
+//
+//		return studentRepository.save(student);
+//	}
 
 	@Transactional
 	public Student updateStudentProblematicStatus(Student student, boolean isProblematic) {
