@@ -30,7 +30,7 @@ public class TestStudentRestController extends TestAcademicManagerRestController
     @Before
     public void TestDependenciesExistence() {
 
-        // checks if we have a Cooperator id=1 available on the database.
+        // checks if we have a Cooperator available on the database.
         Response fromCooperators = get(HOMEPAGE + "cooperators/" + _coopid);
         if (fromCooperators.getStatusCode() != OK) {
             given()
