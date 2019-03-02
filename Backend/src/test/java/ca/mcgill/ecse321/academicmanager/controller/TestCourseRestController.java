@@ -37,6 +37,18 @@ public class TestCourseRestController extends TestAcademicManagerRestController 
         }
     }
 
+    @After
+    public void ClearDependencies() {
+        Response fromCooperators = get(HOMEPAGE + "cooperators/" + _coopid);
+        if (fromCooperators.getStatusCode() == OK) {
+            given()
+                    .when()
+                    .delete(HOMEPAGE + "cooperators/" + _coopid)
+                    .then()
+                    .assertThat().statusCode(NO_CONTENT);
+        }
+    }
+
     @Test
     public void TestView() {
         given().
@@ -63,5 +75,7 @@ public class TestCourseRestController extends TestAcademicManagerRestController 
                 body("term", equalTo(_term)).
                 body("courseName", equalTo(_name)).
                 body("courseRank", equalTo(Integer.parseInt(_rank)));
+        // clean up the database
+        delete(_prefix + _id).then().assertThat().statusCode(NO_CONTENT);
     }
 }

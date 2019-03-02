@@ -7,7 +7,7 @@ import static io.restassured.RestAssured.*;
 public class TestCooperatorRestController extends TestAcademicManagerRestController {
     protected String relation_name = "cooperators/";
     protected String _prefix = HOMEPAGE + relation_name;
-    protected String _id = "1";
+    protected String _id = "-1";
 
     @Test
     public void TestView() {
@@ -23,6 +23,8 @@ public class TestCooperatorRestController extends TestAcademicManagerRestControl
                 .post(_prefix + POST + "/?id=" + _id)
         .then()
                 .assertThat().statusCode(OK);
+        // after that, delete this test object
+        delete(_prefix + _id).then().assertThat().statusCode(NO_CONTENT);
     }
 
 }
