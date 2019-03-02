@@ -22,7 +22,7 @@ public class TestTeam07RestController {
     @Test
     public void TestInitApp() {
         // try to use their POST...
-        Response teamSeven = get(HOMEPAGE_TEAM07 + "mainapp/"+ TEAM18_APP_FINGERPRINT + "/getapp");
+        Response teamSeven = get(HOMEPAGE_TEAM07 + "mainapp/"+ TEAM18_APP_FINGERPRINT);
         if (teamSeven.getStatusCode() != OK) {
             // the app hasn't exist yet!
             post(HOMEPAGE_TEAM07 + "/mainapp/" + TEAM18_APP_FINGERPRINT)
