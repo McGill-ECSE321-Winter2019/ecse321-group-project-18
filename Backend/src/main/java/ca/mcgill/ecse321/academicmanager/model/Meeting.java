@@ -1,6 +1,8 @@
 package ca.mcgill.ecse321.academicmanager.model;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+
 import java.sql.Time;
 import javax.persistence.Id;
 
@@ -61,7 +63,7 @@ public class Meeting
 	}
 	private Set<Student> student;
 	
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER)
 	public Set<Student> getStudent() {
 	   return this.student;
 	}

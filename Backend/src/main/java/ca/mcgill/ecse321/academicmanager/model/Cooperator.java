@@ -1,6 +1,7 @@
 package ca.mcgill.ecse321.academicmanager.model;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 
 import java.util.HashSet;
@@ -21,7 +22,7 @@ public class Cooperator{
     }
 	private Set<Student> student;
 	
-	@OneToMany(mappedBy="cooperator", cascade={CascadeType.ALL})
+	@OneToMany(mappedBy="cooperator", fetch=FetchType.EAGER)
 	public Set<Student> getStudent() {
 	   return this.student;
 	}
@@ -46,7 +47,7 @@ public class Cooperator{
 	
 	private Set<Course> course;
 	
-	@OneToMany(mappedBy="cooperator", cascade={CascadeType.ALL})
+	@OneToMany(mappedBy="cooperator", fetch=FetchType.EAGER)
 	public Set<Course> getCourse() {
 	   return this.course;
 	}

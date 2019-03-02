@@ -88,17 +88,14 @@ public class AcademicManagerService {
 		Set<CoopTermRegistration> StudentCtrs = student.getCoopTermRegistration();
 		if(StudentCtrs != null) {
 			for(CoopTermRegistration ctrTemp : StudentCtrs) {
-				if(ctrTemp.getTerm() == term) {
+				if(ctrTemp.getTerm().getTermID() == term.getTermID()) {
 					throw new IllegalAddException("Student is already registerd for the given term");
 				}
 			}
 		}
 		
-		
 		ctr.setStudent(student);
 		ctr.setTerm(term);
-		//student.addCoopTermRegistration(ctr);
-		//term.addCoopTermRegistration(ctr);
 		
 		return coopTermRegistrationRepository.save(ctr);
 	}
@@ -140,7 +137,6 @@ public class AcademicManagerService {
 		course.setCourseRank(rank);
 		
 		course.setCooperator(c);
-		//c.addCourse(course);
 		
 		return courseRepository.save(course);
 	}
@@ -175,7 +171,7 @@ public class AcademicManagerService {
 		form.setPdfLink(pdflink);
 		form.setFormType(formtype);
 		
-		ctr.addForm(form);
+		form.setCoopTermRegistration(ctr);
 		
 		return formRepository.save(form);
 	}
@@ -200,7 +196,11 @@ public class AcademicManagerService {
 		
 		return formRepository.save(form);
 	}
-
+	
+	@Transactional
+	public Form getForm(String formId) {
+		return formRepository.findByFormID(formId);
+	}
 	
 	@Transactional
 	public Set<Form> getAllStudentEvalFormsOfStudent(Student student) {
@@ -285,8 +285,6 @@ public class AcademicManagerService {
 		if(!checkArg(student)) {
 			throw new NullArgumentException();
 		}
-		
-		student.addMeeting(meeting);
 		meeting.addStudent(student);
 		
 		return meetingRepository.save(meeting);
@@ -343,9 +341,7 @@ public class AcademicManagerService {
 		student.setLastName(lastname);
 		student.setIsProblematic(false);
 		
-		
 		student.setCooperator(c);
-//		c.addStudent(student);
 		
 		return studentRepository.save(student);
 	}
@@ -355,9 +351,7 @@ public class AcademicManagerService {
 		if(!checkArg(meeting)) {
 			throw new NullArgumentException();
 		}
-		
 		student.addMeeting(meeting);
-		meeting.addStudent(student);
 		
 		return studentRepository.save(student);
 	}
