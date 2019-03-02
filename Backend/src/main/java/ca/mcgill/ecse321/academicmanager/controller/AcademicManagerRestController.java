@@ -30,13 +30,12 @@ public class AcademicManagerRestController {
 	}
 
 	// Method is to POST/CREATE term
-	// curl -X POST -i
-	// http://localhost:8082/terms/create/?id=2112&name=Winter2019&studentdeadline=2019-3-22&coopdeadline=2019-4-4
+	//  curl -X POST -i 'localhost:8082/terms/create/?id=2112&name=Winter2019&studentdeadline=2019-3-22&coopdeadline=2019-4-4'
 	@PostMapping(value = { "/terms/create", "/terms/create/" })
 	public TermDto CreateTerm(@RequestParam("id") String termID, @RequestParam("name") String name,
 			@RequestParam("studentdeadline") String date1, @RequestParam("coopdeadline") String date2) {
 		// @formatter:on
-    Date studentEvalFormDeadline = Date.valueOf(date1); // form of date: "2015-06-01"
+		Date studentEvalFormDeadline = Date.valueOf(date1); // form of date: "2015-06-01"
 		Date coopEvalFormDeadline = Date.valueOf(date2);
 		Term term = service.createTerm(termID, name, studentEvalFormDeadline, coopEvalFormDeadline);
 		return convertToDto(term);
@@ -59,7 +58,7 @@ public class AcademicManagerRestController {
 	 *         database.
 	 */
 
-	// http://localhost:8082/students/create/?id=226433222&firstname=Yen-Vi&lastname=Huynh&cooperatorid=1
+	// curl -X POST -i 'http://localhost:8082/students/create/?id=226433222&firstname=Yen-Vi&lastname=Huynh&cooperatorid=1'
 	@PostMapping(value = { "/students/create", "/students/create/" })
 	public StudentDto createStudent(@RequestParam("id") String studentID, @RequestParam("firstname") String firstName,
 			@RequestParam("lastname") String lastName, @RequestParam("cooperatorid") Integer cooperatorID)
@@ -70,20 +69,62 @@ public class AcademicManagerRestController {
 		Student student = service.createStudent(studentID, firstName, lastName, coop);
 		return convertToDto(student);
 	}
+	
+	
+    // To convert the TermStatus so:
+    // 0: ONGOING, 1: FINISHED, 2: FAILED
+    
+    public static TermStatus ConvertTermStatus(int x) {
+        switch(x) {          
+        case 0:
+            return TermStatus.ONGOING;
+        case 1:
+            return TermStatus.FINISHED;
+        case 2:
+        	return TermStatus.FAILED;
+        }
+        return null;
+    }
+    
+    // To convert the Grade for student in this case
+    // 0:A, 1:B, 2:C, 3:D, 4:F, 5: NotGraded
+    public static Grade ConvertGrade(int x) {
+        switch(x) {          
+        case 0:
+            return Grade.A;
+        case 1:
+            return Grade.B;
+        case 2:
+        	return Grade.C;
+        case 3:
+        	return Grade.D;
+        case 4:
+        	return Grade.F;
+        case 5:
+        	return Grade.NotGraded;
+        }
+        return null;
+    }
+    
+        
 
-	// http://localhost:8082/cooptermregistrations/create/?registrationid=1&jobid=142412&studentid=226433222&termid=2112
+	// curl -X POST -i 'http://localhost:8082/coopTermRegistrations/create/?registrationid=1&jobid=142412&studentid=226433222&termid=2112&termstat=0&gradeid=5'
 	@PostMapping(value = { "/coopTermRegistrations/create", "/coopTermRegistrations/create/" })
 	public CoopTermRegistrationDto createCoopTermRegistration(@RequestParam("registrationid") String registrationID,
-			@RequestParam("jobid") String jobID, @RequestParam("studentid") String studentID, @RequestParam("termid") String termID) {
+			@RequestParam("jobid") String jobID, @RequestParam("studentid") String studentID, @RequestParam("termid") String termID,
+			@RequestParam("termstat") Integer termStat,@RequestParam("gradeid") Integer gradeID) {
 		//	throws IllegalArgumentException {
 		Student student = service.getStudent(studentID);
 		Term term = service.getTerm(termID);
-		CoopTermRegistration internship = service.createCoopTermRegistration(registrationID, jobID, TermStatus.ONGOING,
-				Grade.NotGraded, student, term);
+		
+		TermStatus mystatus = ConvertTermStatus(termStat);
+		Grade mygrade = ConvertGrade(gradeID);
+		CoopTermRegistration internship = service.createCoopTermRegistration(registrationID, jobID, mystatus,
+				mygrade, student, term);
 		return convertToDto(internship);
 	}
 
-	//http://localhost:8082/courses/create?id=1234&term=lol&name=hahaha&rank=10&cooperatorid=1
+	// curl -X POST -i 'http://localhost:8082/courses/create?id=1234&term=lol&name=hahaha&rank=10&cooperatorid=1'
     @PostMapping(value = { "/courses/create", "/events/create/" })
     @ResponseBody
     public CourseDto createCourse(@RequestParam("id") String id, 
