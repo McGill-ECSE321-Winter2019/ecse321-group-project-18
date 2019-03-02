@@ -16,7 +16,7 @@ public class TestCooperatorRestController extends TestAcademicManagerRestControl
     }
 
     @Test
-    public void TestCreateNaive() {
+    public void TestPostGet() {
         System.out.println(_prefix + POST + "/?id=" + _id);
         given()
         .when()

@@ -1,5 +1,6 @@
 package ca.mcgill.ecse321.academicmanager.controller;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import static io.restassured.RestAssured.*;
@@ -25,7 +26,18 @@ public class TestAcademicManagerRestController {
 //                    statusCode(200);
 //    }
     /**
-     * Check if the database is working properly.
+     * Some entities relies on other entities to be existed before its own creation.
+     * This method ensures that these dependencies exists so that creating the object is safe.
+     * */
+    @Before
+    public void TestDependenciesExistence() {
+        // no dependencies for this class.
+    }
+
+    /**
+     * Using GET to query all objects from a relation.
+     * Note that this test will not check deeply for each elements in that relation,
+     * but only check if the GET call is running appropriately, i.e. if a 200 response value is returned.
      * */
     @Test
     public void TestView() {
@@ -34,5 +46,16 @@ public class TestAcademicManagerRestController {
                 get(HOMEPAGE).
         then().
                 assertThat().statusCode(OK);
+    }
+    /**
+     * Using POST to create a new object and in the database persistence,
+     * then use GET to obtain the same object.
+     * The tess passes if all necessary attributes is sent and received correctly.
+     * @author Bach Tran
+     * @since 2019-03-01
+     * */
+    @Test
+    public void TestPostGet() {
+        //nothing to do! this is the homepage.
     }
 }

@@ -8,35 +8,31 @@ import static org.hamcrest.Matchers.equalTo;
 
 import static io.restassured.RestAssured.*;
 
-/**
- * Test suite related to the Student.
- * Relation name: students.
- * @author Bach Tran
- * */
-public class TestStudentRestController extends TestAcademicManagerRestController {
-    private String relation_name = "students/";
+
+public class TestCourseRestController extends TestAcademicManagerRestController {
+
+    private String relation_name = "courses/";
     protected String _prefix = HOMEPAGE + relation_name;
 
-    protected String _id = "260881053";
-    protected String _firstname = "Donald";
-    protected String _lastname = "Duck";
+    protected String _id = "AVEN999";
+    protected String _term = "Summer 2020";
+    protected String _name = "Introduction to The Avengers";
+    protected String _rank = "1000";
     protected String _coopid = "3";
 
-    protected String ConstructLink(String order, String id, String firstname, String lastname, String coopid) {
-        return super.ConstructLink() + relation_name + order + "?id=" + id +
-                "&firstname=" + firstname + "&lastname=" + lastname + "&cooperatorid=" + coopid;
+    protected String ConstructLink(String id, String term, String name, String rank, String coopid) {
+        return super.ConstructLink() + relation_name + POST + "?id=" + id +
+                "&term=" + term + "&name=" + name + "&rank=" + rank + "&cooperatorid=" + coopid;
     }
-    
+
     @Before
     public void TestDependenciesExistence() {
-
-        // checks if we have a Cooperator id=1 available on the database.
         Response fromCooperators = get(HOMEPAGE + "cooperators/" + _coopid);
         if (fromCooperators.getStatusCode() != OK) {
             given()
-            .when()
+                    .when()
                     .post(HOMEPAGE + "cooperators/create?id=" + _coopid)
-            .then()
+                    .then()
                     .assertThat().statusCode(OK);
         }
     }
@@ -44,25 +40,28 @@ public class TestStudentRestController extends TestAcademicManagerRestController
     @Test
     public void TestView() {
         given().
-        when().
+                when().
                 get(_prefix).
-        then()
+                then()
                 .assertThat().statusCode(OK);
     }
 
     @Test
     public void TestPostGet() {
+        System.out.println(ConstructLink(_id, _term, _name, _rank, _coopid));
         // try to POST a Student to the database.
         given().
-        when().
-                post(ConstructLink(POST, _id, _firstname, _lastname, _coopid)).
+                when().
+                post(ConstructLink(_id, _term, _name, _rank, _coopid)).
                 then().assertThat().statusCode(OK);
         // assure that we can GET what exactly we have just posted.
+        // NOTE: we have to be careful here: courseRank is an int.
         when()
                 .get(_prefix + _id)
-        .then()
+                .then()
                 .assertThat().statusCode(OK).
-                body("firstName", equalTo(_firstname)).
-                body("lastName", equalTo(_lastname));
+                body("term", equalTo(_term)).
+                body("courseName", equalTo(_name)).
+                body("courseRank", equalTo(Integer.parseInt(_rank)));
     }
 }
