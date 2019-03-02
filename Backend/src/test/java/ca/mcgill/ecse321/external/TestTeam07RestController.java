@@ -41,30 +41,7 @@ public class TestTeam07RestController {
     	
     }
 
-    @Test
-    public void TestPostGetStudent() {
-        String _name = "JohnStark";
-        String _id = "11";
-        String _email = "tony.stark@avengers.org";
-        String _major = "genius,billionaire,playboy,philanthropist";
-        String _phone = "911";
-        String _appid = TEAM18_APP_FINGERPRINT;
 
-        Response ironMan = post(HOMEPAGE_TEAM07 + "students/" + _name + "/" + _id + "/" + _email
-        + "/" + _major + "/" + _phone + "/" + _appid);
-        
-        // 500 student exists
-        if (ironMan.getStatusCode() == INTERNAL_SERVER_ERROR)
-        	{  ironMan.then().assertThat().statusCode(INTERNAL_SERVER_ERROR);}
-        
-
-        get(HOMEPAGE_TEAM07 + "students/" + _id).then().assertThat().statusCode(OK)
-                .body("name", equalTo(_name))
-                .body("studentID", equalTo(Integer.parseInt(_id)))
-                .body("email", equalTo(_email))
-                .body("major", equalTo(_major))
-                .body("phone", equalTo(Integer.parseInt(_phone)));
-    }
 
     @Test
     public void GetApp() {
