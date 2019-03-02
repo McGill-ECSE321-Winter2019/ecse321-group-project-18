@@ -1,12 +1,13 @@
 package ca.mcgill.ecse321.academicmanager.controller;
 
 import io.restassured.response.Response;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import static io.restassured.RestAssured.*;
 
-public class TestCoopTermRegistrationRestService extends TestAcademicManagerRestController {
+public class TestCoopTermRegistrationRestController extends TestAcademicManagerRestController {
     //https://cooperatorapp-backend-18.herokuapp.com/coopTermRegistrations/create?registrationid=unemployed&jobid=830102&studentid=112003052&termid=summer-2020
     static String _relation_name = "coopTermRegistrations/";
     static String _prefix = HOMEPAGE + _relation_name;
@@ -15,6 +16,7 @@ public class TestCoopTermRegistrationRestService extends TestAcademicManagerRest
     private String _jobid = "830102";
     private String _studentid = "112003052";
     private String _termid = TestTermRestController._id;
+    private String _coopid = "3";
 
     static String ConstructLink(String id, String jobid, String studentid, String termid) {
         return _prefix + POST + "?registrationid=" + id + "&jobid=" + jobid
@@ -23,7 +25,6 @@ public class TestCoopTermRegistrationRestService extends TestAcademicManagerRest
 
     @Before
     public void TestDependenciesExistence() {
-        String _coopid = "3";
         // checks if we have a Cooperator id=1 available on the database.
         Response fromCooperators = get(HOMEPAGE + "cooperators/" + _coopid);
         if (fromCooperators.getStatusCode() != OK) {
@@ -60,6 +61,38 @@ public class TestCoopTermRegistrationRestService extends TestAcademicManagerRest
         }
     }
 
+    @After
+    public void ClearDependencies() {
+        // checks if we have a Cooperator id=1 available on the database.
+        Response fromCooperators = get(HOMEPAGE + "cooperators/" + _coopid);
+        if (fromCooperators.getStatusCode() == OK) {
+            given()
+                    .when()
+                    .delete(HOMEPAGE + "cooperators/" + _coopid)
+                    .then()
+                    .assertThat().statusCode(NO_CONTENT);
+        }
+        // check if we have a Student ready
+        Response fromStudents = get(HOMEPAGE + "students/" + _studentid);
+        if (fromStudents.getStatusCode() == OK) {
+            given()
+                    .when()
+                    .delete(HOMEPAGE + "students/" + _studentid)
+                    .then()
+                    .assertThat().statusCode(NO_CONTENT);
+        }
+        // check if we have a Term ready
+        Response fromTerms = get(HOMEPAGE + "terms/" + _termid);
+        if (fromTerms.getStatusCode() == OK) {
+
+            given()
+                    .when()
+                    .delete(HOMEPAGE + "terms/" + _termid)
+                    .then()
+                    .assertThat().statusCode(NO_CONTENT);
+        }
+    }
+
     @Test
     public void TestView() {
         given().
@@ -82,5 +115,7 @@ public class TestCoopTermRegistrationRestService extends TestAcademicManagerRest
                 .get(_prefix + _id)
                 .then()
                 .assertThat().statusCode(OK);
+        // Delete the database afterwards
+        delete(_prefix + _id).then().assertThat().statusCode(NO_CONTENT);
     }
 }

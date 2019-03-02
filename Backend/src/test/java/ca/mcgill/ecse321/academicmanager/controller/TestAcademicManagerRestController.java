@@ -1,5 +1,6 @@
 package ca.mcgill.ecse321.academicmanager.controller;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -7,6 +8,7 @@ import static io.restassured.RestAssured.*;
 //import static org.hamcrest.Matchers.*;
 public class TestAcademicManagerRestController {
     static final int OK = 200;
+    static final int NO_CONTENT = 204;
     static final int INTERNAL_SERVER_ERROR = 500;
     static final int NOT_FOUND = 404;
     static final String POST = "create";
@@ -32,6 +34,14 @@ public class TestAcademicManagerRestController {
     @Before
     public void TestDependenciesExistence() {
         // no dependencies for this class.
+    }
+    /**
+     * To make the database clean, clear the dependencies after finish testing,
+     * using DELETE calls.
+     * */
+    @After
+    public void ClearDependencies() {
+        // no dependencies for this class
     }
 
     /**

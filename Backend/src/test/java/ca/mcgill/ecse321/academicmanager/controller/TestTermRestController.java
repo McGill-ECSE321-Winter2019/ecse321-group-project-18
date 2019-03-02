@@ -45,5 +45,7 @@ public class TestTermRestController extends TestAcademicManagerRestController {
                 body("termName", equalTo(_name)).
                 body("studentEvalFormDeadline", equalTo(_student_deadline)).
                 body("coopEvalFormDeadline", equalTo(_coop_deadline));
+        // clean up the database
+        delete(_prefix + _id).then().assertThat().statusCode(NO_CONTENT);
     }
 }

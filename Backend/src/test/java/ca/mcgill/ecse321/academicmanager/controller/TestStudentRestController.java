@@ -20,7 +20,7 @@ public class TestStudentRestController extends TestAcademicManagerRestController
     protected String _id = "260881053";
     protected String _firstname = "Donald";
     protected String _lastname = "Duck";
-    protected String _coopid = "3";
+    protected String _coopid = "-3";
 
     protected String ConstructLink(String order, String id, String firstname, String lastname, String coopid) {
         return super.ConstructLink() + relation_name + order + "?id=" + id +
@@ -38,6 +38,18 @@ public class TestStudentRestController extends TestAcademicManagerRestController
                     .post(HOMEPAGE + "cooperators/create?id=" + _coopid)
             .then()
                     .assertThat().statusCode(OK);
+        }
+    }
+    @After
+    public void ClearDependencies() {
+        // checks if we have a Cooperator available on the database.
+        Response fromCooperators = get(HOMEPAGE + "cooperators/" + _coopid);
+        if (fromCooperators.getStatusCode() == OK) {
+            given()
+                    .when()
+                    .delete(HOMEPAGE + "cooperators/" + _coopid)
+                    .then()
+                    .assertThat().statusCode(NO_CONTENT);
         }
     }
 
@@ -64,5 +76,7 @@ public class TestStudentRestController extends TestAcademicManagerRestController
                 .assertThat().statusCode(OK).
                 body("firstName", equalTo(_firstname)).
                 body("lastName", equalTo(_lastname));
+        // clear that Student out of the database, it's just a test Student anyway :)
+        delete(_prefix + _id).then().assertThat().statusCode(NO_CONTENT);
     }
 }
