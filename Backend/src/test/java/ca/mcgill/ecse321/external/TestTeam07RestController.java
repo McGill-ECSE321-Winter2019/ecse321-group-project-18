@@ -27,9 +27,8 @@ public class TestTeam07RestController {
             // the app hasn't exist yet!
             post(HOMEPAGE_TEAM07 + "/mainapp/" + TEAM18_APP_FINGERPRINT)
                     .then().assertThat().statusCode(OK);
-        }
-
-        teamSeven.then().assertThat().statusCode(OK);
+        } else
+        	{    teamSeven.then().assertThat().statusCode(OK); }
     }
 
     @Test
@@ -48,6 +47,9 @@ public class TestTeam07RestController {
             if (ironMan.getStatusCode() == INTERNAL_SERVER_ERROR) {
                 get(HOMEPAGE_TEAM07 + "students/" + _id).then().assertThat().statusCode(OK);
             }
+            else
+            	ironMan.then().assertThat().statusCode(OK);
+            
         }
         get(HOMEPAGE_TEAM07 + "students/" + _id).then().assertThat().statusCode(OK)
                 .body("name", equalTo(_name))
