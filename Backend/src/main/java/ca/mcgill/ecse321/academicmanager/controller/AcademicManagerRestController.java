@@ -72,7 +72,7 @@ public class AcademicManagerRestController {
 	}
 
 	// http://localhost:8082/cooptermregistrations/create/?registrationid=1&jobid=142412&studentid=226433222&termid=2112
-	@PostMapping(value = { "/cooptermregistrations/create", "/cooptermregistrations/create/" })
+	@PostMapping(value = { "/coopTermRegistrations/create", "/coopTermRegistrations/create/" })
 	public CoopTermRegistrationDto createCoopTermRegistration(@RequestParam("registrationid") String registrationID,
 			@RequestParam("jobid") String jobID, @RequestParam("studentid") String studentID, @RequestParam("termid") String termID) {
 		//	throws IllegalArgumentException {
@@ -103,8 +103,8 @@ public class AcademicManagerRestController {
     // this method is to view the grades for internships
  	// http://localhost:8082/CoopTermRegistrations
  	// curl localhost:8082/CoopTermRegistrations
- 	@GetMapping(value = { "/cooptermregistrations/list", "/cooptermregistrations/list/", "/cooptermregistrations",
- 			"/cooptermregistrations/" })
+ 	@GetMapping(value = { "/coopTermRegistrations/list", "/coopTermRegistrations/list/", "/coopTermRegistrations",
+ 			"/coopTermRegistrations/" })
  	@ResponseBody
  	public List<CoopTermRegistrationDto> viewCoopTermRegistrations() {
  		// @formatter:on
@@ -122,7 +122,7 @@ public class AcademicManagerRestController {
  	// this method is to view the grades for internships
  	// http://localhost:8082/cooptermregistrations/grades
  	// curl localhost:8082/cooptermregistrations/grades
- 	@GetMapping(value = { "/cooptermregistrations/grades", "/cooptermregistrations/grades/" })
+ 	@GetMapping(value = { "/coopTermRegistrations/grades", "/coopTermRegistrations/grades/" })
  	@ResponseBody
  	public Set<Grade> viewGrades() throws IllegalArgumentException {
 
@@ -338,8 +338,8 @@ public class AcademicManagerRestController {
     /************ START OF USE CASES POST METHODS ****************/
     
     // http://localhost:8082/cooptermregistrations/1/adjudicate/?success=true
- 	@PostMapping(value = { "/cooptermregistrations/{registrationID}/adjudicate",
- 			"/cooptermregistrations/{registrationID}/adjudicate/" })
+ 	@PostMapping(value = { "/coopTermRegistrations/{registrationID}/adjudicate",
+ 			"/coopTermRegistrations/{registrationID}/adjudicate/" })
  	public CoopTermRegistrationDto adjudicateTermRegistration(@PathVariable("registrationID") String registrationID,
  			@RequestParam("success") boolean success) throws IllegalArgumentException {
  		CoopTermRegistration termRegistration = service.getCoopTermRegistration(registrationID);
