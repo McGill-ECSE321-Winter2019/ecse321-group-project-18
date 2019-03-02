@@ -256,7 +256,7 @@ public class AcademicManagerApplicationTests {
 	public void testGetAllCoopTermRegistration() {
 		Set<CoopTermRegistration> CTRs = new HashSet<CoopTermRegistration>();
 		CTRs = service.getAllCoopTermRegistration();
-		assertEquals(CTRs.size(), 2);
+		assertEquals(CTRs.size(), 1);
 	}
 
 	@Test
