@@ -57,16 +57,6 @@ public class AcademicManagerService {
 	public Set<Cooperator> getAllCooperators() {
 		return toSet(cooperatorRepository.findAll());
 	}
-
-	@Transactional
-	public Set<Course> getCooperatorCourses(Cooperator c) {
-		return c.getCourse();
-	}
-
-	@Transactional
-	public Set<Student> getCooperatorStudents(Cooperator c) {
-		return c.getStudent();
-	}
 	// ---Cooperator---
 
 	// ---CoopTermRegistration---
@@ -146,7 +136,8 @@ public class AcademicManagerService {
 
 	@Transactional
 	public Course updateCourseRank(Course course, Integer rank) {
-		course.setCourseRank(rank);
+		if(checkArg(rank))
+			course.setCourseRank(rank);
 		return courseRepository.save(course);
 	}
 
@@ -238,7 +229,7 @@ public class AcademicManagerService {
 	// ---Form---
 
 	// ---Meeting---
-	@Transactional
+	/*@Transactional
 	public Meeting createMeeting(String meetingID, String location, String details, Date date, Time startTime,
 			Time endTime) {
 		// check for nulls
@@ -312,7 +303,7 @@ public class AcademicManagerService {
 	@Transactional
 	public Set<Meeting> getAllMeetings() {
 		return toSet(meetingRepository.findAll());
-	}
+	}*/
 	// ---Meeting---
 
 	// ---Student---
@@ -361,11 +352,6 @@ public class AcademicManagerService {
 	@Transactional
 	public Student getStudent(String studentID) {
 		return studentRepository.findByStudentID(studentID);
-	}
-
-	@Transactional
-	public Set<Meeting> getStudentMeetings(Student student) {
-		return student.getMeeting();
 	}
 
 	@Transactional
