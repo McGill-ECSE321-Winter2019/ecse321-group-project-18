@@ -122,7 +122,6 @@ public class TestCRUD {
 //		Set<Course> cooperatorCourses = cooperator.getCourse();
 //		assertTrue(cooperatorCourses.contains(course1));
 //		assertTrue(cooperatorCourses.contains(course2));
-		
 	}
 	
 	@Test(expected = NullArgumentException.class)
