@@ -61,10 +61,10 @@ public class TestTeam07RestController {
     public void TestExamples() {
 
         String[] examples = {
-        "https://employer-backend-8888.herokuapp.com/mainapp/1/getapp",
-        "https://employer-backend-8888.herokuapp.com/students/26080",
-        "https://employer-backend-8888.herokuapp.com/mainapp/1/getstudents",
-        "https://employer-backend-8888.herokuapp.com/mainapp/1/getemployers"
+        "https://employer-backend-8888.herokuapp.com/mainapp/TEAM18_APP_FINGERPRINT/getapp",
+        "https://employer-backend-8888.herokuapp.com/students/42",
+        "https://employer-backend-8888.herokuapp.com/mainapp/TEAM18_APP_FINGERPRINT/getstudents",
+        "https://employer-backend-8888.herokuapp.com/mainapp/TEAM18_APP_FINGERPRINT/getemployers"
         };
 
 
