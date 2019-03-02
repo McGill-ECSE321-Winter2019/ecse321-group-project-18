@@ -3,6 +3,7 @@ package ca.mcgill.ecse321.academicmanager.service;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -73,6 +74,11 @@ public class TestCRUD {
 		cooperatorRepository.deleteAll();
 	}
 	
+	@Test(expected = NullArgumentException.class)
+	public void testCreateCooperatorNull() {
+		assertNull(service.createCooperator(null));
+	}
+	
 	@Test
 	public void testCreateStudent() {
 		String studentID = "260632353";
@@ -93,6 +99,12 @@ public class TestCRUD {
 		
 	}
 	
+	@Test(expected = NullArgumentException.class)
+	public void testCreateStudentNull() {
+		Student student1 = service.createStudent(null, null, null, null);
+		assertNull(student1);
+	}
+	
 	@Test
 	public void testCreateCourse() {
 		String courseID = "ECSE321";
@@ -107,10 +119,14 @@ public class TestCRUD {
 		Course course2 = service.createCourse(courseID, term, courseName, null, cooperator);
 		assertEquals(cooperator, course2.getCooperator());
 		
-		//Set<Course> cooperatorCourses = cooperator.getCourse();
-		//assertTrue(cooperatorCourses.contains(course1));
-		//assertTrue(cooperatorCourses.contains(course2));
-		
+//		Set<Course> cooperatorCourses = cooperator.getCourse();
+//		assertTrue(cooperatorCourses.contains(course1));
+//		assertTrue(cooperatorCourses.contains(course2));
+	}
+	
+	@Test(expected = NullArgumentException.class)
+	public void testCreateCourseNull() {
+		service.createCourse(null, null, null, null, null);
 	}
 	
 	@Test
@@ -143,7 +159,12 @@ public class TestCRUD {
 		
 	}
 	
-	@Test
+	@Test(expected = NullArgumentException.class)
+	public void testCreateCTRNull() {
+		assertNull(service.createCoopTermRegistration(null, null, null, null, null, null));
+	}
+	
+	/*@Test
 	public void testSettingMeeting() {
 		assertEquals(0, service.getAllStudents().size());
 		assertEquals(0, service.getAllMeetings().size());
@@ -185,7 +206,7 @@ public class TestCRUD {
 		assertTrue(studentMeetings.contains(meeting));
 		assertTrue(meetingStudents.contains(student));
 		
-	}
+	}*/
 	
 	@Test
 	public void testAddCtrsToTerm() {
