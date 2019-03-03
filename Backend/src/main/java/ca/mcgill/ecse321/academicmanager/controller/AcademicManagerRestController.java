@@ -196,7 +196,7 @@ public class AcademicManagerRestController {
      * @param quantity number of courses wanted to retrieve.
      * @return a list of n useful courses.
      * */
-    //
+    //curl https://cooperatorapp-backend-18.herokuapp.com/courses/filter?quantity=2
     @GetMapping(value = {"/courses/filter", "courses/filter/"})
     @ResponseBody
     public List<CourseDto> getCourses(@RequestParam("quantity")int quantity) {
