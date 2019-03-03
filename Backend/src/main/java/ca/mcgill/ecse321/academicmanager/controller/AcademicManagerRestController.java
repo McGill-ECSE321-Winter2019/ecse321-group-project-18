@@ -110,9 +110,13 @@ public class AcademicManagerRestController {
 
 	// curl -X POST -i 'https://cooperatorapp-backend-18.herokuapp.com/coopTermRegistrations/create/?registrationid=1&jobid=142412&studentid=226433222&termid=2112&termstat=0&gradeid=5'
 	@PostMapping(value = { "/coopTermRegistrations/create", "/coopTermRegistrations/create/" })
-	public CoopTermRegistrationDto createCoopTermRegistration(@RequestParam("registrationid") String registrationID,
-			@RequestParam("jobid") String jobID, @RequestParam("studentid") String studentID, @RequestParam("termid") String termID,
-			@RequestParam("termstat") Integer termStat,@RequestParam("gradeid") Integer gradeID) {
+	public CoopTermRegistrationDto createCoopTermRegistration(
+			@RequestParam("registrationid") String registrationID,
+			@RequestParam("jobid") String jobID,
+			@RequestParam("studentid") String studentID,
+			@RequestParam("termid") String termID,
+			@RequestParam("termstat") Integer termStat,
+			@RequestParam("gradeid") Integer gradeID) {
 		//	throws IllegalArgumentException {
 		Student student = service.getStudent(studentID);
 		Term term = service.getTerm(termID);
