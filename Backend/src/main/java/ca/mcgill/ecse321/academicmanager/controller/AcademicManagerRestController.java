@@ -108,11 +108,15 @@ public class AcademicManagerRestController {
     
         
 
-	// curl -X POST -i 'http://localhost:8082/coopTermRegistrations/create/?registrationid=1&jobid=142412&studentid=226433222&termid=2112&termstat=0&gradeid=5'
+	// curl -X POST -i 'https://cooperatorapp-backend-18.herokuapp.com/coopTermRegistrations/create/?registrationid=1&jobid=142412&studentid=226433222&termid=2112&termstat=0&gradeid=5'
 	@PostMapping(value = { "/coopTermRegistrations/create", "/coopTermRegistrations/create/" })
-	public CoopTermRegistrationDto createCoopTermRegistration(@RequestParam("registrationid") String registrationID,
-			@RequestParam("jobid") String jobID, @RequestParam("studentid") String studentID, @RequestParam("termid") String termID,
-			@RequestParam("termstat") Integer termStat,@RequestParam("gradeid") Integer gradeID) {
+	public CoopTermRegistrationDto createCoopTermRegistration(
+			@RequestParam("registrationid") String registrationID,
+			@RequestParam("jobid") String jobID,
+			@RequestParam("studentid") String studentID,
+			@RequestParam("termid") String termID,
+			@RequestParam("termstat") Integer termStat,
+			@RequestParam("gradeid") Integer gradeID) {
 		//	throws IllegalArgumentException {
 		Student student = service.getStudent(studentID);
 		Term term = service.getTerm(termID);
@@ -124,7 +128,7 @@ public class AcademicManagerRestController {
 		return convertToDto(internship);
 	}
 
-	// curl -X POST -i 'http://localhost:8082/courses/create?id=1234&term=lol&name=hahaha&rank=10&cooperatorid=1'
+	// curl -X POST 'https://cooperatorapp-backend-18.herokuapp.com/courses/create?id=1234&term=2112&name=hahaha&rank=10&cooperatorid=1'
     @PostMapping(value = { "/courses/create", "/events/create/" })
     @ResponseBody
     public CourseDto createCourse(@RequestParam("id") String id, 
@@ -143,6 +147,8 @@ public class AcademicManagerRestController {
     
     // this method is to view the grades for internships
  	// http://localhost:8082/CoopTermRegistrations
+    
+    //curl https://cooperatorapp-backend-18.herokuapp.com/coopTermRegistrations/list 
  	// curl localhost:8082/CoopTermRegistrations
  	@GetMapping(value = { "/coopTermRegistrations/list", "/coopTermRegistrations/list/", "/coopTermRegistrations",
  			"/coopTermRegistrations/" })
@@ -161,6 +167,7 @@ public class AcademicManagerRestController {
  	}
 
  	// this method is to view the grades for internships
+ 	// curl https://cooperatorapp-backend-18.herokuapp.com/coopTermRegistrations/grades/
  	// http://localhost:8082/cooptermregistrations/grades
  	// curl localhost:8082/cooptermregistrations/grades
  	@GetMapping(value = { "/coopTermRegistrations/grades", "/coopTermRegistrations/grades/" })
@@ -176,6 +183,7 @@ public class AcademicManagerRestController {
  		return grades;
  	}
  	
+ 	//curl https://cooperatorapp-backend-18.herokuapp.com/courses/specific/1234
  	
     @GetMapping(value = {"/courses/specific", "/courses/specific/"})
     @ResponseBody
@@ -192,7 +200,7 @@ public class AcademicManagerRestController {
      * @param quantity number of courses wanted to retrieve.
      * @return a list of n useful courses.
      * */
-    //
+    //curl https://cooperatorapp-backend-18.herokuapp.com/courses/filter?quantity=2
     @GetMapping(value = {"/courses/filter", "courses/filter/"})
     @ResponseBody
     public List<CourseDto> getCourses(@RequestParam("quantity")int quantity) {
@@ -377,8 +385,8 @@ public class AcademicManagerRestController {
     }
     
     /************ START OF USE CASES POST METHODS ****************/
-    
-    // http://localhost:8082/cooptermregistrations/1/adjudicate/?success=true
+    //curl -X POST 'https://cooperatorapp-backend-18.herokuapp.com/coopTermRegistrations/1/adjudicate/?success=true'
+    // http://localhost:8082/coopTermRegistrations/1/adjudicate/?success=true
  	@PostMapping(value = { "/coopTermRegistrations/{registrationID}/adjudicate",
  			"/coopTermRegistrations/{registrationID}/adjudicate/" })
  	public CoopTermRegistrationDto adjudicateTermRegistration(@PathVariable("registrationID") String registrationID,

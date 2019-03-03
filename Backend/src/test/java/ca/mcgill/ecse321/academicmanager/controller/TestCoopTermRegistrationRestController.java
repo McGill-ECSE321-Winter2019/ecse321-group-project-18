@@ -17,10 +17,14 @@ public class TestCoopTermRegistrationRestController extends TestAcademicManagerR
     private String _studentid = "112003052";
     private String _termid = TestTermRestController._id;
     private String _coopid = "3";
+    private String _termstat = "0";
+    private String _gradeid = "5";
 
-    static String ConstructLink(String id, String jobid, String studentid, String termid) {
+    static String ConstructLink(String id, String jobid, String studentid, String termid,
+                                String termstat, String gradeid) {
         return _prefix + POST + "?registrationid=" + id + "&jobid=" + jobid
-                + "&studentid=" + studentid + "&termid=" + termid;
+                + "&studentid=" + studentid + "&termid=" + termid + "&termstat=" + termstat
+                + "&gradeid=" + gradeid;
     }
 
     @Before
@@ -107,7 +111,7 @@ public class TestCoopTermRegistrationRestController extends TestAcademicManagerR
         // Try to POST a Term
         given().
                 when().
-                post(ConstructLink(_id, _jobid, _studentid, _termid)).
+                post(ConstructLink(_id, _jobid, _studentid, _termid, _termstat, _gradeid)).
                 then()
                 .assertThat().statusCode(OK);
         // Try to receive the same Term having just posted.
