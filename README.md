@@ -18,6 +18,8 @@ For more information or documents pertaining to the Deliverables, please refer t
 
 ## Deliverable 2
 
+For the documentation of our services provided in sprint 2 and how to use them, please refer to this wiki [page](https://github.com/McGill-ECSE321-Winter2019/ecse321-group-project-18/wiki).
+
 |Team member's name      |Total hours |Responsibility                                                                    |
 |------------------------|------------|----------------------------------------------------------------------------------|
 |Moetassem Abdelazim     | 32   hours |CTO (All with more emphasis Service Debugging, Unit Testing and Restful Services) |
