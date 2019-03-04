@@ -18,10 +18,10 @@ For more information or documents pertaining to the Deliverables, please refer t
 
 ## Deliverable 2
 
-|Team member's name      |Total hours |Responsibility                                                       |
-|------------------------|------------|---------------------------------------------------------------------|
-|Moetassem Abdelazim     |      hours |CTO                                                                  |
-|Saleh Bakhit            |      hours |                                                                     |
-|Yen-Vi Huynh            |      hours |                                                                     |
-|Edward Huang            |      hours |                                                                     |
-|Bach Tran               |      hours |                                                                     |
+|Team member's name      |Total hours |Responsibility                                                                    |
+|------------------------|------------|----------------------------------------------------------------------------------|
+|Moetassem Abdelazim     | 32   hours |CTO (All with more emphasis Service Debugging, Unit Testing and Restful Services) |
+|Saleh Bakhit            | 28   hours |Service and domain model Debugger and Tester                                      |
+|Yen-Vi Huynh            | 29   hours |RestFul Services and Documentation                                                |
+|Edward Huang            | 24   hours |Unit Testing - Mocking Database Tester                                            |
+|Bach Tran               | 33   hours |Integration Testing                                                               |
