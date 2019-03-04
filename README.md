@@ -25,5 +25,5 @@ For the documentation of our services provided in sprint 2 and how to use them, 
 |Moetassem Abdelazim     | 32   hours |CTO (All with more emphasis Service Debugging, Unit Testing and Restful Services) |
 |Saleh Bakhit            | 28   hours |Service and domain model Debugger and Tester                                      |
 |Yen-Vi Huynh            | 29   hours |RestFul Services and Documentation                                                |
-|Edward Huang            | 24   hours |Unit Testing - Mocking Database Tester                                            |
-|Bach Tran               | 33   hours |Integration Testing                                                               |
+|Edward Huang            | 24   hours |Unit Testing and Restful Services                                                 |
+|Bach Tran               | 33   hours |Integration Testing and Restful Services                                          |
