@@ -16,7 +16,6 @@ import java.util.HashSet;
 import java.util.List;
 */
 import java.util.Set;
-import java.util.HashSet;
 import java.util.List;
 
 import org.junit.Before;
@@ -70,8 +69,8 @@ public class TestAcademicManagerService {
 	public void clearDatabase() {
 		courseRepository.deleteAll();
 		formRepository.deleteAll();
-		termRepository.deleteAll();
 		coopTermRegistrationRepository.deleteAll();
+		termRepository.deleteAll();
 		meetingRepository.deleteAll();
 		studentRepository.deleteAll();
 		cooperatorRepository.deleteAll();
@@ -282,7 +281,7 @@ public class TestAcademicManagerService {
 		assertEquals("142142", form.getFormID());
 		
 		
-		Set<Form> forms = ctr.getForm();
+		Set<Form> forms = service.getCoopTermRegistration("1214214").getForm();
 		
 		for(Form f : forms) {
 			assertEquals(FormType.STUDENTEVALUATION, f.getFormType());

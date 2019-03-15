@@ -2,18 +2,9 @@ package ca.mcgill.ecse321.academicmanager.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.sql.Date;
 import java.sql.Time;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.junit.Before;
@@ -25,9 +16,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import ca.mcgill.ecse321.academicmanager.dao.*;
-
-import ca.mcgill.ecse321.academicmanager.exceptions.*;
-
 import ca.mcgill.ecse321.academicmanager.model.*;
 
 @RunWith(SpringRunner.class)
@@ -66,8 +54,8 @@ public class TestCRUD {
 	public void clearDatabase() {
 		courseRepository.deleteAll();
 		formRepository.deleteAll();
-		termRepository.deleteAll();
 		coopTermRegistrationRepository.deleteAll();
+		termRepository.deleteAll();
 		meetingRepository.deleteAll();
 		studentRepository.deleteAll();
 		cooperatorRepository.deleteAll();
@@ -194,9 +182,9 @@ public class TestCRUD {
 		Term t2 = service.createTerm("2", "2-Term", null, null);
 		Term t3 = service.createTerm("3", "3-Term", null, null);
 		
-		CoopTermRegistration ctr1 = service.createCoopTermRegistration("1", "1", TermStatus.ONGOING, null, s1, t1);
-		CoopTermRegistration ctr2 = service.createCoopTermRegistration("2", "2", TermStatus.ONGOING, null, s1, t2);
-		CoopTermRegistration ctr3 = service.createCoopTermRegistration("3", "3", TermStatus.ONGOING, null, s1, t3);
+		service.createCoopTermRegistration("1", "1", TermStatus.ONGOING, null, s1, t1);
+		service.createCoopTermRegistration("2", "2", TermStatus.ONGOING, null, s1, t2);
+		service.createCoopTermRegistration("3", "3", TermStatus.ONGOING, null, s1, t3);
 		
 		Student s1Test = service.getStudent("1");
 		Term t1Test = service.getTerm("1");

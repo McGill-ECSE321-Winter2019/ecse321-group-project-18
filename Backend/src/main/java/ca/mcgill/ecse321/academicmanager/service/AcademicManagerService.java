@@ -4,7 +4,6 @@ import java.sql.Date;
 import java.sql.Time;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 import org.dom4j.IllegalAddException;
@@ -88,7 +87,7 @@ public class AcademicManagerService {
 		Set<CoopTermRegistration> StudentCtrs = student.getCoopTermRegistration();
 		if(StudentCtrs != null) {
 			for(CoopTermRegistration ctrTemp : StudentCtrs) {
-				if(ctrTemp.getTerm().getTermID() == term.getTermID()) {
+				if(ctrTemp.getTerm().equals(term)) {
 					throw new IllegalAddException("Student is already registerd for the given term");
 				}
 			}
