@@ -30,13 +30,12 @@ public class AcademicManagerRestController {
 	}
 
 	// Method is to POST/CREATE term
-	// curl -X POST -i
-	// http://localhost:8082/terms/create/?id=2112&name=Winter2019&studentdeadline=2019-3-22&coopdeadline=2019-4-4
+	//  curl -X POST -i 'localhost:8082/terms/create/?id=2112&name=Winter2019&studentdeadline=2019-3-22&coopdeadline=2019-4-4'
 	@PostMapping(value = { "/terms/create", "/terms/create/" })
 	public TermDto CreateTerm(@RequestParam("id") String termID, @RequestParam("name") String name,
 			@RequestParam("studentdeadline") String date1, @RequestParam("coopdeadline") String date2) {
 		// @formatter:on
-    Date studentEvalFormDeadline = Date.valueOf(date1); // form of date: "2015-06-01"
+		Date studentEvalFormDeadline = Date.valueOf(date1); // form of date: "2015-06-01"
 		Date coopEvalFormDeadline = Date.valueOf(date2);
 		Term term = service.createTerm(termID, name, studentEvalFormDeadline, coopEvalFormDeadline);
 		return convertToDto(term);
@@ -59,7 +58,7 @@ public class AcademicManagerRestController {
 	 *         database.
 	 */
 
-	// http://localhost:8082/students/create/?id=226433222&firstname=Yen-Vi&lastname=Huynh&cooperatorid=1
+	// curl -X POST -i 'http://localhost:8082/students/create/?id=226433222&firstname=Yen-Vi&lastname=Huynh&cooperatorid=1'
 	@PostMapping(value = { "/students/create", "/students/create/" })
 	public StudentDto createStudent(@RequestParam("id") String studentID, @RequestParam("firstname") String firstName,
 			@RequestParam("lastname") String lastName, @RequestParam("cooperatorid") Integer cooperatorID)
@@ -70,20 +69,66 @@ public class AcademicManagerRestController {
 		Student student = service.createStudent(studentID, firstName, lastName, coop);
 		return convertToDto(student);
 	}
+	
+	
+    // To convert the TermStatus so:
+    // 0: ONGOING, 1: FINISHED, 2: FAILED
+    
+    public static TermStatus ConvertTermStatus(int x) {
+        switch(x) {          
+        case 0:
+            return TermStatus.ONGOING;
+        case 1:
+            return TermStatus.FINISHED;
+        case 2:
+        	return TermStatus.FAILED;
+        }
+        return null;
+    }
+    
+    // To convert the Grade for student in this case
+    // 0:A, 1:B, 2:C, 3:D, 4:F, 5: NotGraded
+    public static Grade ConvertGrade(int x) {
+        switch(x) {          
+        case 0:
+            return Grade.A;
+        case 1:
+            return Grade.B;
+        case 2:
+        	return Grade.C;
+        case 3:
+        	return Grade.D;
+        case 4:
+        	return Grade.F;
+        case 5:
+        	return Grade.NotGraded;
+        }
+        return null;
+    }
+    
+        
 
-	// http://localhost:8082/cooptermregistrations/create/?registrationid=1&jobid=142412&studentid=226433222&termid=2112
-	@PostMapping(value = { "/cooptermregistrations/create", "/cooptermregistrations/create/" })
-	public CoopTermRegistrationDto createCoopTermRegistration(@RequestParam("registrationid") String registrationID,
-			@RequestParam("jobid") String jobID, @RequestParam("studentid") String studentID, @RequestParam("termid") String termID) {
+	// curl -X POST -i 'https://cooperatorapp-backend-18.herokuapp.com/coopTermRegistrations/create/?registrationid=1&jobid=142412&studentid=226433222&termid=2112&termstat=0&gradeid=5'
+	@PostMapping(value = { "/coopTermRegistrations/create", "/coopTermRegistrations/create/" })
+	public CoopTermRegistrationDto createCoopTermRegistration(
+			@RequestParam("registrationid") String registrationID,
+			@RequestParam("jobid") String jobID,
+			@RequestParam("studentid") String studentID,
+			@RequestParam("termid") String termID,
+			@RequestParam("termstat") Integer termStat,
+			@RequestParam("gradeid") Integer gradeID) {
 		//	throws IllegalArgumentException {
 		Student student = service.getStudent(studentID);
 		Term term = service.getTerm(termID);
-		CoopTermRegistration internship = service.createCoopTermRegistration(registrationID, jobID, TermStatus.ONGOING,
-				Grade.NotGraded, student, term);
+		
+		TermStatus mystatus = ConvertTermStatus(termStat);
+		Grade mygrade = ConvertGrade(gradeID);
+		CoopTermRegistration internship = service.createCoopTermRegistration(registrationID, jobID, mystatus,
+				mygrade, student, term);
 		return convertToDto(internship);
 	}
 
-	//http://localhost:8082/courses/create?id=1234&term=lol&name=hahaha&rank=10&cooperatorid=1
+	// curl -X POST 'https://cooperatorapp-backend-18.herokuapp.com/courses/create?id=1234&term=2112&name=hahaha&rank=10&cooperatorid=1'
     @PostMapping(value = { "/courses/create", "/events/create/" })
     @ResponseBody
     public CourseDto createCourse(@RequestParam("id") String id, 
@@ -102,9 +147,11 @@ public class AcademicManagerRestController {
     
     // this method is to view the grades for internships
  	// http://localhost:8082/CoopTermRegistrations
+    
+    //curl https://cooperatorapp-backend-18.herokuapp.com/coopTermRegistrations/list 
  	// curl localhost:8082/CoopTermRegistrations
- 	@GetMapping(value = { "/cooptermregistrations/list", "/cooptermregistrations/list/", "/cooptermregistrations",
- 			"/cooptermregistrations/" })
+ 	@GetMapping(value = { "/coopTermRegistrations/list", "/coopTermRegistrations/list/", "/coopTermRegistrations",
+ 			"/coopTermRegistrations/" })
  	@ResponseBody
  	public List<CoopTermRegistrationDto> viewCoopTermRegistrations() {
  		// @formatter:on
@@ -120,9 +167,10 @@ public class AcademicManagerRestController {
  	}
 
  	// this method is to view the grades for internships
+ 	// curl https://cooperatorapp-backend-18.herokuapp.com/coopTermRegistrations/grades/
  	// http://localhost:8082/cooptermregistrations/grades
  	// curl localhost:8082/cooptermregistrations/grades
- 	@GetMapping(value = { "/cooptermregistrations/grades", "/cooptermregistrations/grades/" })
+ 	@GetMapping(value = { "/coopTermRegistrations/grades", "/coopTermRegistrations/grades/" })
  	@ResponseBody
  	public Set<Grade> viewGrades() throws IllegalArgumentException {
 
@@ -135,6 +183,7 @@ public class AcademicManagerRestController {
  		return grades;
  	}
  	
+ 	//curl https://cooperatorapp-backend-18.herokuapp.com/courses/specific/1234
  	
     @GetMapping(value = {"/courses/specific", "/courses/specific/"})
     @ResponseBody
@@ -151,7 +200,7 @@ public class AcademicManagerRestController {
      * @param quantity number of courses wanted to retrieve.
      * @return a list of n useful courses.
      * */
-    //
+    //curl https://cooperatorapp-backend-18.herokuapp.com/courses/filter?quantity=2
     @GetMapping(value = {"/courses/filter", "courses/filter/"})
     @ResponseBody
     public List<CourseDto> getCourses(@RequestParam("quantity")int quantity) {
@@ -259,7 +308,7 @@ public class AcademicManagerRestController {
 			throws IllegalArgumentException {
 		// @formatter:on
 
-		Student mystudent = service.getStudent(studentID);
+		/*Student mystudent = service.getStudent(studentID);
 
 		if (mystudent != null) {
 			Set<Form> myformlist = service.getAllStudentEvalFormsOfStudent(mystudent);
@@ -272,14 +321,25 @@ public class AcademicManagerRestController {
 			StudentformDto mystudentforms = new StudentformDto(myname, arrayList);
 			return mystudentforms;
 		}
-		return null;
+		return null;*/
+		
+		Set<Form> myformlist = service.getAllStudentEvalForms();
+		List<FormDto> arrayList = new ArrayList<FormDto>();
+		for (Form f : myformlist) {
+			if(f.getCoopTermRegistration().getStudent().getStudentID().equals(studentID)) {
+				FormDto myform = convertFormToDto(f);
+				arrayList.add(myform);
+			}
+		}
+		StudentformDto mystudentforms = new StudentformDto(studentID, arrayList);
+		return mystudentforms;
 	}
 
 	@GetMapping(value = { "/students/employereval/{studentID}", "/students/employereval/{studentID}" })
 	public EmployerformDto getAllEmployerEval(@PathVariable("studentID") String studentID)
 			throws IllegalArgumentException {
 
-		Student mystudent = service.getStudent(studentID);
+/*		Student mystudent = service.getStudent(studentID);
 
 		if (mystudent != null) {
 			Set<Form> myformlist = service.getAllEmployerEvalFormsOfStudent(mystudent);
@@ -292,7 +352,18 @@ public class AcademicManagerRestController {
 			EmployerformDto myemployerforms = new EmployerformDto(myname, arrayList);
 			return myemployerforms;
 		}
-		return null;
+		return null;*/
+		
+		Set<Form> myformlist = service.getAllEmployerEvalForms();
+		List<FormDto> arrayList = new ArrayList<FormDto>();
+		for (Form f : myformlist) {
+			if(f.getCoopTermRegistration().getStudent().getStudentID().equals(studentID)) {
+				FormDto myform = convertFormToDto(f);
+				arrayList.add(myform);
+			}
+		}
+		EmployerformDto myemployerforms = new EmployerformDto(studentID, arrayList);
+		return myemployerforms;
 	}
 	
     /**
@@ -314,10 +385,10 @@ public class AcademicManagerRestController {
     }
     
     /************ START OF USE CASES POST METHODS ****************/
-    
-    // http://localhost:8082/cooptermregistrations/1/adjudicate/?success=true
- 	@PostMapping(value = { "/cooptermregistrations/{registrationID}/adjudicate",
- 			"/cooptermregistrations/{registrationID}/adjudicate/" })
+    //curl -X POST 'https://cooperatorapp-backend-18.herokuapp.com/coopTermRegistrations/1/adjudicate/?success=true'
+    // http://localhost:8082/coopTermRegistrations/1/adjudicate/?success=true
+ 	@PostMapping(value = { "/coopTermRegistrations/{registrationID}/adjudicate",
+ 			"/coopTermRegistrations/{registrationID}/adjudicate/" })
  	public CoopTermRegistrationDto adjudicateTermRegistration(@PathVariable("registrationID") String registrationID,
  			@RequestParam("success") boolean success) throws IllegalArgumentException {
  		CoopTermRegistration termRegistration = service.getCoopTermRegistration(registrationID);

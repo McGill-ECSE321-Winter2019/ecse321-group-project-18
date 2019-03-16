@@ -133,6 +133,22 @@ public class TestAcademicManagerService {
 	}
 	
 	@Test
+	public void testUpdateCourseRankNull() {
+		String courseID = "ECSE321";
+		String term = "Winter2019";
+		String courseName = "Introduction to Software Engineering";
+		Integer courseRank = 2;
+
+		Course course = service.createCourse(courseID, term, courseName, courseRank, cooperator);
+		assertEquals(course.getCourseRank(), courseRank);
+		
+		course = service.updateCourseRank(course, null);
+		
+		assertEquals(courseRank, course.getCourseRank());
+		assertEquals(1, service.getAllCourses().size());
+	}
+	
+	@Test
 	public void testCreateStudent() {	
 		assertEquals(0, service.getAllStudents().size());
 
@@ -254,18 +270,48 @@ public class TestAcademicManagerService {
 		FormType formType = FormType.STUDENTEVALUATION;
 		
 		Form form = service.createForm(formID, formName, pdfLink, formType, tmpCTR);
-		
+
 		pdfLink = "2";
 		formName = "2";
 		formType = FormType.COOPEVALUATION;
 		
-		form = service.updateForm(form, null, formName, pdfLink, formType);
+		form = service.updateForm(form, formID, formName, pdfLink, formType);
 		
 		assertEquals(1, formRepository.count());
 		assertEquals("142142", form.getFormID());
 		assertEquals("2", form.getPdfLink());
 		assertEquals("2", form.getName());
 		assertEquals(FormType.COOPEVALUATION, form.getFormType());
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testUpdateNonexistingForm() {
+		String formID = "12";
+		String pdfLink = "2";
+		String formName = "2";
+		FormType formType = FormType.COOPEVALUATION;
+		
+		service.updateForm(null, formID, formName, pdfLink, formType);
+	}
+	
+	@Test
+	public void testUpdateFormNull() {
+		Student tmpStudent = service.createStudent("1", "first", "last", cooperator);
+		Term tmpTerm = service.createTerm("Winter2019", "Winter 2019", null, null);
+		CoopTermRegistration tmpCTR = service.createCoopTermRegistration("0", "123", TermStatus.ONGOING, null, tmpStudent, tmpTerm);
+		
+		String formID = "142142";
+		String pdfLink = "1";
+		String formName = "1";
+		FormType formType = FormType.STUDENTEVALUATION;
+		
+		Form form = service.createForm(formID, formName, pdfLink, formType, tmpCTR);
+		
+		form = service.updateForm(form, null, null, null, null);
+		
+		assertEquals(pdfLink, form.getPdfLink());
+		assertEquals(formName, form.getName());
+		assertEquals(formType, form.getFormType());
 	}
 	
 	
@@ -321,7 +367,7 @@ public class TestAcademicManagerService {
 	 * @author ecse321-winter2019-group18
 	 * @since 2019-02-10
 	 */
-	@Test
+	/*@Test
 	public void testCreateMeetingStartTimeAfterEndTime()
 	{		
 		assertEquals(0, service.getAllMeetings().size());
@@ -361,11 +407,11 @@ public class TestAcademicManagerService {
 		}
 	}
 	
-	/**
+	*//**
 	 * Test case: a null Meeting object
 	 * @author ecse321-winter2019-group18
 	 * @since 2019-02-10
-	 */
+	 *//*
 	@Test
 	public void testCreateMeetingNull()
 	{
@@ -411,7 +457,7 @@ public class TestAcademicManagerService {
 		assertEquals(meeting.getDate(), date);
 		assertEquals(meeting.getStartTime(), startTime);
 		assertEquals(meeting.getEndTime(), endTime);
-	}
+	}*/
 	
 	@Test
 	public void testCreateCoopTermRegistration() {
@@ -462,6 +508,50 @@ public class TestAcademicManagerService {
 	}
 	
 	@Test
+	public void testUpdateCoopTermRegistrationGrade() {
+		String studentID = "142142";
+		String firstname = "1";
+		String lastname = "1";
+		
+		Student tmpStudent = service.createStudent(studentID, firstname, lastname, cooperator);
+		Term tmpTerm = service.createTerm("Winter2019", "Winter 2019", null, null);
+		
+		String registrationID = "1214214";
+		String jobID = "1512521";
+		TermStatus status = TermStatus.FAILED;
+		Grade grade = Grade.A;
+		
+		CoopTermRegistration tmpCTR = service.createCoopTermRegistration(registrationID, jobID, status, grade, tmpStudent, tmpTerm);
+		
+		tmpCTR = service.updateCoopTermRegistration(tmpCTR, null, Grade.B);
+		
+		assertEquals(tmpCTR.getGrade(), Grade.B);
+	}
+	
+	@Test
+	public void testUpdateCoopTermRegistrationNull() {
+
+		String studentID = "142142";
+		String firstname = "1";
+		String lastname = "1";
+		
+		Student tmpStudent = service.createStudent(studentID, firstname, lastname, cooperator);
+		Term tmpTerm = service.createTerm("Winter2019", "Winter 2019", null, null);
+		
+		String registrationID = "1214214";
+		String jobID = "1512521";
+		TermStatus status = TermStatus.FAILED;
+		Grade grade = Grade.A;
+		
+		CoopTermRegistration tmpCTR = service.createCoopTermRegistration(registrationID, jobID, status, grade, tmpStudent, tmpTerm);
+		
+		tmpCTR = service.updateCoopTermRegistration(tmpCTR, null, null);
+		
+		assertEquals(tmpCTR.getTermStatus(), status);
+		assertEquals(tmpCTR.getGrade(), grade);
+	}
+	
+	@Test
 	public void testCreateTerm() {
 		String termID = "696969";
 		String termName = "Winter 2019";
@@ -505,9 +595,30 @@ public class TestAcademicManagerService {
 		
 		studentEvalFormDeadline = Date.valueOf("2017-06-01");
 		coopEvalFormDeadline = Date.valueOf("2017-06-01");
+		termName = "Fall2019";
 		
-		term = service.updateTerm(term, null, studentEvalFormDeadline, coopEvalFormDeadline);
+		term = service.updateTerm(term, termName, studentEvalFormDeadline, coopEvalFormDeadline);
 		
+		assertEquals(term.getCoopEvalFormDeadline(), coopEvalFormDeadline);
+		assertEquals(term.getStudentEvalFormDeadline(), studentEvalFormDeadline);
+		assertEquals(term.getTermName(), termName);
+	}
+	
+	@Test
+	public void testUpdateTermNull() {
+		Term term;
+		
+		String termID = "696969";
+		String termName = "Winter2019";
+		Date studentEvalFormDeadline = Date.valueOf("2015-06-01");
+		Date coopEvalFormDeadline = Date.valueOf("2015-06-01");
+		
+		term = service.createTerm(termID, termName, studentEvalFormDeadline, coopEvalFormDeadline);
+		
+		term = service.updateTerm(term, null, null, null);
+		
+		assertEquals(term.getTermID(), termID);
+		assertEquals(term.getTermName(), termName);
 		assertEquals(term.getCoopEvalFormDeadline(), coopEvalFormDeadline);
 		assertEquals(term.getStudentEvalFormDeadline(), studentEvalFormDeadline);
 	}

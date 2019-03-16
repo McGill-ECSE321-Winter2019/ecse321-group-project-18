@@ -19,7 +19,7 @@ import ca.mcgill.ecse321.academicmanager.model.*;
 
 @Service
 public class AcademicManagerService {
-	
+
 	@Autowired
 	CooperatorRepository cooperatorRepository;
 	@Autowired
@@ -34,55 +34,45 @@ public class AcademicManagerService {
 	StudentRepository studentRepository;
 	@Autowired
 	TermRepository termRepository;
-	
-	//---Cooperator---
+
+	// ---Cooperator---
 	@Transactional
 	public Cooperator createCooperator(Integer id) {
-		if(!checkArg(id)) {
+		if (!checkArg(id)) {
 			throw new NullArgumentException();
 		}
 		Cooperator c = new Cooperator();
 		c.setId(id);
-		
+
 		return cooperatorRepository.save(c);
 	}
 
-	
 	@Transactional
 	public Cooperator getCooperator(Integer id) {
 		return cooperatorRepository.findByid(id);
 	}
-	
+
 	@Transactional
 	public Set<Cooperator> getAllCooperators() {
 		return toSet(cooperatorRepository.findAll());
 	}
-	
-	@Transactional
-	public Set<Course> getCooperatorCourses(Cooperator c) {
-		return c.getCourse();
-	}
-	
-	@Transactional
-	public Set<Student> getCooperatorStudents(Cooperator c) {		
-		return c.getStudent();
-	}
-	//---Cooperator---
-	
-	//---CoopTermRegistration---
+	// ---Cooperator---
+
+	// ---CoopTermRegistration---
 	@Transactional
 	public CoopTermRegistration createCoopTermRegistration(String registrationID, String jobID, TermStatus status,
 			Grade grade, Student student, Term term) {
-		if(!checkArg(registrationID) || !checkArg(jobID) || !checkArg(status) || !checkArg(student) || !checkArg(term)) {
+		if (!checkArg(registrationID) || !checkArg(jobID) || !checkArg(status) || !checkArg(student)
+				|| !checkArg(term)) {
 			throw new NullArgumentException();
 		}
-		
+
 		CoopTermRegistration ctr = new CoopTermRegistration();
 		ctr.setRegistrationID(registrationID);
 		ctr.setTermStatus(status);
 		ctr.setJobID(jobID);
 		ctr.setGrade(grade);
-		
+
 		// check if student is already registered in that term
 		Set<CoopTermRegistration> StudentCtrs = student.getCoopTermRegistration();
 		if(StudentCtrs != null) {
@@ -95,104 +85,102 @@ public class AcademicManagerService {
 		
 		ctr.setStudent(student);
 		ctr.setTerm(term);
-		
 		return coopTermRegistrationRepository.save(ctr);
 	}
-	
+
 	@Transactional
 	public CoopTermRegistration updateCoopTermRegistration(CoopTermRegistration ctr, TermStatus status, Grade grade) {
-		if(checkArg(status)) {
+		if (checkArg(status)) {
 			ctr.setTermStatus(status);
 		}
-		if(checkArg(grade)) {
+		if (checkArg(grade)) {
 			ctr.setGrade(grade);
 		}
-		
+
 		return coopTermRegistrationRepository.save(ctr);
 	}
-	
+
 	@Transactional
 	public CoopTermRegistration getCoopTermRegistration(String registrationID) {
 		return coopTermRegistrationRepository.findByRegistrationID(registrationID);
 	}
-	
+
 	@Transactional
 	public Set<CoopTermRegistration> getAllCoopTermRegistration() {
 		return toSet(coopTermRegistrationRepository.findAll());
 	}
-	//---CoopTermRegistration---
-	
-	//---Course---
+	// ---CoopTermRegistration---
+
+	// ---Course---
 	@Transactional
 	public Course createCourse(String courseID, String term, String courseName, Integer rank, Cooperator c) {
-		if(!checkArg(courseID) || !checkArg(term) || !checkArg(courseName) || !checkArg(c)) {
+		if (!checkArg(courseID) || !checkArg(term) || !checkArg(courseName) || !checkArg(c)) {
 			throw new NullArgumentException();
 		}
-		
+
 		Course course = new Course();
 		course.setCourseID(courseID);
 		course.setTerm(term);
 		course.setCourseName(courseName);
 		course.setCourseRank(rank);
-		
+
 		course.setCooperator(c);
-		
 		return courseRepository.save(course);
 	}
-	
+
 	@Transactional
 	public Course updateCourseRank(Course course, Integer rank) {
-		course.setCourseRank(rank);
+		if(checkArg(rank))
+			course.setCourseRank(rank);
 		return courseRepository.save(course);
 	}
-	
+
 	@Transactional
 	public Course getCourse(String courseID, String term) {
 		return courseRepository.findByCourseIDAndTerm(courseID, term);
 	}
-	
+
 	@Transactional
 	public Set<Course> getAllCourses() {
 		return toSet(courseRepository.findAll());
 	}
-	//---Course---
-	
-	//---Form---
+	// ---Course---
+
+	// ---Form---
 	@Transactional
 	public Form createForm(String formID, String name, String pdflink, FormType formtype, CoopTermRegistration ctr) {
-		if(!checkArg(name) || !checkArg(pdflink) || !checkArg(formtype) || !checkArg(ctr)) {
+		if (!checkArg(name) || !checkArg(pdflink) || !checkArg(formtype) || !checkArg(ctr)) {
 			throw new NullArgumentException();
 		}
-		
+
 		Form form = new Form();
 		form.setFormID(formID);
 		form.setName(name);
 		form.setPdfLink(pdflink);
 		form.setFormType(formtype);
-		
 		form.setCoopTermRegistration(ctr);
-		
-		return formRepository.save(form);
+    
+    return formRepository.save(form);
 	}
-	
+
 	@Transactional
 	Form updateForm(Form form, String formID, String name, String pdflink, FormType formtype) {
-		if(!checkArg(form)) {
+		if (!checkArg(form)) {
 			throw new IllegalArgumentException("form is null");
 		}
-		if(checkArg(formID)) {
+		if (checkArg(formID)) {
 			form.setFormID(formID);
 		}
-		if(checkArg(name)) {
+		if (checkArg(name)) {
 			form.setName(name);
 		}
-		if(checkArg(pdflink)) {
+		if (checkArg(pdflink)) {
 			form.setPdfLink(pdflink);
 		}
-		if(checkArg(formtype)) {
+		if (checkArg(formtype)) {
 			form.setFormType(formtype);
 		}
-		
+
 		return formRepository.save(form);
 	}
 	
@@ -202,144 +190,132 @@ public class AcademicManagerService {
 	}
 	
 	@Transactional
-	public Set<Form> getAllStudentEvalFormsOfStudent(Student student) {
-		if(!checkArg(student)) {
-			throw new NullArgumentException();
-		}
-		
-		Set<CoopTermRegistration> ctrs = student.getCoopTermRegistration();
-		
-		if(!checkArg(ctrs) ) {
-			throw new IllegalArgumentException("student is not registered for a term");
-		}
-		
+	public Set<Form> getAllEmployerEvalForms() {
+		Set<CoopTermRegistration> ctrs = this.getAllCoopTermRegistration();
+
 		Set<Form> forms = new HashSet<Form>();
-		
-		for (CoopTermRegistration ctr:ctrs) {
-			forms.addAll(ctr.getForm());
-			for(Form form : forms) {	
-				if(form.getFormType() != FormType.STUDENTEVALUATION) {
-					forms.remove(form);
+		Set<Form> employerForms = new HashSet<Form>();
+
+		for (CoopTermRegistration ctr : ctrs) {
+			forms = ctr.getForm();
+			for (Form form : forms) {
+				if (form.getFormType() == FormType.COOPEVALUATION) {
+					employerForms.add(form);
 				}
 			}
 		}
-		return forms;
+		return employerForms;
 	}
-	
+
 	@Transactional
-	public Set<Form> getAllEmployerEvalFormsOfStudent(Student student) {
-		if(!checkArg(student)) {
-			throw new NullArgumentException();
-		}
-		
-		Set<CoopTermRegistration> ctrs = student.getCoopTermRegistration();
-		
-		if(!checkArg(ctrs) ) {
-			throw new IllegalArgumentException("student is not registered for a term");
-		}
-		
+	public Set<Form> getAllStudentEvalForms() {
+		Set<CoopTermRegistration> ctrs = this.getAllCoopTermRegistration();
+
 		Set<Form> forms = new HashSet<Form>();
-		
-		for (CoopTermRegistration ctr:ctrs) {
-			forms.addAll(ctr.getForm());
-			for(Form form : forms) {	
-				if(form.getFormType() != FormType.COOPEVALUATION) {
-					forms.remove(form);
+		Set<Form> studentForms = new HashSet<Form>();
+
+		for (CoopTermRegistration ctr : ctrs) {
+			forms = ctr.getForm();
+			for (Form form : forms) {
+				if (form.getFormType() == FormType.STUDENTEVALUATION) {
+					studentForms.add(form);
 				}
 			}
 		}
-		return forms;
+		return studentForms;
 	}
-	//---Form---
-	
-	//---Meeting---
-	@Transactional
-	public Meeting createMeeting(String meetingID, String location, String details, Date date, Time startTime, Time endTime) {
+	// ---Form---
+
+	// ---Meeting---
+	/*@Transactional
+	public Meeting createMeeting(String meetingID, String location, String details, Date date, Time startTime,
+			Time endTime) {
 		// check for nulls
-		if(!checkArg(meetingID) || !checkArg(location) || !checkArg(startTime) || !checkArg(endTime)) {
+		if (!checkArg(meetingID) || !checkArg(location) || !checkArg(startTime) || !checkArg(endTime)) {
 			throw new NullArgumentException();
 		}
-		
+
 		// check for invalid time constraints
 		if (endTime.compareTo(startTime) < 0) {
 			throw new InvalidEndTimeException();
 		}
-		
+
 		Meeting meeting = new Meeting();
 		meeting.setMeetingID(meetingID);
 		meeting.setLocation(location);
 		meeting.setDate(date);
 		meeting.setStartTime(startTime);
 		meeting.setEndTime(endTime);
-		
-		if(checkArg(details)) {
+
+		if (checkArg(details)) {
 			meeting.setDetails(details);
 		}
-		
+
 		return meetingRepository.save(meeting);
 	}
-	
+
 	@Transactional
 	public Meeting addMeetingStudent(Meeting meeting, Student student) {
-		if(!checkArg(student)) {
+		if (!checkArg(student)) {
 			throw new NullArgumentException();
 		}
+    
 		meeting.addStudent(student);
-		
+
 		return meetingRepository.save(meeting);
 	}
-	
+
 	@Transactional
-	public Meeting updateMeeting(Meeting meeting, String location, String details, Date date, Time startTime, Time endTime, Student student) {
-		if(checkArg(location)) {
+	public Meeting updateMeeting(Meeting meeting, String location, String details, Date date, Time startTime,
+			Time endTime, Student student) {
+		if (checkArg(location)) {
 			meeting.setLocation(location);
 		}
-		if(checkArg(details)) {
+		if (checkArg(details)) {
 			meeting.setDetails(details);
 		}
-		if(checkArg(date)) {
+		if (checkArg(date)) {
 			meeting.setDate(date);
 		}
-		if(checkArg(startTime)) {
+		if (checkArg(startTime)) {
 			meeting.setStartTime(startTime);
 		}
-		if(checkArg(endTime)) {
+		if (checkArg(endTime)) {
 			meeting.setEndTime(endTime);
 		}
-		
+
 		return meetingRepository.save(meeting);
 	}
-	
+
 	@Transactional
 	public Meeting getMeeting(String meetingID) {
 		return meetingRepository.findByMeetingID(meetingID);
 	}
-	
+
 	@Transactional
 	public Set<Student> getMeetingStudents(Meeting meeting) {
 		return meeting.getStudent();
 	}
-	
+
 	@Transactional
 	public Set<Meeting> getAllMeetings() {
 		return toSet(meetingRepository.findAll());
-	}
-	//---Meeting---
-	
-	//---Student---
+	}*/
+	// ---Meeting---
+
+	// ---Student---
 	@Transactional
 	public Student createStudent(String studentID, String firstname, String lastname, Cooperator c) {
-		if(!checkArg(studentID) || !checkArg(firstname) || !checkArg(lastname) || !checkArg(c)) {
+		if (!checkArg(studentID) || !checkArg(firstname) || !checkArg(lastname) || !checkArg(c)) {
 			throw new NullArgumentException();
 		}
-		
+
 		Student student = new Student();
-		
+
 		student.setStudentID(studentID);
 		student.setFirstName(firstname);
 		student.setLastName(lastname);
 		student.setIsProblematic(false);
-		
 		student.setCooperator(c);
 		
 		return studentRepository.save(student);
@@ -351,121 +327,128 @@ public class AcademicManagerService {
 			throw new NullArgumentException();
 		}
 		student.addMeeting(meeting);
-		
+    
 		return studentRepository.save(student);
 	}
-	
+
+//	@Transactional
+//	public Student addStudentMeeting(Student student, Meeting meeting) {
+//		if (!checkArg(meeting)) {
+//			throw new NullArgumentException();
+//		}
+//
+//		student.addMeeting(meeting);
+//		meeting.addStudent(student);
+//
+//		return studentRepository.save(student);
+//	}
+
 	@Transactional
 	public Student updateStudentProblematicStatus(Student student, boolean isProblematic) {
 		student.setIsProblematic(isProblematic);
 		return studentRepository.save(student);
 	}
-	
+
 	@Transactional
-	public List<Student> getAllProblematicStudents(){
+	public List<Student> getAllProblematicStudents() {
 		return studentRepository.findByIsProblematic(true);
 	}
-	
+
 	@Transactional
 	public Student getStudent(String studentID) {
 		return studentRepository.findByStudentID(studentID);
-	}
-	
-	@Transactional
-	public Set<Meeting> getStudentMeetings(Student student) {
-		return student.getMeeting();
 	}
 
 	@Transactional
 	public Set<Student> getAllStudents() {
 		return toSet(studentRepository.findAll());
 	}
-	
+
 	@Transactional
 	public Grade getStudentGrade(CoopTermRegistration ctr) {
 		return ctr.getGrade();
 	}
-	//---Student---
-	
-	//---Term---
+	// ---Student---
+
+	// ---Term---
 	@Transactional
 	public Term createTerm(String termID, String termName, Date studentEvalFormDeadline, Date coopEvalFormDeadline) {
-		if(!checkArg(termID)) {
+		if (!checkArg(termID)) {
 			throw new NullArgumentException();
 		}
-		
+
 		Term term = new Term();
 		term.setTermID(termID);
 		term.setTermName(termName);
 		term.setStudentEvalFormDeadline(studentEvalFormDeadline);
 		term.setCoopEvalFormDeadline(coopEvalFormDeadline);
-		
+
 		return termRepository.save(term);
 	}
-	
-	@Transactional
-	public void addTermCtr(Term term, CoopTermRegistration ctr) {
-		if(!checkArg(ctr)) {
-			throw new NullArgumentException();
-		}
-		
-		Set<CoopTermRegistration> ctrs = term.getCoopTermRegistration();
-		try {
-			ctrs.add(ctr);
-		}
-		catch(Exception e) {
-			ctrs = new HashSet<>();
-			ctrs.add(ctr);
-		}
-		term.setCoopTermRegistration(ctrs);
-		
-//		return termRepository.save(term);
-	}
-	
+	//
+	// @Transactional
+	// public void addTermCtr(Term term, CoopTermRegistration ctr) {
+	// if(!checkArg(ctr)) {
+	// throw new NullArgumentException();
+	// }
+	//
+	// Set<CoopTermRegistration> ctrs = term.getCoopTermRegistration();
+	// try {
+	// ctrs.add(ctr);
+	// }
+	// catch(Exception e) {
+	// ctrs = new HashSet<>();
+	// ctrs.add(ctr);
+	// }
+	// term.setCoopTermRegistration(ctrs);
+	//
+	//// return termRepository.save(term);
+	// }
+
 	@Transactional
 	public Term updateTerm(Term term, String termName, Date studentEvalFormDeadline, Date coopEvalFormDeadline) {
-		if(checkArg(termName)) {
+		if (checkArg(termName)) {
 			term.setTermName(termName);
 		}
-		if(checkArg(studentEvalFormDeadline)) {
+		if (checkArg(studentEvalFormDeadline)) {
 			term.setStudentEvalFormDeadline(studentEvalFormDeadline);
 		}
-		if(checkArg(coopEvalFormDeadline)) {
+		if (checkArg(coopEvalFormDeadline)) {
 			term.setCoopEvalFormDeadline(coopEvalFormDeadline);
 		}
-		
+
 		return termRepository.save(term);
 	}
-	
+
 	@Transactional
 	public Term getTerm(String termID) {
 		return termRepository.findByTermID(termID);
 	}
-	
-	@Transactional
-	public Set<Term> getAllTerms() {
-		return toSet(termRepository.findAll());
-	}
-	//---Term---
-	
-	//---HELPER METHODS---
-	private <T> Set<T> toSet(Iterable<T> iterable){
+
+	// @Transactional
+	// public Set<Term> getAllTerms() {
+	// return toSet(termRepository.findAll());
+	// }
+	// ---Term---
+
+	// ---HELPER METHODS---
+	private <T> Set<T> toSet(Iterable<T> iterable) {
 		Set<T> res = new HashSet<T>();
 		for (T t : iterable) {
 			res.add(t);
 		}
 		return res;
 	}
-	
-	private <T> boolean checkArg( T arg ) {
+
+	private <T> boolean checkArg(T arg) {
 		boolean legal = true;
-		if(arg == null) {
+		if (arg == null) {
 			legal = false;
-		} else if(arg instanceof String && ((String) arg).trim().length() == 0) {
+		} else if (arg instanceof String && ((String) arg).trim().length() == 0) {
 			legal = false;
 		}
-		
+
 		return legal;
 	}
-	
+
 }
