@@ -1,5 +1,5 @@
 {
   "scripts": {
-    "postinstall": "cd Frontend && npm install"
+    "postinstall": "cd AcademicManager-Web && npm install"
   }
 }

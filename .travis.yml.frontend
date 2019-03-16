@@ -2,6 +2,8 @@ language: java
 language: node_js
 node_js: 8.10.0
 
+script:
+- bash checkdir.sh
 notifications:
   slack: ecse321-group18:tJheLEmh0qxP7QBcS8dSegUe
 jdk:
