@@ -1,6 +1,7 @@
 package ca.mcgill.ecse321.academicmanager.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.sql.Date;
@@ -16,6 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import ca.mcgill.ecse321.academicmanager.dao.*;
+import ca.mcgill.ecse321.academicmanager.exceptions.NullArgumentException;
 import ca.mcgill.ecse321.academicmanager.model.*;
 
 @RunWith(SpringRunner.class)
