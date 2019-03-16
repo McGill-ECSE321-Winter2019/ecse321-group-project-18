@@ -1,0 +1,1 @@
+web: cd AcademicManager-Web && echo $PORT && export PORT && npm start 
