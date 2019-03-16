@@ -1,7 +1,7 @@
 package ca.mcgill.ecse321.academicmanager.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import java.sql.Date;
 import java.util.HashSet;
@@ -53,7 +53,7 @@ public class Term
 	}
 	private Set<CoopTermRegistration> coopTermRegistration;
 	
-	@OneToMany(mappedBy="term", cascade= {CascadeType.ALL})
+	@OneToMany(mappedBy="term", fetch=FetchType.EAGER)
 	public Set<CoopTermRegistration> getCoopTermRegistration() {
 		return this.coopTermRegistration;
 	}

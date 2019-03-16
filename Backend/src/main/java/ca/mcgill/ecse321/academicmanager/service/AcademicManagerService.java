@@ -4,7 +4,6 @@ import java.sql.Date;
 import java.sql.Time;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 import org.dom4j.IllegalAddException;
@@ -76,19 +75,16 @@ public class AcademicManagerService {
 
 		// check if student is already registered in that term
 		Set<CoopTermRegistration> StudentCtrs = student.getCoopTermRegistration();
-		if (StudentCtrs != null) {
-			for (CoopTermRegistration ctrTemp : StudentCtrs) {
-				if (ctrTemp.getTerm() == term) {
+		if(StudentCtrs != null) {
+			for(CoopTermRegistration ctrTemp : StudentCtrs) {
+				if(ctrTemp.getTerm().equals(term)) {
 					throw new IllegalAddException("Student is already registerd for the given term");
 				}
 			}
 		}
-
+		
 		ctr.setStudent(student);
 		ctr.setTerm(term);
-		// student.addCoopTermRegistration(ctr);
-		// term.addCoopTermRegistration(ctr);
-
 		return coopTermRegistrationRepository.save(ctr);
 	}
 
@@ -129,8 +125,6 @@ public class AcademicManagerService {
 		course.setCourseRank(rank);
 
 		course.setCooperator(c);
-		// c.addCourse(course);
-
 		return courseRepository.save(course);
 	}
 
@@ -164,10 +158,9 @@ public class AcademicManagerService {
 		form.setName(name);
 		form.setPdfLink(pdflink);
 		form.setFormType(formtype);
-
-		ctr.addForm(form);
-
-		return formRepository.save(form);
+		form.setCoopTermRegistration(ctr);
+    
+    return formRepository.save(form);
 	}
 
 	@Transactional
@@ -190,7 +183,12 @@ public class AcademicManagerService {
 
 		return formRepository.save(form);
 	}
-
+	
+	@Transactional
+	public Form getForm(String formId) {
+		return formRepository.findByFormID(formId);
+	}
+	
 	@Transactional
 	public Set<Form> getAllEmployerEvalForms() {
 		Set<CoopTermRegistration> ctrs = this.getAllCoopTermRegistration();
@@ -261,8 +259,7 @@ public class AcademicManagerService {
 		if (!checkArg(student)) {
 			throw new NullArgumentException();
 		}
-
-		student.addMeeting(meeting);
+    
 		meeting.addStudent(student);
 
 		return meetingRepository.save(meeting);
@@ -319,10 +316,18 @@ public class AcademicManagerService {
 		student.setFirstName(firstname);
 		student.setLastName(lastname);
 		student.setIsProblematic(false);
-
 		student.setCooperator(c);
-		// c.addStudent(student);
-
+		
+		return studentRepository.save(student);
+	}
+	
+	@Transactional
+	public Student addStudentMeeting(Student student, Meeting meeting) {
+		if(!checkArg(meeting)) {
+			throw new NullArgumentException();
+		}
+		student.addMeeting(meeting);
+    
 		return studentRepository.save(student);
 	}
 

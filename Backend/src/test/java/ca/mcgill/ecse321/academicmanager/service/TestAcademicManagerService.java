@@ -16,7 +16,6 @@ import java.util.HashSet;
 import java.util.List;
 */
 import java.util.Set;
-import java.util.HashSet;
 import java.util.List;
 
 import org.junit.Before;
@@ -70,8 +69,8 @@ public class TestAcademicManagerService {
 	public void clearDatabase() {
 		courseRepository.deleteAll();
 		formRepository.deleteAll();
-		termRepository.deleteAll();
 		coopTermRegistrationRepository.deleteAll();
+		termRepository.deleteAll();
 		meetingRepository.deleteAll();
 		studentRepository.deleteAll();
 		cooperatorRepository.deleteAll();
@@ -328,7 +327,7 @@ public class TestAcademicManagerService {
 		assertEquals("142142", form.getFormID());
 		
 		
-		Set<Form> forms = ctr.getForm();
+		Set<Form> forms = service.getCoopTermRegistration("1214214").getForm();
 		
 		for(Form f : forms) {
 			assertEquals(FormType.STUDENTEVALUATION, f.getFormType());
@@ -624,16 +623,17 @@ public class TestAcademicManagerService {
 		assertEquals(term.getStudentEvalFormDeadline(), studentEvalFormDeadline);
 	}
 	
-//	@Test(expected=IllegalAddException.class)
-//	public void testAddTwoInternshipsFail() {
-//		Student s1 = service.createStudent("1", "s1First", "s1Last", cooperator);
-//		
-//		Term t1 = service.createTerm("1", "1-Term", null, null);
-//		
-//		service.createCoopTermRegistration("1", "1", TermStatus.ONGOING, null, s1, t1);
-//		//should fail here (same student same term)
-//		service.createCoopTermRegistration("2", "2", TermStatus.ONGOING, null, s1, t1);
-//		
-//	}
+	@Test(expected=IllegalAddException.class)
+	public void testAddTwoInternshipsFail() {
+		Student s1 = service.createStudent("1", "s1First", "s1Last", cooperator);
+		
+		Term t1 = service.createTerm("1", "1-Term", null, null);
+		
+		service.createCoopTermRegistration("1", "1", TermStatus.ONGOING, null, s1, t1);
+		
+		//should fail here (same student same term)
+		service.createCoopTermRegistration("2", "2", TermStatus.ONGOING, null, service.getStudent("1"), service.getTerm("1"));
+		
+	}
 	
 }

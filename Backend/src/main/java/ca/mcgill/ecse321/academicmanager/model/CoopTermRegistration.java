@@ -1,7 +1,7 @@
 package ca.mcgill.ecse321.academicmanager.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -46,7 +46,7 @@ public class CoopTermRegistration
 	}
 	private Set<Form> form;
 	
-	@OneToMany(mappedBy="coopTermRegistration", cascade= {CascadeType.ALL})
+	@OneToMany(mappedBy="coopTermRegistration", fetch=FetchType.EAGER)
 	public Set<Form> getForm() {
 	   return this.form;
 	}
@@ -90,7 +90,7 @@ public class CoopTermRegistration
 	}
 	private Student student;
 	
-	@ManyToOne(optional=false, cascade={CascadeType.ALL})
+	@ManyToOne(optional=false)
 	public Student getStudent() {
 	   return this.student;
 	}
