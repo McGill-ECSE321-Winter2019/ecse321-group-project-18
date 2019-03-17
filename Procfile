@@ -1,1 +1,1 @@
-node AcademicManager-Web/build/dev-server.js
+web: node AcademicManager-Web/build/dev-server.js
