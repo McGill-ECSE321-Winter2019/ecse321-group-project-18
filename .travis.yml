@@ -2,8 +2,6 @@ language: java
 language: node_js
 node_js: 8.10.0
 
-notifications:
-  slack: ecse321-group18:tJheLEmh0qxP7QBcS8dSegUe
 jdk:
   - oraclejdk9
 
