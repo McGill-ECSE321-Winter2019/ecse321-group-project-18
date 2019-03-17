@@ -4,12 +4,12 @@ var path = require('path')
 module.exports = {
   build: {
     env: require('./prod.env'),
-    index: path.resolve(__dirname, '/app/AcademicManager-Web/index.html'),
+    index: path.resolve(__dirname, '../dist/index.html'),
     host: 'cooperatorapp-frontend-18.herokuapp.com',
     port: 443,
     backendHost: 'cooperatorapp-backend-18.herokuapp.com',
     backendPort: 443,
-    assetsRoot: path.resolve(__dirname, '/app/AcademicManager-Web'),
+    assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
     assetsPublicPath: '/AcademicManager-Web',
     productionSourceMap: true,
