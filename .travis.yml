@@ -2,6 +2,9 @@ language: java
 language: node_js
 node_js: 8.10.0
 
+script:
+- bash checkdir.sh
+
 jdk:
   - oraclejdk9
 deploy:
