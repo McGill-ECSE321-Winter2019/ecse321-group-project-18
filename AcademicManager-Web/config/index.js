@@ -4,14 +4,14 @@ var path = require('path')
 module.exports = {
   build: {
     env: require('./prod.env'),
-    index: path.resolve(__dirname, '../dist/index.html'),
+    index: path.resolve(__dirname, './index.html'),
     host: 'cooperatorapp-frontend-18.herokuapp.com',
     port: 443,
     backendHost: 'cooperatorapp-backend-18.herokuapp.com',
     backendPort: 443,
-    assetsRoot: path.resolve(__dirname, '/'),
+    assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/AcademicManager-Web/',
+    assetsPublicPath: '/AcademicManager-Web',
     productionSourceMap: true,
     // Gzip off by default as many popular static hosts such as
     // Surge or Netlify already gzip all static assets for you.
