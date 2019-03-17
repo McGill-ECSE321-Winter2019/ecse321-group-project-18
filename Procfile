@@ -1,1 +1,1 @@
-web: node AcademicManager-Web/src/main.js
+web: node AcademicManager-Web/build/dev-server.js
