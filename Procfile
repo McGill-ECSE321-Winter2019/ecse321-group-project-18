@@ -1,1 +1,1 @@
-web: node AcademicManager-Web/build/dev-server.js
+web: sh -c 'cd ./AcademicManager-Web/ && node build/dev-server.js'
