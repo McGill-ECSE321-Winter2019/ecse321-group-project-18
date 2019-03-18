@@ -25,7 +25,7 @@ module.exports = {
     // Set to `true` or `false` to always turn it on or off
     bundleAnalyzerReport: process.env.npm_config_report,
     devServer: {
-      contentBase: path.join(__dirname, '/app/AcademicManager-Web')
+      contentBase: path.join(__dirname, '/app/AcademicManager-Web'),
       historyApiFallback: true,
     }
   },
