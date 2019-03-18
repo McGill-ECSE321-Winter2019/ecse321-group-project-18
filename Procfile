@@ -1,2 +1,1 @@
-web: java -jar Backend/build/libs/Backend-0.0.1-SNAPSHOT.jar
-
+web: sh -c 'cd ./AcademicManager-Web/ && node build/dev-server.js'
