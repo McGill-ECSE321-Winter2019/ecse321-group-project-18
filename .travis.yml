@@ -2,7 +2,7 @@ matrix:
     include:
       - language: node_js
         node_js:
-            - "10.15.3"
+            - "8.10.0"
 
         before_install:
             - cd AcademicManager-Web
