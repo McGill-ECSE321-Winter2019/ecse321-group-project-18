@@ -2,10 +2,16 @@
   <div class="page-content">
 	  <h2 class="pagetitle">Courses</h2>
 
+    <div class="filters-section">
+      <h4 class="search-title">Search specific</h4>
+      <div class="filters-entries">
+        <input type="text" v-model="courseID" placeholder="Course ID" />
+        <button @click="filterCourseById(courseID)"> Search </button>
+      </div>
+    </div>
 	  <div class="filters-section">
 	    <h4 class="search-title">Search</h4>
 	    <div class ="filters-entries">
-	      <input type="text" name="name" placeholder="Course ID">
 	      <select>
 	        <option value="mostToLeastUseful">Most To Least Useful</option>
 	        <option value="problematic">Least To Most Useful</option>
@@ -20,11 +26,17 @@
 	      <button>Search</button>
 	    </div>
 	  </div>
+    <div class="filters-section">
+      <h4 class="search-title">Query results</h4>
+      <b-table striped hover :items="courses" />
+    </div>
+
   </div>
+
 </template>
 
 
-<script>
+<script src="./course.js">
 </script>
 
 
