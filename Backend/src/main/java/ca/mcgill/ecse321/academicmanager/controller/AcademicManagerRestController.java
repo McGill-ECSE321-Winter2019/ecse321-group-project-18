@@ -70,7 +70,6 @@ public class AcademicManagerRestController {
 		return convertToDto(student);
 	}
 	
-	
     // To convert the TermStatus so:
     // 0: ONGOING, 1: FINISHED, 2: FAILED
     
@@ -142,6 +141,15 @@ public class AcademicManagerRestController {
     	Course course = service.createCourse(id, term, name, Integer.parseInt(rank), c);
     	return convertCourseToDto(course);
     }
+    
+    /********** GENERAL Update/PUT METHODS ****************/
+    
+	// curl -X PUT -i 'http://localhost:8082/students/update/?id=226433222&status=true'
+	@PutMapping(value = {"/students/update", "/students/update/"})
+	public StudentDto updateStudentStatus(@RequestParam("id") String studentID, @RequestParam("status") boolean isProblematic) 
+			throws IllegalArgumentException {
+		return convertToDto(service.updateStudentProblematicStatus(service.getStudent(studentID), isProblematic));
+	}
     
     /********** GENERAL GET METHODS ****************/
     

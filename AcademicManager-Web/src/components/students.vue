@@ -7,7 +7,7 @@
         <input type="text" name="id" placeholder="Student ID">
         <input type="text" name="firstname" placeholder="First Name">
         <input type="text" name="lastname" placeholder="Last Name">
-        <div>
+        <div class="text-left">
           <select>
             <option value="all">All Students</option>
             <option value="problematic">Problematic</option>
@@ -18,22 +18,7 @@
     </div>
 
     <div>
-      <b-form inline @submit="createStudent" @reset="onReset" v-if="show">
-        <label class="sr-only" for="studentid">Name</label>
-        <b-input class="mb-2 mr-sm-2 mb-sm-0" id="studentid" v-model="this.newStudent.studentid" placeholder="Student ID" />
-
-        <label class="sr-only" for="firstname">Name</label>
-        <b-input class="mb-2 mr-sm-2 mb-sm-0" id="firstname" v-model="this.newStudent.first_name" placeholder="First Name" />
-
-        <label class="sr-only" for="lastname">Name</label>
-        <b-input class="mb-2 mr-sm-2 mb-sm-0" id="lastname" v-model="this.newStudent.last_name" placeholder="Last Name" />
-
-        <b-button variant="primary">Add</b-button>
-      </b-form>
-    </div>
-
-    <div>
-      <b-table striped bordered hover :items="students" :fields="fields" :caption-top="true" :busy="isBusy">
+      <b-table striped bordered hover responsive :items="students" :fields="fields" :caption-top="true" :busy="isBusy">
         <div slot="table-busy" class="text-center text-danger my-2">
           <b-spinner class="align-middle" />
           <strong>Loading...</strong>
@@ -69,6 +54,7 @@
     data() {
       return {
         students: [],
+        fields: ['studentID', 'firstName', 'lastName', 'studentProblematicStatus'],
         newStudent: {
           studentid: '',
           first_name: '',
@@ -76,8 +62,7 @@
           is_problematic: null
         },
         errorStudent: '',
-        response: [],
-        show: true
+        response: []
       }
     },
     created: function () {
@@ -93,12 +78,22 @@
     },
     methods: {
       createStudent: function(studentid, first_name, last_name, is_problematic) {
+        this.isBusy = true
         AXIOS.post('/students/create/?id=${studentid}&firstname=${first_name}&lastname=${last_name}&cooperatorid=1')
+        if(is_problematic == true) {
+          AXIOS.put('/students/update/?id=${studentid}&?status=${is_problematic}')
+        }
         const s = new studentDto(studentid, first_name, last_name, is_problematic)
         this.students.push(s)
+
         this.newStudent = ''
+        this.isBusy = false
       },
-      onReset: function (evt) {
+      updateStatus: function(studentid, is_problematic) {
+        AXIOS.put('/students/update/?id=${studentid}&?status=${is_problematic}')
+        // this.students.
+      },
+      onReset: function(evt) {
         evt.preventDefault()
         this.newStudent.studentid = ''
         this.newStudent.first_name = ''
