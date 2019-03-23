@@ -24,8 +24,15 @@
 import axios from 'axios'
 var config = require('../../config')
 
-var frontendUrl = 'https://' + config.build.host + ':' + config.build.port
-var backendUrl = 'https://' + config.build.backendHost + ':' + config.build.backendPort
+if (process.env.NODE_ENV != 'production') {
+  	var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
+	var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort
+} 
+else
+{
+	var frontendUrl = 'https://' + config.build.host + ':' + config.build.port
+	var backendUrl = 'https://' + config.build.backendHost + ':' + config.build.backendPort
+}
 
 
 var AXIOS = axios.create({
