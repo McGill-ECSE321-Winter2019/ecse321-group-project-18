@@ -2,7 +2,6 @@
 
 The scope of this software engineering group project of the Winter 2019 edition of the ECSE 321 course is to develop a software system for managing co-op terms for future co-op programs. Our team delivers the viewpoints of the Academic Program Manager and the Term Instructor.
 
-
 For more information or documents pertaining to the Deliverables, please refer to this wiki [page](https://github.com/McGill-ECSE321-Winter2019/ecse321-group-project-18/wiki).
 
 ## Deliverable 1
