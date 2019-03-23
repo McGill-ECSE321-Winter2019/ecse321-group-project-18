@@ -4,19 +4,42 @@
     <div class="filters-section">
       <h4 class="search-title">Search</h4>
       <div class ="filters-entries">
-        <input type="text" name="name" placeholder="Student ID">
-        <input type="text" name="lastname" placeholder="Student name">
-        <select>
-          <option value="all">All Students</option>
-          <option value="problematic">Problematic</option>
-        </select>
-        <button>Search</button>
+        <input type="text" name="id" placeholder="Student ID">
+        <input type="text" name="firstname" placeholder="First Name">
+        <input type="text" name="lastname" placeholder="Last Name">
+        <div>
+          <select>
+            <option value="all">All Students</option>
+            <option value="problematic">Problematic</option>
+          </select>
+          <button>Search</button>
+        </div>
       </div>
     </div>
 
-    <b-table striped bordered hover :items="students" :fields="fields" :caption-top="true" :busy="isBusy">
+    <div>
+      <b-form inline @submit="createStudent" @reset="onReset" v-if="show">
+        <label class="sr-only" for="studentid">Name</label>
+        <b-input class="mb-2 mr-sm-2 mb-sm-0" id="studentid" v-model="this.newStudent.studentid" placeholder="Student ID" />
 
-    </b-table>
+        <label class="sr-only" for="firstname">Name</label>
+        <b-input class="mb-2 mr-sm-2 mb-sm-0" id="firstname" v-model="this.newStudent.first_name" placeholder="First Name" />
+
+        <label class="sr-only" for="lastname">Name</label>
+        <b-input class="mb-2 mr-sm-2 mb-sm-0" id="lastname" v-model="this.newStudent.last_name" placeholder="Last Name" />
+
+        <b-button variant="primary">Add</b-button>
+      </b-form>
+    </div>
+
+    <div>
+      <b-table striped bordered hover :items="students" :fields="fields" :caption-top="true" :busy="isBusy">
+        <div slot="table-busy" class="text-center text-danger my-2">
+          <b-spinner class="align-middle" />
+          <strong>Loading...</strong>
+        </div>
+      </b-table>
+    </div>
   </div>
 </template>
 
@@ -46,12 +69,19 @@
     data() {
       return {
         students: [],
-        newStudent: '',
+        newStudent: {
+          studentid: '',
+          first_name: '',
+          last_name: '',
+          is_problematic: null
+        },
         errorStudent: '',
-        response: []
+        response: [],
+        show: true
       }
     },
     created: function () {
+      this.isBusy = true
       AXIOS.get('/students/list')
         .then(response => {
           this.students = response.data
@@ -59,14 +89,26 @@
         .catch(e => {
           this.errorStudent = e
         });
+      this.isBusy = false
     },
     methods: {
       createStudent: function(studentid, first_name, last_name, is_problematic) {
         AXIOS.post('/students/create/?id=${studentid}&firstname=${first_name}&lastname=${last_name}&cooperatorid=1')
         const s = new studentDto(studentid, first_name, last_name, is_problematic)
         this.students.push(s)
-
         this.newStudent = ''
+      },
+      onReset: function (evt) {
+        evt.preventDefault()
+        this.newStudent.studentid = ''
+        this.newStudent.first_name = ''
+        this.newStudent.last_name = ''
+        this.newStudent.is_problematic = null
+
+        this.show = false
+        this.$nextTick(() => {
+          this.show = true
+        })
       }
     }
   }
