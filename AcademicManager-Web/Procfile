@@ -1,1 +1,1 @@
-web: sh -c 'cd ./AcademicManager-Web/ && node build/dev-server.js'
+web: cd Frontend && echo $PORT && export PORT && npm start 
