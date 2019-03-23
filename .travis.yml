@@ -1,17 +1,37 @@
-language: java
-language: node_js
-node_js: 8.10.0
+matrix:
+    include:
+      - language: node_js
+        node_js:
+            - "10.15.3"
 
-notifications:
-  slack: ecse321-group18:tJheLEmh0qxP7QBcS8dSegUe
+        before_install:
+            - cd AcademicManager-Web
+            - npm install
 
-script:
-- bash checkdir.sh
+        script:
+            - npm run build
 
+        deploy:
+            provider: heroku
+            api_key: 0d2d6a3a-a07c-4f2b-b209-450f71f35ad6
+            app:
+                master: cooperatorapp-frontend-18
+            on:
+                repo: McGill-ECSE321-Winter2019/ecse321-group-project-18
 
-jdk:
-  - oraclejdk9
-deploy:
-  provider: heroku
-  api_key: 0d2d6a3a-a07c-4f2b-b209-450f71f35ad6 
-  app: cooperatorapp-frontend-18
+      - language: java
+
+        before_install:
+            - chmod +x gradlew
+
+        script:
+            - ./gradlew build
+
+        deploy:
+            provider: heroku
+            api_key: 0d2d6a3a-a07c-4f2b-b209-450f71f35ad6
+            app:
+                master: cooperatorapp-backend-18
+            on:
+                repo: McGill-ECSE321-Winter2019/ecse321-group-project-18
+

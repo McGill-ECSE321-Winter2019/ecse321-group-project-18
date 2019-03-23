@@ -1,0 +1,18 @@
+language: java
+language: node_js
+node_js: 8.10.0
+
+notifications:
+  slack: ecse321-group18:tJheLEmh0qxP7QBcS8dSegUe
+
+script:
+- bash checkdir.sh
+- ./gradlew build
+
+jdk:
+  - oraclejdk9
+deploy:
+  provider: heroku
+  api_key: 0d2d6a3a-a07c-4f2b-b209-450f71f35ad6 
+  app: cooperatorapp-frontend-18
+  on: integration 
