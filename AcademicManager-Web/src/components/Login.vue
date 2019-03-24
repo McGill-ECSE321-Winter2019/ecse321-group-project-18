@@ -1,20 +1,21 @@
-<!DOCTYPE html>
-<template>
-  <html lang="en">
+<!DOCTYPE >
+<template >
+  <html lang="en" >
 
-  <head>
+  <head style="background-color:powderblue;">
     <title>Bootstrap Example</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
   </head>
 
-  <body>
+  <body style="background-color:white;">
+
 
     <div class="container-fluid" id="top-container">
       <div class="container text-center">
       <div class="container text-center">
-          <img src="@/assets/mcgill.png"/>
+          <img src="@/assets/mcgill2.png"/>
       </div>
       </div>
     </div>
@@ -40,7 +41,7 @@
                 <br><br><br><br>
                 <div class="form-group">
                   <label for="usr">
-                    <font size="4">Cooperator Number:</font>
+                    <font size="4">Please Enter your ID</font>
                   </label>
                   <input type="text" class="form-control form-control-lg" id="usr">
                   <p id="demo"></p>
@@ -69,11 +70,7 @@
     max-width: 100%;
   }
 
-  #top-container {
-    margin-bottom: 0;
-    margin-top: 0;
-    color: #ffffff;
-  }
+
 
 
   #welcome {
@@ -88,15 +85,7 @@
     font-size: 37px
   }
 
-  #welcome h3 {
-    text-align: center;
-    margin-top: 5px;
-    margin-bottom: 0px;
-    font-size: 25px;
-    font-family: Lucida;
-    font-style: oblique;
-    color: #333335;
-  }
+
 </style>
 
 <script>
