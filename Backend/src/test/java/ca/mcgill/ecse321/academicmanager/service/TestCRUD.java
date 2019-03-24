@@ -149,10 +149,12 @@ public class TestCRUD {
 		String pdflink = "798fakhj";
 		service.createForm(formID, name, pdflink, FormType.COOPEVALUATION, ctr);
 		
+		
 		Form formTest = service.getForm(formID);
 		ctrTest = service.getCoopTermRegistration(registrationID);
 		assertEquals(ctrTest, formTest.getCoopTermRegistration());
 		assertTrue(ctrTest.getForm().contains(formTest));
+		assertEquals(ctrTest.getForm().iterator().next().getPdfLink(), pdflink);
 		
 	}
 	

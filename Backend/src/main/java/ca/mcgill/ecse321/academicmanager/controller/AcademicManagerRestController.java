@@ -125,7 +125,7 @@ public class AcademicManagerRestController {
 		Grade mygrade = ConvertGrade(gradeID);
 		CoopTermRegistration internship = service.createCoopTermRegistration(registrationID, jobID, mystatus,
 				mygrade, student, term);
-		return convertToDto(internship);
+		return convertToDto(internship, "NONE", "NONE");
 	}
 
 	// curl -X POST 'https://cooperatorapp-backend-18.herokuapp.com/courses/create?id=1234&term=2112&name=hahaha&rank=10&cooperatorid=1'
@@ -188,7 +188,16 @@ public class AcademicManagerRestController {
 
  		if (internships != null) {
  			for (CoopTermRegistration intern : internships) {
- 				internshipsDto.add(convertToDto(intern));
+ 				Set<Form> forms = intern.getForm();
+ 				String employerFormLink = "NONE";
+ 				String studentFormLink = "NONE";
+ 				for(Form form : forms) {
+ 					if(form.getFormType() == FormType.STUDENTEVALUATION)
+ 						studentFormLink = form.getPdfLink();
+ 					else
+ 						employerFormLink = form.getPdfLink();
+ 				}
+ 				internshipsDto.add(convertToDto(intern, studentFormLink, employerFormLink));
  			}
  		}
  		return internshipsDto;
@@ -244,7 +253,16 @@ public class AcademicManagerRestController {
 
  		if (internships != null) {
  			for (CoopTermRegistration intern : internships) {
- 				internshipsDto.add(convertToDto(intern));
+ 				Set<Form> forms = intern.getForm();
+ 				String employerFormLink = "NONE";
+ 				String studentFormLink = "NONE";
+ 				for(Form form : forms) {
+ 					if(form.getFormType() == FormType.STUDENTEVALUATION)
+ 						studentFormLink = form.getPdfLink();
+ 					else
+ 						employerFormLink = form.getPdfLink();
+ 				}
+ 				internshipsDto.add(convertToDto(intern, studentFormLink, employerFormLink));
  			}
  		}
  		return internshipsDto;
@@ -263,12 +281,12 @@ public class AcademicManagerRestController {
 	}
 
 	// convert to Dto CoopTermRegistration
-	private CoopTermRegistrationDto convertToDto(CoopTermRegistration e) {
+	private CoopTermRegistrationDto convertToDto(CoopTermRegistration e, String studentFormLink, String employerFormLink) {
 		if (e == null) {
 			throw new IllegalArgumentException("There student doens't exist in this CoopTermRegistration!");
 		}
-		CoopTermRegistrationDto coopTermRegistrationDto = new CoopTermRegistrationDto(e.getRegistrationID(),
-				e.getJobID(), e.getTermStatus(), e.getGrade(), e.getStudent().getStudentID());
+		CoopTermRegistrationDto coopTermRegistrationDto = new CoopTermRegistrationDto(e.getRegistrationID(), e.getTerm().getTermName(),
+				e.getJobID(), e.getTermStatus(), e.getGrade(), e.getStudent().getStudentID(), studentFormLink, employerFormLink);
 		return coopTermRegistrationDto;
 	}
 
@@ -437,6 +455,17 @@ public class AcademicManagerRestController {
  			termRegistration.setTermStatus(TermStatus.FINISHED);
  		else
  			termRegistration.setTermStatus(TermStatus.FAILED);
- 		return convertToDto(termRegistration);
+ 		
+ 		Set<Form> forms = termRegistration.getForm();
+ 		String employerFormLink = "NONE";
+ 		String studentFormLink = "NONE";
+ 		for(Form form : forms) {
+ 			if(form.getFormType() == FormType.STUDENTEVALUATION)
+ 				studentFormLink = form.getPdfLink();
+ 			else
+ 				employerFormLink = form.getPdfLink();
+ 		}
+
+ 		return convertToDto(termRegistration, studentFormLink, employerFormLink);
  	}
 }

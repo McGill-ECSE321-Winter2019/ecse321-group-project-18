@@ -10,28 +10,27 @@ public class CoopTermRegistrationDto {
 	private TermStatus status;
 	private Grade grade;
 	private String studentID;
+	private String employerFormLink;
+	private String studentFormLink;
+	private String termName;
 	
-	public CoopTermRegistrationDto() {
-	}
-	
-	public CoopTermRegistrationDto(String registrationID, String jobID, TermStatus status) {
-		this(registrationID, jobID, status, Grade.NotGraded, null);
-	}
-
-	public CoopTermRegistrationDto(String registrationID, String jobID, TermStatus status, Grade grade) {
-		this(registrationID, jobID, status, grade, null);
-	}
-	
-	public CoopTermRegistrationDto(String registrationID, String jobID, TermStatus status, Grade grade, String studentID) {
+	public CoopTermRegistrationDto(String registrationID, String termName, String jobID, TermStatus status, Grade grade, String studentID, String employerFormLink, String studentFormLink) {
 		this.registrationID = registrationID;
+		this.termName = termName;
 		this.jobID = jobID;
 		this.status = status;
 		this.grade = grade;
 		this.studentID = studentID;
+		this.employerFormLink = employerFormLink;
+		this.studentFormLink = studentFormLink;
 	}
 	
 	public String getRegistrationID() {
 		return registrationID;
+	}
+	
+	public String getTermName() {
+		return this.termName;
 	}
 
 	public String getjobID() {
@@ -46,7 +45,15 @@ public class CoopTermRegistrationDto {
 		return grade;
 	}
 	
-	public String getStudentID() {
-		return studentID;
+	public Grade getStudentID() {
+		return this.getStudentID();
+	}
+	
+	public String getEmployerFormLink() {
+		return this.employerFormLink;
+	}
+	
+	public String getStudentFormLink() {
+		return this.studentFormLink;
 	}
 }
