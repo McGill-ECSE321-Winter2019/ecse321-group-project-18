@@ -143,6 +143,7 @@ public class AcademicManagerRestController {
     	return convertCourseToDto(course);
     }
     
+    //http://localhost:8082/students/report/create/?formid=123&pdflink=test.com&ctrid=1
     @PostMapping(value = { "/students/report/create", "/student/report/create/" })
     @ResponseBody
     public FormDto createStudentForm(@RequestParam("formid") String formID,
@@ -452,9 +453,9 @@ public class AcademicManagerRestController {
  			@RequestParam("success") boolean success) throws IllegalArgumentException {
  		CoopTermRegistration termRegistration = service.getCoopTermRegistration(registrationID);
  		if (success)
- 			termRegistration.setTermStatus(TermStatus.FINISHED);
+ 			termRegistration = service.updateCoopTermRegistration(termRegistration, TermStatus.FINISHED, termRegistration.getGrade());
  		else
- 			termRegistration.setTermStatus(TermStatus.FAILED);
+ 			termRegistration = service.updateCoopTermRegistration(termRegistration, TermStatus.FAILED, termRegistration.getGrade());
  		
  		Set<Form> forms = termRegistration.getForm();
  		String employerFormLink = "NONE";

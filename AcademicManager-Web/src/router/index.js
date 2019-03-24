@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Hello from '@/components/Hello'
-import termscreate from '@/components/termscreate'
-import studentslist from '@/components/studentslist'
+import internships from '@/components/internships'
+import students from '@/components/students'
+import courses from '@/components/courses'
 
 
 Vue.use(Router)
@@ -15,14 +16,19 @@ export default new Router({
       component: Hello
     },
     {
-      path: '/terms/create',
-      name: 'termscreate',
-      component: termscreate
+      path: '/internships',
+      name: 'internships',
+      component: internships
     },
     {
-      path: '/students/list',
-      name: 'studentslist',
-      component: studentslist
+      path: '/students',
+      name: 'students',
+      component: students
+    },
+    {
+      path: '/courses',
+      name: 'courses',
+      component: courses
     }
   ]
 })
