@@ -2,7 +2,7 @@ import axios from 'axios'
 var config = require('../../config')
 
 var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
-var backendUrl = 'http://' + config.dev.backendHost //+ ':' + config.dev.backendPort
+var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort
 
 var AXIOS = axios.create({
   baseURL: backendUrl,
@@ -22,7 +22,10 @@ export default {
     return {
       courses: [],
       courseID: '',
+      term: '',
       error: '',
+      quantity: '',
+      sort_order: '',
       response: []
     }
   },
@@ -45,16 +48,30 @@ export default {
       // Reset the name field for new people
       this.newCourse = ''
     },
-    filterCourseById: function(courseID) {
-      AXIOS.get('/courses' + '/' + courseID)
+    filterCourseById: function(courseID, term) {
+      this.error = ''
+      AXIOS.get('/courses/specific?id=' + courseID + '&term=' + term)
         .then(response => {
           // JSON responses are automatically parsed.
-          if (courseID != '') {
-            var c = response.data
-            this.courses= [c]
-          } else {
-            this.courses = response.data
-          }
+          this.courses = [response.data]
+        })
+        .catch(e => {
+          this.error = e
+        });
+    },
+    filterByQuantity: function(quantity, sort_order) {
+      this.error = ''
+      var url = '/courses/filter?'
+      if (sort_order != undefined && sort_order != null) {
+        url += '&order=' + sort_order
+      }
+      if (quantity != undefined && quantity != null) {
+        url += '&quantity=' + quantity
+      }
+      AXIOS.get(url)
+        .then(response => {
+          // JSON responses are automatically parsed.
+          this.courses = response.data
         })
         .catch(e => {
           this.error = e;

@@ -6,24 +6,23 @@
       <h4 class="search-title">Search specific</h4>
       <div class="filters-entries">
         <input type="text" v-model="courseID" placeholder="Course ID" />
-        <button @click="filterCourseById(courseID)"> Search </button>
+        <input type="text" v-model="term" placeholder="Term">
+        <button @click="filterCourseById(courseID, term)"> Search </button>
+        <p>
+          <span v-if="error" style="color:red">{{error}}</span>
+        </p>
       </div>
     </div>
 	  <div class="filters-section">
 	    <h4 class="search-title">Search</h4>
 	    <div class ="filters-entries">
-	      <select>
-	        <option value="mostToLeastUseful">Most To Least Useful</option>
-	        <option value="problematic">Least To Most Useful</option>
+	      <select v-model="sort_order">
+	        <option value="descending">Sort descending</option>
+	        <option value="ascending">Sort ascending</option>
 	      </select>
 
-	      <select>
-	        <option value="first5">5</option>
-	        <option value="first10">10</option>
-	        <option value="first20">20</option>
-	        <option value="all">All</option>
-	      </select>
-	      <button>Search</button>
+	      <input type="text" v-model="quantity" placeholder="Quantity" />
+	      <button @click="filterByQuantity(quantity, sort_order)">Search</button>
 	    </div>
 	  </div>
     <div class="filters-section">
