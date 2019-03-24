@@ -9,7 +9,8 @@
     "start": "node build/dev-server.js",
     "build": "node build/build.js",
     "e2e": "node test/e2e/runner.js",
-    "test": "npm run e2e"
+    "test": "npm run e2e",
+    "nightwatch": "nightwatch -c test/e2e/nightwatch.conf.js -e chrome"
   },
   "dependencies": {
     "autoprefixer": "^7.1.2",
