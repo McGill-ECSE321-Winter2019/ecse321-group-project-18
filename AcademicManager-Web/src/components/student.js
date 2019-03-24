@@ -73,9 +73,10 @@ export default {
         this.show = true
       })
     },
-    listStudents: function () {
+    listStudents: function (id) {
     var e = document.getElementById("filterBy");
-    if (e.options[e.selectedIndex].value == "all"){
+    if ((id == undefined || id == ``)  && 
+      e.options[e.selectedIndex].value == "all"){
       AXIOS.get(`/students/list`)
       .then(response => {
         this.students = response.data
@@ -84,7 +85,8 @@ export default {
         this.errorStudent = e;
       });
     }
-    else{
+    else if ((id == undefined || id == ``)  && 
+      e.options[e.selectedIndex].value == "problematic"){
       AXIOS.get(`/students/problematic`)
       .then(response => {
         this.students = response.data
@@ -93,6 +95,26 @@ export default {
         this.errorStudent = e;
       });
     }
-  }
+    else if ((id != undefined && id != ``)  && 
+      e.options[e.selectedIndex].value == "all"){
+      AXIOS.get(`/students/listByID/?studentid=` + id)
+      .then(response => {
+        this.students = response.data
+      })
+      .catch(e => {
+        this.students = [];
+      });
+    }
+    else if ((id != undefined && id != ``)  && 
+      e.options[e.selectedIndex].value == "problematic"){
+      AXIOS.get(`/students/problematic/listByID/?studentid=` + id)
+      .then(response => {
+        this.students = response.data
+      })
+      .catch(e => {
+        this.errorStudent = e;
+      });
+    }
+    }
   }
 }

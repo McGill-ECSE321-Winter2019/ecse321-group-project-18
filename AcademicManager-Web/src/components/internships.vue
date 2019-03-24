@@ -22,6 +22,7 @@
 	    </div>
 	  </div>
 	</div>
+	<!-- <b-table striped boarded hover responsive :items="ctrs" /> -->
 	<table>
 		<tr>
 	      <th>RegistrationID</th> 

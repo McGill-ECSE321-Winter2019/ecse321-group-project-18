@@ -5,7 +5,7 @@
     </div>
     <div id="sidebar">
       <ul id="sidebar-list">
-        <li><a href="home.vue" class="sidebar-element">Home</a></li>
+        <li><a href="#/app" class="sidebar-element">Home</a></li>
         <li><a href="#/students" class="sidebar-element">Students</a></li>
         <li><a href="#/internships" class="sidebar-element">Internships</a></li>
         <li><a href="#/courses" class="sidebar-element">Courses</a></li>

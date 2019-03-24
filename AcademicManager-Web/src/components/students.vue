@@ -4,15 +4,13 @@
     <div class="filters-section">
       <h4 class="search-title">Search</h4>
       <div class ="filters-entries">
-        <input type="text" name="id" placeholder="Student ID">
-        <input type="text" name="firstname" placeholder="First Name">
-        <input type="text" name="lastname" placeholder="Last Name">
+        <input type="text" v-model="id" placeholder="Student ID">
         <div class="text-left">
           <select id="filterBy">
             <option value="all">All Students</option>
             <option value="problematic">Problematic</option>
           </select>
-          <button @click="listStudents()">Search</button>
+          <button @click="listStudents(id)">Search</button>
         </div>
       </div>
     </div>
