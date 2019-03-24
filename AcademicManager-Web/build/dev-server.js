@@ -68,7 +68,7 @@ app.use(staticPath, express.static('./static'))
 //var uri = 'http://localhost:' + port
 var host = config.dev.host
 var uri = 'http://' + host + ':' + port
-
+// https://127.0.0.1:8087/#/students
 var _resolve
 var readyPromise = new Promise(resolve => {
   _resolve = resolve
