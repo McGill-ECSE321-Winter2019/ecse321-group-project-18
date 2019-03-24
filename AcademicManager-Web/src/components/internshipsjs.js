@@ -32,7 +32,7 @@ export default {
   methods: {
   listCTRs: function (studentID) {
     var e = document.getElementById("termFilter")
-    if(studentID != undefined && e.value == `-`){
+    if((studentID != undefined && studentID != ``) && e.value == `-`){
     AXIOS.get(`/coopTermRegistrations/listByStudent/?studentid=` + studentID)
     .then(response => {
         // JSON responses are automatically parsed.
@@ -42,7 +42,7 @@ export default {
         this.error = e;
       });
     }
-    else if(studentID == undefined && e.value != `-`) {
+    else if((studentID == undefined || studentID == ``) && e.value != `-`) {
     AXIOS.get(`/coopTermRegistrations/listByTerm/?termname=` + e.value)
     .then(response => {
         // JSON responses are automatically parsed.
@@ -52,7 +52,7 @@ export default {
         this.error = e;
       });
     }
-    else if(studentID != undefined && e.value != `-`) {
+    else if((studentID != undefined && studentID != ``) && e.value != `-`) {
     AXIOS.get(`/coopTermRegistrations/listByTermAndStudent/?termname=` + e.value + `&studentid=` + studentID)
     .then(response => {
         // JSON responses are automatically parsed.
@@ -62,8 +62,7 @@ export default {
         this.error = e;
       });
     }
-    else 
-    if(studentID == undefined && e.value == `-`){
+    else if((studentID == undefined || studentID == ``) && e.value == `-`){
     AXIOS.get(`/coopTermRegistrations/list/`)
     .then(response => {
         // JSON responses are automatically parsed.

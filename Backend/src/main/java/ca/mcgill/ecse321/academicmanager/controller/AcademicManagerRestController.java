@@ -247,7 +247,7 @@ public class AcademicManagerRestController {
     
     @GetMapping(value = { "/coopTermRegistrations/listByStudent/", "/coopTermRegistrations/listByStudent/" })
  	@ResponseBody
- 	public List<CoopTermRegistrationDto> viewCoopTermRegistrationsOfStudent(@RequestParam("studentID") String studentID) throws IllegalArgumentException {
+ 	public List<CoopTermRegistrationDto> viewCoopTermRegistrationsOfStudent(@RequestParam("studentid") String studentID) throws IllegalArgumentException {
 
  		Set<CoopTermRegistration> internships = service.getCoopTermRegistrationsByStudentID(studentID);
  		List<CoopTermRegistrationDto> internshipsDto = new ArrayList<CoopTermRegistrationDto>();
