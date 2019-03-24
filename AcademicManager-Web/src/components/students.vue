@@ -8,11 +8,11 @@
         <input type="text" name="firstname" placeholder="First Name">
         <input type="text" name="lastname" placeholder="Last Name">
         <div class="text-left">
-          <select>
+          <select id="filterBy">
             <option value="all">All Students</option>
             <option value="problematic">Problematic</option>
           </select>
-          <button>Search</button>
+          <button @click="listStudents()">Search</button>
         </div>
       </div>
     </div>
@@ -29,84 +29,7 @@
 </template>
 
 
-<script>
-  import axios from 'axios'
-
-  var config = require('../../config')
-
-  var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
-  var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort
-
-  var AXIOS = axios.create({
-    baseURL: backendUrl,
-    headers: { 'Access-Control-Allow-Origin': frontendUrl }
-  })
-
-  function studentDto(studentid, first_name, last_name, is_problematic) {
-    this.studentid = studentid
-    this.first_name = first_name
-    this.last_name = last_name
-    this.is_problematic = is_problematic
-  }
-
-  export default {
-    name: 'students',
-    data() {
-      return {
-        students: [],
-        fields: ['studentID', 'firstName', 'lastName', 'studentProblematicStatus'],
-        newStudent: {
-          studentid: '',
-          first_name: '',
-          last_name: '',
-          is_problematic: null
-        },
-        errorStudent: '',
-        response: []
-      }
-    },
-    created: function () {
-      this.isBusy = true
-      AXIOS.get('/students/list')
-        .then(response => {
-          this.students = response.data
-        })
-        .catch(e => {
-          this.errorStudent = e
-        });
-      this.isBusy = false
-    },
-    methods: {
-      createStudent: function(studentid, first_name, last_name, is_problematic) {
-        this.isBusy = true
-        AXIOS.post('/students/create/?id=${studentid}&firstname=${first_name}&lastname=${last_name}&cooperatorid=1')
-        if(is_problematic == true) {
-          AXIOS.put('/students/update/?id=${studentid}&?status=${is_problematic}')
-        }
-        const s = new studentDto(studentid, first_name, last_name, is_problematic)
-        this.students.push(s)
-
-        this.newStudent = ''
-        this.isBusy = false
-      },
-      updateStatus: function(studentid, is_problematic) {
-        AXIOS.put('/students/update/?id=${studentid}&?status=${is_problematic}')
-        // this.students.
-      },
-      onReset: function(evt) {
-        evt.preventDefault()
-        this.newStudent.studentid = ''
-        this.newStudent.first_name = ''
-        this.newStudent.last_name = ''
-        this.newStudent.is_problematic = null
-
-        this.show = false
-        this.$nextTick(() => {
-          this.show = true
-        })
-      }
-    }
-  }
+<script src="./student.js">
 </script>
 
 

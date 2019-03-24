@@ -21,8 +21,8 @@
 	   	  <button @click="listCTRs(studentID)">Search</button>
 	    </div>
 	  </div>
-
-	  <table>
+	</div>
+	<table>
 		<tr>
 	      <th>RegistrationID</th> 
 	      <th>jobID</th>
@@ -43,7 +43,6 @@
 		</tr>
 
 	  </table>
-	</div>
   </div>
 </template>
 
