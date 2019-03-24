@@ -160,7 +160,7 @@ else
           console.log("b");
           document.getElementById("demo").innerHTML = "Please Enter Correct CooperatorID ";
           document.getElementById("demo").style.color = 'red';
-          this.$router.push("/#/app");
+          this.$router.push("/home");
         };
         //var result = checkInput(input).then(ret);
         console.log("hey")
