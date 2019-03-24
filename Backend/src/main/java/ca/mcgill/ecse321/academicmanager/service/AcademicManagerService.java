@@ -109,6 +109,16 @@ public class AcademicManagerService {
 	public Set<CoopTermRegistration> getAllCoopTermRegistration() {
 		return toSet(coopTermRegistrationRepository.findAll());
 	}
+	
+	@Transactional
+	public Set<CoopTermRegistration> getCoopTermRegistrationsByStudentID(String studentID) {
+		Set<CoopTermRegistration> ctrs = toSet(coopTermRegistrationRepository.findAll());
+		for(CoopTermRegistration ctr : ctrs) {
+			if(!ctr.getStudent().getStudentID().equals(studentID))
+				ctrs.remove(ctr);
+		}
+		return ctrs;
+	}
 	// ---CoopTermRegistration---
 
 	// ---Course---

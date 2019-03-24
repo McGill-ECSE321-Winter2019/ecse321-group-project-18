@@ -5,7 +5,7 @@ import java.util.List;
 
 public class EmployerformDto {
 	private String name;
-	private List<FormDto> forms;
+	private List<String> formLinks;
 
 	public EmployerformDto() {
 	}
@@ -15,20 +15,20 @@ public class EmployerformDto {
 		this(name, Collections.EMPTY_LIST);
 	}
 
-	public EmployerformDto(String name, List<FormDto> arrayList) {
+	public EmployerformDto(String name, List<String> formLinks) {
 		this.name = name;
-		this.forms = arrayList;
+		this.formLinks = formLinks;
 	}
 
 	public String getName() {
 		return name;
 	}
 
-	public List<FormDto> getForms() {
-		return forms;
+	public List<String> getFormLinks() {
+		return formLinks;
 	}
 
-	public void setForms(List<FormDto> forms) {
-		this.forms = forms;
+	public void setFormLinks(List<String> formLinks) {
+		this.formLinks = formLinks;
 	}
 }

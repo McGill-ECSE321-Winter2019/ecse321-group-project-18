@@ -636,4 +636,26 @@ public class TestAcademicManagerService {
 		
 	}
 	
+	@Test
+	public void testGetCoopTermRegistrationsByStudentID() {
+		String studentID = "142142";
+		String firstname = "1";
+		String lastname = "1";
+
+		Student tmpStudent = service.createStudent(studentID, firstname, lastname, cooperator);
+		Term tmpTerm = service.createTerm("Winter2019", "Winter 2019", null, null);
+
+		String registrationID = "1214214";
+		String jobID = "1512521";
+		TermStatus status = TermStatus.FAILED;
+		Grade grade = Grade.A;
+
+		CoopTermRegistration tmpCTR = service.createCoopTermRegistration(registrationID, jobID, status, grade, tmpStudent, tmpTerm);
+
+		Set<CoopTermRegistration> ctr = service.getCoopTermRegistrationsByStudentID(tmpStudent.getStudentID());
+
+		assertEquals(ctr.size(), 1);
+		assertEquals(ctr.iterator().next().getRegistrationID(), "1214214");
+	}
+	
 }

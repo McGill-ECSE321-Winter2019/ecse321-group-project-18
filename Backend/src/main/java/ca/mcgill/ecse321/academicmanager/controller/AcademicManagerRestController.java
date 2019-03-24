@@ -143,6 +143,34 @@ public class AcademicManagerRestController {
     	return convertCourseToDto(course);
     }
     
+    @PostMapping(value = { "/students/report/create", "/student/report/create/" })
+    @ResponseBody
+    public FormDto createStudentForm(@RequestParam("formid") String formID,
+    		@RequestParam("pdflink") String pdfLink, 
+    		@RequestParam("ctrid") String ctrID) {
+    	    	
+		CoopTermRegistration ctr = service.getCoopTermRegistration(ctrID);
+		String formName = ctr.getStudent().getStudentID(); 
+		FormType formType = FormType.STUDENTEVALUATION;
+
+    	Form form = service.createForm(formID, formName, pdfLink, formType, ctr);
+    	return convertFormToDto(form);
+    }
+    
+    @PostMapping(value = { "/students/employereval/create", "/student/employereval/create/" })
+    @ResponseBody
+    public FormDto createEmployerForm(@RequestParam("formid") String formID,
+    		@RequestParam("pdflink") String pdfLink, 
+    		@RequestParam("ctrid") String ctrID) {
+    	    	
+		CoopTermRegistration ctr = service.getCoopTermRegistration(ctrID);
+		String formName = ctr.getStudent().getStudentID(); 
+		FormType formType = FormType.COOPEVALUATION;
+
+    	Form form = service.createForm(formID, formName, pdfLink, formType, ctr);
+    	return convertFormToDto(form);
+    }
+    
     /********** GENERAL GET METHODS ****************/
     
     // this method is to view the grades for internships
@@ -206,6 +234,21 @@ public class AcademicManagerRestController {
     public List<CourseDto> getCourses(@RequestParam("quantity")int quantity) {
     	return new ArrayList<CourseDto>(getCourses().subList(0, (quantity < getCourses().size()) ? quantity : getCourses().size()));
     }
+    
+    @GetMapping(value = { "/coopTermRegistrations/list/{studentID}", "/coopTermRegistrations/list/{studentID}" })
+ 	@ResponseBody
+ 	public List<CoopTermRegistrationDto> viewCoopTermRegistrationsOfStudent(@PathVariable("studentID") String studentID) throws IllegalArgumentException {
+
+ 		Set<CoopTermRegistration> internships = service.getCoopTermRegistrationsByStudentID(studentID);
+ 		List<CoopTermRegistrationDto> internshipsDto = new ArrayList<CoopTermRegistrationDto>();
+
+ 		if (internships != null) {
+ 			for (CoopTermRegistration intern : internships) {
+ 				internshipsDto.add(convertToDto(intern));
+ 			}
+ 		}
+ 		return internshipsDto;
+ 	}
     
 	/********** START OF convertToDto METHODS ************/
 
@@ -324,11 +367,10 @@ public class AcademicManagerRestController {
 		return null;*/
 		
 		Set<Form> myformlist = service.getAllStudentEvalForms();
-		List<FormDto> arrayList = new ArrayList<FormDto>();
+		List<String> arrayList = new ArrayList<String>();
 		for (Form f : myformlist) {
 			if(f.getCoopTermRegistration().getStudent().getStudentID().equals(studentID)) {
-				FormDto myform = convertFormToDto(f);
-				arrayList.add(myform);
+				arrayList.add(f.getPdfLink());
 			}
 		}
 		StudentformDto mystudentforms = new StudentformDto(studentID, arrayList);
@@ -355,11 +397,10 @@ public class AcademicManagerRestController {
 		return null;*/
 		
 		Set<Form> myformlist = service.getAllEmployerEvalForms();
-		List<FormDto> arrayList = new ArrayList<FormDto>();
+		List<String> arrayList = new ArrayList<String>();
 		for (Form f : myformlist) {
 			if(f.getCoopTermRegistration().getStudent().getStudentID().equals(studentID)) {
-				FormDto myform = convertFormToDto(f);
-				arrayList.add(myform);
+				arrayList.add(f.getPdfLink());
 			}
 		}
 		EmployerformDto myemployerforms = new EmployerformDto(studentID, arrayList);
