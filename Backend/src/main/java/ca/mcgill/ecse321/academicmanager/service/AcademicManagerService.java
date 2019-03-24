@@ -398,6 +398,12 @@ public class AcademicManagerService {
 	public Grade getStudentGrade(CoopTermRegistration ctr) {
 		return ctr.getGrade();
 	}
+	
+	@Transactional
+	public Set<Student> getStudentsByIDAndStatus(String studentID, boolean isProblematic) {
+		return toSet(studentRepository.findByStudentIDAndIsProblematic(studentID, isProblematic));
+	}
+
 	// ---Student---
 
 	// ---Term---

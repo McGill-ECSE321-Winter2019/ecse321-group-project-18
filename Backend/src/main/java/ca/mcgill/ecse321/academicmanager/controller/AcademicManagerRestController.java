@@ -426,6 +426,31 @@ public class AcademicManagerRestController {
 
 		return mylist;
 	}
+	
+	@GetMapping(value = { "/students/problematic/listByID", "/students/problematic/listByID/" })
+	@ResponseBody
+	public List<StudentDto> getListStudentsByIDAndStatus(@RequestParam("studentid") String studentID) throws IllegalArgumentException {
+		// @formatter:on
+		Set<Student> students = service.getStudentsByIDAndStatus(studentID, true);
+		List<StudentDto> mylist = new ArrayList<StudentDto>();
+		// check for every student;
+		for (Student s : students) {
+			mylist.add(convertToDto(s));
+		}
+		return mylist;
+	}
+	
+	@GetMapping(value = { "/students/listByID", "/students/listByID/" })
+	@ResponseBody
+	public List<StudentDto> getListStudentsByID(@RequestParam("studentid") String studentID) throws IllegalArgumentException {
+		// @formatter:on
+		Student s = service.getStudent(studentID);
+		List<StudentDto> mylist = new ArrayList<StudentDto>();
+		
+		mylist.add(convertToDto(s));
+			
+		return mylist;
+	}
 
 	// Method is to get the student evaluation report
 	// curl http://localhost:8082/students/report/226433222
