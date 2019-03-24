@@ -13,8 +13,9 @@
 
     <div class="container-fluid" id="top-container">
       <div class="container text-center">
-         <img src="@/assets/mcgill.png" width="600" height="100"/>
-
+      <div class="container text-center">
+          <img src="@/assets/mcgill.png"/>
+      </div>
       </div>
     </div>
 
@@ -30,7 +31,6 @@
                 <h2>
                   <font>Welcome!</font>
                 </h2>
-                <h3>Team 18 is Here</h3>
               </div>
               <hr>
             </div>
@@ -72,7 +72,6 @@
   #top-container {
     margin-bottom: 0;
     margin-top: 0;
-    background-color: #333335;
     color: #ffffff;
   }
 
