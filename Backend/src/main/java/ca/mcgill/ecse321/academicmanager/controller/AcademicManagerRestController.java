@@ -241,8 +241,17 @@ public class AcademicManagerRestController {
     //curl https://cooperatorapp-backend-18.herokuapp.com/courses/filter?quantity=2
     @GetMapping(value = {"/courses/filter", "courses/filter/"})
     @ResponseBody
-    public List<CourseDto> getCourses(@RequestParam("quantity")int quantity) {
-    	return new ArrayList<CourseDto>(getCourses().subList(0, (quantity < getCourses().size()) ? quantity : getCourses().size()));
+    public List<CourseDto> getCourses(@RequestParam(value = "quantity", defaultValue = "-1", required = false)int quantity,
+									  @RequestParam(value = "order", defaultValue = "descending", required = false) String order) {
+		ArrayList<CourseDto> returnList = new ArrayList<>(getCourses());
+    	if (!order.equals("ascending")) {
+			Collections.reverse(returnList);
+		}
+		// new ArrayList<CourseDto>(getCourses().subList(0, (quantity < getCourses().size()) ? quantity : getCourses().size()))
+		if (quantity != -1) {
+			return returnList.subList(0, (quantity < getCourses().size()) ? quantity : getCourses().size());
+		}
+		return returnList;
     }
     
     @GetMapping(value = { "/coopTermRegistrations/list/{studentID}", "/coopTermRegistrations/list/{studentID}" })
