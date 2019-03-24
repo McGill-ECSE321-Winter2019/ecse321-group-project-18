@@ -254,11 +254,59 @@ public class AcademicManagerRestController {
 		return returnList;
     }
     
-    @GetMapping(value = { "/coopTermRegistrations/list/{studentID}", "/coopTermRegistrations/list/{studentID}" })
+    @GetMapping(value = { "/coopTermRegistrations/listByStudent/", "/coopTermRegistrations/listByStudent/" })
  	@ResponseBody
- 	public List<CoopTermRegistrationDto> viewCoopTermRegistrationsOfStudent(@PathVariable("studentID") String studentID) throws IllegalArgumentException {
+ 	public List<CoopTermRegistrationDto> viewCoopTermRegistrationsOfStudent(@RequestParam("studentID") String studentID) throws IllegalArgumentException {
 
  		Set<CoopTermRegistration> internships = service.getCoopTermRegistrationsByStudentID(studentID);
+ 		List<CoopTermRegistrationDto> internshipsDto = new ArrayList<CoopTermRegistrationDto>();
+
+ 		if (internships != null) {
+ 			for (CoopTermRegistration intern : internships) {
+ 				Set<Form> forms = intern.getForm();
+ 				String employerFormLink = "NONE";
+ 				String studentFormLink = "NONE";
+ 				for(Form form : forms) {
+ 					if(form.getFormType() == FormType.STUDENTEVALUATION)
+ 						studentFormLink = form.getPdfLink();
+ 					else
+ 						employerFormLink = form.getPdfLink();
+ 				}
+ 				internshipsDto.add(convertToDto(intern, studentFormLink, employerFormLink));
+ 			}
+ 		}
+ 		return internshipsDto;
+ 	}
+    
+    @GetMapping(value = { "/coopTermRegistrations/listByTermAndStudent", "/coopTermRegistrations/listByTermAndStudent/" })
+ 	@ResponseBody
+ 	public List<CoopTermRegistrationDto> viewCoopTermRegistrationsByTermNameAndStudentID(@RequestParam("termname") String termName, @RequestParam("studentid") String studentID) throws IllegalArgumentException {
+
+ 		Set<CoopTermRegistration> internships = service.getCoopTermRegistrationsByTermNameAndStudentID(termName, studentID);
+ 		List<CoopTermRegistrationDto> internshipsDto = new ArrayList<CoopTermRegistrationDto>();
+
+ 		if (internships != null) {
+ 			for (CoopTermRegistration intern : internships) {
+ 				Set<Form> forms = intern.getForm();
+ 				String employerFormLink = "NONE";
+ 				String studentFormLink = "NONE";
+ 				for(Form form : forms) {
+ 					if(form.getFormType() == FormType.STUDENTEVALUATION)
+ 						studentFormLink = form.getPdfLink();
+ 					else
+ 						employerFormLink = form.getPdfLink();
+ 				}
+ 				internshipsDto.add(convertToDto(intern, studentFormLink, employerFormLink));
+ 			}
+ 		}
+ 		return internshipsDto;
+ 	}
+    
+    @GetMapping(value = { "/coopTermRegistrations/listByTerm", "/coopTermRegistrations/listByTerm/" })
+ 	@ResponseBody
+ 	public List<CoopTermRegistrationDto> viewCoopTermRegistrationsByTermName(@RequestParam("termname") String termName) throws IllegalArgumentException {
+
+ 		Set<CoopTermRegistration> internships = service.getCoopTermRegistrationsByTermName(termName);
  		List<CoopTermRegistrationDto> internshipsDto = new ArrayList<CoopTermRegistrationDto>();
 
  		if (internships != null) {

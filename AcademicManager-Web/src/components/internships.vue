@@ -8,14 +8,14 @@
 	    <input type="text" v-model="studentID" placeholder="Student ID">
 	    <select id="termFilter">
 	      <option value="-">-</option>	
-	      <option value="Winter19">Winter 2019</option>
-	      <option value="Fall19">Fall 2019</option>
-	      <option value="Winter18">Winter 2018</option>
-	      <option value="Fall18">Fall 2018</option>
-	      <option value="Winter17">Winter 2017</option>
-	      <option value="Fall17">Fall 2017</option>
-	      <option value="Winter16">Winter 2016</option>
-	      <option value="Fall16">Fall 2016</option>
+	      <option value="Winter2019">Winter 2019</option>
+	      <option value="Fall2019">Fall 2019</option>
+	      <option value="Winter2018">Winter 2018</option>
+	      <option value="Fall2018">Fall 2018</option>
+	      <option value="Winter2017">Winter 2017</option>
+	      <option value="Fall2017">Fall 2017</option>
+	      <option value="Winter2016">Winter 2016</option>
+	      <option value="Fall2016">Fall 2016</option>
 	    </select>
 	    <div class="text-right">
 	   	  <button @click="listCTRs(studentID)">Search</button>
