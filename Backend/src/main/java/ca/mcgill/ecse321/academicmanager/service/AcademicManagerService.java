@@ -112,32 +112,36 @@ public class AcademicManagerService {
 	
 	@Transactional
 	public Set<CoopTermRegistration> getCoopTermRegistrationsByStudentID(String studentID) {
+		Set<CoopTermRegistration> ret = new HashSet<CoopTermRegistration>();
+		
 		Set<CoopTermRegistration> ctrs = toSet(coopTermRegistrationRepository.findAll());
 		for(CoopTermRegistration ctr : ctrs) {
-			if(!ctr.getStudent().getStudentID().equals(studentID))
-				ctrs.remove(ctr);
+			if(ctr.getStudent().getStudentID().equals(studentID))
+				ret.add(ctr);
 		}
-		return ctrs;
+		return ret;
 	}
 	
 	@Transactional
 	public Set<CoopTermRegistration> getCoopTermRegistrationsByTermName(String termName) {
+		Set<CoopTermRegistration> ret = new HashSet<CoopTermRegistration>();
 		Set<CoopTermRegistration> ctrs = toSet(coopTermRegistrationRepository.findAll());
 		for(CoopTermRegistration ctr : ctrs) {
-			if(!ctr.getTerm().getTermName().equals(termName))
-				ctrs.remove(ctr);
+			if(ctr.getTerm().getTermName().equals(termName))
+				ret.add(ctr);
 		}
-		return ctrs;
+		return ret;
 	}
 	
 	@Transactional
 	public Set<CoopTermRegistration> getCoopTermRegistrationsByTermNameAndStudentID(String termName, String studentID) {
+		Set<CoopTermRegistration> ret = new HashSet<CoopTermRegistration>();
 		Set<CoopTermRegistration> ctrs = toSet(coopTermRegistrationRepository.findAll());
 		for(CoopTermRegistration ctr : ctrs) {
-			if(!ctr.getTerm().getTermName().equals(termName) || !ctr.getStudent().getStudentID().equals(studentID) )
-				ctrs.remove(ctr);
+			if(ctr.getTerm().getTermName().equals(termName) && ctr.getStudent().getStudentID().equals(studentID) )
+				ret.add(ctr);
 		}
-		return ctrs;
+		return ret;
 	}
 	// ---CoopTermRegistration---
 
