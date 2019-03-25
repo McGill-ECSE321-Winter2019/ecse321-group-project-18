@@ -28,7 +28,7 @@
 		  <td>{{ student.studentID }}</td>
 		  <td>{{ student.firstName }}</td>
 		  <td>{{ student.lastName }}</td>
-		  <td>{{ student.studentProblematicStatus }}</td>
+		  <td>{{ student.isProblematic }}</td>
 		</tr>
 	</table>
   </div>
