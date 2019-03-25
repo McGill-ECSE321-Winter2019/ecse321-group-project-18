@@ -1,1 +1,1 @@
-web: node build/dev-server.js
+web: cd AcademicManager-Web && echo $PORT && export PORT && npm start 

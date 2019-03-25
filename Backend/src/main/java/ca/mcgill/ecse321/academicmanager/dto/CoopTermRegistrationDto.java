@@ -16,21 +16,17 @@ public class CoopTermRegistrationDto {
 	
 	public CoopTermRegistrationDto(String registrationID, String termName, String jobID, TermStatus status, Grade grade, String studentID, String employerFormLink, String studentFormLink) {
 		this.registrationID = registrationID;
-		this.termName = termName;
 		this.jobID = jobID;
 		this.status = status;
 		this.grade = grade;
 		this.studentID = studentID;
 		this.employerFormLink = employerFormLink;
 		this.studentFormLink = studentFormLink;
+		this.termName = termName;
 	}
 	
 	public String getRegistrationID() {
 		return registrationID;
-	}
-	
-	public String getTermName() {
-		return this.termName;
 	}
 
 	public String getjobID() {
@@ -40,17 +36,21 @@ public class CoopTermRegistrationDto {
 	public TermStatus getTermStatus() {
 		return status;
 	}
+	
+	public String getTermName() {
+		return termName;
+	}
 
 	public Grade getGrade() {
 		return grade;
 	}
 	
-	public Grade getStudentID() {
-		return this.getStudentID();
-	}
-	
 	public String getEmployerFormLink() {
 		return this.employerFormLink;
+	}
+	
+	public String getStudentID() {
+		return this.studentID;
 	}
 	
 	public String getStudentFormLink() {

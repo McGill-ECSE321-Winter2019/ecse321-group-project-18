@@ -119,6 +119,26 @@ public class AcademicManagerService {
 		}
 		return ctrs;
 	}
+	
+	@Transactional
+	public Set<CoopTermRegistration> getCoopTermRegistrationsByTermName(String termName) {
+		Set<CoopTermRegistration> ctrs = toSet(coopTermRegistrationRepository.findAll());
+		for(CoopTermRegistration ctr : ctrs) {
+			if(!ctr.getTerm().getTermName().equals(termName))
+				ctrs.remove(ctr);
+		}
+		return ctrs;
+	}
+	
+	@Transactional
+	public Set<CoopTermRegistration> getCoopTermRegistrationsByTermNameAndStudentID(String termName, String studentID) {
+		Set<CoopTermRegistration> ctrs = toSet(coopTermRegistrationRepository.findAll());
+		for(CoopTermRegistration ctr : ctrs) {
+			if(!ctr.getTerm().getTermName().equals(termName) || !ctr.getStudent().getStudentID().equals(studentID) )
+				ctrs.remove(ctr);
+		}
+		return ctrs;
+	}
 	// ---CoopTermRegistration---
 
 	// ---Course---
@@ -378,6 +398,12 @@ public class AcademicManagerService {
 	public Grade getStudentGrade(CoopTermRegistration ctr) {
 		return ctr.getGrade();
 	}
+	
+	@Transactional
+	public Set<Student> getStudentsByIDAndStatus(String studentID, boolean isProblematic) {
+		return toSet(studentRepository.findByStudentIDAndIsProblematic(studentID, isProblematic));
+	}
+
 	// ---Student---
 
 	// ---Term---
