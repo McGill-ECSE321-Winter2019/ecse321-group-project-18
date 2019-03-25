@@ -19,11 +19,11 @@ var AXIOS = axios.create({
   headers: { 'Access-Control-Allow-Origin': frontendUrl }
 })
 
-function studentDto(studentID, firstName, lastName, isProblematic) {
-  this.studentID = studentID
-  this.firstName = firstName
-  this.lastName = lastName
-  this.isProblematic = isProblematic
+function studentDto(studentid, first_name, last_name, is_problematic) {
+  this.studentid = studentid
+  this.first_name = first_name
+  this.last_name = last_name
+  this.is_problematic = is_problematic
 }
 
 export default {
