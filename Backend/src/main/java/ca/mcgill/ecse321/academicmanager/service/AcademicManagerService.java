@@ -141,7 +141,8 @@ public class AcademicManagerService {
 			if(ctr.getTerm().getTermName().equals(termName) && ctr.getStudent().getStudentID().equals(studentID) )
 				ret.add(ctr);
 		}
-		return ret;
+		return ret
+				;
 	}
 	// ---CoopTermRegistration---
 

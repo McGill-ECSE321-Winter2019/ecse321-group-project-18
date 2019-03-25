@@ -7,14 +7,7 @@
       <div class = filters-entries>
         <button name="generate-test-instances" @click="generateTestInstances()"> Generate test instances </button>
       </div>
-      <!--<div class="filters-entries">-->
-      <!--<input type="text" name="input-course-id" v-model="courseID" placeholder="Course ID" />-->
-      <!--<input type="text" name="input-term-id" v-model="term" placeholder="Term">-->
-      <!--<button name="filter-course-by-id" @click="filterCourseById(courseID, term)"> Search </button>-->
-      <!--<p>-->
-      <!--<span name="filter-course-by-id-error" v-if="error" style="color:red">{{error}}</span>-->
-      <!--</p>-->
-      <!--</div>-->
+      <span> {{ message }} </span>
     </div>
   </div>
 
