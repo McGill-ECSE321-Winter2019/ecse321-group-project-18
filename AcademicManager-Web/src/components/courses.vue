@@ -35,10 +35,10 @@
 	      <th>Course Rank</th>
 	  	</tr>
 		<tr v-for="course in courses">
-		  <td>{{ course.id }}</td>
-		  <td>{{ course.name }}</td>
+		  <td>{{ course.courseID }}</td>
+		  <td>{{ course.courseName }}</td>
 		  <td>{{ course.term }}</td>
-		  <td>{{ course.rank }}</td>
+		  <td>{{ course.courseRank }}</td>
 		</tr>
 	</table>
   </div>
