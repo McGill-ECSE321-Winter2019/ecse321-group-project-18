@@ -5,7 +5,7 @@
 	<div class="filters-section">
 	  <h4 class="search-title">Search</h4>
 	  <div class ="filters-entries">
-	    <input type="text" v-model="studentID" placeholder="Student ID">
+	    <input type="text" v-model="studentID" placeholder="Internship ID">
 	    <select id="termFilter">
 	      <option value="-">-</option>	
 	      <option value="Winter2019">Winter 2019</option>
