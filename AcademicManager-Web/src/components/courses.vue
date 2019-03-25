@@ -30,8 +30,8 @@
     <table class="table table-striped table-hover table-users">
 		<tr>
 	      <th>Course ID</th> 
-	      <th>Term</th>
 	      <th>Course Name</th>
+	      <th>Term ID</th>
 	      <th>Course Rank</th>
 	  	</tr>
 		<tr v-for="course in courses">
