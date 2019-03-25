@@ -34,8 +34,8 @@ For the documentation of our services provided in sprint 3 and how to use them, 
 
 |Team member's name      |Total hours |Responsibility                                                                    |
 |------------------------|------------|----------------------------------------------------------------------------------|
-|Moetassem Abdelazim     | 30   hours |CTO (All with more emphasis UI Design, UI Implementation)                         |
-|Saleh Bakhit            | 30   hours |UI Implementation, Debugging                                                      |
+|Moetassem Abdelazim     | 27   hours |CTO (All with more emphasis UI Design, UI Implementation)                         |
+|Saleh Bakhit            | 23   hours |UI Implementation, Debugging                                                      |
 |Yen-Vi Huynh            | 30   hours |Integration Backend/Frontend, Heroku Deployment, Build system, and Documentation  |
-|Edward Huang            | 30   hours |Architecture Model/Component descriptions, UI Implementation                      |
-|Bach Tran               | 30   hours |UI Implementation, Nightwatch end-to-end tests                                    |
+|Edward Huang            | 34   hours |Architecture Model/Component descriptions, UI Implementation                      |
+|Bach Tran               | 35   hours |UI Implementation, Nightwatch end-to-end tests                                    |
