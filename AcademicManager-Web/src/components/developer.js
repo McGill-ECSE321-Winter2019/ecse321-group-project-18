@@ -68,11 +68,11 @@ export default {
       AXIOS.post(`/students/employereval/create/?formid=18&pdflink=http://samplelink18.com&ctrid=8`)
       AXIOS.post(`/students/employereval/create/?formid=19&pdflink=http://samplelink19.com&ctrid=9`)
 
-      AXIOS.post(`students/update/?id=1&status=true`)
-      AXIOS.post(`students/update/?id=2&status=true`)
-      AXIOS.post(`students/update/?id=3&status=true`)
-      AXIOS.post(`students/update/?id=4&status=true`)
-      AXIOS.post(`students/update/?id=5&status=true`)
+      AXIOS.put(`students/update/?id=1&status=true`)
+      AXIOS.put(`students/update/?id=2&status=true`)
+      AXIOS.put(`students/update/?id=3&status=true`)
+      AXIOS.put(`students/update/?id=4&status=true`)
+      AXIOS.put(`students/update/?id=5&status=true`)
 
       this.message = `Test data created`
     }
