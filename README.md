@@ -27,3 +27,15 @@ For the documentation of our services provided in sprint 2 and how to use them, 
 |Yen-Vi Huynh            | 29   hours |RestFul Services and Documentation                                                |
 |Edward Huang            | 24   hours |Unit Testing and Restful Services                                                 |
 |Bach Tran               | 33   hours |Integration Testing and Restful Services                                          |
+
+## Deliverable 3
+
+For the documentation of our services provided in sprint 3 and how to use them, please refer to this wiki [page](https://github.com/McGill-ECSE321-Winter2019/ecse321-group-project-18/wiki).
+
+|Team member's name      |Total hours |Responsibility                                                                    |
+|------------------------|------------|----------------------------------------------------------------------------------|
+|Moetassem Abdelazim     | 30   hours |CTO (All with more emphasis UI Design, UI Implementation)                         |
+|Saleh Bakhit            | 30   hours |UI Implementation, Debugging                                                      |
+|Yen-Vi Huynh            | 30   hours |Integration Backend/Frontend, Heroku Deployment, Build system, and Documentation  |
+|Edward Huang            | 30   hours |Architecture Model/Component descriptions, UI Implementation                      |
+|Bach Tran               | 30   hours |UI Implementation, Nightwatch end-to-end tests                                    |

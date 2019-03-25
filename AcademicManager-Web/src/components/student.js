@@ -31,7 +31,6 @@ export default {
   data() {
     return {
       students: [],
-      fields: ['studentID', 'firstName', 'lastName', 'studentProblematicStatus'],
       newStudent: {
         studentid: '',
         first_name: '',
