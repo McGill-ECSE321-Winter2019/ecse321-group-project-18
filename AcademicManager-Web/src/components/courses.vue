@@ -5,9 +5,9 @@
     <div class="filters-section">
       <h4 class="search-title">Search specific</h4>
       <div class="filters-entries">
-        <input type="text" v-model="courseID" placeholder="Course ID" />
-        <input type="text" v-model="term" placeholder="Term">
-        <button @click="filterCourseById(courseID, term)"> Search </button>
+        <input name="input-course-id" type="text" v-model="courseID" placeholder="Course ID" />
+        <input name="input-term-id" type="text" v-model="term" placeholder="Term">
+        <button name="filter-course-by-id" @click="filterCourseById(courseID, term)"> Search </button>
         <p>
           <span v-if="error" style="color:red">{{error}}</span>
         </p>
@@ -22,7 +22,7 @@
 	      </select>
 
 	      <input type="text" v-model="quantity" placeholder="Quantity" />
-	      <button @click="filterByQuantity(quantity, sort_order)">Search</button>
+	      <button name="filter-course-by-quantity" @click="filterByQuantity(quantity, sort_order)">Search</button>
 	    </div>
 	  </div>
     <div class="filters-section">
