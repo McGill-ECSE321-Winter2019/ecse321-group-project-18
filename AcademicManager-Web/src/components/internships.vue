@@ -78,3 +78,19 @@
 	float: left;
 }
 </style>
+
+.filters-entries button{
+	background-color: #dc3545;
+	border: 1px solid #dc3545;
+	color: white;
+	margin: 0px 0px 3px 0px;
+	padding: 3px 15px;
+	border-radius: 4px;
+}
+
+.filters-entries button:hover{
+	background-color: #c82333;
+	border-color: #c82333;
+}
+
+</style>

@@ -4,7 +4,7 @@
     <div class="filters-section">
       <h4 class="search-title">Search</h4>
       <div class ="filters-entries">
-        <input type="text" v-model="id" placeholder="Student ID">
+        <input name="input-student-id" type="text" v-model="id" placeholder="Student ID">
         <div class="text-left">
           <select id="filterBy">
             <option value="all">All Students</option>
