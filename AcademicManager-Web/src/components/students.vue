@@ -10,19 +10,27 @@
             <option value="all">All Students</option>
             <option value="problematic">Problematic</option>
           </select>
-          <button @click="listStudents(id)">Search</button>
+          <div class="text-right">
+          	<button @click="listStudents(id)">Search</button>          
+          </div>
         </div>
       </div>
     </div>
 
-    <div>
-      <b-table striped bordered hover responsive :items="students" :fields="fields" :caption-top="true" :busy="isBusy">
-        <div slot="table-busy" class="text-center text-danger my-2">
-          <b-spinner class="align-middle" />
-          <strong>Loading...</strong>
-        </div>
-      </b-table>
-    </div>
+    <table class="table table-striped table-hover table-users">
+		<tr>
+	      <th>StudentID</th> 
+	      <th>First Name</th>
+	      <th>Last Name</th>
+	      <th>Student Problematic Status</th>
+	  	</tr>
+		<tr v-for="student in students">
+		  <td>{{ student.studentID }}</td>
+		  <td>{{ student.firstName }}</td>
+		  <td>{{ student.lastName }}</td>
+		  <td>{{ student.is_problematic }}</td>
+		</tr>
+	</table>
   </div>
 </template>
 
@@ -31,7 +39,7 @@
 </script>
 
 
-<style scoped>
+<style>
   .filters-entries input{
     width: 30%;
     padding-left: 5px;
