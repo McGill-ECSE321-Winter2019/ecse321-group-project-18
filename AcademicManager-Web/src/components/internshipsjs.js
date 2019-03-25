@@ -38,6 +38,15 @@ export default {
       error: ''
     }
   },
+  created: function () {
+    AXIOS.get('/coopTermRegistrations/list')
+      .then(response => {
+        this.ctrs = response.data
+      })
+      .catch(e => {
+        this.error = e;
+      });
+  },
   methods: {
   listCTRs: function (studentID) {
     var e = document.getElementById("termFilter")
@@ -88,7 +97,13 @@ export default {
     AXIOS.post(`/coopTermRegistrations/` + ctrID + `/adjudicate/?success=true`)
     .then(response => {
         // JSON responses are automatically parsed.
-        this.ctrs = [];
+        AXIOS.get('/coopTermRegistrations/list')
+      .then(response => {
+        this.ctrs = response.data
+      })
+      .catch(e => {
+        this.error = e;
+      });
       })
       .catch(e => {
         this.error = e;
@@ -99,7 +114,13 @@ export default {
     AXIOS.post(`/coopTermRegistrations/` + ctrID + `/adjudicate/?success=false`)
     .then(response => {
         // JSON responses are automatically parsed.
-        this.ctrs = [];
+        AXIOS.get('/coopTermRegistrations/list')
+      .then(response => {
+        this.ctrs = response.data
+      })
+      .catch(e => {
+        this.error = e;
+      });
       })
       .catch(e => {
         this.error = e;
