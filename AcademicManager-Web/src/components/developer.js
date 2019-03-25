@@ -31,6 +31,7 @@ export default {
       for (i = 1; i < 9; i++) {
         // create students
         AXIOS.post(`/students/create/?id=${i}&firstname=Mock Student&lastname=${i}&cooperatorid=${TEST_COOPERATOR_ID}`)
+
         // create terms
         AXIOS.post(`/terms/create/?id=${i}&name=Winter${2013+i}&studentdeadline=2019-01-${i}&coopdeadline=2019-01-${i+1}`)
         // create courses
@@ -66,6 +67,12 @@ export default {
       AXIOS.post(`/students/employereval/create/?formid=17&pdflink=http://samplelink17.com&ctrid=7`)
       AXIOS.post(`/students/employereval/create/?formid=18&pdflink=http://samplelink18.com&ctrid=8`)
       AXIOS.post(`/students/employereval/create/?formid=19&pdflink=http://samplelink19.com&ctrid=9`)
+
+      AXIOS.post(`students/update/?id=1&status=true`)
+      AXIOS.post(`students/update/?id=2&status=true`)
+      AXIOS.post(`students/update/?id=3&status=true`)
+      AXIOS.post(`students/update/?id=4&status=true`)
+      AXIOS.post(`students/update/?id=5&status=true`)
 
       this.message = `Test data created`
     }
