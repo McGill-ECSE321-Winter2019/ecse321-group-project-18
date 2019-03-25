@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div id="banner">
-      <img id="logo" src="./assets/mcgill-logo.png" height="60" width="45">
+      <a href="#/app"><img id="logo" src="./assets/mcgill.png" height="80" width="200"></a>
     </div>
     <div id="sidebar">
       <ul id="sidebar-list">
@@ -12,7 +12,7 @@
       </ul>
     </div>
     <router-view></router-view>
-  </div> 
+  </div>
 
 </template>
 
@@ -36,7 +36,7 @@ export default {
 
 #logo{
   align: center;
-  margin-top: 10px;
+  margin-top: 0px;
 }
 
 #banner {
@@ -90,5 +90,19 @@ export default {
   margin: 20px 0px;
   border: 4px solid;
   border-radius: 8px;
+}
+
+.filters-entries button{
+  background-color: #dc3545;
+  border: 1px solid #dc3545;
+  color: white;
+  margin: 0px 0px 3px 0px;
+  padding: 3px 15px;
+  border-radius: 4px;
+}
+
+.filters-entries button:hover{
+  background-color: #c82333;
+  border-color: #c82333;
 }
 </style>
