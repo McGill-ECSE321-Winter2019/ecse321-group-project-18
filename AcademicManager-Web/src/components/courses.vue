@@ -27,8 +27,20 @@
 	  </div>
     </div>
     
-
-    <b-table striped hover :items="courses" />
+    <table class="table table-striped table-hover table-users">
+		<tr>
+	      <th>Course ID</th> 
+	      <th>Term</th>
+	      <th>Course Name</th>
+	      <th>Course Rank</th>
+	  	</tr>
+		<tr v-for="course in courses">
+		  <td>{{ course.id }}</td>
+		  <td>{{ course.name }}</td>
+		  <td>{{ course.term }}</td>
+		  <td>{{ course.rank }}</td>
+		</tr>
+	</table>
   </div>
 </template>
 
