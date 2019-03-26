@@ -11,7 +11,7 @@
             <option value="problematic">Problematic</option>
           </select>
           <div class="text-right">
-          	<button @click="listStudents(id)">Search</button>          
+          	<button name="search-for-students" @click="listStudents(id)">Search</button>
           </div>
         </div>
       </div>

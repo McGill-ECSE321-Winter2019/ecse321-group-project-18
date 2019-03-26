@@ -1,5 +1,5 @@
 module.exports = {
-  'Student Page Test': function (browser) {
+  'Internship Page Test': function (browser) {
     // automatically uses dev Server port from /config.index.js
     // default: http://localhost:8080
     // see nightwatch.conf.js
@@ -11,7 +11,9 @@ module.exports = {
       .waitForElementVisible('div[id="banner"]', 4000)
       .waitForElementVisible('img[id="logo"]', 4000)
       .waitForElementVisible('div[id="sidebar"]', 4000)
-      .waitForElementVisible('input[name="input-student-id"]', 4000)
+      .waitForElementVisible('input[name ="input-student-id"]', 4000)
+      .waitForElementVisible('select[id="termFilter"]', 4000)
+      .waitForElementVisible('button[name="search-for-internships"]', 4000)
       .assert.urlContains(category)
       .end();
   }
