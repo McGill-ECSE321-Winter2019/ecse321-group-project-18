@@ -8,10 +8,10 @@
         <p style="">Both fields must be filled</p>
       </div>
       <div class="filters-entries" style="margin-top:-30px;">
-        <input type="text" v-model="courseID" placeholder="Course ID"/>
-        <input type="text" v-model="term" placeholder="Term">
+        <input name="input-course-id" type="text" v-model="courseID" placeholder="Course ID"/>
+        <input name="input-term-id" type="text" v-model="term" placeholder="Term">
         <div class="text-right">
-          <button @click="filterCourseById(courseID, term)">Search</button>
+          <button name="filter-course-by-id" @click="filterCourseById(courseID, term)">Search</button>
         </div>
       </div>
       <h4 class="search-title">Or Sort by Order Specify Quantity of Course Displayed</h4>
@@ -22,7 +22,7 @@
 	    </select>
         <input type="text" v-model="quantity" placeholder="Quantity" />
 	    <div class="text-right">
-	      <button @click="filterByQuantity(quantity, sort_order)">Search</button>	
+	      <button name="filter-course-by-quantity" @click="filterByQuantity(quantity, sort_order)">Search</button>
 	    </div>
 	  </div>
     </div>

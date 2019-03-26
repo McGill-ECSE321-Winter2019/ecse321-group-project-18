@@ -5,7 +5,7 @@
 	<div class="filters-section">
 	  <h4 class="search-title">Search</h4>
 	  <div class ="filters-entries">
-	    <input type="text" v-model="studentID" placeholder="Internship ID">
+	    <input name ="input-student-id" type="text" v-model="studentID" placeholder="Internship ID">
 	    <select id="termFilter">
 	      <option value="-">-</option>	
 	      <option value="Winter2019">Winter 2019</option>
@@ -18,7 +18,7 @@
 	      <option value="Fall2016">Fall 2016</option>
 	    </select>
 	    <div class="text-right">
-	   	  <button @click="listCTRs(studentID)">Search</button>
+	   	  <button name="search-for-internships" @click="listCTRs(studentID)">Search</button>
 	    </div>
 	  </div>
 	</div>
