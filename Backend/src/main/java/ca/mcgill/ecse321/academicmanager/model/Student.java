@@ -61,7 +61,7 @@ public class Student {
 
 	private Set<Meeting> meeting;
 
-	@ManyToMany(mappedBy = "student", fetch = FetchType.EAGER)
+	@ManyToMany(mappedBy = "student", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
 	public Set<Meeting> getMeeting() {
 		return this.meeting;
 	}
@@ -83,7 +83,7 @@ public class Student {
 
 	private Set<CoopTermRegistration> coopTermRegistration;
 
-	@OneToMany(mappedBy = "student", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
+	@OneToMany(mappedBy = "student", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
 	public Set<CoopTermRegistration> getCoopTermRegistration() {
 		return this.coopTermRegistration;
 	}

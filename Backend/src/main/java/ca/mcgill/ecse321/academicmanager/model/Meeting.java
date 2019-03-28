@@ -1,5 +1,6 @@
 package ca.mcgill.ecse321.academicmanager.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 
@@ -73,7 +74,7 @@ public class Meeting {
 
 	private Set<Student> student;
 
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
 	public Set<Student> getStudent() {
 		return this.student;
 	}

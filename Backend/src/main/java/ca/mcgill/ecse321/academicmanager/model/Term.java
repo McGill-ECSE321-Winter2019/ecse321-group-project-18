@@ -61,7 +61,7 @@ public class Term {
 
 	private Set<CoopTermRegistration> coopTermRegistration;
 
-	@OneToMany(mappedBy = "term", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
+	@OneToMany(mappedBy = "term", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
 	public Set<CoopTermRegistration> getCoopTermRegistration() {
 		return this.coopTermRegistration;
 	}

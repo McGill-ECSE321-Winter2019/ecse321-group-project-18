@@ -53,7 +53,7 @@ public class CoopTermRegistration {
 
 	private Set<Form> form;
 
-	@OneToMany(mappedBy = "coopTermRegistration", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
+	@OneToMany(mappedBy = "coopTermRegistration", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
 	public Set<Form> getForm() {
 		return this.form;
 	}

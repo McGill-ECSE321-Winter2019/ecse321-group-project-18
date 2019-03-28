@@ -24,7 +24,7 @@ public class Cooperator {
 
 	private Set<Student> student;
 
-	@OneToMany(mappedBy = "cooperator", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
+	@OneToMany(mappedBy = "cooperator", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
 	public Set<Student> getStudent() {
 		return this.student;
 	}
@@ -48,7 +48,7 @@ public class Cooperator {
 
 	private Set<Course> course;
 
-	@OneToMany(mappedBy = "cooperator", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
+	@OneToMany(mappedBy = "cooperator", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
 	public Set<Course> getCourse() {
 		return this.course;
 	}
