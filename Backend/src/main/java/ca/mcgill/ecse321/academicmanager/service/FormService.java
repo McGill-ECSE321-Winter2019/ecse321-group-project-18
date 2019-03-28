@@ -37,6 +37,8 @@ public class FormService {
 	 * @param formtype Type of the Form
 	 * @param ctr      CoopTermRegistration instance associated with Form
 	 * @return Form instance
+	 * @throws NullArgumentException throws exception if input(s) is/are null or
+	 *                               invalid
 	 */
 	@Transactional
 	public Form create(String formID, String name, String pdflink, FormType formtype, CoopTermRegistration ctr) {
