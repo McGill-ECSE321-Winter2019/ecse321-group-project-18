@@ -131,10 +131,6 @@ public class TestCRUD {
 		Set<Course> cooperatorCoursesDb = cooperatorTest.getCourse();
 		assertTrue(cooperatorCoursesDb.contains(course1Test));
 		assertTrue(cooperatorCoursesDb.contains(course2Test));
-
-		courseService.delete(course2Test);
-		cooperatorTest = cooperatorService.get(1);
-		assertTrue(!cooperatorTest.getCourse().contains(course2Test));
 	}
 
 	@Test
@@ -168,10 +164,6 @@ public class TestCRUD {
 		assertEquals(ctrTest, formTest.getCoopTermRegistration());
 		assertTrue(ctrTest.getForm().contains(formTest));
 		assertEquals(ctrTest.getForm().iterator().next().getPdfLink(), pdflink);
-
-		formService.delete(formTest);
-		ctrTest = coopTermRegistrationService.get(registrationID);
-		assertTrue(!ctrTest.getForm().contains(formTest));
 	}
 
 	@Test(expected = NullArgumentException.class)

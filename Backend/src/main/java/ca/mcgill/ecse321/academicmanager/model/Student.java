@@ -1,5 +1,6 @@
 package ca.mcgill.ecse321.academicmanager.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -12,101 +13,109 @@ import java.util.Set;
 
 /**
  * Student Entity.
+ * 
  * @author ecse321-winter2019-group18
  */
 @Entity
-public class Student{
+public class Student {
 	private String studentID;
-   
-    public void setStudentID(String value) {
-	   this.studentID = value;
-    }
+
+	public void setStudentID(String value) {
+		this.studentID = value;
+	}
+
 	@Id
 	public String getStudentID() {
 		return this.studentID;
-    }
+	}
+
 	private String firstName;
-	
+
 	public void setFirstName(String value) {
 		this.firstName = value;
-    }
+	}
+
 	public String getFirstName() {
 		return this.firstName;
-    }
+	}
+
 	private String lastName;
-	
+
 	public void setLastName(String value) {
-	this.lastName = value;
-    }
+		this.lastName = value;
+	}
+
 	public String getLastName() {
 		return this.lastName;
-    }
+	}
+
 	private boolean isProblematic;
-	
+
 	public void setIsProblematic(boolean value) {
 		this.isProblematic = value;
-    }
+	}
+
 	public boolean isIsProblematic() {
 		return this.isProblematic;
-    }
+	}
+
 	private Set<Meeting> meeting;
-	
-	@ManyToMany(mappedBy="student", fetch=FetchType.EAGER)
+
+	@ManyToMany(mappedBy = "student", fetch = FetchType.EAGER)
 	public Set<Meeting> getMeeting() {
-	   return this.meeting;
+		return this.meeting;
 	}
-	
+
 	public void setMeeting(Set<Meeting> meetings) {
-	   this.meeting = meetings;
+		this.meeting = meetings;
 	}
-	
+
 	public void addMeeting(Meeting meeting) {
 		try {
-			if(!this.meeting.contains(meeting)) {
+			if (!this.meeting.contains(meeting)) {
 				this.meeting.add(meeting);
 			}
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			this.meeting = new HashSet<Meeting>();
 			this.meeting.add(meeting);
 		}
 	}
-	
+
 	private Set<CoopTermRegistration> coopTermRegistration;
-	
-	@OneToMany(mappedBy="student", fetch=FetchType.EAGER)
+
+	@OneToMany(mappedBy = "student", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
 	public Set<CoopTermRegistration> getCoopTermRegistration() {
-	   return this.coopTermRegistration;
+		return this.coopTermRegistration;
 	}
-	
+
 	public void setCoopTermRegistration(Set<CoopTermRegistration> coopTermRegistration) {
-	   this.coopTermRegistration = coopTermRegistration;
+		this.coopTermRegistration = coopTermRegistration;
 	}
-	
+
 	public void addCoopTermRegistration(CoopTermRegistration coopTermRegistration) {
 		try {
-			if(!this.coopTermRegistration.contains(coopTermRegistration)) {
+			if (!this.coopTermRegistration.contains(coopTermRegistration)) {
 				this.coopTermRegistration.add(coopTermRegistration);
 				coopTermRegistration.setStudent(this);
 			}
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			this.coopTermRegistration = new HashSet<CoopTermRegistration>();
 			this.coopTermRegistration.add(coopTermRegistration);
 			coopTermRegistration.setStudent(this);
 		}
 	}
-	
+
 	private Cooperator cooperator;
-	
-	@ManyToOne(optional=false)
+
+	@ManyToOne(optional = false)
 	public Cooperator getCooperator() {
-	   return this.cooperator;
+		return this.cooperator;
 	}
-	
+
 	public void setCooperator(Cooperator cooperator) {
-	   this.cooperator = cooperator;
+		this.cooperator = cooperator;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -117,6 +126,7 @@ public class Student{
 		result = prime * result + ((studentID == null) ? 0 : studentID.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -145,6 +155,5 @@ public class Student{
 			return false;
 		return true;
 	}
-	
-	
+
 }

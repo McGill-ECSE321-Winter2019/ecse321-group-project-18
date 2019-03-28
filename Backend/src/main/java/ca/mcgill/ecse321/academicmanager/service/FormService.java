@@ -13,6 +13,13 @@ import ca.mcgill.ecse321.academicmanager.model.CoopTermRegistration;
 import ca.mcgill.ecse321.academicmanager.model.Form;
 import ca.mcgill.ecse321.academicmanager.model.FormType;
 
+/**
+ * form service class to interface with the database
+ * 
+ * @author Group-18
+ * @version 2.0
+ *
+ */
 @Service
 public class FormService {
 	@Autowired
@@ -21,6 +28,16 @@ public class FormService {
 	CoopTermRegistrationService coopTermRegistrationService;
 
 	// ---CREATE---
+	/**
+	 * Creates a new Form instance
+	 * 
+	 * @param formID   id of the Form
+	 * @param name     name of the Form
+	 * @param pdflink  link to the Form
+	 * @param formtype Type of the Form
+	 * @param ctr      CoopTermRegistration instance associated with Form
+	 * @return Form instance
+	 */
 	@Transactional
 	public Form create(String formID, String name, String pdflink, FormType formtype, CoopTermRegistration ctr) {
 		if (!Helper.checkArg(name) || !Helper.checkArg(pdflink) || !Helper.checkArg(formtype)
@@ -39,8 +56,15 @@ public class FormService {
 	}
 
 	// ---UPDATE---
+	/**
+	 * Updated name of form
+	 * 
+	 * @param form Form instance
+	 * @param name new name of form to be updated
+	 * @return updated Form instance
+	 */
 	@Transactional
-	Form updateName(Form form, String name) {
+	public Form updateName(Form form, String name) {
 		if (!Helper.checkArg(form)) {
 			throw new IllegalArgumentException("form is null");
 		}
@@ -51,8 +75,15 @@ public class FormService {
 		return formRepository.save(form);
 	}
 
+	/**
+	 * Updated form link
+	 * 
+	 * @param form    Form instance
+	 * @param pdflink new link of form to be updated
+	 * @return updated Form instance
+	 */
 	@Transactional
-	Form updateLink(Form form, String pdflink) {
+	public Form updateLink(Form form, String pdflink) {
 		if (!Helper.checkArg(form)) {
 			throw new IllegalArgumentException("form is null");
 		}
@@ -63,8 +94,15 @@ public class FormService {
 		return formRepository.save(form);
 	}
 
+	/**
+	 * Updated form type
+	 * 
+	 * @param form     Form instance
+	 * @param formtype new form type to be updated
+	 * @return updated Form instance
+	 */
 	@Transactional
-	Form updateType(Form form, FormType formtype) {
+	public Form updateType(Form form, FormType formtype) {
 		if (!Helper.checkArg(form)) {
 			throw new IllegalArgumentException("form is null");
 		}
@@ -76,16 +114,32 @@ public class FormService {
 	}
 
 	// ---GET---
+	/**
+	 * Gets Form instance based on formId
+	 * 
+	 * @param formId id of the Form
+	 * @return Form instance
+	 */
 	@Transactional
 	public Form get(String formId) {
 		return formRepository.findByFormID(formId);
 	}
 
+	/**
+	 * Gets all Form instances
+	 * 
+	 * @return Set of Form instances
+	 */
 	@Transactional
 	public Set<Form> getAll() {
 		return Helper.toSet(formRepository.findAll());
 	}
 
+	/**
+	 * Gets employer evaluation Form instances
+	 * 
+	 * @return Set of Form instances
+	 */
 	@Transactional
 	public Set<Form> getAllEmployerEvalForms() {
 		Set<CoopTermRegistration> ctrs = coopTermRegistrationService.getAll();
@@ -104,6 +158,11 @@ public class FormService {
 		return employerForms;
 	}
 
+	/**
+	 * Gets student evaluation Form instances
+	 * 
+	 * @return Set of Form instances
+	 */
 	@Transactional
 	public Set<Form> getAllStudentEvalForms() {
 		Set<CoopTermRegistration> ctrs = coopTermRegistrationService.getAll();
@@ -123,6 +182,11 @@ public class FormService {
 	}
 
 	// ---DELETE---
+	/**
+	 * Deletes a From instance
+	 * 
+	 * @param form Form instance to be deleted
+	 */
 	@Transactional
 	public void delete(Form form) {
 		formRepository.delete(form);

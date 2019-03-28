@@ -1,7 +1,5 @@
 package ca.mcgill.ecse321.academicmanager.model;
 
-
-public enum FormType
-{
+public enum FormType {
 	STUDENTEVALUATION, COOPEVALUATION;
 }
