@@ -1,5 +1,6 @@
 package ca.mcgill.ecse321.academicmanager.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -9,72 +10,79 @@ import java.util.Set;
 import javax.persistence.OneToMany;
 
 /**
- * Represents a Term (semester) in a school year.
- * A deadline to submit evaluation forms is determined for each term.
+ * Represents a Term (semester) in a school year. A deadline to submit
+ * evaluation forms is determined for each term.
+ * 
  * @see Form
  * @author ecse321-winter2019-group18
- * */
+ */
 @Entity
-public class Term
-{
+public class Term {
 	private String termID;
-	   
+
 	public void setTermID(String value) {
 		this.termID = value;
 	}
+
 	@Id
 	public String getTermID() {
 		return this.termID;
 	}
-	
+
 	private String termName;
 
 	public void setTermName(String value) {
 		this.termName = value;
 	}
+
 	public String getTermName() {
 		return this.termName;
 	}
+
 	private Date studentEvalFormDeadline;
-	
+
 	public void setStudentEvalFormDeadline(Date value) {
 		this.studentEvalFormDeadline = value;
 	}
+
 	public Date getStudentEvalFormDeadline() {
 		return this.studentEvalFormDeadline;
 	}
+
 	private Date coopEvalFormDeadline;
-	
+
 	public void setCoopEvalFormDeadline(Date value) {
 		this.coopEvalFormDeadline = value;
 	}
+
 	public Date getCoopEvalFormDeadline() {
 		return this.coopEvalFormDeadline;
 	}
+
 	private Set<CoopTermRegistration> coopTermRegistration;
-	
-	@OneToMany(mappedBy="term", fetch=FetchType.EAGER)
+
+	@OneToMany(mappedBy = "term", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
 	public Set<CoopTermRegistration> getCoopTermRegistration() {
 		return this.coopTermRegistration;
 	}
-	
+
 	public void setCoopTermRegistration(Set<CoopTermRegistration> coopTermRegistrations) {
-	   this.coopTermRegistration = coopTermRegistrations;
+		this.coopTermRegistration = coopTermRegistrations;
 	}
 
 	public void addCoopTermRegistration(CoopTermRegistration coopTermRegistrations) {
 		try {
-			if(!this.coopTermRegistration.contains(coopTermRegistrations)) {
+			if (!this.coopTermRegistration.contains(coopTermRegistrations)) {
 				this.coopTermRegistration.add(coopTermRegistrations);
 				coopTermRegistrations.setTerm(this);
 			}
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			this.coopTermRegistration = new HashSet<CoopTermRegistration>();
 			this.coopTermRegistration.add(coopTermRegistrations);
 			coopTermRegistrations.setTerm(this);
 		}
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -85,6 +93,7 @@ public class Term
 		result = prime * result + ((termName == null) ? 0 : termName.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -116,5 +125,5 @@ public class Term
 			return false;
 		return true;
 	}
-	
+
 }

@@ -14,7 +14,19 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class AcademicManagerRestController {
 	@Autowired
-	AcademicManagerService service;
+	private CooperatorService cooperatorService;
+	@Autowired
+	private CoopTermRegistrationService coopTermRegistrationService;
+	@Autowired
+	private CourseService courseService;
+	@Autowired
+	private FormService formService;
+	@Autowired
+	private MeetingService meetingService;
+	@Autowired
+	private StudentService studentService;
+	@Autowired
+	private TermService termService;
 	Cooperator cooperator;
 
 	/************* CREATE/POST OBJECTS METHODS ************/
@@ -25,7 +37,7 @@ public class AcademicManagerRestController {
 	public CooperatorDto CreateCooperator(@RequestParam("id") Integer coopID) throws IllegalArgumentException {
 		// @formatter:on
 
-		service.createCooperator(coopID);
+		cooperatorService.create(coopID);
 		return convertToDto(coopID);
 	}
 
@@ -37,7 +49,7 @@ public class AcademicManagerRestController {
 		// @formatter:on
 		Date studentEvalFormDeadline = Date.valueOf(date1); // form of date: "2015-06-01"
 		Date coopEvalFormDeadline = Date.valueOf(date2);
-		Term term = service.createTerm(termID, name, studentEvalFormDeadline, coopEvalFormDeadline);
+		Term term = termService.create(termID, name, studentEvalFormDeadline, coopEvalFormDeadline);
 		return convertToDto(term);
 	}
 
@@ -64,9 +76,9 @@ public class AcademicManagerRestController {
 			@RequestParam("lastname") String lastName, @RequestParam("cooperatorid") Integer cooperatorID)
 			throws IllegalArgumentException {
 		// @formatter:on
-		Cooperator coop = service.getCooperator(cooperatorID);
+		Cooperator coop = cooperatorService.get(cooperatorID);
 
-		Student student = service.createStudent(studentID, firstName, lastName, coop);
+		Student student = studentService.create(studentID, firstName, lastName, coop);
 		return convertToDto(student);
 	}
 	
@@ -117,12 +129,12 @@ public class AcademicManagerRestController {
 			@RequestParam("termstat") Integer termStat,
 			@RequestParam("gradeid") Integer gradeID) {
 		//	throws IllegalArgumentException {
-		Student student = service.getStudent(studentID);
-		Term term = service.getTerm(termID);
+		Student student = studentService.get(studentID);
+		Term term = termService.get(termID);
 		
 		TermStatus mystatus = ConvertTermStatus(termStat);
 		Grade mygrade = ConvertGrade(gradeID);
-		CoopTermRegistration internship = service.createCoopTermRegistration(registrationID, jobID, mystatus,
+		CoopTermRegistration internship = coopTermRegistrationService.create(registrationID, jobID, mystatus,
 				mygrade, student, term);
 		return convertToDto(internship, "NONE", "NONE");
 	}
@@ -136,9 +148,9 @@ public class AcademicManagerRestController {
     		@RequestParam("rank") String rank,
     		@RequestParam("cooperatorid") Integer cooperatorID) {
     	    	
-		Cooperator c = service.getCooperator(cooperatorID);
+		Cooperator c = cooperatorService.get(cooperatorID);
 
-    	Course course = service.createCourse(id, term, name, Integer.parseInt(rank), c);
+    	Course course = courseService.create(id, term, name, Integer.parseInt(rank), c);
     	return convertCourseToDto(course);
     }
     
@@ -149,11 +161,11 @@ public class AcademicManagerRestController {
     		@RequestParam("pdflink") String pdfLink, 
     		@RequestParam("ctrid") String ctrID) {
     	    	
-		CoopTermRegistration ctr = service.getCoopTermRegistration(ctrID);
+		CoopTermRegistration ctr = coopTermRegistrationService.get(ctrID);
 		String formName = ctr.getStudent().getStudentID(); 
 		FormType formType = FormType.STUDENTEVALUATION;
 
-    	Form form = service.createForm(formID, formName, pdfLink, formType, ctr);
+    	Form form = formService.create(formID, formName, pdfLink, formType, ctr);
     	return convertFormToDto(form);
     }
     
@@ -163,11 +175,11 @@ public class AcademicManagerRestController {
     		@RequestParam("pdflink") String pdfLink, 
     		@RequestParam("ctrid") String ctrID) {
     	    	
-		CoopTermRegistration ctr = service.getCoopTermRegistration(ctrID);
+		CoopTermRegistration ctr = coopTermRegistrationService.get(ctrID);
 		String formName = ctr.getStudent().getStudentID(); 
 		FormType formType = FormType.COOPEVALUATION;
 
-    	Form form = service.createForm(formID, formName, pdfLink, formType, ctr);
+    	Form form = formService.create(formID, formName, pdfLink, formType, ctr);
     	return convertFormToDto(form);
     }
     /********** GENERAL Update/PUT METHODS ****************/
@@ -176,7 +188,7 @@ public class AcademicManagerRestController {
 	@PutMapping(value = {"/students/update", "/students/update/"})
 	public StudentDto updateStudentStatus(@RequestParam("id") String studentID, @RequestParam("status") boolean isProblematic) 
 			throws IllegalArgumentException {
-		return convertToDto(service.updateStudentProblematicStatus(service.getStudent(studentID), isProblematic));
+		return convertToDto(studentService.updateProblematicStatus(studentService.get(studentID), isProblematic));
 	}
     
     /********** GENERAL GET METHODS ****************/
@@ -191,7 +203,7 @@ public class AcademicManagerRestController {
  	@ResponseBody
  	public List<CoopTermRegistrationDto> viewCoopTermRegistrations() {
  		// @formatter:on
- 		Set<CoopTermRegistration> internships = service.getAllCoopTermRegistration();
+ 		Set<CoopTermRegistration> internships = coopTermRegistrationService.getAll();
  		List<CoopTermRegistrationDto> internshipsDto = new ArrayList<CoopTermRegistrationDto>();
 
  		if (internships != null) {
@@ -219,7 +231,7 @@ public class AcademicManagerRestController {
  	@ResponseBody
  	public Set<Grade> viewGrades() throws IllegalArgumentException {
 
- 		Set<CoopTermRegistration> internships = service.getAllCoopTermRegistration();
+ 		Set<CoopTermRegistration> internships = coopTermRegistrationService.getAll();
  		Set<Grade> grades = new HashSet<Grade>();
 
  		for (CoopTermRegistration intern : internships) {
@@ -237,7 +249,7 @@ public class AcademicManagerRestController {
     	if (courseID == null || courseID.isEmpty()) {
     		throw new IllegalArgumentException();
     	}
-    	return convertCourseToDto(service.getCourse(courseID, term));
+    	return convertCourseToDto(courseService.get(courseID, term));
     }
     
     /**
@@ -265,7 +277,7 @@ public class AcademicManagerRestController {
  	@ResponseBody
  	public List<CoopTermRegistrationDto> viewCoopTermRegistrationsOfStudent(@RequestParam("studentid") String studentID) throws IllegalArgumentException {
 
- 		Set<CoopTermRegistration> internships = service.getCoopTermRegistrationsByStudentID(studentID);
+ 		Set<CoopTermRegistration> internships = coopTermRegistrationService.getByStudentID(studentID);
  		List<CoopTermRegistrationDto> internshipsDto = new ArrayList<CoopTermRegistrationDto>();
 
  		if (internships != null) {
@@ -289,7 +301,7 @@ public class AcademicManagerRestController {
  	@ResponseBody
  	public List<CoopTermRegistrationDto> viewCoopTermRegistrationsByTermNameAndStudentID(@RequestParam("termname") String termName, @RequestParam("studentid") String studentID) throws IllegalArgumentException {
 
- 		Set<CoopTermRegistration> internships = service.getCoopTermRegistrationsByTermNameAndStudentID(termName, studentID);
+ 		Set<CoopTermRegistration> internships = coopTermRegistrationService.getByTermNameAndStudentID(termName, studentID);
  		List<CoopTermRegistrationDto> internshipsDto = new ArrayList<CoopTermRegistrationDto>();
 
  		if (internships != null) {
@@ -313,7 +325,7 @@ public class AcademicManagerRestController {
  	@ResponseBody
  	public List<CoopTermRegistrationDto> viewCoopTermRegistrationsByTermName(@RequestParam("termname") String termName) throws IllegalArgumentException {
 
- 		Set<CoopTermRegistration> internships = service.getCoopTermRegistrationsByTermName(termName);
+ 		Set<CoopTermRegistration> internships = coopTermRegistrationService.getByTermName(termName);
  		List<CoopTermRegistrationDto> internshipsDto = new ArrayList<CoopTermRegistrationDto>();
 
  		if (internships != null) {
@@ -400,7 +412,7 @@ public class AcademicManagerRestController {
 	@ResponseBody
 	public List<StudentDto> getProblematicStudents() throws IllegalArgumentException {
 		// @formatter:on
-		List<Student> students = service.getAllProblematicStudents();
+		List<Student> students = studentService.getAllProblematicStudents();
 		List<StudentDto> mylist = new ArrayList<StudentDto>();
 		// check for every student;
 		for (Student s : students) {
@@ -416,7 +428,7 @@ public class AcademicManagerRestController {
 	@ResponseBody
 	public List<StudentDto> getListStudents() throws IllegalArgumentException {
 		// @formatter:on
-		Set<Student> students = service.getAllStudents();
+		Set<Student> students = studentService.getAll();
 		List<StudentDto> mylist = new ArrayList<StudentDto>();
 
 		// check for every student;
@@ -431,7 +443,7 @@ public class AcademicManagerRestController {
 	@ResponseBody
 	public List<StudentDto> getListStudentsByIDAndStatus(@RequestParam("studentid") String studentID) throws IllegalArgumentException {
 		// @formatter:on
-		Set<Student> students = service.getStudentsByIDAndStatus(studentID, true);
+		Set<Student> students = studentService.getByIDAndStatus(studentID, true);
 		List<StudentDto> mylist = new ArrayList<StudentDto>();
 		// check for every student;
 		for (Student s : students) {
@@ -444,7 +456,7 @@ public class AcademicManagerRestController {
 	@ResponseBody
 	public List<StudentDto> getListStudentsByID(@RequestParam("studentid") String studentID) throws IllegalArgumentException {
 		// @formatter:on
-		Student s = service.getStudent(studentID);
+		Student s = studentService.get(studentID);
 		List<StudentDto> mylist = new ArrayList<StudentDto>();
 		
 		mylist.add(convertToDto(s));
@@ -459,7 +471,7 @@ public class AcademicManagerRestController {
 			throws IllegalArgumentException {
 		// @formatter:on
 
-		/*Student mystudent = service.getStudent(studentID);
+		/*Student mystudent = studentService.get(studentID);
 
 		if (mystudent != null) {
 			Set<Form> myformlist = service.getAllStudentEvalFormsOfStudent(mystudent);
@@ -474,7 +486,7 @@ public class AcademicManagerRestController {
 		}
 		return null;*/
 		
-		Set<Form> myformlist = service.getAllStudentEvalForms();
+		Set<Form> myformlist = formService.getAllStudentEvalForms();
 		List<String> arrayList = new ArrayList<String>();
 		for (Form f : myformlist) {
 			if(f.getCoopTermRegistration().getStudent().getStudentID().equals(studentID)) {
@@ -504,7 +516,7 @@ public class AcademicManagerRestController {
 		}
 		return null;*/
 		
-		Set<Form> myformlist = service.getAllEmployerEvalForms();
+		Set<Form> myformlist = formService.getAllEmployerEvalForms();
 		List<String> arrayList = new ArrayList<String>();
 		for (Form f : myformlist) {
 			if(f.getCoopTermRegistration().getStudent().getStudentID().equals(studentID)) {
@@ -524,7 +536,7 @@ public class AcademicManagerRestController {
     @ResponseBody
     public List<CourseDto> getCourses() {
     	// dummy...
-    	Set<Course> courseSet = service.getAllCourses();
+    	Set<Course> courseSet = courseService.getAll();
     	List<CourseDto> courseList = new ArrayList<CourseDto>();
     	for (Course course : courseSet) {
     		courseList.add(convertCourseToDto(course));
@@ -540,11 +552,11 @@ public class AcademicManagerRestController {
  			"/coopTermRegistrations/{registrationID}/adjudicate/" })
  	public CoopTermRegistrationDto adjudicateTermRegistration(@PathVariable("registrationID") String registrationID,
  			@RequestParam("success") boolean success) throws IllegalArgumentException {
- 		CoopTermRegistration termRegistration = service.getCoopTermRegistration(registrationID);
+ 		CoopTermRegistration termRegistration = coopTermRegistrationService.get(registrationID);
  		if (success)
- 			termRegistration = service.updateCoopTermRegistration(termRegistration, TermStatus.FINISHED, termRegistration.getGrade());
+ 			termRegistration = coopTermRegistrationService.updateTermStatus(termRegistration, TermStatus.FINISHED);
  		else
- 			termRegistration = service.updateCoopTermRegistration(termRegistration, TermStatus.FAILED, termRegistration.getGrade());
+ 			termRegistration = coopTermRegistrationService.updateTermStatus(termRegistration, TermStatus.FAILED);
  		
  		Set<Form> forms = termRegistration.getForm();
  		String employerFormLink = "NONE";

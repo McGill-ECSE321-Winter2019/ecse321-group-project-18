@@ -1,5 +1,6 @@
 package ca.mcgill.ecse321.academicmanager.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -10,59 +11,64 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * A CoopTermRegistration object is created when a Student register for a course.
- * Each registration has a unique ID and therefore stores necessary information on the course
- * and its term.
+ * A CoopTermRegistration object is created when a Student register for a
+ * course. Each registration has a unique ID and therefore stores necessary
+ * information on the course and its term.
+ * 
  * @author ecse321-winter2019-group18
  * @since 2019-02-10
  */
 @Entity
-public class CoopTermRegistration
-{
+public class CoopTermRegistration {
 	private Grade grade;
-   
-   	public void setGrade(Grade value) {
-	   this.grade = value;
-    }
-   	public Grade getGrade() {
+
+	public void setGrade(Grade value) {
+		this.grade = value;
+	}
+
+	public Grade getGrade() {
 		return this.grade;
-    }
+	}
+
 	private String registrationID;
-   
-    public void setRegistrationID(String value) {
-	    this.registrationID = value;
-    }
+
+	public void setRegistrationID(String value) {
+		this.registrationID = value;
+	}
+
 	@Id
 	public String getRegistrationID() {
 		return this.registrationID;
 	}
+
 	private TermStatus termStatus;
-	
+
 	public void setTermStatus(TermStatus value) {
 		this.termStatus = value;
 	}
+
 	public TermStatus getTermStatus() {
 		return this.termStatus;
 	}
+
 	private Set<Form> form;
-	
-	@OneToMany(mappedBy="coopTermRegistration", fetch=FetchType.EAGER)
+
+	@OneToMany(mappedBy = "coopTermRegistration", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
 	public Set<Form> getForm() {
-	   return this.form;
+		return this.form;
 	}
-	
+
 	public void setForm(Set<Form> forms) {
-	   this.form = forms;
+		this.form = forms;
 	}
-	
+
 	public void addForm(Form form) {
 		try {
-			if(!this.form.contains(form)) {
+			if (!this.form.contains(form)) {
 				this.form.add(form);
 				form.setCoopTermRegistration(this);
 			}
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			this.form = new HashSet<Form>();
 			this.form.add(form);
 			form.setCoopTermRegistration(this);
@@ -70,34 +76,37 @@ public class CoopTermRegistration
 	}
 
 	private Term term;
-	
+
 	@ManyToOne
 	public Term getTerm() {
-	   return this.term;
+		return this.term;
 	}
 
 	public void setTerm(Term term) {
-	   this.term = term;
+		this.term = term;
 	}
-	
+
 	private String jobID;
-	
+
 	public void setJobID(String value) {
 		this.jobID = value;
 	}
+
 	public String getJobID() {
 		return this.jobID;
 	}
+
 	private Student student;
-	
-	@ManyToOne(optional=false)
+
+	@ManyToOne(optional = false)
 	public Student getStudent() {
-	   return this.student;
+		return this.student;
 	}
-	
+
 	public void setStudent(Student student) {
-	   this.student = student;
+		this.student = student;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -108,6 +117,7 @@ public class CoopTermRegistration
 		result = prime * result + ((termStatus == null) ? 0 : termStatus.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -133,6 +143,5 @@ public class CoopTermRegistration
 			return false;
 		return true;
 	}
-	
-	
+
 }

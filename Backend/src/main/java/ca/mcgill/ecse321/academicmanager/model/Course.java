@@ -5,50 +5,59 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Course{
+public class Course {
 	private String courseID;
-   
-   public void setCourseID(String value) {
-	   this.courseID = value;
-    }
+
+	public void setCourseID(String value) {
+		this.courseID = value;
+	}
+
 	@Id
 	public String getCourseID() {
 		return this.courseID;
-    }
+	}
+
 	private String term;
-	
+
 	public void setTerm(String value) {
 		this.term = value;
-    }
+	}
+
 	public String getTerm() {
-	return this.term;
-	    }
+		return this.term;
+	}
+
 	private String courseName;
-	
+
 	public void setCourseName(String value) {
 		this.courseName = value;
-    }
+	}
+
 	public String getCourseName() {
 		return this.courseName;
-    }
+	}
+
 	private Integer courseRank;
-	
+
 	public void setCourseRank(Integer value) {
 		this.courseRank = value;
-    }
+	}
+
 	public Integer getCourseRank() {
 		return this.courseRank;
-    }
+	}
+
 	private Cooperator cooperator;
-	
-	@ManyToOne(optional=false)
+
+	@ManyToOne(optional = false)
 	public Cooperator getCooperator() {
-	   return this.cooperator;
+		return this.cooperator;
 	}
-	
+
 	public void setCooperator(Cooperator cooperator) {
-	   this.cooperator = cooperator;
+		this.cooperator = cooperator;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -59,6 +68,7 @@ public class Course{
 		result = prime * result + ((term == null) ? 0 : term.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -90,6 +100,5 @@ public class Course{
 			return false;
 		return true;
 	}
-	
-	
+
 }
