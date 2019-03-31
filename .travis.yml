@@ -1,23 +1,23 @@
 matrix:
     include:
-      - language: node_js
-        node_js:
-            - "8.10.0"
+    #   - language: node_js
+    #     node_js:
+    #         - "8.10.0"
 
-        before_install:
-            - cd AcademicManager-Web
-            - npm install
+    #     before_install:
+    #         - cd AcademicManager-Web
+    #         - npm install
 
-        script:
-            - npm run build
+    #     script:
+    #         - npm run build
 
-        deploy:
-            provider: heroku
-            api_key: 0d2d6a3a-a07c-4f2b-b209-450f71f35ad6
-            app:
-                master: cooperatorapp-frontend-18
-            on:
-                repo: McGill-ECSE321-Winter2019/ecse321-group-project-18
+    #     deploy:
+    #         provider: heroku
+    #         api_key: 0d2d6a3a-a07c-4f2b-b209-450f71f35ad6
+    #         app:
+    #             master: cooperatorapp-frontend-18
+    #         on:
+    #             repo: McGill-ECSE321-Winter2019/ecse321-group-project-18
 
       - language: java
 
@@ -35,36 +35,36 @@ matrix:
             on:
                 repo: McGill-ECSE321-Winter2019/ecse321-group-project-18
 
-      - language: android
-        sudo: false
-        jdk:
-            - oraclejdk8
-        before_install:
-            - cd AcademicManager-Android
-            - chmod +x gradlew
-            - yes | sdkmanager "build-tools;28.0.3"
-            - yes | sdkmanager "platforms;android-28"
-        script:
-            - ./gradlew build
-        android:
-            components:
-                # - extra-android-support
-                - extra-google-google_play_services
-                - platform-tools
-                - tools
-                - build-tools-28.0.3
-                - android-28
-                # - android-22
-                # - sys-img-armeabi-v7a-android-22
-                - extra-android-m2repository
-            licenses:
-            - 'android-sdk-preview-license-52d11cd2'
-            - 'android-sdk-license-.+'
-            - 'google-gdk-license-.+'
-            # before_script:
-            #     echo no | android create avd --force -n test -t - android-22 --abi armeabi-v7a
-            #     emulator -avd test -no-skin -no-audio -no-window &
-            #     android-wait-for-emulator
-            #     adb shell input keyevent 82 &
+    #   - language: android
+    #     sudo: false
+    #     jdk:
+    #         - oraclejdk8
+    #     before_install:
+    #         - cd AcademicManager-Android
+    #         - chmod +x gradlew
+    #         - yes | sdkmanager "build-tools;28.0.3"
+    #         - yes | sdkmanager "platforms;android-28"
+    #     script:
+    #         - ./gradlew build
+    #     android:
+    #         components:
+    #             # - extra-android-support
+    #             - extra-google-google_play_services
+    #             - platform-tools
+    #             - tools
+    #             - build-tools-28.0.3
+    #             - android-28
+    #             # - android-22
+    #             # - sys-img-armeabi-v7a-android-22
+    #             - extra-android-m2repository
+    #         licenses:
+    #         - 'android-sdk-preview-license-52d11cd2'
+    #         - 'android-sdk-license-.+'
+    #         - 'google-gdk-license-.+'
+    #         # before_script:
+    #         #     echo no | android create avd --force -n test -t - android-22 --abi armeabi-v7a
+    #         #     emulator -avd test -no-skin -no-audio -no-window &
+    #         #     android-wait-for-emulator
+    #         #     adb shell input keyevent 82 &
 
 
