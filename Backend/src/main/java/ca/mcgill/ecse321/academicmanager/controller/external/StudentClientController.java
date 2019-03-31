@@ -2,6 +2,7 @@ package ca.mcgill.ecse321.academicmanager.controller.external;
 
 import ca.mcgill.ecse321.academicmanager.service.StudentService;
 import com.google.gson.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.BufferedReader;
@@ -43,6 +44,8 @@ class ExternalStudentDto {
 public class StudentClientController {
 
     public static final String GET_URL = "https://employer-backend-8888.herokuapp.com/mainapp/1/getstudents";
+    private List<ExternalStudentDto> students = new ArrayList<>();
+    @Autowired
     private StudentService studentService;
     /**
      * source: https://www.journaldev.com/7148/java-httpurlconnection-example-java-http-request-get-post
@@ -73,7 +76,7 @@ public class StudentClientController {
         return responseString;
     }
     /**
-     * Response method for the HTTP GET request /students/sync
+     * Main response method for the HTTP GET request /students/sync
      * @return a message to the REST Client
      * @author Bach Tran
      * */
@@ -81,29 +84,40 @@ public class StudentClientController {
     public String getAllStudents() {
         String responseMessage = "Sync complete!";
         String responseString = "";
+        // send HTTP GET request
         try {
             responseString = sendGETStudents();
         } catch (IOException e) {
             System.out.println(e.getMessage());
             responseMessage = e.getMessage();
         }
-
-       Gson gson = new Gson();
-//        Type type = new TypeToken<ExternalStudentDto[]>(){}.getType();
-//        ExternalStudentDto[] externalStudentDto = gson.fromJson(responseString, ExternalStudentDto[].class);
         // parse raw data
         JsonParser parser = new JsonParser();
         JsonArray jsonStudents = parser.parse(responseString).getAsJsonArray();
         // parse to Java Objects
-        List<ExternalStudentDto> students = new ArrayList<>();
-        for (JsonElement jsonStudent : jsonStudents) {
-            if (jsonStudent.isJsonObject()) {
-                JsonObject intermediateObject = jsonStudent.getAsJsonObject();
-                students.add(new ExternalStudentDto(intermediateObject.get("studentID").toString(),
+        students = jsonArrayToList(jsonStudents);
+        return responseMessage + "\n" + students.toString();
+    }
+    /**
+     * Helper method: convert a jsonArray of students to a Java.util.ArrayList of ExxternalStudentDto
+     * @return a List of ExternalStudentDto
+     * */
+    private List<ExternalStudentDto> jsonArrayToList(JsonArray jsonArray) {
+        List<ExternalStudentDto> result = new ArrayList<>();
+        for (JsonElement jsonElement : jsonArray) {
+            if (jsonElement.isJsonObject()) {
+                JsonObject intermediateObject = jsonElement.getAsJsonObject();
+                result.add(new ExternalStudentDto(intermediateObject.get("studentID").toString(),
                         intermediateObject.get("name").toString()));
             }
-            System.out.println(students);
         }
-        return responseMessage + "\n" + students.toString();
+        return result;
+    }
+    /**
+     * Puts the received data into the Backend's database.
+     * @author Bach Tran
+     * */
+    private void persist() {
+        
     }
 }
