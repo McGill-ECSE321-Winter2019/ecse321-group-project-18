@@ -39,6 +39,7 @@ matrix:
       
         before_install:
             - cd AcademicManagerAndroid
+            - chmod +x gradlew
       
         android:
           components:
