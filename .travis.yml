@@ -34,6 +34,7 @@ matrix:
                 master: cooperatorapp-backend-18
             on:
                 repo: McGill-ECSE321-Winter2019/ecse321-group-project-18
+                
       - language: android
         sudo: false
         jdk:
@@ -41,44 +42,21 @@ matrix:
         before_install:
             - cd AcademicManager-Android
             - chmod +x gradlew
-      
-        env:
-            global:
-                - ANDROID_API_LEVEL=24
-                - EMULATOR_API_LEVEL=21
-                - ANDROID_BUILD_TOOLS_VERSION=24.0.1
-                - ANDROID_ABI=google_apis/armeabi-v7a
-                - ADB_INSTALL_TIMEOUT=20 # minutes (2 minutes by default)
         android:
-        components:
-            - tools
-            - tools
-            - platform-tools
-            - build-tools-$ANDROID_BUILD_TOOLS_VERSION
-            - android-$ANDROID_API_LEVEL
-            - android-$EMULATOR_API_LEVEL
-            - extra
-            - add-on
-            - extra-google-m2repository
-            - extra-android-m2repository
-
-            # Google Play Services
-            - extra-google-google_play_services
-            # Support library
+            components:
             - extra-android-support
-
-            - addon-google_apis-google-$ANDROID_API_LEVEL
-            - addon-google_apis-google-$EMULATOR_API_LEVEL
-
-            - sys-img-armeabi-v7a-addon-google_apis-google-$ANDROID_API_LEVEL
-            - sys-img-armeabi-v7a-addon-google_apis-google-$EMULATOR_API_LEVEL
-        licenses:
-            - 'android-sdk-preview-license-52d11cd2'
-            - 'android-sdk-license-.+'
-            - 'google-gdk-license-.+'
-        before_script:
-            - echo no | android create avd --force -n test -t "Google Inc.:Google APIs:"$EMULATOR_API_LEVEL --abi $ANDROID_ABI
-            - emulator -avd test -no-skin -no-audio -no-window &
-            - android-wait-for-emulator
+            - extra-google-google_play_services
+            - platform-tools
+            - tools
+            - build-tools-25.0.2
+            - android-24
+            - android-22
+            - sys-img-armeabi-v7a-android-22
+            - extra-android-m2repository
+            before_script:
+            echo no | android create avd --force -n test -t - android-22 --abi armeabi-v7a
+            emulator -avd test -no-skin -no-audio -no-window &
+            android-wait-for-emulator
+            adb shell input keyevent 82 &
 
 
