@@ -186,4 +186,14 @@ public class StudentService {
 	public void delete(Student student) {
 		studentRepository.delete(student);
 	}
+	/**
+	 * Checks if a Student having the given ID exists in the database.
+	 * @author Bach Tran
+	 * @param studentID the unique id of the Student
+	 * @return true if the Student with the given id exists in the database.
+	 * */
+	@Transactional
+	public boolean exists(String studentID) {
+		return studentRepository.existsById(studentID);
+	}
 }

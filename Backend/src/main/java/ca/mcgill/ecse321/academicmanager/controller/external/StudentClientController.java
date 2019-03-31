@@ -118,9 +118,10 @@ public class StudentClientController {
     }
     /**
      * Puts the received data into the Backend's database.
+     * Contains the logic (instruction) on how to appropriately inject data to the database.
      * @author Bach Tran
      * */
     private void persist() {
-
+        
     }
 }
