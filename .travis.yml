@@ -45,26 +45,26 @@ matrix:
             - yes | sdkmanager "build-tools;28.0.3"
             - yes | sdkmanager "platforms;android-28"
         script:
-            - ./gradle build
+            - ./gradlew build
         android:
             components:
-                - extra-android-support
+                # - extra-android-support
                 - extra-google-google_play_services
                 - platform-tools
                 - tools
                 - build-tools-28.0.3
                 - android-28
-                - android-22
-                - sys-img-armeabi-v7a-android-22
+                # - android-22
+                # - sys-img-armeabi-v7a-android-22
                 - extra-android-m2repository
             licenses:
             - 'android-sdk-preview-license-52d11cd2'
             - 'android-sdk-license-.+'
             - 'google-gdk-license-.+'
-            before_script:
-                echo no | android create avd --force -n test -t - android-22 --abi armeabi-v7a
-                emulator -avd test -no-skin -no-audio -no-window &
-                android-wait-for-emulator
-                adb shell input keyevent 82 &
+            # before_script:
+            #     echo no | android create avd --force -n test -t - android-22 --abi armeabi-v7a
+            #     emulator -avd test -no-skin -no-audio -no-window &
+            #     android-wait-for-emulator
+            #     adb shell input keyevent 82 &
 
 
