@@ -1,11 +1,11 @@
 <template>
   <div id="app">
     <div id="banner">
-      <a href="#/app"><img id="logo" src="./assets/mcgill.png" height="80" width="200"></a>
+      <a href="#/app"><img id="logo" src="./assets/common_logo.png" width="280" height="200"></a>
     </div>
     <div id="sidebar">
       <ul id="sidebar-list">
-        <li><a href="#/app" class="sidebar-element">Home</a></li>
+        <li><a href="#/Hello" class="sidebar-element">Home</a></li>
         <li><a href="#/students" class="sidebar-element">Students</a></li>
         <li><a href="#/internships" class="sidebar-element">Internships</a></li>
         <li><a href="#/courses" class="sidebar-element">Courses</a></li>
@@ -31,12 +31,11 @@ export default {
   margin-top: 60px;
   background-color: #f5f5f5;
   height: 100vh;
-  width: 100wh;
 }
 
 #logo{
   align: center;
-  margin-top: 0px;
+  margin-top: -60px;
 }
 
 #banner {
