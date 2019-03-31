@@ -13,6 +13,7 @@ import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -42,9 +43,8 @@ class ExternalStudentDto {
 
 @RestController
 public class StudentClientController {
-
     public static final String GET_URL = "https://employer-backend-8888.herokuapp.com/mainapp/1/getstudents";
-    private List<ExternalStudentDto> students = new ArrayList<>();
+    private HashMap<String, ExternalStudentDto> students = new HashMap<>();
     @Autowired
     private StudentService studentService;
     /**
@@ -102,13 +102,16 @@ public class StudentClientController {
      * Helper method: convert a jsonArray of students to a Java.util.ArrayList of ExxternalStudentDto
      * @return a List of ExternalStudentDto
      * */
-    private List<ExternalStudentDto> jsonArrayToList(JsonArray jsonArray) {
-        List<ExternalStudentDto> result = new ArrayList<>();
+    private HashMap<String, ExternalStudentDto> jsonArrayToList(JsonArray jsonArray) {
+        HashMap<String, ExternalStudentDto> result = new HashMap<>();
         for (JsonElement jsonElement : jsonArray) {
             if (jsonElement.isJsonObject()) {
+                // extracts necessary information
                 JsonObject intermediateObject = jsonElement.getAsJsonObject();
-                result.add(new ExternalStudentDto(intermediateObject.get("studentID").toString(),
-                        intermediateObject.get("name").toString()));
+                String studentID = intermediateObject.get("studentID").toString();
+                String name = intermediateObject.get("name").toString();
+                // persists into HashMap
+                result.put(studentID, new ExternalStudentDto(studentID, name));
             }
         }
         return result;
@@ -118,6 +121,6 @@ public class StudentClientController {
      * @author Bach Tran
      * */
     private void persist() {
-        
+
     }
 }
