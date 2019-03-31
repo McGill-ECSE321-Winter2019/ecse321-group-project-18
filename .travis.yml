@@ -34,3 +34,13 @@ matrix:
                 master: cooperatorapp-backend-18
             on:
                 repo: McGill-ECSE321-Winter2019/ecse321-group-project-18
+
+      - language: java
+
+        before_install:
+            - cd AcademicManagerAndroid 
+
+        script:
+            - ./gradlew build
+
+
