@@ -178,13 +178,13 @@ public class StudentClientController {
         if (!cooperatorService.exists(DEFAULT_COOPERATOR_ID)) {
             cooperatorService.create(DEFAULT_COOPERATOR_ID);
         }
-        // deletes all obsolete student data
-        for (Student academicMangerStudent : studentService.getAll()) {
-            // deletes all obsolete students from the AcademicManager's database
-            if (!students.containsKey(academicMangerStudent.getStudentID())) {
-                studentService.delete(academicMangerStudent.getStudentID());
-            }
-        }
+//        // deletes all obsolete student data
+//        for (Student academicMangerStudent : studentService.getAll()) {
+//            // deletes all obsolete students from the AcademicManager's database
+//            if (!students.containsKey(academicMangerStudent.getStudentID())) {
+//                studentService.delete(academicMangerStudent.getStudentID());
+//            }
+//        }
         // persists new student to the database
         for (String externalStudentID : students.keySet()) {
             if (studentService.exists(externalStudentID)) {
