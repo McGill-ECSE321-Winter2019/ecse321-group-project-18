@@ -123,6 +123,22 @@ export default {
         this.errorStudent = e;
       });
     }
+    },
+    syncWithExternal: function() {
+      AXIOS.get(`/students/sync`)
+        .then(response => {
+          this.students = response.data
+        })
+        .catch(e => {
+          this.errorStudent = e;
+        });
+      AXIOS.get(`/students/list`)
+        .then(response => {
+          this.students = response.data
+        })
+        .catch(e => {
+          this.errorStudent = e;
+        });
     }
   }
 }

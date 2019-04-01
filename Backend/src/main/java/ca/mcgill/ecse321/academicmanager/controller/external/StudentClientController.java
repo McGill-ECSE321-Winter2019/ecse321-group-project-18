@@ -112,7 +112,7 @@ public class StudentClientController {
                 // extracts necessary information
                 JsonObject intermediateObject = jsonElement.getAsJsonObject();
                 String studentID = intermediateObject.get("studentID").toString();
-                String name = intermediateObject.get("name").toString();
+                String name = intermediateObject.get("name").getAsString();
                 // persists into HashMap
                 result.put(studentID, new ExternalStudentDto(studentID, name));
             }
