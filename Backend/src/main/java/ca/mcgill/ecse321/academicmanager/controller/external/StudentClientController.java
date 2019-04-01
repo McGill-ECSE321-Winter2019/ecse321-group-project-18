@@ -59,7 +59,6 @@ public class StudentClientController {
         connection.setRequestMethod("GET");
         int responseCode = connection.getResponseCode();
         String responseString = "";
-        System.out.println(responseCode);
         if (responseCode == HttpURLConnection.HTTP_OK) {
             BufferedReader in = new BufferedReader(new InputStreamReader(
                     connection.getInputStream()));
@@ -127,7 +126,6 @@ public class StudentClientController {
      * @return a String array contains exactly two elements: the first name and the last name.
      * */
     private static String[] nameSeperator(String name) {
-        System.out.println(name);
         String[] splitted = name.split(" ");
         if (splitted.length < 2) {
             String first_name = splitted[0];
@@ -169,9 +167,6 @@ public class StudentClientController {
         }
         // persists new student to the database
         for (String externalStudentID : students.keySet()) {
-                System.out.println(externalStudentID + ", "  + ", "
-                        + nameSeperator(students.get(externalStudentID).name)[0]
-                        + nameSeperator(students.get(externalStudentID).name)[1]);
             if (studentService.exists(externalStudentID)) {
                 // updates the existing student
                 Student student = studentService.get(externalStudentID);
@@ -185,5 +180,6 @@ public class StudentClientController {
                         cooperatorService.get(DEFAULT_COOPERATOR_ID));
             }
         }
+        System.out.println("Updated data in the backend database!");
     }
 }
