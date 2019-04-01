@@ -83,6 +83,7 @@ class ExternalStudentDto {
  * Main class handle the synchronization with the Student team's data.
  * @author Bach Tran
  * */
+@CrossOrigin(origins="*")
 @RestController
 public class StudentClientController {
     public static final String GET_URL = "https://employer-backend-8888.herokuapp.com/mainapp/1/getstudents";
@@ -126,6 +127,7 @@ public class StudentClientController {
      * @author Bach Tran
      * */
     @GetMapping(value = { "/students/sync", "/students/sync/" })
+    @ResponseBody
     public String getAllStudents() {
         String responseMessage = "Sync complete!";
         String responseString = "";
