@@ -11,7 +11,7 @@
             <option value="problematic">Problematic</option>
           </select>
           <div class="text-right">
-            <button name="sync-with-external" @click="syncWithExternal()">Update database</button>
+            <!--<button name="sync-with-external" @click="syncWithExternal()">Update database</button>-->
           	<button name="search-for-students" @click="listStudents(id)">Search</button>
           </div>
         </div>
