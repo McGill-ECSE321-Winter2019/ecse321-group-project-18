@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "*")
 @RestController
 public class AcademicManagerRestController {
+    // These followings constants are put here to make it easier in testing RESTful services manually.
 	public static final String LOCAL_PORT = "8082";
 	public static final String LOCAL_HOST = "http://localhost";
 	public static final String BACKEND_HOST = "https://cooperatorapp-backend-18.herokuapp.com";
@@ -36,7 +37,6 @@ public class AcademicManagerRestController {
 	private StudentService studentService;
 	@Autowired
 	private TermService termService;
-	Cooperator cooperator;
 
 	/**
 	 * Responses to the HTTP POST call on creating a Cooperator.
@@ -509,14 +509,11 @@ public class AcademicManagerRestController {
 		return mylist;
 	}
 
-	// This method is to report a list of students
-	// http://localhost:8082/students/list
-	// curl localhost:8082/students/list
-
     /**
      * Responses to the HTTP GET request on retrieving a List of all Students available
      * in the database.
      * @return a List of StudentDto having all the Students in the database.
+     * @sample /students/list
      */
 	@GetMapping(value = { "/students/list", "/students/list", "/students", "/students/" })
 	@ResponseBody
@@ -557,6 +554,7 @@ public class AcademicManagerRestController {
      * object to a List.
      * @param studentID the id of this specific Student
      * @return a List wrapped this Student.
+     * @sample /students/report/226433222
      */
 	@GetMapping(value = { "/students/listByID", "/students/listByID/" })
 	@ResponseBody
@@ -569,9 +567,6 @@ public class AcademicManagerRestController {
 			
 		return mylist;
 	}
-
-	// Method is to get the student evaluation report
-	// curl http://localhost:8082/students/report/226433222
 
     /**
      * Response to HTTP GET request on retrieving a report of a specific Student.
@@ -660,14 +655,12 @@ public class AcademicManagerRestController {
     	return courseList;
     }
 
-    //curl -X POST 'https://cooperatorapp-backend-18.herokuapp.com/coopTermRegistrations/1/adjudicate/?success=true'
-    // http://localhost:8082/coopTermRegistrations/1/adjudicate/?success=true
-
     /**
      * Responses to HTTP POST request on adjudicating success of an internship.
      * @param registrationID the registration ID.
      * @param success the success status.
      * @return a CoopTermRegistration object.
+     * @sample /coopTermRegistrations/1/adjudicate/?success=true
      */
  	@PostMapping(value = { "/coopTermRegistrations/{registrationID}/adjudicate",
  			"/coopTermRegistrations/{registrationID}/adjudicate/" })
