@@ -197,6 +197,7 @@ public class AcademicManagerRestController {
     
     /**
 	 * Response to the HTTP POST request on creating a Form.
+     * The type of Form is Student's evaluation form.
 	 * @param formID the unique form id.
 	 * @param pdfLink the link to this Form (documentation).
 	 * @param ctrID the CoopTermRegistration's id related to this Form.
@@ -216,7 +217,16 @@ public class AcademicManagerRestController {
     	Form form = formService.create(formID, formName, pdfLink, formType, ctr);
     	return convertFormToDto(form);
     }
-    
+
+    /**
+     * Response to the HTTP POST request on creating a Form.
+     * The type of Form is Employer's evaluation form.
+     * @param formID the unique id of the form
+     * @param pdfLink the link leading to the pdf file.
+     * @param ctrID the CoopTermRegistrations related to this form.
+     * @return a FormDto object.
+     * @sample /students/report/create/?formid=123&pdflink=test.com&ctrid=1
+     */
     @PostMapping(value = { "/students/employereval/create", "/student/employereval/create/" })
     @ResponseBody
     public FormDto createEmployerForm(@RequestParam("formid") String formID,
@@ -230,22 +240,24 @@ public class AcademicManagerRestController {
     	Form form = formService.create(formID, formName, pdfLink, formType, ctr);
     	return convertFormToDto(form);
     }
-    /********** GENERAL Update/PUT METHODS ****************/
-    
-	// curl -X PUT -i 'http://localhost:8082/students/update/?id=226433222&status=true'
+
+    /**
+     * Responses to the HTTP PUT request on updating Student's problematic status.
+     * @param studentID the id of the Student to be updated.
+     * @param isProblematic the new Problematic status.
+     * @return a StudentDto object.
+     * @sample /students/update/?id=226433222&status=true
+     */
 	@PutMapping(value = {"/students/update", "/students/update/"})
-	public StudentDto updateStudentStatus(@RequestParam("id") String studentID, @RequestParam("status") boolean isProblematic) 
-			throws IllegalArgumentException {
+	public StudentDto updateStudentStatus(@RequestParam("id") String studentID, @RequestParam("status") boolean isProblematic) {
 		return convertToDto(studentService.updateProblematicStatus(studentService.get(studentID), isProblematic));
 	}
-    
-    /********** GENERAL GET METHODS ****************/
-    
-    // this method is to view the grades for internships
- 	// http://localhost:8082/CoopTermRegistrations
-    
-    //curl https://cooperatorapp-backend-18.herokuapp.com/coopTermRegistrations/list 
- 	// curl localhost:8082/CoopTermRegistrations
+
+    /**
+     * Response to HTTP GET request on retrieving a LIST of CoopTermRegistrations.
+     * @return a List of CoopTermRegistrationDtos.
+     * @sample /coopTermRegistrations/list
+     */
  	@GetMapping(value = { "/coopTermRegistrations/list", "/coopTermRegistrations/list/", "/coopTermRegistrations",
  			"/coopTermRegistrations/" })
  	@ResponseBody
@@ -271,13 +283,14 @@ public class AcademicManagerRestController {
  		return internshipsDto;
  	}
 
- 	// this method is to view the grades for internships
- 	// curl https://cooperatorapp-backend-18.herokuapp.com/coopTermRegistrations/grades/
- 	// http://localhost:8082/cooptermregistrations/grades
- 	// curl localhost:8082/cooptermregistrations/grades
+    /**
+     * Responses to the HTTP GET request on retrieving all grades related to all CoopTermRegistration.
+     * @return a Set of Grade objects.
+     * @sample /coopTermRegistrations/grades/
+     */
  	@GetMapping(value = { "/coopTermRegistrations/grades", "/coopTermRegistrations/grades/" })
  	@ResponseBody
- 	public Set<Grade> viewGrades() throws IllegalArgumentException {
+ 	public Set<Grade> viewGrades() {
 
  		Set<CoopTermRegistration> internships = coopTermRegistrationService.getAll();
  		Set<Grade> grades = new HashSet<Grade>();
@@ -287,9 +300,14 @@ public class AcademicManagerRestController {
  		}
  		return grades;
  	}
- 	
- 	//curl https://cooperatorapp-backend-18.herokuapp.com/courses/specific/1234
- 	
+
+    /**
+     * Responses to HTTP GET request on retrieving a specific Course given its id and term.
+     * @param courseID the unique id of the Course to be retrieved.
+     * @param term the Term name that the Course belongs to.
+     * @return a CourseDto object wrapping the result.
+     * @sample /courses/specific/1234
+     */
     @GetMapping(value = {"/courses/specific", "/courses/specific/"})
     @ResponseBody
     public CourseDto getCourse(@RequestParam("id") String courseID, 
@@ -301,11 +319,11 @@ public class AcademicManagerRestController {
     }
     
     /**
-     * RESTful service: retrieves n first useful course, using courseRank to make comparison.
+     * Responses to HTTP GET request on retrieving n first useful course, using courseRank to make comparison.
      * @param quantity number of courses wanted to retrieve.
      * @return a list of n useful courses.
+     * @sample /courses/filter?quantity=2
      * */
-    //curl https://cooperatorapp-backend-18.herokuapp.com/courses/filter?quantity=2
     @GetMapping(value = {"/courses/filter", "courses/filter/"})
     @ResponseBody
     public List<CourseDto> getCourses(@RequestParam(value = "quantity", defaultValue = "-1", required = false)int quantity,
@@ -320,10 +338,15 @@ public class AcademicManagerRestController {
 		}
 		return returnList;
     }
-    
+
+    /**
+     * Responses to HTTP GET request on retrieving all CoopTermRegistrations related to a SPECIFIC Student.
+     * @param studentID the id of the Student
+     * @return a List of CoopTermRegistrationDtos related to the Student.
+     */
     @GetMapping(value = { "/coopTermRegistrations/listByStudent/", "/coopTermRegistrations/listByStudent/" })
  	@ResponseBody
- 	public List<CoopTermRegistrationDto> viewCoopTermRegistrationsOfStudent(@RequestParam("studentid") String studentID) throws IllegalArgumentException {
+ 	public List<CoopTermRegistrationDto> viewCoopTermRegistrationsOfStudent(@RequestParam("studentid") String studentID) {
 
  		Set<CoopTermRegistration> internships = coopTermRegistrationService.getByStudentID(studentID);
  		List<CoopTermRegistrationDto> internshipsDto = new ArrayList<CoopTermRegistrationDto>();
@@ -344,10 +367,17 @@ public class AcademicManagerRestController {
  		}
  		return internshipsDto;
  	}
-    
+
+    /**
+     * Responses to the HTTP GET request on retrieving all CoopTermRegistrations related to a SPECIFIC Student,
+     * filtered by a SPECIFIC Term.
+     * @param termName the name of the Term to be filtered.
+     * @param studentID the unique id of the Student.
+     * @return a List of CoopTermRegistrationDtos wrapping the results.
+     */
     @GetMapping(value = { "/coopTermRegistrations/listByTermAndStudent", "/coopTermRegistrations/listByTermAndStudent/" })
  	@ResponseBody
- 	public List<CoopTermRegistrationDto> viewCoopTermRegistrationsByTermNameAndStudentID(@RequestParam("termname") String termName, @RequestParam("studentid") String studentID) throws IllegalArgumentException {
+ 	public List<CoopTermRegistrationDto> viewCoopTermRegistrationsByTermNameAndStudentID(@RequestParam("termname") String termName, @RequestParam("studentid") String studentID) {
 
  		Set<CoopTermRegistration> internships = coopTermRegistrationService.getByTermNameAndStudentID(termName, studentID);
  		List<CoopTermRegistrationDto> internshipsDto = new ArrayList<CoopTermRegistrationDto>();
@@ -368,10 +398,16 @@ public class AcademicManagerRestController {
  		}
  		return internshipsDto;
  	}
-    
+
+    /**
+     * Responses to the HTTP GET request on retrieving
+     * all CoopTermRegistrations on a specific Term.
+     * @param termName the name of the Term.
+     * @return a List of CoopTermRegistrationDtos wrapping the results.
+     */
     @GetMapping(value = { "/coopTermRegistrations/listByTerm", "/coopTermRegistrations/listByTerm/" })
  	@ResponseBody
- 	public List<CoopTermRegistrationDto> viewCoopTermRegistrationsByTermName(@RequestParam("termname") String termName) throws IllegalArgumentException {
+ 	public List<CoopTermRegistrationDto> viewCoopTermRegistrationsByTermName(@RequestParam("termname") String termName) {
 
  		Set<CoopTermRegistration> internships = coopTermRegistrationService.getByTermName(termName);
  		List<CoopTermRegistrationDto> internshipsDto = new ArrayList<CoopTermRegistrationDto>();
@@ -393,9 +429,12 @@ public class AcademicManagerRestController {
  		return internshipsDto;
  	}
     
-	/********** START OF convertToDto METHODS ************/
 
-    // convert to Dto Student
+
+
+ 	/*
+     * HELPER METHODS
+     */
 	private StudentDto convertToDto(Student e) {
 		if (e == null) {
 			throw new IllegalArgumentException("There student doens't exist in this Cooperator!");
@@ -450,15 +489,16 @@ public class AcademicManagerRestController {
     	}
     	return new CourseDto(e.getCourseID(), e.getTerm(), e.getCourseName(), e.getCourseRank());
     }
-	
-	/*********** START OF USE CASES GET METHODS ************/
 
-	// This method is to report a list of problematic students
-	// http://localhost:8082/Students/problematic
-	// curl localhost:8082/Students/problematic
+    /**
+     * Responses to HTTP GET request on retrieving a list of problematic Students.
+     *
+     * @return a List of StudentDtos containing problematic Students.
+     * @sample /students/problematic
+     */
 	@GetMapping(value = { "/students/problematic", "/students/problematic" })
 	@ResponseBody
-	public List<StudentDto> getProblematicStudents() throws IllegalArgumentException {
+	public List<StudentDto> getProblematicStudents() {
 		// @formatter:on
 		List<Student> students = studentService.getAllProblematicStudents();
 		List<StudentDto> mylist = new ArrayList<StudentDto>();
@@ -472,9 +512,15 @@ public class AcademicManagerRestController {
 	// This method is to report a list of students
 	// http://localhost:8082/students/list
 	// curl localhost:8082/students/list
+
+    /**
+     * Responses to the HTTP GET request on retrieving a List of all Students available
+     * in the database.
+     * @return a List of StudentDto having all the Students in the database.
+     */
 	@GetMapping(value = { "/students/list", "/students/list", "/students", "/students/" })
 	@ResponseBody
-	public List<StudentDto> getListStudents() throws IllegalArgumentException {
+	public List<StudentDto> getListStudents() {
 		// @formatter:on
 		Set<Student> students = studentService.getAll();
 		List<StudentDto> mylist = new ArrayList<StudentDto>();
@@ -486,10 +532,16 @@ public class AcademicManagerRestController {
 
 		return mylist;
 	}
-	
+
+    /**
+     * Responses to the HTTP GET request on
+     * querying a specific Student in a list of all problematic Students.
+     * @param studentID the specific id of a problematic Student.
+     * @return a List of StudentDto.
+     */
 	@GetMapping(value = { "/students/problematic/listByID", "/students/problematic/listByID/" })
 	@ResponseBody
-	public List<StudentDto> getListStudentsByIDAndStatus(@RequestParam("studentid") String studentID) throws IllegalArgumentException {
+	public List<StudentDto> getListStudentsByIDAndStatus(@RequestParam("studentid") String studentID) {
 		// @formatter:on
 		Set<Student> students = studentService.getByIDAndStatus(studentID, true);
 		List<StudentDto> mylist = new ArrayList<StudentDto>();
@@ -499,10 +551,16 @@ public class AcademicManagerRestController {
 		}
 		return mylist;
 	}
-	
+
+    /**
+     * Responses to HTTP GET request on retrieving a specific Student, but wraps this single Student
+     * object to a List.
+     * @param studentID the id of this specific Student
+     * @return a List wrapped this Student.
+     */
 	@GetMapping(value = { "/students/listByID", "/students/listByID/" })
 	@ResponseBody
-	public List<StudentDto> getListStudentsByID(@RequestParam("studentid") String studentID) throws IllegalArgumentException {
+	public List<StudentDto> getListStudentsByID(@RequestParam("studentid") String studentID) {
 		// @formatter:on
 		Student s = studentService.get(studentID);
 		List<StudentDto> mylist = new ArrayList<StudentDto>();
@@ -514,9 +572,14 @@ public class AcademicManagerRestController {
 
 	// Method is to get the student evaluation report
 	// curl http://localhost:8082/students/report/226433222
+
+    /**
+     * Response to HTTP GET request on retrieving a report of a specific Student.
+     * @param studentID the id of this specific Student.
+     * @return the report (Form object) of the Student.
+     */
 	@GetMapping(value = { "/students/report/{studentID}", "/students/report/{studentID}" })
-	public StudentformDto getStudentReport(@PathVariable("studentID") String studentID)
-			throws IllegalArgumentException {
+	public StudentformDto getStudentReport(@PathVariable("studentID") String studentID) {
 		// @formatter:on
 
 		/*Student mystudent = studentService.get(studentID);
@@ -545,9 +608,13 @@ public class AcademicManagerRestController {
 		return mystudentforms;
 	}
 
+    /**
+     * Responses to HTTP GET request on retrieving all employer's evaluation form of a specific Student.
+     * @param studentID the ID of this specific Student.
+     * @return a FormDto object, containing the Employer's evaluation form.
+     */
 	@GetMapping(value = { "/students/employereval/{studentID}", "/students/employereval/{studentID}" })
-	public EmployerformDto getAllEmployerEval(@PathVariable("studentID") String studentID)
-			throws IllegalArgumentException {
+	public EmployerformDto getAllEmployerEval(@PathVariable("studentID") String studentID) {
 
 /*		Student mystudent = service.getStudent(studentID);
 
@@ -592,14 +659,20 @@ public class AcademicManagerRestController {
     	Collections.sort(courseList);
     	return courseList;
     }
-    
-    /************ START OF USE CASES POST METHODS ****************/
+
     //curl -X POST 'https://cooperatorapp-backend-18.herokuapp.com/coopTermRegistrations/1/adjudicate/?success=true'
     // http://localhost:8082/coopTermRegistrations/1/adjudicate/?success=true
+
+    /**
+     * Responses to HTTP POST request on adjudicating success of an internship.
+     * @param registrationID the registration ID.
+     * @param success the success status.
+     * @return a CoopTermRegistration object.
+     */
  	@PostMapping(value = { "/coopTermRegistrations/{registrationID}/adjudicate",
  			"/coopTermRegistrations/{registrationID}/adjudicate/" })
  	public CoopTermRegistrationDto adjudicateTermRegistration(@PathVariable("registrationID") String registrationID,
- 			@RequestParam("success") boolean success) throws IllegalArgumentException {
+ 			@RequestParam("success") boolean success) {
  		CoopTermRegistration termRegistration = coopTermRegistrationService.get(registrationID);
  		if (success)
  			termRegistration = coopTermRegistrationService.updateTermStatus(termRegistration, TermStatus.FINISHED);
