@@ -10,9 +10,18 @@ import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * This class stands in between all the Java services and the RESTful service calls.
+ * @author Bach Tran, Edward Huang, Yen-Vi Huynh, Moetassem Abdelazim, Saleh Bakhit.
+ * @since Sprint 2
+ * */
 @CrossOrigin(origins = "*")
 @RestController
 public class AcademicManagerRestController {
+	public static final String LOCAL_PORT = "8082";
+	public static final String LOCAL_HOST = "http://localhost";
+	public static final String BACKEND_HOST = "https://cooperatorapp-backend-18.herokuapp.com";
+	public static final String BACKEND_PORT = "443";
 	@Autowired
 	private CooperatorService cooperatorService;
 	@Autowired
@@ -29,10 +38,13 @@ public class AcademicManagerRestController {
 	private TermService termService;
 	Cooperator cooperator;
 
-	/************* CREATE/POST OBJECTS METHODS ************/
-  
-	// Method is to POST/CREATE cooperator
-	// curl -X POST -i 'http://localhost:8082/cooperators/create/?id=1'
+	/**
+	 * Responses to the HTTP POST call on creating a Cooperator.
+	 * @param coopID the unique id of the Cooperator.
+	 * @throws IllegalArgumentException if id is null.
+	 * @return a CooperatorDto object.
+	 * @sample /cooperators/create?id=1
+	 * */
 	@PostMapping(value = { "/cooperators/create", "/cooperators/create/" })
 	public CooperatorDto CreateCooperator(@RequestParam("id") Integer coopID) throws IllegalArgumentException {
 		// @formatter:on
@@ -40,9 +52,13 @@ public class AcademicManagerRestController {
 		cooperatorService.create(coopID);
 		return convertToDto(coopID);
 	}
-
-	// Method is to POST/CREATE term
-	//  curl -X POST -i 'localhost:8082/terms/create/?id=2112&name=Winter2019&studentdeadline=2019-3-22&coopdeadline=2019-4-4'
+	/**
+	 * Responses to the HTTP POST call on creating a Term.
+	 * @param date1 deadline of Student's evaluation.
+	 * @param date2 deadline of CoopTerm's evaluation.
+	 * @return a TermDto object.
+	 * @sample /terms/create/?id=2112&name=Winter2019&studentdeadline=2019-3-22&coopdeadline=2019-4-4
+	 * */
 	@PostMapping(value = { "/terms/create", "/terms/create/" })
 	public TermDto CreateTerm(@RequestParam("id") String termID, @RequestParam("name") String name,
 			@RequestParam("studentdeadline") String date1, @RequestParam("coopdeadline") String date2) {
@@ -54,10 +70,7 @@ public class AcademicManagerRestController {
 	}
 
 	/**
-	 * RESTful service: create a new, non-problematic Student. This method
-	 * automatically creates a new Cooperator object and assigns it to this Student.
-	 * 
-	 * @order create
+	 * Response to the HTTP POST call on creating a Student.
 	 * @param studentID
 	 *            (primary key) unique ID of this Student.
 	 * @param firstName
@@ -68,9 +81,8 @@ public class AcademicManagerRestController {
 	 *            the ID of the Cooperator of this Student.
 	 * @return a TermDto object that represent the object to be persisted in the
 	 *         database.
+	 * @sample /students/create/?id=226433222&firstname=Yen-Vi&lastname=Huynh&cooperatorid=1
 	 */
-
-	// curl -X POST -i 'http://localhost:8082/students/create/?id=226433222&firstname=Yen-Vi&lastname=Huynh&cooperatorid=1'
 	@PostMapping(value = { "/students/create", "/students/create/" })
 	public StudentDto createStudent(@RequestParam("id") String studentID, @RequestParam("firstname") String firstName,
 			@RequestParam("lastname") String lastName, @RequestParam("cooperatorid") Integer cooperatorID)
@@ -81,11 +93,15 @@ public class AcademicManagerRestController {
 		Student student = studentService.create(studentID, firstName, lastName, coop);
 		return convertToDto(student);
 	}
-	
-    // To convert the TermStatus so:
-    // 0: ONGOING, 1: FINISHED, 2: FAILED
-    
-    public static TermStatus ConvertTermStatus(int x) {
+	/**
+	 * Maps a number to the corresponding term status.
+	 * 0 --> ONGOING,
+	 * 1 --> FINISHED,
+	 * 2 --> FAILED.
+	 * @param x the number to be converted.
+	 * @return a TermStatus after conversion.
+	 * */
+	private static TermStatus ConvertTermStatus(int x) {
         switch(x) {          
         case 0:
             return TermStatus.ONGOING;
@@ -96,10 +112,18 @@ public class AcademicManagerRestController {
         }
         return null;
     }
-    
-    // To convert the Grade for student in this case
-    // 0:A, 1:B, 2:C, 3:D, 4:F, 5: NotGraded
-    public static Grade ConvertGrade(int x) {
+    /**
+	 * Maps a number to the corresponding grade.
+	 * 0 --> A,
+	 * 1 --> B,
+	 * 2 --> C,
+	 * 3 --> D,
+	 * 4 --> F,
+	 * 5 --> NOT GRADED.
+	 * @param x the number to be converted.
+	 * @return a Grade object after conversion.
+	 * */
+    private static Grade ConvertGrade(int x) {
         switch(x) {          
         case 0:
             return Grade.A;
@@ -116,10 +140,18 @@ public class AcademicManagerRestController {
         }
         return null;
     }
-    
-        
 
-	// curl -X POST -i 'https://cooperatorapp-backend-18.herokuapp.com/coopTermRegistrations/create/?registrationid=1&jobid=142412&studentid=226433222&termid=2112&termstat=0&gradeid=5'
+	/**
+	 * Responses to the HTTP POST call on creating a CoopTermRegistration.
+	 * @param registrationID the id of the CoopTermRegistration.
+	 * @param jobID the corresponding job id of the CoopTermRegistration.
+	 * @param studentID the student ID attached to this CoopTermRegistration.
+	 * @param termID the term ID attached to this CoopTermRegistration.
+	 * @param termStat the status of the term related to this CoopTermRegistration.
+	 * @param gradeID the outcome (grade) related to this CoopTermRegistration.
+	 * @return a CoopTermRegistrationDto object.
+	 * @sample /coopTermRegistrations/create/?registrationid=1&jobid=142412&studentid=226433222&termid=2112&termstat=0&gradeid=5
+	 * */
 	@PostMapping(value = { "/coopTermRegistrations/create", "/coopTermRegistrations/create/" })
 	public CoopTermRegistrationDto createCoopTermRegistration(
 			@RequestParam("registrationid") String registrationID,
@@ -128,19 +160,28 @@ public class AcademicManagerRestController {
 			@RequestParam("termid") String termID,
 			@RequestParam("termstat") Integer termStat,
 			@RequestParam("gradeid") Integer gradeID) {
-		//	throws IllegalArgumentException {
+		// get relevant information
 		Student student = studentService.get(studentID);
 		Term term = termService.get(termID);
-		
+		// convert input data to the appropriate format
 		TermStatus mystatus = ConvertTermStatus(termStat);
 		Grade mygrade = ConvertGrade(gradeID);
+		// finally, we can create a CoopTermRegistration.
 		CoopTermRegistration internship = coopTermRegistrationService.create(registrationID, jobID, mystatus,
 				mygrade, student, term);
 		return convertToDto(internship, "NONE", "NONE");
 	}
-
-	// curl -X POST 'https://cooperatorapp-backend-18.herokuapp.com/courses/create?id=1234&term=2112&name=hahaha&rank=10&cooperatorid=1'
-    @PostMapping(value = { "/courses/create", "/events/create/" })
+    /**
+	 * Responses to the HTTP POST call on creating a Course.
+	 * @param id the unique id of the Course.
+	 * @param term the term id related to the Course.
+	 * @param name the name of the Course.
+	 * @param rank the rank of the Course.
+	 * @param cooperatorID the related Cooperator of this Course.
+	 * @return a CourseDto object.
+	 * @sample /courses/create?id=1234&term=2112&name=hahaha&rank=10&cooperatorid=1
+	 * */
+	@PostMapping(value = { "/courses/create", "/events/create/" })
     @ResponseBody
     public CourseDto createCourse(@RequestParam("id") String id, 
     		@RequestParam("term") String term, 
@@ -154,7 +195,14 @@ public class AcademicManagerRestController {
     	return convertCourseToDto(course);
     }
     
-    //http://localhost:8082/students/report/create/?formid=123&pdflink=test.com&ctrid=1
+    /**
+	 * Response to the HTTP POST request on creating a Form.
+	 * @param formID the unique form id.
+	 * @param pdfLink the link to this Form (documentation).
+	 * @param ctrID the CoopTermRegistration's id related to this Form.
+	 * @return a FormDto.
+	 * @sample /students/report/create/?formid=123&pdflink=test.com&ctrid=1
+	 * */
     @PostMapping(value = { "/students/report/create", "/student/report/create/" })
     @ResponseBody
     public FormDto createStudentForm(@RequestParam("formid") String formID,
