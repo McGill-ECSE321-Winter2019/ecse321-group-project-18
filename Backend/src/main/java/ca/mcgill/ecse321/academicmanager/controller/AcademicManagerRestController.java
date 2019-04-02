@@ -50,7 +50,7 @@ public class AcademicManagerRestController {
 		// @formatter:on
 
 		cooperatorService.create(coopID);
-		return convertToDto(coopID);
+		return Helper.convertToDto(coopID);
 	}
 	/**
 	 * Responses to the HTTP POST call on creating a Term.
@@ -66,7 +66,7 @@ public class AcademicManagerRestController {
 		Date studentEvalFormDeadline = Date.valueOf(date1); // form of date: "2015-06-01"
 		Date coopEvalFormDeadline = Date.valueOf(date2);
 		Term term = termService.create(termID, name, studentEvalFormDeadline, coopEvalFormDeadline);
-		return convertToDto(term);
+		return Helper.convertToDto(term);
 	}
 
 	/**
@@ -91,7 +91,7 @@ public class AcademicManagerRestController {
 		Cooperator coop = cooperatorService.get(cooperatorID);
 
 		Student student = studentService.create(studentID, firstName, lastName, coop);
-		return convertToDto(student);
+		return Helper.convertToDto(student);
 	}
 	/**
 	 * Maps a number to the corresponding term status.
@@ -169,7 +169,7 @@ public class AcademicManagerRestController {
 		// finally, we can create a CoopTermRegistration.
 		CoopTermRegistration internship = coopTermRegistrationService.create(registrationID, jobID, mystatus,
 				mygrade, student, term);
-		return convertToDto(internship, "NONE", "NONE");
+		return Helper.convertToDto(internship, "NONE", "NONE");
 	}
     /**
 	 * Responses to the HTTP POST call on creating a Course.
@@ -192,7 +192,7 @@ public class AcademicManagerRestController {
 		Cooperator c = cooperatorService.get(cooperatorID);
 
     	Course course = courseService.create(id, term, name, Integer.parseInt(rank), c);
-    	return convertCourseToDto(course);
+    	return Helper.convertCourseToDto(course);
     }
     
     /**
@@ -215,7 +215,7 @@ public class AcademicManagerRestController {
 		FormType formType = FormType.STUDENTEVALUATION;
 
     	Form form = formService.create(formID, formName, pdfLink, formType, ctr);
-    	return convertFormToDto(form);
+    	return Helper.convertFormToDto(form);
     }
 
     /**
@@ -238,7 +238,7 @@ public class AcademicManagerRestController {
 		FormType formType = FormType.COOPEVALUATION;
 
     	Form form = formService.create(formID, formName, pdfLink, formType, ctr);
-    	return convertFormToDto(form);
+    	return Helper.convertFormToDto(form);
     }
 
     /**
@@ -250,7 +250,7 @@ public class AcademicManagerRestController {
      */
 	@PutMapping(value = {"/students/update", "/students/update/"})
 	public StudentDto updateStudentStatus(@RequestParam("id") String studentID, @RequestParam("status") boolean isProblematic) {
-		return convertToDto(studentService.updateProblematicStatus(studentService.get(studentID), isProblematic));
+		return Helper.convertToDto(studentService.updateProblematicStatus(studentService.get(studentID), isProblematic));
 	}
 
     /**
@@ -277,7 +277,7 @@ public class AcademicManagerRestController {
  					else
  						employerFormLink = form.getPdfLink();
  				}
- 				internshipsDto.add(convertToDto(intern, studentFormLink, employerFormLink));
+ 				internshipsDto.add(Helper.convertToDto(intern, studentFormLink, employerFormLink));
  			}
  		}
  		return internshipsDto;
@@ -315,7 +315,7 @@ public class AcademicManagerRestController {
     	if (courseID == null || courseID.isEmpty()) {
     		throw new IllegalArgumentException();
     	}
-    	return convertCourseToDto(courseService.get(courseID, term));
+    	return Helper.convertCourseToDto(courseService.get(courseID, term));
     }
     
     /**
@@ -362,7 +362,7 @@ public class AcademicManagerRestController {
  					else
  						employerFormLink = form.getPdfLink();
  				}
- 				internshipsDto.add(convertToDto(intern, studentFormLink, employerFormLink));
+ 				internshipsDto.add(Helper.convertToDto(intern, studentFormLink, employerFormLink));
  			}
  		}
  		return internshipsDto;
@@ -393,7 +393,7 @@ public class AcademicManagerRestController {
  					else
  						employerFormLink = form.getPdfLink();
  				}
- 				internshipsDto.add(convertToDto(intern, studentFormLink, employerFormLink));
+ 				internshipsDto.add(Helper.convertToDto(intern, studentFormLink, employerFormLink));
  			}
  		}
  		return internshipsDto;
@@ -423,7 +423,7 @@ public class AcademicManagerRestController {
  					else
  						employerFormLink = form.getPdfLink();
  				}
- 				internshipsDto.add(convertToDto(intern, studentFormLink, employerFormLink));
+ 				internshipsDto.add(Helper.convertToDto(intern, studentFormLink, employerFormLink));
  			}
  		}
  		return internshipsDto;
@@ -432,63 +432,63 @@ public class AcademicManagerRestController {
 
 
 
- 	/*
-     * HELPER METHODS
-     */
-	private StudentDto convertToDto(Student e) {
-		if (e == null) {
-			throw new IllegalArgumentException("There student doens't exist in this Cooperator!");
-		}
-		StudentDto studentDto = new StudentDto(e.getStudentID(), e.getFirstName(), e.getLastName(),
-				e.isIsProblematic());
-		return studentDto;
-	}
-
-	// convert to Dto CoopTermRegistration
-	private CoopTermRegistrationDto convertToDto(CoopTermRegistration e, String studentFormLink, String employerFormLink) {
-		if (e == null) {
-			throw new IllegalArgumentException("There student doens't exist in this CoopTermRegistration!");
-		}
-		CoopTermRegistrationDto coopTermRegistrationDto = new CoopTermRegistrationDto(e.getRegistrationID(), e.getTerm().getTermName(),
-				e.getJobID(), e.getTermStatus(), e.getGrade(), e.getStudent().getStudentID(), studentFormLink, employerFormLink);
-		return coopTermRegistrationDto;
-	}
-
-	// convert to Dto cooperator
-	private CooperatorDto convertToDto(Integer e) {
-		if (e == null) {
-			throw new IllegalArgumentException("Cannot create term");
-		}
-		CooperatorDto CoopDto = new CooperatorDto(e);
-		return CoopDto;
-	}
-
-	// convert to Dto Term
-	private TermDto convertToDto(Term e) {
-		if (e == null) {
-			throw new IllegalArgumentException("Cannot create term");
-		}
-		TermDto termDto = new TermDto(e.getTermID(), e.getTermName(), e.getStudentEvalFormDeadline(),
-				e.getCoopEvalFormDeadline());
-		return termDto;
-	}
-
-	// convert to Dto Form
-	private FormDto convertFormToDto(Form e) {
-		if (e == null) {
-			throw new IllegalArgumentException("Cannot create form!");
-		}
-		FormDto formDto = new FormDto(e.getFormID(), e.getName(), e.getPdfLink());
-		return formDto;
-	}
-
-	// convert to Dto Course
-	private CourseDto convertCourseToDto (Course e) throws IllegalArgumentException {
-    	if (e == null) {
-    		throw new IllegalArgumentException("No course to convert!");
-    	}
-    	return new CourseDto(e.getCourseID(), e.getTerm(), e.getCourseName(), e.getCourseRank());
-    }
+// 	/*
+//     * HELPER METHODS
+//     */
+//	private StudentDto convertToDto(Student e) {
+//		if (e == null) {
+//			throw new IllegalArgumentException("There student doens't exist in this Cooperator!");
+//		}
+//		StudentDto studentDto = new StudentDto(e.getStudentID(), e.getFirstName(), e.getLastName(),
+//				e.isIsProblematic());
+//		return studentDto;
+//	}
+//
+//	// convert to Dto CoopTermRegistration
+//	private CoopTermRegistrationDto convertToDto(CoopTermRegistration e, String studentFormLink, String employerFormLink) {
+//		if (e == null) {
+//			throw new IllegalArgumentException("There student doens't exist in this CoopTermRegistration!");
+//		}
+//		CoopTermRegistrationDto coopTermRegistrationDto = new CoopTermRegistrationDto(e.getRegistrationID(), e.getTerm().getTermName(),
+//				e.getJobID(), e.getTermStatus(), e.getGrade(), e.getStudent().getStudentID(), studentFormLink, employerFormLink);
+//		return coopTermRegistrationDto;
+//	}
+//
+//	// convert to Dto cooperator
+//	private CooperatorDto convertToDto(Integer e) {
+//		if (e == null) {
+//			throw new IllegalArgumentException("Cannot create term");
+//		}
+//		CooperatorDto CoopDto = new CooperatorDto(e);
+//		return CoopDto;
+//	}
+//
+//	// convert to Dto Term
+//	private TermDto convertToDto(Term e) {
+//		if (e == null) {
+//			throw new IllegalArgumentException("Cannot create term");
+//		}
+//		TermDto termDto = new TermDto(e.getTermID(), e.getTermName(), e.getStudentEvalFormDeadline(),
+//				e.getCoopEvalFormDeadline());
+//		return termDto;
+//	}
+//
+//	// convert to Dto Form
+//	private FormDto convertFormToDto(Form e) {
+//		if (e == null) {
+//			throw new IllegalArgumentException("Cannot create form!");
+//		}
+//		FormDto formDto = new FormDto(e.getFormID(), e.getName(), e.getPdfLink());
+//		return formDto;
+//	}
+//
+//	// convert to Dto Course
+//	private CourseDto convertCourseToDto (Course e) throws IllegalArgumentException {
+//    	if (e == null) {
+//    		throw new IllegalArgumentException("No course to convert!");
+//    	}
+//    	return new CourseDto(e.getCourseID(), e.getTerm(), e.getCourseName(), e.getCourseRank());
+//    }
 
     /**
      * Responses to HTTP GET request on retrieving a list of problematic Students.
@@ -504,7 +504,7 @@ public class AcademicManagerRestController {
 		List<StudentDto> mylist = new ArrayList<StudentDto>();
 		// check for every student;
 		for (Student s : students) {
-			mylist.add(convertToDto(s));
+			mylist.add(Helper.convertToDto(s));
 		}
 		return mylist;
 	}
@@ -524,7 +524,7 @@ public class AcademicManagerRestController {
 
 		// check for every student;
 		for (Student s : students) {
-			mylist.add(convertToDto(s));
+			mylist.add(Helper.convertToDto(s));
 		}
 
 		return mylist;
@@ -544,7 +544,7 @@ public class AcademicManagerRestController {
 		List<StudentDto> mylist = new ArrayList<StudentDto>();
 		// check for every student;
 		for (Student s : students) {
-			mylist.add(convertToDto(s));
+			mylist.add(Helper.convertToDto(s));
 		}
 		return mylist;
 	}
@@ -563,7 +563,7 @@ public class AcademicManagerRestController {
 		Student s = studentService.get(studentID);
 		List<StudentDto> mylist = new ArrayList<StudentDto>();
 		
-		mylist.add(convertToDto(s));
+		mylist.add(Helper.convertToDto(s));
 			
 		return mylist;
 	}
@@ -649,7 +649,7 @@ public class AcademicManagerRestController {
     	Set<Course> courseSet = courseService.getAll();
     	List<CourseDto> courseList = new ArrayList<CourseDto>();
     	for (Course course : courseSet) {
-    		courseList.add(convertCourseToDto(course));
+    		courseList.add(Helper.convertCourseToDto(course));
     	}
     	Collections.sort(courseList);
     	return courseList;
@@ -682,6 +682,67 @@ public class AcademicManagerRestController {
  				employerFormLink = form.getPdfLink();
  		}
 
- 		return convertToDto(termRegistration, studentFormLink, employerFormLink);
+ 		return Helper.convertToDto(termRegistration, studentFormLink, employerFormLink);
  	}
+}
+
+/**
+ * Contains all helper method in converting Service objects to Dto objects.
+ */
+class Helper {
+
+	static StudentDto convertToDto(Student e) {
+		if (e == null) {
+			throw new IllegalArgumentException("There student doens't exist in this Cooperator!");
+		}
+		StudentDto studentDto = new StudentDto(e.getStudentID(), e.getFirstName(), e.getLastName(),
+				e.isIsProblematic());
+		return studentDto;
+	}
+
+	// convert to Dto CoopTermRegistration
+	static CoopTermRegistrationDto convertToDto(CoopTermRegistration e, String studentFormLink, String employerFormLink) {
+		if (e == null) {
+			throw new IllegalArgumentException("There student doens't exist in this CoopTermRegistration!");
+		}
+		CoopTermRegistrationDto coopTermRegistrationDto = new CoopTermRegistrationDto(e.getRegistrationID(), e.getTerm().getTermName(),
+				e.getJobID(), e.getTermStatus(), e.getGrade(), e.getStudent().getStudentID(), studentFormLink, employerFormLink);
+		return coopTermRegistrationDto;
+	}
+
+	// convert to Dto cooperator
+	static CooperatorDto convertToDto(Integer e) {
+		if (e == null) {
+			throw new IllegalArgumentException("Cannot create term");
+		}
+		CooperatorDto CoopDto = new CooperatorDto(e);
+		return CoopDto;
+	}
+
+	// convert to Dto Term
+	static TermDto convertToDto(Term e) {
+		if (e == null) {
+			throw new IllegalArgumentException("Cannot create term");
+		}
+		TermDto termDto = new TermDto(e.getTermID(), e.getTermName(), e.getStudentEvalFormDeadline(),
+				e.getCoopEvalFormDeadline());
+		return termDto;
+	}
+
+	// convert to Dto Form
+	static FormDto convertFormToDto(Form e) {
+		if (e == null) {
+			throw new IllegalArgumentException("Cannot create form!");
+		}
+		FormDto formDto = new FormDto(e.getFormID(), e.getName(), e.getPdfLink());
+		return formDto;
+	}
+
+	// convert to Dto Course
+	static CourseDto convertCourseToDto (Course e) throws IllegalArgumentException {
+		if (e == null) {
+			throw new IllegalArgumentException("No course to convert!");
+		}
+		return new CourseDto(e.getCourseID(), e.getTerm(), e.getCourseName(), e.getCourseRank());
+	}
 }
