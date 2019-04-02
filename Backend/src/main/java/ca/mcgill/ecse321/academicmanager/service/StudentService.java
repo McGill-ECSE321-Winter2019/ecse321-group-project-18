@@ -179,11 +179,28 @@ public class StudentService {
 	// ---DELETE---
 	/**
 	 * Deletes a Student instance
-	 * 
+	 * @author Saleh Bakhit
 	 * @param student Student instance to be deleted
 	 */
 	@Transactional
 	public void delete(Student student) {
 		studentRepository.delete(student);
+	}
+	/**
+	 * Delete a Student given the ID.
+	 * @author Bach Tran
+	 * @param studentID ID of the Student to be deleted.
+	 * */
+	@Transactional
+	public void delete(String studentID) {studentRepository.deleteById(studentID);}
+	/**
+	 * Checks if a Student having the given ID exists in the database.
+	 * @author Bach Tran
+	 * @param studentID the unique id of the Student
+	 * @return true if the Student with the given id exists in the database.
+	 * */
+	@Transactional
+	public boolean exists(String studentID) {
+		return studentRepository.existsById(studentID);
 	}
 }

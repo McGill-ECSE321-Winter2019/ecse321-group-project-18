@@ -35,25 +35,31 @@ export default {
       AXIOS.post('/cooperators/create/?id=' + TEST_COOPERATOR_ID)
       // create students
       let i = 0;
+      var firstNames = ["Donald", "Barrack", "Daniel", "Marton", "Dell", "Bill", "Steve", "Tony", "Mock"];
+      var lastNames = ["Trump", "Obama", "Varro", "Bur", "Michael", "Gates", "Jobs", "Stark", "Student"];
       for (i = 1; i < 9; i++) {
         // create students
-        AXIOS.post(`/students/create/?id=${i}&firstname=Mock Student&lastname=${i}&cooperatorid=${TEST_COOPERATOR_ID}`)
+        AXIOS.post(`/students/create/?id=${i}&firstname=${firstNames[i]}&lastname=${lastNames[i]}&cooperatorid=${TEST_COOPERATOR_ID}`)
 
         // create terms
         AXIOS.post(`/terms/create/?id=${i}&name=Winter${2013+i}&studentdeadline=2019-01-${i}&coopdeadline=2019-01-${i+1}`)
-        // create courses
-        AXIOS.post(`/courses/create/?id=MOCK${i}&term=${i}&name=MockCourse${i}&rank=${i}&cooperatorid=${TEST_COOPERATOR_ID}`)
       }
-      AXIOS.post(`/coopTermRegistrations/create/?registrationid=1&jobid=1&studentid=1&termid=1&termstat=0&gradeid=5`)
-      AXIOS.post(`/coopTermRegistrations/create/?registrationid=2&jobid=1&studentid=2&termid=2&termstat=0&gradeid=5`)
-      AXIOS.post(`/coopTermRegistrations/create/?registrationid=3&jobid=1&studentid=3&termid=3&termstat=0&gradeid=5`)
-      AXIOS.post(`/coopTermRegistrations/create/?registrationid=4&jobid=1&studentid=4&termid=4&termstat=0&gradeid=5`)
-      AXIOS.post(`/coopTermRegistrations/create/?registrationid=5&jobid=1&studentid=5&termid=5&termstat=0&gradeid=5`)
-      AXIOS.post(`/coopTermRegistrations/create/?registrationid=6&jobid=1&studentid=6&termid=6&termstat=0&gradeid=5`)
-      AXIOS.post(`/coopTermRegistrations/create/?registrationid=7&jobid=1&studentid=7&termid=7&termstat=0&gradeid=5`)
-      AXIOS.post(`/coopTermRegistrations/create/?registrationid=8&jobid=1&studentid=8&termid=8&termstat=0&gradeid=5`)
-      AXIOS.post(`/coopTermRegistrations/create/?registrationid=9&jobid=1&studentid=9&termid=9s&termstat=0&gradeid=5`)
-      AXIOS.post(`/coopTermRegistrations/create/?registrationid=10&jobid=1&studentid=10&termid=10&termstat=0&gradeid=5`)
+      // create courses
+      AXIOS.post(`/courses/create/?id=ECSE321&term=1&name=Introduction to Electrical Engineering&rank=2&cooperatorid=${TEST_COOPERATOR_ID}`)
+      AXIOS.post(`/courses/create/?id=MATH240&term=1&name=Discrete Structures 1&rank=1&cooperatorid=${TEST_COOPERATOR_ID}`)
+      AXIOS.post(`/courses/create/?id=FRSL105&term=1&name=Intensive Beginners French&rank=4&cooperatorid=${TEST_COOPERATOR_ID}`)
+      AXIOS.post(`/courses/create/?id=COMP303&term=1&name=Software Design&rank=3&cooperatorid=${TEST_COOPERATOR_ID}`)
+      // create coopTermRegistrations
+      AXIOS.post(`/coopTermRegistrations/create/?registrationid=1&jobid=1&studentid=1&termid=1&termstat=1&gradeid=5`)
+      AXIOS.post(`/coopTermRegistrations/create/?registrationid=2&jobid=2&studentid=2&termid=2&termstat=2&gradeid=5`)
+      AXIOS.post(`/coopTermRegistrations/create/?registrationid=3&jobid=3&studentid=3&termid=3&termstat=1&gradeid=5`)
+      AXIOS.post(`/coopTermRegistrations/create/?registrationid=4&jobid=33&studentid=4&termid=4&termstat=1&gradeid=5`)
+      AXIOS.post(`/coopTermRegistrations/create/?registrationid=5&jobid=333&studentid=5&termid=5&termstat=2&gradeid=5`)
+      AXIOS.post(`/coopTermRegistrations/create/?registrationid=6&jobid=4&studentid=6&termid=6&termstat=1&gradeid=5`)
+      AXIOS.post(`/coopTermRegistrations/create/?registrationid=7&jobid=5&studentid=7&termid=7&termstat=1&gradeid=5`)
+      AXIOS.post(`/coopTermRegistrations/create/?registrationid=8&jobid=345&studentid=8&termid=8&termstat=2&gradeid=5`)
+      AXIOS.post(`/coopTermRegistrations/create/?registrationid=9&jobid=129545&studentid=9&termid=9s&termstat=2&gradeid=5`)
+      AXIOS.post(`/coopTermRegistrations/create/?registrationid=10&jobid=10234&studentid=10&termid=10&termstat=2&gradeid=5`)
 
       AXIOS.post(`/students/report/create/?formid=1&pdflink=http://samplelink1.com&ctrid=1`)
       AXIOS.post(`/students/report/create/?formid=1&pdflink=http://samplelink2.com&ctrid=2`)

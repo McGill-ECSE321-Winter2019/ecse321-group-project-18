@@ -74,4 +74,15 @@ public class CooperatorService {
 	public void delete(Cooperator cooperator) {
 		cooperatorRepository.delete(cooperator);
 	}
+
+	/**
+	 * Checks if there exists a Cooperator with the given id.
+	 * @author Bach Tran
+	 * @param id the id of the Cooperator to be checked for existance.
+	 * @return true if there exists a Cooperator with the given ID
+	 * */
+	@Transactional
+	public boolean exists(int id) {
+		return cooperatorRepository.existsById(id);
+	}
 }

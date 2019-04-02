@@ -43,6 +43,7 @@ export default {
   },
   created: function () {
     this.isBusy = true
+    AXIOS.get(`/students/sync`);
     AXIOS.get('/students/list')
       .then(response => {
         this.students = response.data
@@ -85,6 +86,7 @@ export default {
     var e = document.getElementById("filterBy");
     if ((id == undefined || id == ``)  && 
       e.options[e.selectedIndex].value == "all"){
+      AXIOS.get(`/students/sync`);
       AXIOS.get(`/students/list`)
       .then(response => {
         this.students = response.data
@@ -95,6 +97,7 @@ export default {
     }
     else if ((id == undefined || id == ``)  && 
       e.options[e.selectedIndex].value == "problematic"){
+      AXIOS.get(`/students/sync`);
       AXIOS.get(`/students/problematic`)
       .then(response => {
         this.students = response.data
@@ -105,6 +108,7 @@ export default {
     }
     else if ((id != undefined && id != ``)  && 
       e.options[e.selectedIndex].value == "all"){
+      AXIOS.get(`/students/sync`);
       AXIOS.get(`/students/listByID/?studentid=` + id)
       .then(response => {
         this.students = response.data
@@ -115,6 +119,7 @@ export default {
     }
     else if ((id != undefined && id != ``)  && 
       e.options[e.selectedIndex].value == "problematic"){
+      AXIOS.get(`/students/sync`);
       AXIOS.get(`/students/problematic/listByID/?studentid=` + id)
       .then(response => {
         this.students = response.data
@@ -122,7 +127,17 @@ export default {
       .catch(e => {
         this.errorStudent = e;
       });
-    }
+      }
+    },
+    syncWithExternal: async function() {
+      AXIOS.get(`/students/sync`);
+      AXIOS.get(`/students/list`)
+        .then(response => {
+          this.students = response.data
+        })
+        .catch(e => {
+          this.errorStudent = e;
+        });
     }
   }
 }
