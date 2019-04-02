@@ -6,6 +6,7 @@
       <h4 class="search-title">Generate test instances</h4>
       <div class = filters-entries>
         <button name="generate-test-instances" @click="generateTestInstances()"> Generate test instances </button>
+        <button name="wipe-databse" @click="wipeDatabase()"> Wipe database </button>
       </div>
       <span> {{ message }} </span>
     </div>
