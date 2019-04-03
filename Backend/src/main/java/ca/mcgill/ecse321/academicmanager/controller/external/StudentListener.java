@@ -13,9 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.regex.*;
+
 
 /**
  * Main class handles the Student's team (team 07) data
@@ -61,16 +60,6 @@ public class StudentListener extends Listener{
             String id = link.trim().substring(link.lastIndexOf('/') + 1);
             students.put(id ,new ExternalStudentDto(id, firstName, lastName));
         }
-    }
-
-    /**
-     * reference: https://www.tutorialspoint.com/java/java_regular_expressions.htm
-     * @param messyString
-     * @return
-     */
-    private String studentIdFinder(String messyString) {
-        // had to do it the hard way...
-        return messyString.substring(messyString.lastIndexOf('/') + 1);
     }
 
     @Override
