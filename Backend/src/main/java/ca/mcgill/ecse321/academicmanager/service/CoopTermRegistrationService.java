@@ -165,7 +165,7 @@ public class CoopTermRegistrationService {
 	/**
 	 * Gets CoopTermRegistration instances based on termName and studentID
 	 * 
-	 * @param termName  termName name of a term
+	 * @param termName termName name of a term
 	 * @param studentID studentID id of a student
 	 * @return Set of CoopTermRegistration instances
 	 */

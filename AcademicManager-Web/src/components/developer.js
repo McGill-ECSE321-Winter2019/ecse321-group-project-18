@@ -88,6 +88,10 @@ export default {
       AXIOS.put(`students/update/?id=5&status=true`)
 
       this.message = `Test data created`
+    },
+    wipeDatabase : function() {
+      AXIOS.get('/developers/wipe')
+      this.message = 'Database wiped. It should be empty now.'
     }
   }
 }
