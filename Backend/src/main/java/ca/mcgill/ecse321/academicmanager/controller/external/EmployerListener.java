@@ -6,12 +6,6 @@ import ca.mcgill.ecse321.academicmanager.service.StudentService;
 import com.google.gson.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.HashMap;
 
 
@@ -25,10 +19,7 @@ class ExternalStudentDto {
     protected String studentID;
     protected String firstName;
     protected String lastName;
-//    protected String email;
-//    protected String major;
-//    protected String phone;
-//    protected String coopPosition;
+
     /**
      * Creates a new ExternalStudentDto object, this object captures relevant data on the Student team.
      * @param fullName the full name of the Student. This will be automatically split into firstName and lastName
@@ -85,41 +76,14 @@ class ExternalStudentDto {
  * */
 @CrossOrigin(origins="*")
 @RestController
-public class StudentClientController {
+public class EmployerListener extends Listener {
+    public static final int DEFAULT_COOPERATOR_ID = 1;
     public static final String GET_URL = "https://employer-backend-8888.herokuapp.com/mainapp/1/getstudents";
     private HashMap<String, ExternalStudentDto> students = new HashMap<>();
     @Autowired
     private StudentService studentService;
     @Autowired
     private CooperatorService cooperatorService;
-    /**
-     * Low-level method to open a connection to the Student team's RESTful calls.
-     * source: https://www.journaldev.com/7148/java-httpurlconnection-example-java-http-request-get-post
-     * @author Bach Tran
-     * @return a String in JSON format, or an empty String if request has an error.
-     * */
-    public String sendGETStudents() throws IOException {
-        // prepare to connect
-        URL getURL = new URL(GET_URL);
-        HttpURLConnection connection = (HttpURLConnection) getURL.openConnection();
-        connection.setRequestMethod("GET");
-        int responseCode = connection.getResponseCode();
-        String responseString = "";
-        if (responseCode == HttpURLConnection.HTTP_OK) {
-            BufferedReader in = new BufferedReader(new InputStreamReader(
-                    connection.getInputStream()));
-            String inputLine;
-            StringBuffer response = new StringBuffer();
-
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
-            in.close();
-
-            responseString = response.toString();
-        }
-        return responseString;
-    }
     /**
      * Main response method for the HTTP GET request /students/sync.
      * This method aims to get all Student from the Student team's database.
@@ -128,28 +92,12 @@ public class StudentClientController {
      * */
     @GetMapping(value = { "/students/sync", "/students/sync/" })
     @ResponseBody
-    public String getAllStudents() {
-        String responseMessage = "Sync complete!";
-        String responseString = "";
-        // send HTTP GET request
-        try {
-            responseString = sendGETStudents();
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-            responseMessage = e.getMessage();
-        }
-        // parse raw data
-        JsonParser parser = new JsonParser();
-        JsonArray jsonStudents = parser.parse(responseString).getAsJsonArray();
-        // parse to Java Objects
-        students = jsonArrayToList(jsonStudents);
-
-        // finally, persist the new data to the backend database
-        persist();
-        return responseMessage + "\n" + students.toString();
+    String trigger() {
+        return super.trigger(GET_URL);
     }
+
     /**
-     * Helper method: convert a jsonArray of students to a Java.util.ArrayList of ExxternalStudentDto
+     * Helper method: convert a jsonArray of students to a Java.util.ArrayList of ExternalStudentDto
      * @return a List of ExternalStudentDto
      * */
     private static HashMap<String, ExternalStudentDto> jsonArrayToList(JsonArray jsonArray) {
@@ -166,25 +114,35 @@ public class StudentClientController {
         }
         return result;
     }
-    /**
-     * Puts the received data into the Backend's database.
-     * Contains the logic (instruction) on how to appropriately inject data to the database.
-     * After this method, the database of the AcademicManager will be the same to that of the Student team.
-     * @author Bach Tran
-     * */
-    private void persist() {
-        // preliminary work: handle the cooperator
-        final int DEFAULT_COOPERATOR_ID = 1;
+
+    @Override
+    protected void interpretRequest(String jsonString) {
+        // parse raw data
+        JsonParser parser = new JsonParser();
+        JsonArray jsonStudents = parser.parse(jsonString).getAsJsonArray();
+        // parse to Java Objects
+        students = jsonArrayToList(jsonStudents);
+    }
+
+    @Override
+    protected void handleDependencies() {
+        // dependency: Cooperator
         if (!cooperatorService.exists(DEFAULT_COOPERATOR_ID)) {
             cooperatorService.create(DEFAULT_COOPERATOR_ID);
         }
-//        // deletes all obsolete student data
-//        for (Student academicMangerStudent : studentService.getAll()) {
-//            // deletes all obsolete students from the AcademicManager's database
-//            if (!students.containsKey(academicMangerStudent.getStudentID())) {
-//                studentService.delete(academicMangerStudent.getStudentID());
-//            }
-//        }
+    }
+
+    @Override
+    protected void persist() {
+        // handle dependencies
+        super.persist();
+        // deletes all obsolete student data
+        for (Student academicMangerStudent : studentService.getAll()) {
+            // deletes all obsolete students from the AcademicManager's database
+            if (!students.containsKey(academicMangerStudent.getStudentID())) {
+                studentService.delete(academicMangerStudent.getStudentID());
+            }
+        }
         // persists new student to the database
         for (String externalStudentID : students.keySet()) {
             if (studentService.exists(externalStudentID)) {
