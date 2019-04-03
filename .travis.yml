@@ -1,23 +1,23 @@
 matrix:
     include:
-    #   - language: node_js
-    #     node_js:
-    #         - "8.10.0"
+      - language: node_js
+        node_js:
+            - "8.10.0"
 
-    #     before_install:
-    #         - cd AcademicManager-Web
-    #         - npm install
+        before_install:
+            - cd AcademicManager-Web
+            - npm install
 
-    #     script:
-    #         - npm run build
+        script:
+            - npm run build
 
-    #     deploy:
-    #         provider: heroku
-    #         api_key: 0d2d6a3a-a07c-4f2b-b209-450f71f35ad6
-    #         app:
-    #             master: cooperatorapp-frontend-18
-    #         on:
-    #             repo: McGill-ECSE321-Winter2019/ecse321-group-project-18
+        deploy:
+            provider: heroku
+            api_key: 0d2d6a3a-a07c-4f2b-b209-450f71f35ad6
+            app:
+                master: cooperatorapp-frontend-18
+            on:
+                repo: McGill-ECSE321-Winter2019/ecse321-group-project-18
 
       - language: java
 
