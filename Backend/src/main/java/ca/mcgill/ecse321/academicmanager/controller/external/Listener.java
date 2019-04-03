@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.Stack;
 
 public abstract class Listener {
@@ -16,7 +17,7 @@ public abstract class Listener {
      * Responses to the HTTP request, the main flow of a Listener.
      * @return a String containing a message indicating if this HTTP GET has succeed or failed.
      */
-    String trigger(String url) {
+    protected String trigger(String url) {
         String serverResponse = "";
         // Step 1: send HTTP GET
         try {
@@ -63,6 +64,13 @@ public abstract class Listener {
         } else {
             throw new RuntimeException("Error " + responseCode + ", message from subsystem: " + connection.getResponseMessage());
         }
+    }
+    protected ArrayList<String> sendGetRequest(ArrayList<String> urls) throws IOException, RuntimeException {
+        ArrayList<String> rawJsons = new ArrayList<>();
+        for (String url : urls) {
+            rawJsons.add(sendGetRequest(url));
+        }
+        return rawJsons;
     }
     /**
      * Interprets raw JSON String to something meaningful.

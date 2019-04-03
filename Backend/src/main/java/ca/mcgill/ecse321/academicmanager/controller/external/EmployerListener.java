@@ -33,6 +33,12 @@ class ExternalStudentDto {
         this.lastName = nameSeparator(this.fullName)[1];
     }
 
+    public ExternalStudentDto(String studentID, String firstName, String lastName) {
+        this.studentID = studentID;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
     @Override
     public String toString() {
         return "ID = " + studentID + " fullName = " + fullName;
@@ -92,7 +98,7 @@ public class EmployerListener extends Listener {
      * */
     @GetMapping(value = { "/students/sync", "/students/sync/" })
     @ResponseBody
-    String trigger() {
+    protected String trigger() {
         return super.trigger(GET_URL);
     }
 
