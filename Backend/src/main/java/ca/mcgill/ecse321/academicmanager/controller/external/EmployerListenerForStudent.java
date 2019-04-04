@@ -82,7 +82,7 @@ class ExternalStudentDto {
  * */
 @CrossOrigin(origins="*")
 @RestController
-public class EmployerListener extends Listener {
+public class EmployerListenerForStudent extends Listener {
     public static final int DEFAULT_COOPERATOR_ID = 1;
     public static final String GET_URL = "https://employer-backend-8888.herokuapp.com/mainapp/1/getstudents";
     private HashMap<String, ExternalStudentDto> students = new HashMap<>();

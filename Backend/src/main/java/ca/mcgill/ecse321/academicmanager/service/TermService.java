@@ -131,4 +131,7 @@ public class TermService {
 	public void delete(Term term) {
 		termRepository.delete(term);
 	}
+
+	@Transactional
+	public boolean exists(String termID) { return termRepository.existsById(termID); }
 }

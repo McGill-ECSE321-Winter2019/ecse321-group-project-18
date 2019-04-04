@@ -17,11 +17,14 @@ import java.util.HashMap;
 
 
 /**
- * Main class handles the Student's team (team 07) Student data
+ * This class specifically works for the Student viewpoint (team 04).
+ * It specifically get all students and add it straight to the backend using our services.
+ * @author Bach Tran
+ * @since Sprint 4
  */
 @CrossOrigin(origins = "*")
 @RestController
-public class StudentListener extends Listener{
+public class StudentListenerForStudent extends Listener{
 
     public static final String GET_ALL_STUDENTS_URL = "https://cooperator-backend-0000.herokuapp.com/students/";
     public static final int DEFAULT_COOPERATOR_ID = 1;
