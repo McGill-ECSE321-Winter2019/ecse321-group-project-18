@@ -24,27 +24,12 @@ import java.util.HashMap;
  */
 @CrossOrigin(origins = "*")
 @RestController
-public class StudentListenerForStudent extends Listener{
+public class StudentListenerForStudent extends ListenerForStudent {
 
     public static final String GET_ALL_STUDENTS_URL = "https://cooperator-backend-0000.herokuapp.com/students/";
-    public static final int DEFAULT_COOPERATOR_ID = 1;
-
-    private HashMap<String, ExternalStudentDto> students = new HashMap<>();
-
-    @Autowired
-    private CooperatorService cooperatorService;
-    @Autowired
-    private StudentService studentService;
-
-    @GetMapping(value = { "/students/sync04", "/students/sync04/" })
-    @ResponseBody
-    @Override
-    protected String trigger() {
-        return super.mainProceudure(GET_ALL_STUDENTS_URL);
-    }
 
     @Override
-    protected void interpretRequest(String jsonString) {
+    protected void interpretRequest(String jsonString) throws RuntimeException {
         JsonParser parser = new JsonParser();
         if (!parser.parse(jsonString).isJsonObject()) {
             System.out.println("Cannot interpret");
@@ -67,40 +52,7 @@ public class StudentListenerForStudent extends Listener{
     }
 
     @Override
-    protected void handleDependencies() {
-        // dependency: Cooperator
-        if (!cooperatorService.exists(DEFAULT_COOPERATOR_ID)) {
-            cooperatorService.create(DEFAULT_COOPERATOR_ID);
-        }
-    }
-
-    @Override
-    protected void persist() {
-        // handle dependencies
-        super.persist();
-        // deletes all obsolete student data
-        for (Student academicMangerStudent : studentService.getAll()) {
-            // deletes all obsolete students from the AcademicManager's database
-            if (!students.containsKey(academicMangerStudent.getStudentID())) {
-                studentService.delete(academicMangerStudent.getStudentID());
-            }
-        }
-        // persists new student to the database
-        for (String externalStudentID : students.keySet()) {
-            if (studentService.exists(externalStudentID)) {
-                // updates the existing student
-                Student student = studentService.get(externalStudentID);
-                studentService.updateFirstName(student, students.get(externalStudentID).firstName);
-                studentService.updateLastName(student, students.get(externalStudentID).lastName);
-            } else {
-                // create new, non-problematic student
-                studentService.create(externalStudentID,
-                        students.get(externalStudentID).firstName,
-                        students.get(externalStudentID).lastName,
-                        cooperatorService.get(DEFAULT_COOPERATOR_ID));
-            }
-        }
-        // optional: return message to console.
-        System.out.println("Updated data in the backend database!");
+    protected String trigger() {
+        return super.mainProcedure(GET_ALL_STUDENTS_URL);
     }
 }

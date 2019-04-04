@@ -1,7 +1,6 @@
 package ca.mcgill.ecse321.academicmanager.controller.external;
 
 import ca.mcgill.ecse321.academicmanager.dto.TermDto;
-import ca.mcgill.ecse321.academicmanager.service.CourseService;
 import ca.mcgill.ecse321.academicmanager.service.TermService;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -31,29 +30,36 @@ public class StudentListenerForTerm extends Listener {
     @GetMapping(value = {"/terms/sync", "/terms/sync"})
     @Override
     protected String trigger() {
-        return super.mainProceudure(GET_ALL_COURSES_URL);
+        return super.mainProcedure(GET_ALL_COURSES_URL);
     }
 
     @Override
-    protected void interpretRequest(String jsonString) {
+    protected void interpretRequest(String jsonString) throws RuntimeException {
         JsonParser parser = new JsonParser();
-        if (!parser.parse(jsonString).isJsonObject()) {
-            System.out.println("Cannot interpret!");
-            return;
+        if (!parser.parse(jsonString).isJsonObject()) { ;
+            throw new RuntimeException("Cannot interpret!");
         }
-        // break the complex json down to an array of CourseOfferings
-        JsonObject complex = (JsonObject) parser.parse(jsonString).getAsJsonObject().get("_embedded");
-        JsonArray courseOfferings = complex.get("coopCourseOfferings").getAsJsonArray();
+        JsonArray courseOfferings = extractJsonArray(jsonString, parser);
         // traverse the array to find the courses and the terms
         for (JsonElement courseOffering : courseOfferings) {
-            JsonObject courseOfferingObject = courseOffering.getAsJsonObject();
-            // easy: get "term" & "year" --> termName
-            String externalTerm = courseOfferingObject.get("term").getAsString();
-            String externalYear = courseOfferingObject.get("year").getAsString();
-            String internalId = ExternalTermDto.generateId(externalTerm, externalYear);
-            // adding to a HashSet can guarantee uniqueness
-            terms.add(new ExternalTermDto(internalId, externalTerm, externalYear));
+            convertToInternalDto(courseOffering);
         }
+    }
+
+    private JsonArray extractJsonArray(String jsonString, JsonParser parser) {
+        // break the complex json down to an array of CourseOfferings
+        JsonObject complex = (JsonObject) parser.parse(jsonString).getAsJsonObject().get("_embedded");
+        return complex.get("coopCourseOfferings").getAsJsonArray();
+    }
+
+    private void convertToInternalDto(JsonElement courseOffering) {
+        JsonObject courseOfferingObject = courseOffering.getAsJsonObject();
+        // easy: get "term" & "year" --> termName
+        String externalTerm = courseOfferingObject.get("term").getAsString();
+        String externalYear = courseOfferingObject.get("year").getAsString();
+        String internalId = ExternalTermDto.generateId(externalTerm, externalYear);
+        // adding to a HashSet can guarantee uniqueness
+        terms.add(new ExternalTermDto(internalId, externalTerm, externalYear));
     }
 
     @Override
@@ -62,21 +68,22 @@ public class StudentListenerForTerm extends Listener {
     }
 
     @Override
-    protected void persist() {
-        super.persist();
-        // persist in database.
+    protected void removeObsolete() {
+        // nothing to perform for this class!
+    }
+
+    @Override
+    protected void postData() {
         for (ExternalTermDto externalTerm : terms) {
             if (!termService.exists(externalTerm.getTermID()))
             {
                 termService.create(
-                    externalTerm.getTermID(),
-                    externalTerm.getTermName(),
-                    externalTerm.getDate1(),
-                    externalTerm.getDate2()
-            );}
+                        externalTerm.getTermID(),
+                        externalTerm.getTermName(),
+                        externalTerm.getDate1(),
+                        externalTerm.getDate2()
+                );}
         }
-        // shouldn't wipe anything...
-        System.out.println("Updated data to the database!");
     }
 }
 

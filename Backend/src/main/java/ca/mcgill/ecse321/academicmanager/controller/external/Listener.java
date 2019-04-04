@@ -17,7 +17,7 @@ public abstract class Listener {
      * This follows a 4-step procedures: send > interpret > persist > update (notify user)
      * @return a String containing a message indicating if this HTTP GET has succeed or failed.
      */
-    protected String mainProceudure(String url) {
+    protected String mainProcedure(String url) {
         String serverResponse = "";
         // Step 1: send HTTP GET
         try {
@@ -25,12 +25,17 @@ public abstract class Listener {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         } catch (RuntimeException e) {
+            e.printStackTrace();
             System.out.println(e.getMessage() + " at " + new Time(System.currentTimeMillis()));
             return "Request failed at " + new Time(System.currentTimeMillis())
                 + '\n' + e.getMessage() ;
         }
         // Step 2: interpret the String data
-        this.interpretRequest(serverResponse);
+        try {
+            this.interpretRequest(serverResponse);
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+        }
         // Step 3: data persistence
         this.persist();
         // Step 4: record the time of update, and return the message
@@ -82,13 +87,9 @@ public abstract class Listener {
      * Each subclass will interpret this information differently.
      * @param jsonString the String return as the result of the RESTful call.
      */
-    protected abstract void interpretRequest(String jsonString);
+    protected abstract void interpretRequest(String jsonString) throws RuntimeException;
 
-    /**
-     * To create some entities, it is required to create their dependencies first.
-     * Each concrete class has different dependencies and therefore different way to handle them.
-     */
-    protected abstract void handleDependencies();
+
 
     /**
      * Save the information to the database.
@@ -97,8 +98,17 @@ public abstract class Listener {
      */
     protected void persist() {
         handleDependencies();
+        removeObsolete();
+        postData();
+        System.out.println("Persisted data to the database!");
     }
-
+    /**
+     * To create some entities, it is required to create their dependencies first.
+     * Each concrete class has different dependencies and therefore different way to handle them.
+     */
+    protected abstract void handleDependencies();
+    protected abstract void removeObsolete();
+    protected abstract void postData();
     /**
      * Add a new time after an update happen.
      */

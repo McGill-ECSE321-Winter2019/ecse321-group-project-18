@@ -6,6 +6,7 @@ import ca.mcgill.ecse321.academicmanager.service.StudentService;
 import com.google.gson.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.HashMap;
 
 
@@ -82,14 +83,8 @@ class ExternalStudentDto {
  * */
 @CrossOrigin(origins="*")
 @RestController
-public class EmployerListenerForStudent extends Listener {
-    public static final int DEFAULT_COOPERATOR_ID = 1;
+public class EmployerListenerForStudent extends ListenerForStudent {
     public static final String GET_URL = "https://employer-backend-8888.herokuapp.com/mainapp/1/getstudents";
-    private HashMap<String, ExternalStudentDto> students = new HashMap<>();
-    @Autowired
-    private StudentService studentService;
-    @Autowired
-    private CooperatorService cooperatorService;
     /**
      * Main response method for the HTTP GET request /students/sync.
      * This method aims to get all Student from the Student team's database.
@@ -100,7 +95,7 @@ public class EmployerListenerForStudent extends Listener {
     @ResponseBody
     @Override
     protected String trigger() {
-        return super.mainProceudure(GET_URL);
+        return super.mainProcedure(GET_URL);
     }
 
     /**
@@ -123,49 +118,11 @@ public class EmployerListenerForStudent extends Listener {
     }
 
     @Override
-    protected void interpretRequest(String jsonString) {
+    protected void interpretRequest(String jsonString) throws RuntimeException {
         // parse raw data
         JsonParser parser = new JsonParser();
         JsonArray jsonStudents = parser.parse(jsonString).getAsJsonArray();
         // parse to Java Objects
         students = jsonArrayToList(jsonStudents);
-    }
-
-    @Override
-    protected void handleDependencies() {
-        // dependency: Cooperator
-        if (!cooperatorService.exists(DEFAULT_COOPERATOR_ID)) {
-            cooperatorService.create(DEFAULT_COOPERATOR_ID);
-        }
-    }
-
-    @Override
-    protected void persist() {
-        // handle dependencies
-        super.persist();
-        // deletes all obsolete student data
-        for (Student academicMangerStudent : studentService.getAll()) {
-            // deletes all obsolete students from the AcademicManager's database
-            if (!students.containsKey(academicMangerStudent.getStudentID())) {
-                studentService.delete(academicMangerStudent.getStudentID());
-            }
-        }
-        // persists new student to the database
-        for (String externalStudentID : students.keySet()) {
-            if (studentService.exists(externalStudentID)) {
-                // updates the existing student
-                Student student = studentService.get(externalStudentID);
-                studentService.updateFirstName(student, students.get(externalStudentID).firstName);
-                studentService.updateLastName(student, students.get(externalStudentID).lastName);
-            } else {
-                // create new, non-problematic student
-                studentService.create(externalStudentID,
-                        students.get(externalStudentID).firstName,
-                        students.get(externalStudentID).lastName,
-                        cooperatorService.get(DEFAULT_COOPERATOR_ID));
-            }
-        }
-        // optional: return message to console.
-        System.out.println("Updated data in the backend database!");
     }
 }
