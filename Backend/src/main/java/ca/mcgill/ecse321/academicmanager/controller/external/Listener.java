@@ -11,13 +11,13 @@ import java.util.Stack;
 
 public abstract class Listener {
     protected Stack<Time> updateHistory = new Stack<>();
-    protected String GET_URL = new String();
 
     /**
-     * Responses to the HTTP request, the main flow of a Listener.
+     * The main flow of a Listener.
+     * This follows a 4-step procedures: send > interpret > persist > update (notify user)
      * @return a String containing a message indicating if this HTTP GET has succeed or failed.
      */
-    protected String trigger(String url) {
+    protected String mainProceudure(String url) {
         String serverResponse = "";
         // Step 1: send HTTP GET
         try {
@@ -35,8 +35,12 @@ public abstract class Listener {
         this.persist();
         // Step 4: record the time of update, and return the message
         this.update();
-        return "Request completed at " + this.updateHistory.peek();
+        return "Request completed at " + this.updateHistory.peek() + " updateHistory=" + this.updateHistory;
     }
+    /**
+     * Responses to the HTTP Request
+     */
+    protected abstract String trigger();
     /**
      * Low-level method to open a connection to the Student team's RESTful calls.
      * source: https://www.journaldev.com/7148/java-httpurlconnection-example-java-http-request-get-post

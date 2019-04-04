@@ -17,7 +17,7 @@ import java.util.HashMap;
 
 
 /**
- * Main class handles the Student's team (team 07) data
+ * Main class handles the Student's team (team 07) Student data
  */
 @CrossOrigin(origins = "*")
 @RestController
@@ -35,8 +35,9 @@ public class StudentListener extends Listener{
 
     @GetMapping(value = { "/students/sync04", "/students/sync04/" })
     @ResponseBody
+    @Override
     protected String trigger() {
-        return super.trigger(GET_ALL_STUDENTS_URL);
+        return super.mainProceudure(GET_ALL_STUDENTS_URL);
     }
 
     @Override

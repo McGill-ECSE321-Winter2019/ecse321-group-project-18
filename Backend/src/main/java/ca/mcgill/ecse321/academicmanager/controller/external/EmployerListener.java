@@ -98,8 +98,9 @@ public class EmployerListener extends Listener {
      * */
     @GetMapping(value = { "/students/sync", "/students/sync/" })
     @ResponseBody
+    @Override
     protected String trigger() {
-        return super.trigger(GET_URL);
+        return super.mainProceudure(GET_URL);
     }
 
     /**
