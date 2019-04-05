@@ -27,7 +27,7 @@ class EmployerTeamListenerForStudent extends ListenerForStudent {
      * @return a message to the REST Client
      * @author Bach Tran
      * */
-    @GetMapping(value = { "/students/sync", "/students/sync/" })
+    @GetMapping(value = { "/students/sync-with-employer", "/students/sync-with-employer/" })
     @ResponseBody
     @Override
     protected String trigger() {

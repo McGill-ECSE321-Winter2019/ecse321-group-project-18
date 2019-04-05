@@ -5,6 +5,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -42,7 +44,8 @@ class StudentTeamListenerForStudent extends ListenerForStudent {
             students.put(id ,new ExternalStudentDto(id, firstName, lastName));
         }
     }
-
+    @GetMapping(value = {"/students/sync", "/students/sync/"})
+    @ResponseBody
     @Override
     protected String trigger() {
         return super.mainProcedure(GET_ALL_STUDENTS_URL);
