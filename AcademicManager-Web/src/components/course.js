@@ -39,14 +39,15 @@ export default {
   },
   created: function () {
     // Initializing people from backend
-    AXIOS.get('/courses')
+    AXIOS.get('/courses/sync')
+      .then((response)=>{return AXIOS.get('/courses')
       .then(response => {
         // JSON responses are automatically parsed.
         this.courses = response.data
       })
       .catch(e => {
         this.error = e;
-      });
+      })});
   },
   methods: {
     createCourse: function (courseID, courseName, term, courseRank) {

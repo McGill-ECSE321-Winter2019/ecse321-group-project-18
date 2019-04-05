@@ -45,7 +45,7 @@ public class CourseDto implements Comparable <CourseDto> {
 	 * */
 //	public CourseDto(Course course) {
 //		super();
-//		if (course == null) throw new IllegalArgumentException("The given course paramater is null.");
+//		if (course == null) throw new IllegalArgumentException("The given course parameter is null.");
 //		this.courseID = course.getCourseID();
 //		this.term = course.getTerm();
 //		this.courseName = course.getCourseName();

@@ -36,5 +36,19 @@ public class TermDto {
 		return date2;
 	}
 
+	public void setTermID(String termID) {
+		this.termID = termID;
+	}
 
+	public void setTermName(String termName) {
+		this.termName = termName;
+	}
+
+	public void setDate1(Date date1) {
+		this.date1 = date1;
+	}
+
+	public void setDate2(Date date2) {
+		this.date2 = date2;
+	}
 }

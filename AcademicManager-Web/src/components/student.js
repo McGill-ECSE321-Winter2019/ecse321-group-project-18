@@ -43,14 +43,23 @@ export default {
   },
   created: function () {
     this.isBusy = true
-    AXIOS.get(`/students/sync`);
-    AXIOS.get('/students/list')
-      .then(response => {
-        this.students = response.data
-      })
-      .catch(e => {
-        this.errorStudent = e
-      });
+    // AXIOS.get(`/students/sync`);
+    // AXIOS.get('/students/list')
+    //   .then(response => {
+    //     this.students = response.data
+    //   })
+    //   .catch(e => {
+    //     this.errorStudent = e
+    //   });
+    AXIOS.get('/students/sync')
+      .then((response)=>{return AXIOS.get('/students/list')
+        .then(response => {
+          // JSON responses are automatically parsed.
+          this.students = response.data
+        })
+        .catch(e => {
+          this.errorStudent = e;
+        })});
     this.isBusy = false
   },
   methods: {
@@ -86,7 +95,7 @@ export default {
     var e = document.getElementById("filterBy");
     if ((id == undefined || id == ``)  && 
       e.options[e.selectedIndex].value == "all"){
-      AXIOS.get(`/students/sync`);
+      //AXIOS.get(`/students/sync`);
       AXIOS.get(`/students/list`)
       .then(response => {
         this.students = response.data
@@ -97,7 +106,7 @@ export default {
     }
     else if ((id == undefined || id == ``)  && 
       e.options[e.selectedIndex].value == "problematic"){
-      AXIOS.get(`/students/sync`);
+      //AXIOS.get(`/students/sync`);
       AXIOS.get(`/students/problematic`)
       .then(response => {
         this.students = response.data
@@ -108,7 +117,7 @@ export default {
     }
     else if ((id != undefined && id != ``)  && 
       e.options[e.selectedIndex].value == "all"){
-      AXIOS.get(`/students/sync`);
+      //AXIOS.get(`/students/sync`);
       AXIOS.get(`/students/listByID/?studentid=` + id)
       .then(response => {
         this.students = response.data
@@ -119,7 +128,7 @@ export default {
     }
     else if ((id != undefined && id != ``)  && 
       e.options[e.selectedIndex].value == "problematic"){
-      AXIOS.get(`/students/sync`);
+      //AXIOS.get(`/students/sync`);
       AXIOS.get(`/students/problematic/listByID/?studentid=` + id)
       .then(response => {
         this.students = response.data
@@ -130,7 +139,7 @@ export default {
       }
     },
     syncWithExternal: async function() {
-      AXIOS.get(`/students/sync`);
+      //AXIOS.get(`/students/sync`);
       AXIOS.get(`/students/list`)
         .then(response => {
           this.students = response.data

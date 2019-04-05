@@ -115,4 +115,17 @@ public class CourseService {
 	public void delete(Course course) {
 		courseRepository.delete(course);
 	}
+
+	/**
+	 * Checks if a Course with a given ID and term exists in the database.
+	 * @author Bach Tran
+	 * @param courseID the id of the Course to be checked.
+	 * @param term the term of the Course to be checked.
+	 * @return true if this Course with this id has existed.
+	 */
+	@Transactional
+	public boolean exists(String courseID, String term) {
+		if (!courseRepository.existsById(courseID)) { return false; }
+		return courseRepository.findById(courseID).get().getTerm().equals(term);
+	}
 }
