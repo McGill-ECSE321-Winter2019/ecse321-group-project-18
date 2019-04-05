@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.Time;
+import java.time.ZonedDateTime;
 import java.util.Stack;
 
 /**
@@ -19,7 +20,7 @@ import java.util.Stack;
  * @since Sprint 4
  */
 abstract class Listener {
-    protected Stack<Time> updateHistory = new Stack<>();
+    protected Stack<ZonedDateTime> updateHistory = new Stack<>();
 
     /**
      * The main flow of a Listener.
@@ -48,7 +49,7 @@ abstract class Listener {
         // Step 3: data persistence
         this.persist();
         // Step 4: record the time of update, and return the message
-        this.update();
+        this.updateHistory.push(ZonedDateTime.now());
         return "Request completed at " + this.updateHistory.peek() + " updateHistory=" + this.updateHistory;
     }
     /**
@@ -127,12 +128,6 @@ abstract class Listener {
      * If data exists, update their attributes corresponding to the external sources.
      */
     protected abstract void postData();
-    /**
-     * Add a new time after an update happen.
-     */
-    private void update() {
-        this.updateHistory.push(new Time(System.currentTimeMillis()));
-    }
 
     /**
      * Simply print out the update history
