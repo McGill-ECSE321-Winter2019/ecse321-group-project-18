@@ -17,7 +17,8 @@
         </div>
       </div>
     </div>
-
+    <!-- This is the message show how much time has elapsed since last update.-->
+    <span>{{message}}</span>
     <table class="table table-striped table-hover table-users">
 		<tr>
 	      <th>StudentID</th> 
