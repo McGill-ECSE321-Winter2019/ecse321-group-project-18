@@ -152,11 +152,11 @@ abstract class Listener {
         ZonedDateTime currentTime = ZonedDateTime.now();
         if (updateHistory.isEmpty()) {
             updateHistory.push(currentTime);
-            return "Updated for the first time. " + currentTime;
+            return "Updated for the first time. ";
         }
         Duration duration = Duration.between(updateHistory.peek(), updateHistory.push(currentTime));
         if (duration.getSeconds() <= 1) {
-            return "Updated less than a second ago. " + currentTime;
+            return "Updated less than a second ago. ";
         }
         String response = "Updated ";
         if (duration.toDays() > 0) {

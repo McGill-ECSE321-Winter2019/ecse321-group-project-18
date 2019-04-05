@@ -38,7 +38,8 @@ export default {
         is_problematic: null
       },
       errorStudent: '',
-      response: []
+      response: [],
+      message: ''
     }
   },
   created: function () {
@@ -52,7 +53,9 @@ export default {
     //     this.errorStudent = e
     //   });
     AXIOS.get('/students/sync')
-      .then((response)=>{return AXIOS.get('/students/list')
+      .then((response)=>{
+        this.message = response.data
+        return AXIOS.get('/students/list')
         .then(response => {
           // JSON responses are automatically parsed.
           this.students = response.data

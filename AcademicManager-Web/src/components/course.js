@@ -34,13 +34,16 @@ export default {
       error: '',
       quantity: '',
       sort_order: '',
-      response: []
+      response: [],
+      message: ''
     }
   },
   created: function () {
     // Initializing people from backend
     AXIOS.get('/courses/sync')
-      .then((response)=>{return AXIOS.get('/courses')
+      .then((response)=>{
+        this.message = response.data
+        return AXIOS.get('/courses')
       .then(response => {
         // JSON responses are automatically parsed.
         this.courses = response.data
