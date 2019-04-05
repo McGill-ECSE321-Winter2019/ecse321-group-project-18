@@ -6,10 +6,19 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.Time;
-import java.util.ArrayList;
 import java.util.Stack;
 
-public abstract class Listener {
+/**
+ * The Listener define a basic step-by-step procedure on how to request, receive, and interpret
+ * JSON data in the external databases.
+ * It records time of each transaction, also reports information on errors from a HTTP Request,
+ * or a failure to interpret JSON data.
+ * Each concrete Listener can only handle 1 HTTP Request and work on a specific number of entities only,
+ * this is currently a problem and can be developed in future releases.
+ * @author Bach Tran
+ * @since Sprint 4
+ */
+abstract class Listener {
     protected Stack<Time> updateHistory = new Stack<>();
 
     /**
@@ -43,7 +52,10 @@ public abstract class Listener {
         return "Request completed at " + this.updateHistory.peek() + " updateHistory=" + this.updateHistory;
     }
     /**
-     * Responses to the HTTP Request
+     * The method binds to the HTTP Request.
+     * It contains the instruction on how to react to the Request.
+     * When user call the RESTful endpoints, this is the first method to be run.
+     * Note: add tag @GetMapping in this method for each concrete class only!
      */
     protected abstract String trigger();
     /**
@@ -74,27 +86,19 @@ public abstract class Listener {
             throw new RuntimeException("Error " + responseCode + ", message from subsystem: " + connection.getResponseMessage());
         }
     }
-    protected ArrayList<String> sendGetRequest(ArrayList<String> urls) throws IOException, RuntimeException {
-        ArrayList<String> rawJsons = new ArrayList<>();
-        for (String url : urls) {
-            rawJsons.add(sendGetRequest(url));
-        }
-        return rawJsons;
-    }
+
     /**
      * Interprets raw JSON String to something meaningful.
      * Converts the JSON String to Java object.
-     * Each subclass will interpret this information differently.
+     * Each subclass will have different strategies to interpret (read) the JSON string
+     * from external subsystems.
      * @param jsonString the String return as the result of the RESTful call.
      */
     protected abstract void interpretRequest(String jsonString) throws RuntimeException;
 
-
-
     /**
-     * Save the information to the database.
-     * Different Listener relies on different dependencies, hence having different way
-     * to approach data persistence.
+     * A method contains the procedure on how to persist external database
+     * to the internal database.
      */
     protected void persist() {
         handleDependencies();
@@ -103,11 +107,25 @@ public abstract class Listener {
         System.out.println("Persisted data to the database!");
     }
     /**
-     * To create some entities, it is required to create their dependencies first.
+     * To create some entities, it is required to create their dependencies first,
+     * otherwise, the internal Service class might fail to create objects.
      * Each concrete class has different dependencies and therefore different way to handle them.
+     * Triggers this method first before posting the data.
      */
     protected abstract void handleDependencies();
+
+    /**
+     * Some data on the external systems might have been deleted, this method helps
+     * to reflect those deletes on the internal data.
+     * Triggers this method first before posting the data.
+     */
     protected abstract void removeObsolete();
+
+    /**
+     * Injects records from the external systems to the internal database.
+     * If data does not exist, create an object.
+     * If data exists, update their attributes corresponding to the external sources.
+     */
     protected abstract void postData();
     /**
      * Add a new time after an update happen.

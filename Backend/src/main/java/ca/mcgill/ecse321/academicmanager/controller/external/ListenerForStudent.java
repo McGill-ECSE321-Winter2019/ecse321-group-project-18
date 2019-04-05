@@ -4,12 +4,10 @@ import ca.mcgill.ecse321.academicmanager.model.Student;
 import ca.mcgill.ecse321.academicmanager.service.CooperatorService;
 import ca.mcgill.ecse321.academicmanager.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
 
-public abstract class ListenerForStudent extends Listener {
+abstract class ListenerForStudent extends Listener {
     public static final int DEFAULT_COOPERATOR_ID = 1;
     protected HashMap<String, ExternalStudentDto> students = new HashMap<>();
     @Autowired
@@ -17,22 +15,12 @@ public abstract class ListenerForStudent extends Listener {
     @Autowired
     protected StudentService studentService;
 
-    @GetMapping(value = { "/students/sync04", "/students/sync04/" })
-    @ResponseBody
-    @Override
-    protected abstract String trigger();
-
     @Override
     protected void handleDependencies() {
         // dependency: Cooperator
         if (!cooperatorService.exists(DEFAULT_COOPERATOR_ID)) {
             cooperatorService.create(DEFAULT_COOPERATOR_ID);
         }
-    }
-
-    @Override
-    public void removeObsolete() {
-
     }
 
     @Override
@@ -54,8 +42,8 @@ public abstract class ListenerForStudent extends Listener {
         }
     }
 
-    private void removeObsoleteData() {
-        // deletes all obsolete student data
+    @Override
+    protected void removeObsolete() {
         for (Student academicMangerStudent : studentService.getAll()) {
             // deletes all obsolete students from the AcademicManager's database
             if (!students.containsKey(academicMangerStudent.getStudentID())) {

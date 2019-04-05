@@ -1,19 +1,11 @@
 package ca.mcgill.ecse321.academicmanager.controller.external;
 
-import ca.mcgill.ecse321.academicmanager.model.Student;
-import ca.mcgill.ecse321.academicmanager.service.CooperatorService;
-import ca.mcgill.ecse321.academicmanager.service.StudentService;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.HashMap;
 
 
 /**
@@ -24,7 +16,7 @@ import java.util.HashMap;
  */
 @CrossOrigin(origins = "*")
 @RestController
-public class StudentListenerForStudent extends ListenerForStudent {
+class StudentTeamListenerForStudent extends ListenerForStudent {
 
     public static final String GET_ALL_STUDENTS_URL = "https://cooperator-backend-0000.herokuapp.com/students/";
 
