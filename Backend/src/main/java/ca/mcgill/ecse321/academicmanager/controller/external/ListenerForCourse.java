@@ -27,7 +27,7 @@ abstract class ListenerForCourse extends Listener {
             cooperatorService.create(DEFAULT_COOPERATOR_ID);
         }
         for (ExternalTermDto externalTerm : terms) {
-            if (termService.exists(externalTerm.getTermID())) {
+            if (!termService.exists(externalTerm.getTermID())) {
                 termService.create(externalTerm.getTermID(), externalTerm.getTermName(),
                         externalTerm.getDate1(), externalTerm.getDate2()
                 );
