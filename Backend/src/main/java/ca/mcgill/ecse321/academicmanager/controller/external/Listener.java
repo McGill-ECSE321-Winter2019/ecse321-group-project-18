@@ -5,8 +5,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.sql.Time;
+import java.time.Duration;
 import java.time.ZonedDateTime;
+import java.util.ConcurrentModificationException;
 import java.util.Stack;
 
 /**
@@ -36,8 +37,8 @@ abstract class Listener {
             System.out.println(e.getMessage());
         } catch (RuntimeException e) {
             e.printStackTrace();
-            System.out.println(e.getMessage() + " at " + new Time(System.currentTimeMillis()));
-            return "Request failed at " + new Time(System.currentTimeMillis())
+            System.out.println(e.getMessage() + " at " + ZonedDateTime.now());
+            return "Request failed at " + ZonedDateTime.now()
                 + '\n' + e.getMessage() ;
         }
         // Step 2: interpret the String data
@@ -45,12 +46,20 @@ abstract class Listener {
             this.interpretRequest(serverResponse);
         } catch (RuntimeException e) {
             e.printStackTrace();
+            return "Request failed at " + ZonedDateTime.now();
         }
         // Step 3: data persistence
-        this.persist();
+        try {
+            this.persist();
+        } catch (ConcurrentModificationException e) {
+            // RESOLVE CONCURRENCY PROBLEM!!! :D
+            // This means the previous transaction is going on! This current transaction will be denied.
+            System.out.println("Another transaction is going on, request delayed at " + ZonedDateTime.now());
+            return "Request denied! Another transaction is going on.";
+        }
         // Step 4: record the time of update, and return the message
-        this.updateHistory.push(ZonedDateTime.now());
-        return "Request completed at " + this.updateHistory.peek() + " updateHistory=" + this.updateHistory;
+        //return "Request completed at " + this.updateHistory.peek() + " updateHistory=" + this.updateHistory;
+        return this.calculateTimeElapsed();
     }
     /**
      * The method binds to the HTTP Request.
@@ -101,11 +110,11 @@ abstract class Listener {
      * A method contains the procedure on how to persist external database
      * to the internal database.
      */
-    protected void persist() {
+    protected void persist() throws ConcurrentModificationException {
         handleDependencies();
         removeObsolete();
         postData();
-        System.out.println("Persisted data to the database!");
+        System.out.println("Persisted data to the database at " + ZonedDateTime.now());
     }
     /**
      * To create some entities, it is required to create their dependencies first,
@@ -136,5 +145,46 @@ abstract class Listener {
     @Override
     public String toString() {
         return "Update History: " + updateHistory.toString();
+    }
+
+    private String calculateTimeElapsed() {
+
+        ZonedDateTime currentTime = ZonedDateTime.now();
+        if (updateHistory.isEmpty()) {
+            updateHistory.push(currentTime);
+            return "Updated for the first time. " + currentTime;
+        }
+        Duration duration = Duration.between(updateHistory.peek(), updateHistory.push(currentTime));
+        if (duration.getSeconds() <= 1) {
+            return "Updated less than a second ago. " + currentTime;
+        }
+        String response = "Updated ";
+        if (duration.toDays() > 0) {
+            response += duration.toDays() + singularOrPlural("day", duration.toDays());
+            duration = duration.minusDays(duration.toDays());
+        }
+        if (duration.toHours() > 0) {
+            response += duration.toHours() + singularOrPlural("hour", duration.toHours());
+            duration = duration.minusHours(duration.toHours());
+        }
+        if (duration.toMinutes() > 0) {
+            response += duration.toMinutes() + singularOrPlural("minute", duration.toMinutes());
+            duration = duration.minusMinutes(duration.toMinutes());
+        }
+        if (duration.getSeconds() > 0) {
+            response += duration.getSeconds() + singularOrPlural("second", duration.getSeconds());
+        }
+        response += " ago. ";
+        return  response;
+    }
+
+    /**
+     * We respect the English grammar! :)
+     * @param word the word
+     * @param value the value to be decided to make plural or not
+     * @return the result
+     */
+    private static String singularOrPlural(String word, long value) {
+        return " " + ((value == 1) ? word : word + "s") + " ";
     }
 }
