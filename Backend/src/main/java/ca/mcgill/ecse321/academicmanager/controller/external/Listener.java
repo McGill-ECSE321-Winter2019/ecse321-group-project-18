@@ -7,6 +7,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.Duration;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ConcurrentModificationException;
 import java.util.Stack;
 
@@ -58,8 +59,9 @@ abstract class Listener {
             return "Request denied! Another transaction is going on.";
         }
         // Step 4: record the time of update, and return the message
-        //return "Request completed at " + this.updateHistory.peek() + " updateHistory=" + this.updateHistory;
-        return this.calculateTimeElapsed();
+        return "Database updated at "
+                + DateTimeFormatter.ofPattern("yyyy-MM-dd - kk:mm:ss").format(ZonedDateTime.now()) + ". "
+                + this.calculateTimeElapsed();
     }
     /**
      * The method binds to the HTTP Request.
@@ -152,13 +154,13 @@ abstract class Listener {
         ZonedDateTime currentTime = ZonedDateTime.now();
         if (updateHistory.isEmpty()) {
             updateHistory.push(currentTime);
-            return "Updated for the first time. ";
+            return "";
         }
+        String response = "The previous update was ";
         Duration duration = Duration.between(updateHistory.peek(), updateHistory.push(currentTime));
         if (duration.getSeconds() <= 1) {
-            return "Updated less than a second ago. ";
+            return response + "less than a second ago.";
         }
-        String response = "Updated ";
         if (duration.toDays() > 0) {
             response += duration.toDays() + singularOrPlural("day", duration.toDays());
             duration = duration.minusDays(duration.toDays());
@@ -174,8 +176,7 @@ abstract class Listener {
         if (duration.getSeconds() > 0) {
             response += duration.getSeconds() + singularOrPlural("second", duration.getSeconds());
         }
-        response += " ago. ";
-        return  response;
+        return response + " ago.";
     }
 
     /**
