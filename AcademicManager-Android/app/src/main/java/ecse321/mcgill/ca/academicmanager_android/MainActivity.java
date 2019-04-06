@@ -89,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
 
+
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 try {
@@ -103,6 +104,78 @@ public class MainActivity extends AppCompatActivity {
         });
 // ...
 
+    }
+
+
+    public void listProblematic(View v) {
+        error = "";
+        final TextView tv = (TextView) findViewById(R.id.error);
+        final TextView displayresult = (TextView) findViewById(R.id.textViewStudent);
+        final String mytext="";
+        Intent intent = getIntent();
+        token = intent.getStringExtra("token");
+
+
+        TextView textView = (TextView) findViewById(R.id.text);
+
+        displayresult.setText("response");
+
+        HttpUtils.get("students/problematic", null, token, new JsonHttpResponseHandler() {
+            private JSONArray response;
+            @Override
+            public void onStart() {
+                displayresult.setText("onStart");
+            }
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+
+                String myoutput = response.toString();
+                //displayresult.setText(myoutput);
+                displayresult.setText("");
+
+                for (int i = 0; i < response.length(); i++) {
+
+                    try {
+                        JSONObject jsonobject = response.getJSONObject(i);
+                        String firstname = jsonobject.getString("firstName");
+                        String lastname = jsonobject.getString("lastName");
+                        String studentid = jsonobject.getString("studentID");
+                        String studentproblematic = jsonobject.getString("studentProblematicStatus");
+                        displayresult.append(studentid + "   ");
+                        displayresult.append(firstname + "   " + lastname );
+                        displayresult.append(" - is Problematic :   " + studentproblematic + "\n");
+
+
+
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+
+
+
+                }
+
+
+                //displayresult.setText("On  Success");
+                //refreshErrorMessage();
+
+            }
+
+
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error += errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error += e.getMessage();
+                }
+                refreshErrorMessage();
+            }
+
+
+        });
+// ...
 
     }
 

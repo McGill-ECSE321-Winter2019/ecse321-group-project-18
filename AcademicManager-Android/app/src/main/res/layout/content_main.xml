@@ -32,6 +32,14 @@
             android:text="List Student"
             android:onClick="listStudent"
             tools:ignore="DuplicateIds" />
+        <Button
+            android:id="@+id/myproblematic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="List Problematic Student"
+            android:onClick="listProblematic"
+            tools:ignore="DuplicateIds" />
 
         <TextView
             android:id="@+id/textViewStudent"
