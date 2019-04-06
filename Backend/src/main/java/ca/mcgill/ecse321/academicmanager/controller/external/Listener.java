@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.Duration;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ConcurrentModificationException;
@@ -60,7 +61,8 @@ abstract class Listener {
         }
         // Step 4: record the time of update, and return the message
         return "Database updated at "
-                + DateTimeFormatter.ofPattern("yyyy-MM-dd - kk:mm:ss").format(ZonedDateTime.now()) + ". "
+                + DateTimeFormatter.ofPattern("yyyy-MM-dd - kk:mm:ss")
+                .format(ZonedDateTime.now(ZoneId.of("America/New_York"))) + ". "
                 + this.calculateTimeElapsed();
     }
     /**
