@@ -29,6 +29,7 @@
 	      <th>Job ID</th>
 	      <th>Student ID</th>
 	      <th>Term name</th>
+	      <th>Grade</th>
 	      <th>Status</th>
 	      <th>Employer form link</th>
 	      <th>Student form link</th>
@@ -38,6 +39,7 @@
 		  <td>{{ ctr.jobID }}</td>
 		  <td>{{ ctr.studentID}}</td>
 		  <td>{{ ctr.termName }}</td>
+		  <td>{{ ctr.grade }}</td>
 		  <td>{{ ctr.termStatus }}</td>
 		  <td>{{ ctr.employerFormLink }}</td>
 		  <td>{{ ctr.studentFormLink }}</td>
