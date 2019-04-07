@@ -1,7 +1,8 @@
 <template>
+<body id="common">
   <div id="app">
     <div id="banner">
-      <a href="#/app"><img id="logo" src="./assets/common_logo.png" width="280" height="200"></a>
+      <a href="#/Hello"><img id="logo" src="./assets/common_logo.png" width="250" height="200"></a>
     </div>
     <div id="sidebar">
       <ul id="sidebar-list">
@@ -13,7 +14,7 @@
     </div>
     <router-view></router-view>
   </div>
-
+</body>
 </template>
 
 <script>
@@ -23,14 +24,15 @@ export default {
 </script>
 
 <style>
+body {
+  background-color: #f5f5f5;
+}
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   margin-top: 60px;
-  background-color: #f5f5f5;
-  height: 100vh;
 }
 
 #logo{

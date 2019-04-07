@@ -17,8 +17,8 @@
       <h4 class="search-title">Or Sort by Order Specify Quantity of Course Displayed</h4>
 	  <div class ="filters-entries">
 	    <select v-model="sort_order" style="margin-left:0px; margin-right:15px;">
-	      <option value="descending">Sort descending</option>
-	      <option value="ascending">Sort ascending</option>
+	      <option value="descending">Most Useful to Least Useful</option>
+	      <option value="ascending">Least Useful to Most Useful</option>
 	    </select>
         <input type="text" v-model="quantity" placeholder="Quantity" />
 	    <div class="text-right">
