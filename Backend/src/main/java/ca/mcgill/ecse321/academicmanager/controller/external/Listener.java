@@ -116,7 +116,7 @@ abstract class Listener {
      */
     protected void persist() throws ConcurrentModificationException {
         handleDependencies();
-        removeObsolete();
+        //removeObsolete();
         postData();
         System.out.println("Persisted data to the database at " + ZonedDateTime.now());
     }
