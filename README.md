@@ -46,8 +46,8 @@ For the documentation for sprint 4, please refer to this wiki [page](https://git
 
 |Team member's name      |Total hours |Responsibility                                                                    |
 |------------------------|------------|----------------------------------------------------------------------------------|
-|Moetassem Abdelazim     | 22   hours |CTO (All with more emphasis )                         |
-|Saleh Bakhit            | 22   hours |                                                      |
-|Yen-Vi Huynh            | 22   hours |Android, Heroku Deployment, Build system and Documentation                        |
-|Edward Huang            | 22   hours |                      |
-|Bach Tran               | 22   hours |                                    |
+|Moetassem Abdelazim     | 27   hours |CTO - Front-end improvements, slides, Uniform Unit Homepage, some documentation   |
+|Saleh Bakhit            | 22   hours |Code refactoring, JavaDocs                                                        |
+|Yen-Vi Huynh            | 30   hours |Android, Heroku Deployment, Build system and Documentation                        |
+|Edward Huang            | 21   hours |JavaDocs, Letter Grade Feature                                                    |
+|Bach Tran               | 35   hours |Database Synchronization, database update feature, documentation                  |
