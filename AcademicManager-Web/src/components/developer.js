@@ -52,13 +52,13 @@ export default {
       // create coopTermRegistrations
       AXIOS.post(`/coopTermRegistrations/create/?registrationid=1&jobid=1&studentid=1&termid=1&termstat=1&gradeid=0`)
       AXIOS.post(`/coopTermRegistrations/create/?registrationid=2&jobid=2&studentid=2&termid=2&termstat=2&gradeid=1`)
-      AXIOS.post(`/coopTermRegistrations/create/?registrationid=3&jobid=3&studentid=3&termid=3&termstat=1&gradeid=2`)
+      AXIOS.post(`/coopTermRegistrations/create/?registrationid=3&jobid=3&studentid=3&termid=3&termstat=0&gradeid=2`)
       AXIOS.post(`/coopTermRegistrations/create/?registrationid=4&jobid=33&studentid=4&termid=4&termstat=1&gradeid=3`)
-      AXIOS.post(`/coopTermRegistrations/create/?registrationid=5&jobid=333&studentid=5&termid=5&termstat=2&gradeid=4`)
+      AXIOS.post(`/coopTermRegistrations/create/?registrationid=5&jobid=333&studentid=5&termid=5&termstat=0&gradeid=4`)
       AXIOS.post(`/coopTermRegistrations/create/?registrationid=6&jobid=4&studentid=6&termid=6&termstat=1&gradeid=5`)
       AXIOS.post(`/coopTermRegistrations/create/?registrationid=7&jobid=5&studentid=7&termid=7&termstat=1&gradeid=0`)
-      AXIOS.post(`/coopTermRegistrations/create/?registrationid=8&jobid=345&studentid=8&termid=8&termstat=2&gradeid=1`)
-      AXIOS.post(`/coopTermRegistrations/create/?registrationid=9&jobid=129545&studentid=9&termid=9s&termstat=2&gradeid=2`)
+      AXIOS.post(`/coopTermRegistrations/create/?registrationid=8&jobid=345&studentid=8&termid=8&termstat=0&gradeid=1`)
+      AXIOS.post(`/coopTermRegistrations/create/?registrationid=9&jobid=129545&studentid=9&termid=9s&termstat=0&gradeid=2`)
       AXIOS.post(`/coopTermRegistrations/create/?registrationid=10&jobid=10234&studentid=10&termid=10&termstat=2&gradeid=3`)
 
       AXIOS.post(`/students/report/create/?formid=1&pdflink=http://samplelink1.com&ctrid=1`)
