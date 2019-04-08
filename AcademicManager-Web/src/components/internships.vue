@@ -45,12 +45,53 @@
 			  <td>{{ ctr.termStatus }}</td>
 			  <td>{{ ctr.employerFormLink }}</td>
 			  <td>{{ ctr.studentFormLink }}</td>
-			  <td><button class="btn btn-secondary btn-danger" @click="adjudicateFailureCTR(ctr.registrationID)">Fail</button></td>
-			  <td><button class="btn btn-secondary btn-success" @click="adjudicateSuccessCTR(ctr.registrationID)">Succeed</button></td>
+			  <td>
+			  	<a href="#popupFail">
+			  		<button class="btn btn-secondary btn-danger" @click="adjudicateFailureCTR(ctr.registrationID)">Fail</button>
+			  	</a>
+			  </td>
+			  <td>
+			  	<a href="#popupPass">
+			  		<button class="btn btn-secondary btn-Success" @click="adjudicateSuccessCTR(ctr.registrationID)">Succeed</button>
+			  	</a>
+			  </td>
 			  <td>{{ ctr.grade }}</td>
 			</tr>
 		</table>
 	</div>
+	
+	<div id="popupFail" class="overlay">
+		<div class="popup">
+			<h4>Are you sure you want to Fail this student?</h4>
+			<a class="close" href="#">&times;</a>
+			<div class="content text-right">
+			  <a href="#">
+			  	<button class="btn btn-secondary">Yes</button>
+			  </a>
+			  <a href="#">
+			  	<button class="btn btn-secondary">No</button>
+			  </a>
+			</div>
+		</div>
+	</div>
+
+
+	<div id="popupPass" class="overlay">
+		<div class="popup">
+			<h4>Are you sure you want to Pass this student?</h4>
+			<a class="close" href="#">&times;</a>
+			<div class="content text-right">
+			  <a href="#">
+			  	<button class="btn btn-secondary" @click="adjudicateSuccessCTR(ctr.registrationID)">Yes</button>
+			  </a>
+			  <a href="#">
+			  	<button class="btn btn-secondary">No</button>
+			  </a>
+			</div>
+		</div>
+	</div>
+
+
   </div>
 </template>
 
@@ -60,6 +101,77 @@
 
 
 <style>
+.box {
+  width: 40%;
+  margin: 0 auto;
+  background: rgba(255,255,255,0.2);
+  padding: 35px;
+  border: 2px solid #fff;
+  border-radius: 20px/50px;
+  background-clip: padding-box;
+  text-align: center;
+}
+.button {
+  font-size: 1em;
+  padding: 10px;
+  color: #fff;
+  border: 2px solid #06D85F;
+  border-radius: 20px/50px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease-out;
+}
+.button:hover {
+  background: #06D85F;
+}
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  transition: opacity 500ms;
+  visibility: hidden;
+  opacity: 0;
+}
+.overlay:target {
+  visibility: visible;
+  opacity: 1;
+}
+
+.popup {
+  margin: 70px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 5px;
+  width: 30%;
+  position: relative;
+  transition: all 5s ease-in-out;
+}
+
+.popup h2 {
+  text-align: center;
+  color: #333;
+  font-family: Tahoma, Arial, sans-serif;
+}
+.popup .close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #333;
+}
+.popup .close:hover {
+  color: #06D85F;
+}
+.popup .content {
+  max-height: 30%;
+  overflow: auto;
+}
+
 .filters-entries{
 	background-color: #d0d0d0;
 	padding: 0px 25px;
