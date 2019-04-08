@@ -23,30 +23,34 @@
 	  </div>
 	</div>
 
-	<table class="table table-striped table-hover table-users">
-		<tr>
-	      <th>Registration ID</th> 
-	      <th>Job ID</th>
-	      <th>Student ID</th>
-	      <th>Term name</th>
-	      <th>Grade</th>
-	      <th>Status</th>
-	      <th>Employer form link</th>
-	      <th>Student form link</th>
-	  	</tr>
-		<tr v-for="ctr in ctrs">
-		  <td>{{ ctr.registrationID }}</td>
-		  <td>{{ ctr.jobID }}</td>
-		  <td>{{ ctr.studentID}}</td>
-		  <td>{{ ctr.termName }}</td>
-		  <td>{{ ctr.grade }}</td>
-		  <td>{{ ctr.termStatus }}</td>
-		  <td>{{ ctr.employerFormLink }}</td>
-		  <td>{{ ctr.studentFormLink }}</td>
-		  <td><button class="btn btn-secondary btn-danger" @click="adjudicateFailureCTR(ctr.registrationID)">Fail</button></td>
-		  <td><button class="btn btn-secondary btn-success" @click="adjudicateSuccessCTR(ctr.registrationID)">Succeed</button></td>
-		</tr>
-	</table>
+	<div style="overflow-x:auto;">
+		<table class="table table-striped table-hover table-users">
+			<tr>
+		      <th>Registration ID</th> 
+		      <th>Job ID</th>
+		      <th>Student ID</th>
+		      <th>Term name</th>
+		      <th>Status</th>
+		      <th>Employer form link</th>
+		      <th>Student form link</th>
+		      <th></th>
+		      <th></th>
+		      <th>Grade</th>
+		  	</tr>
+			<tr v-for="ctr in ctrs">
+			  <td>{{ ctr.registrationID }}</td>
+			  <td>{{ ctr.jobID }}</td>
+			  <td>{{ ctr.studentID}}</td>
+			  <td>{{ ctr.termName }}</td>
+			  <td>{{ ctr.termStatus }}</td>
+			  <td>{{ ctr.employerFormLink }}</td>
+			  <td>{{ ctr.studentFormLink }}</td>
+			  <td><button class="btn btn-secondary btn-danger" @click="adjudicateFailureCTR(ctr.registrationID)">Fail</button></td>
+			  <td><button class="btn btn-secondary btn-success" @click="adjudicateSuccessCTR(ctr.registrationID)">Succeed</button></td>
+			  <td>{{ ctr.grade }}</td>
+			</tr>
+		</table>
+	</div>
   </div>
 </template>
 
@@ -79,7 +83,6 @@
 	margin-left: 15px;
 	float: left;
 }
-</style>
 
 .filters-entries button{
 	background-color: #dc3545;

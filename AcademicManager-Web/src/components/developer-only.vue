@@ -2,7 +2,7 @@
   <div class="page-content">
     <h2 class="pagetitle">Developer page</h2>
     <p> Warning! This area is reserved for the developers only! </p>
-    <p> Note that the students page include entries from other teams' databases so the below button won't be affecting these </p>
+    <p> Note that the 'students' and 'courses' page include entries from other teams' databases so the below button won't be affecting these </p>
     <div class="filters-section">
       <h4 class="search-title">Generate test instances</h4>
       <div class = filters-entries>
