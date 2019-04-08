@@ -30,7 +30,7 @@ For the documentation of our services provided in sprint 2 and how to use them, 
 
 ## Deliverable 3
    
-For the documentation of our services provided in sprint 3 and how to use them, please refer to this wiki [page](https://github.com/McGill-ECSE321-Winter2019/ecse321-group-project-18/wiki).
+For the documentation for sprint 3 , please refer to this wiki [page](https://github.com/McGill-ECSE321-Winter2019/ecse321-group-project-18/wiki).
 
 |Team member's name      |Total hours |Responsibility                                                                    |
 |------------------------|------------|----------------------------------------------------------------------------------|
@@ -39,3 +39,15 @@ For the documentation of our services provided in sprint 3 and how to use them, 
 |Yen-Vi Huynh            | 30   hours |Integration Backend/Frontend, Heroku Deployment, Build system, and Documentation  |
 |Edward Huang            | 34   hours |Architecture Model/Component descriptions, UI Implementation                      |
 |Bach Tran               | 35   hours |UI Implementation, Nightwatch end-to-end tests                                    |
+
+## Deliverable 4
+   
+For the documentation for sprint 4, please refer to this wiki [page](https://github.com/McGill-ECSE321-Winter2019/ecse321-group-project-18/wiki).
+
+|Team member's name      |Total hours |Responsibility                                                                    |
+|------------------------|------------|----------------------------------------------------------------------------------|
+|Moetassem Abdelazim     | 30   hours |CTO (All with more emphasis )                         |
+|Saleh Bakhit            | 30   hours |                                                      |
+|Yen-Vi Huynh            | 30   hours |Android, Heroku Deployment, Build system and Documentation                        |
+|Edward Huang            | 30   hours |                      |
+|Bach Tran               | 30   hours |                                    |
