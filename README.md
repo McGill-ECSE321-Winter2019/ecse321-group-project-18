@@ -8,7 +8,7 @@ For more information or documents pertaining to the Deliverables, please refer t
 
 |Team member's name      |Total hours |Responsibility                                                       |
 |------------------------|------------|---------------------------------------------------------------------|
-|Moetassem Abdelazim     |   20 hours*|CTO (a bit of all with more emphasis on Requirements & Domain Model) |
+|Moetassem Abdelazim     |   20 hours |CTO (a bit of all with more emphasis on Requirements & Domain Model) |
 |Saleh Bakhit            |   25 hours |Database Interfaces                                                  |
 |Yen-Vi Huynh            |   26 hours |CI and Heroku Setup                                                  |
 |Edward Huang            |   32 hours |Domain Model and Database Testing                                    |
