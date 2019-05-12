@@ -1,4 +1,4 @@
-# ECSE321 Project Group 18
+# ECSE321 Project Group 18 - Please make public
 
 The scope of this software engineering group project of the Winter 2019 edition of the ECSE 321 course is to develop a software system for managing co-op terms for future co-op programs. Our team delivers the viewpoints of the Academic Program Manager and the Term Instructor.
 
@@ -13,8 +13,6 @@ For more information or documents pertaining to the Deliverables, please refer t
 |Yen-Vi Huynh            |   26 hours |CI and Heroku Setup                                                  |
 |Edward Huang            |   32 hours |Domain Model and Database Testing                                    |
 |Bach Tran               |   24 hours |Database Testing                                                     |
-
-\*The slight lower number of hours by Moetassem is because of personal problems that were communicated and understood by the team.
 
 ## Deliverable 2
 
